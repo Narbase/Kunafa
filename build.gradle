@@ -42,7 +42,7 @@ task assembleWeb(type: Sync) {
 assemble.dependsOn assembleWeb
 
 compileKotlin2Js {
-    kotlinOptions.outputFile = "${projectDir}/web/output.js"
-    kotlinOptions.moduleKind = "commonjs"
+//    kotlinOptions.outputFile = "${projectDir}/web/output.js"
+    kotlinOptions.moduleKind = "plain"
     kotlinOptions.sourceMap = true
 }
