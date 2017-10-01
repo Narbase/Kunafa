@@ -1,7 +1,9 @@
 package net.avatarapps.modernweb.core.components
 
+import net.avatarapps.modernweb.core.components.layout.Layout
 import net.avatarapps.modernweb.core.dimensions.Dimension
 import net.avatarapps.modernweb.core.dimensions.Point
+import net.avatarapps.modernweb.core.dimensions.px
 import net.avatarapps.modernweb.core.drawable.Color
 import org.w3c.dom.HTMLElement
 import kotlin.browser.document
@@ -16,8 +18,9 @@ import kotlin.properties.Delegates.observable
  * Created by islam
  * On: 9/30/17.
  */
-open class View {
-    val element = document.createElement("div") as HTMLElement
+open class View(val parent: Layout?) {
+    var id: String? = null
+    open val element = document.createElement("div") as HTMLElement
 
     var width: Dimension by observable(Point() as Dimension){ _,_,_ ->
         element.style.width = "${width.pixels}px"
@@ -84,6 +87,20 @@ open class View {
         element.style.overflowY =  if (newValue) "scroll" else "hidden"
     }
 
+    init {
+        width = 100.px
+        height = 100.px
+        setMargin(0.px)
+        setPadding(0.px)
+        isScrollableVertically = false
+        isScrollableHorizontally = false
+    }
+
+//    fun addToParent(): View {
+//        println("Adding $id to ${parent?.id}")
+//        parent?.add(this)
+//        return this
+//    }
 
     open fun render(): dynamic  {
         return element

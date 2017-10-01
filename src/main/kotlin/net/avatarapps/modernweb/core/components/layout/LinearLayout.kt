@@ -1,5 +1,6 @@
 package net.avatarapps.modernweb.core.components.layout
 
+import net.avatarapps.modernweb.core.components.View
 import net.avatarapps.modernweb.core.components.layout.LinearLayout.Orientation.horizontal
 
 /**
@@ -11,14 +12,14 @@ import net.avatarapps.modernweb.core.components.layout.LinearLayout.Orientation.
  * On: 9/30/17.
  */
 class LinearLayout(
+        parent: Layout,
         val orientation: Orientation = horizontal
-) : Layout() {
-    override fun render(): dynamic {
-        children.forEach {
-            it.element.style.display = if (orientation == horizontal) "inline-block" else "block"
-            element.append(it.render())
-        }
-        return element
+) : Layout(parent) {
+
+    override fun add(child: View) {
+        child.element.style.display = if (orientation == horizontal) "inline-block" else "block"
+        element.append(child.element)
+        children.add(child)
     }
 
     enum class Orientation {

@@ -13,7 +13,7 @@ class Pixel(override var value: Int = 0) : Dimension() {
     override var pixels = value
 }
 
-val Int.pixels: Dimension
+val Int.px: Dimension
     get() {
         return Pixel(this)
     }

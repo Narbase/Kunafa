@@ -13,7 +13,7 @@ class Point(override var value: Int = 0) : Dimension() {
     override var type: Type = Type.POINTS
 
     override var pixels: Int
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        get() = value
         set(value) {
 
         }

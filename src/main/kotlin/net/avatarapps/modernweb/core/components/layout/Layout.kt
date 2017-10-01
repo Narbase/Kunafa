@@ -10,10 +10,11 @@ import net.avatarapps.modernweb.core.components.View
  * Created by islam
  * On: 9/30/17.
  */
-open class Layout : View() {
+open class Layout(parent: Layout?) : View(parent) {
     val children: ArrayList<View> = arrayListOf()
 
-    fun add(child: View){
+    open fun add(child: View){
+        element.append(child.element)
         children.add(child)
     }
 }

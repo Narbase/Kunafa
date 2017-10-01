@@ -1,5 +1,6 @@
 package net.avatarapps.modernweb.core.components
 
+import net.avatarapps.modernweb.core.components.layout.Layout
 import kotlin.browser.document
 import kotlin.dom.clear
 
@@ -11,16 +12,18 @@ import kotlin.dom.clear
  * Created by islam
  * On: 9/30/17.
  */
-object Page : View() {
-    var root: View? = null
+object Page : Layout(null) {
 
+    override fun add(child: View){
+        document.body?.append(child.element)
+        children.add(child)
+    }
 
-    override fun render(){
+    fun prepare(){
         document.body?.style?.margin = "0"
         document.body?.style?.padding = "0"
         document.body?.style?.overflowY = "hidden"
         document.body?.style?.overflowX = "hidden"
         document.body?.clear()
-        document.body?.append(root?.render())
     }
 }
