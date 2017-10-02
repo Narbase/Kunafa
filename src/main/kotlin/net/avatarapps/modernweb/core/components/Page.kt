@@ -1,6 +1,7 @@
 package net.avatarapps.modernweb.core.components
 
-import net.avatarapps.modernweb.core.components.layout.Layout
+import net.avatarapps.modernweb.core.components.layout.Container
+import net.avatarapps.modernweb.core.dimensions.ExplicitDimension
 import kotlin.browser.document
 import kotlin.dom.clear
 
@@ -12,7 +13,11 @@ import kotlin.dom.clear
  * Created by islam
  * On: 9/30/17.
  */
-object Page : Layout(null) {
+object Page : Container(null) {
+    override val wrappedContentWidth: ExplicitDimension
+        get() = TODO("not implemented")
+    override val wrappedContentHeight: ExplicitDimension
+        get() = TODO("not implemented")
 
     override fun add(child: View){
         document.body?.append(child.element)

@@ -1,5 +1,7 @@
 package net.avatarapps.modernweb.core.dimensions
 
+import net.avatarapps.modernweb.core.components.layout.Container
+
 /**
  * AVATAR APPS CONFIDENTIAL
  * ______________________________
@@ -10,13 +12,16 @@ package net.avatarapps.modernweb.core.dimensions
  */
 
 abstract class Dimension {
-
-    abstract var value: Int
-    abstract var type: Type
     abstract var pixels: Int
+}
+
+abstract class CalculatedDimension(private var container: Container): Dimension() {
+    var type: Type? = null
 
     enum class Type {
-        PIXELS,
-        POINTS
+        width,
+        height,
     }
 }
+
+abstract class ExplicitDimension : Dimension()

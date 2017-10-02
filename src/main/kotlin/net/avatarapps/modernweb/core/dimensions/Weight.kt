@@ -6,18 +6,11 @@ package net.avatarapps.modernweb.core.dimensions
  * [2013] - [2017] Avatar Apps
  * All Rights Reserved.
  * Created by islam
- * On: 9/30/17.
+ * On: 10/1/17.
  */
+class Weight(var value: Double): Dimension() {
 
-class Point(var value: Int = 0) : ExplicitDimension() {
     override var pixels: Int
-        get() = value
-        set(value) {
-
-        }
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
 }
-
-val Int.points: Dimension
-    get() {
-        return Point(this)
-    }

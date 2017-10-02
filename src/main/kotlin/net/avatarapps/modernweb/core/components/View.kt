@@ -1,11 +1,11 @@
 package net.avatarapps.modernweb.core.components
 
-import net.avatarapps.modernweb.core.components.layout.Layout
+import net.avatarapps.modernweb.core.components.layout.Container
 import net.avatarapps.modernweb.core.dimensions.Dimension
 import net.avatarapps.modernweb.core.dimensions.Point
 import net.avatarapps.modernweb.core.dimensions.px
 import net.avatarapps.modernweb.core.drawable.Color
-import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLDivElement
 import kotlin.browser.document
 import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
@@ -18,19 +18,37 @@ import kotlin.properties.Delegates.observable
  * Created by islam
  * On: 9/30/17.
  */
-open class View(val parent: Layout?) {
+open class View(var parent: Container?) {
     var id: String? = null
-    open val element = document.createElement("div") as HTMLElement
+    open val element = document.createElement("div") as HTMLDivElement
 
-    var width: Dimension by observable(Point() as Dimension){ _,_,_ ->
+    protected fun updateElementDimensions(){
+        updateElementWidth()
+        updateElementHeight()
+    }
+
+    protected fun updateElementWidth() {
         element.style.width = "${width.pixels}px"
     }
 
-    var height: Dimension by observable(Point() as Dimension){ _,_,_ ->
+    protected fun updateElementHeight() {
+        println("Height of $id: ${height.pixels}")
         element.style.height = "${height.pixels}px"
     }
 
-    var background: Color by observable(Color()){ _,_,_ ->
+    open var width: Dimension = Point()
+        set(value) {
+            field = value
+            updateElementWidth()
+        }
+
+    open var height: Dimension = Point()
+        set(value) {
+            field = value
+            updateElementHeight()
+        }
+
+    var background: Color by observable(Color()) { _, _, _ ->
         element.style.backgroundColor = "rgba(${background.red},${background.green},${background.blue},${background.alpha})"
     }
 
@@ -41,20 +59,20 @@ open class View(val parent: Layout?) {
         marginBottom = margin
     }
 
-    var marginTop: Dimension by observable(Point() as Dimension){ _,_,_ ->
-        element.style.marginTop = "${marginTop.pixels}px"
+    var marginTop: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+        element.style.marginTop = "${newValue.pixels}px"
     }
 
-    var marginStart: Dimension by observable(Point() as Dimension){ _,_,_ ->
-        element.style.marginLeft = "${marginStart.pixels}px"
+    var marginStart: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+        element.style.marginLeft = "${newValue.pixels}px"
     }
 
-    var marginEnd: Dimension by observable(Point() as Dimension){ _,_,_ ->
-        element.style.marginRight = "${marginEnd.pixels}px"
+    var marginEnd: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+        element.style.marginRight = "${newValue.pixels}px"
     }
 
-    var marginBottom: Dimension by observable(Point() as Dimension){ _,_,_ ->
-        element.style.marginBottom = "${marginBottom.pixels}px"
+    var marginBottom: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+        element.style.marginBottom = "${newValue.pixels}px"
     }
 
     fun setPadding(padding: Dimension) {
@@ -64,32 +82,30 @@ open class View(val parent: Layout?) {
         paddingBottom = padding
     }
 
-    var paddingTop: Dimension by observable(Point() as Dimension){ _,_,_ ->
-        element.style.paddingTop = "${paddingTop.pixels}px"
+    var paddingTop: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+        element.style.paddingTop = "${newValue.pixels}px"
     }
 
-    var paddingStart: Dimension by observable(Point() as Dimension){ _,_,_ ->
-        element.style.paddingLeft = "${paddingStart.pixels}px"
+    var paddingStart: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+        element.style.paddingLeft = "${newValue.pixels}px"
     }
 
-    var paddingEnd: Dimension by observable(Point() as Dimension){ _,_,_ ->
-        element.style.paddingRight = "${paddingEnd.pixels}px"
+    var paddingEnd: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+        element.style.paddingRight = "${newValue.pixels}px"
     }
 
-    var paddingBottom: Dimension by observable(Point() as Dimension){ _,_,_ ->
-        element.style.paddingBottom = "${paddingBottom.pixels}px"
+    var paddingBottom: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+        element.style.paddingBottom = "${newValue.pixels}px"
     }
 
-    var isScrollableHorizontally by Delegates.observable(false){ _, _, newValue ->
-        element.style.overflowX =  if (newValue) "scroll" else "hidden"
+    var isScrollableHorizontally by Delegates.observable(false) { _, _, newValue ->
+        element.style.overflowX = if (newValue) "scroll" else "hidden"
     }
-    var isScrollableVertically by Delegates.observable(false){  _, _, newValue ->
-        element.style.overflowY =  if (newValue) "scroll" else "hidden"
+    var isScrollableVertically by Delegates.observable(false) { _, _, newValue ->
+        element.style.overflowY = if (newValue) "scroll" else "hidden"
     }
 
     init {
-        width = 100.px
-        height = 100.px
         setMargin(0.px)
         setPadding(0.px)
         isScrollableVertically = false
@@ -102,7 +118,7 @@ open class View(val parent: Layout?) {
 //        return this
 //    }
 
-    open fun render(): dynamic  {
+    open fun render(): dynamic {
         return element
     }
 

@@ -1,6 +1,6 @@
 package net.avatarapps.modernweb.core.components
 
-import net.avatarapps.modernweb.core.components.layout.Layout
+import net.avatarapps.modernweb.core.components.layout.Container
 import net.avatarapps.modernweb.core.components.layout.LinearLayout
 
 /**
@@ -17,9 +17,9 @@ fun page(block: Page.() -> Unit = {}){
     Page.block()
 }
 
-fun Layout.linearLayout(orientation: LinearLayout.Orientation, block: Layout.() -> Unit): Layout = LinearLayout(this, orientation).addToParent().visit(block)
+fun Container.linearLayout(orientation: LinearLayout.Orientation, block: Container.() -> Unit): Container = LinearLayout(this, orientation).visit(block).addToParent()
 
-fun Layout.view( block: View.() -> Unit): View = View(this).addToParent().visit(block)
+fun Container.view(block: View.() -> Unit): View = View(this).visit(block).addToParent()
 
 fun <V : View> V.visit(block: V.() -> Unit): V {
     this.block()

@@ -8,13 +8,11 @@ import net.avatarapps.modernweb.core.components.View
  * [2013] - [2017] Avatar Apps
  * All Rights Reserved.
  * Created by islam
- * On: 9/30/17.
+ * On: 10/1/17.
  */
-open class Layout(parent: Layout?) : View(parent) {
-    val children: ArrayList<View> = arrayListOf()
-
-    open fun add(child: View){
-        element.append(child.element)
-        children.add(child)
+class ScrollView(parent: Container?) : View(parent) {
+    init {
+        element.style.overflowX =  "scroll"
+        element.style.overflowY =  "scroll"
     }
 }

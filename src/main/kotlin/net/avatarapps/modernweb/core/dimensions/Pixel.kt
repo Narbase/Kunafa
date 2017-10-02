@@ -8,12 +8,11 @@ package net.avatarapps.modernweb.core.dimensions
  * Created by islam
  * On: 9/30/17.
  */
-class Pixel(override var value: Int = 0) : Dimension() {
-    override var type: Type = Type.PIXELS
+class Pixel(var value: Int = 0) : ExplicitDimension() {
     override var pixels = value
 }
 
-val Int.px: Dimension
+val Int.px: Pixel
     get() {
         return Pixel(this)
     }
