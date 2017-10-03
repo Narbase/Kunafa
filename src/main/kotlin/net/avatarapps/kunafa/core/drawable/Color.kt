@@ -1,4 +1,4 @@
-package net.avatarapps.modernweb.core.drawable
+package net.avatarapps.kunafa.core.drawable
 
 /**
  * AVATAR APPS CONFIDENTIAL

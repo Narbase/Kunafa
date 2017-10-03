@@ -1,10 +1,10 @@
-package net.avatarapps.modernweb.core.components.layout
+package net.avatarapps.kunafa.core.components.layout
 
-import net.avatarapps.modernweb.core.components.View
-import net.avatarapps.modernweb.core.dimensions.CalculatedDimension
-import net.avatarapps.modernweb.core.dimensions.Dimension
-import net.avatarapps.modernweb.core.dimensions.ExplicitDimension
-import net.avatarapps.modernweb.core.dimensions.Point
+import net.avatarapps.kunafa.core.components.View
+import net.avatarapps.kunafa.core.dimensions.CalculatedDimension
+import net.avatarapps.kunafa.core.dimensions.Dimension
+import net.avatarapps.kunafa.core.dimensions.ExplicitDimension
+import net.avatarapps.kunafa.core.dimensions.Point
 
 
 /**

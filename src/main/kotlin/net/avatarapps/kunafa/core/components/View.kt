@@ -1,10 +1,10 @@
-package net.avatarapps.modernweb.core.components
+package net.avatarapps.kunafa.core.components
 
-import net.avatarapps.modernweb.core.components.layout.Container
-import net.avatarapps.modernweb.core.dimensions.Dimension
-import net.avatarapps.modernweb.core.dimensions.Point
-import net.avatarapps.modernweb.core.dimensions.px
-import net.avatarapps.modernweb.core.drawable.Color
+import net.avatarapps.kunafa.core.components.layout.Container
+import net.avatarapps.kunafa.core.dimensions.Dimension
+import net.avatarapps.kunafa.core.dimensions.Point
+import net.avatarapps.kunafa.core.dimensions.px
+import net.avatarapps.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLDivElement
 import kotlin.browser.document
 import kotlin.properties.Delegates

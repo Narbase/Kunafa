@@ -1,6 +1,6 @@
-package net.avatarapps.modernweb.core.dimensions
+package net.avatarapps.kunafa.core.dimensions
 
-import net.avatarapps.modernweb.core.components.layout.Container
+import net.avatarapps.kunafa.core.components.layout.Container
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -17,6 +17,7 @@ abstract class Dimension {
 
 abstract class CalculatedDimension(private var container: Container): Dimension() {
     var type: Type? = null
+    abstract val dependsOnParent: Boolean
 
     enum class Type {
         width,

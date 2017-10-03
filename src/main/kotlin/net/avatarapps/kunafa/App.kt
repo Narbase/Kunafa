@@ -1,52 +1,52 @@
-package net.avatarapps.modernweb
-import net.avatarapps.modernweb.core.components.layout.LinearLayout.Orientation.horizontal
-import net.avatarapps.modernweb.core.components.layout.LinearLayout.Orientation.vertical
-import net.avatarapps.modernweb.core.components.linearLayout
-import net.avatarapps.modernweb.core.components.page
-import net.avatarapps.modernweb.core.components.view
-import net.avatarapps.modernweb.core.dimensions.px
-import net.avatarapps.modernweb.core.dimensions.wrapContent
-import net.avatarapps.modernweb.core.drawable.Color
+package net.avatarapps.kunafa
+import net.avatarapps.kunafa.core.components.horizontalLayout
+import net.avatarapps.kunafa.core.components.page
+import net.avatarapps.kunafa.core.components.verticalLayout
+import net.avatarapps.kunafa.core.components.view
+import net.avatarapps.kunafa.core.dimensions.px
+import net.avatarapps.kunafa.core.dimensions.wrapContent
+import net.avatarapps.kunafa.core.drawable.Color
 
 fun main(args: Array<String>) {
     page {
-        linearLayout(horizontal) {
+        horizontalLayout {
             background = Color.rgb(200, 200, 200)
             width = 1500.px
-            height = 600.px
+            height = 700.px
             setPadding(20.px)
 
-            linearLayout(vertical) {
-                id = "Linear layout"
+            verticalLayout {
+                id = "Vertical Layout"
                 background = Color.rgb(220, 220, 220)
                 width = wrapContent
-                height = wrapContent
+                height = 600.px
                 setPadding(20.px)
                 isScrollableVertically = true
 
-                val rView = view {
+                val redView = view {
                     width = 500.px
-                    height = 200.px
+                    height = 500.px
                     background = Color.red
                 }
                 view {
-                    width = 250.px
+                    width = 200.px
                     height = 200.px
                     background = Color.blue
                 }
 
                 view {
-                    width = 100.px
-                    height = 200.px
+                    width = 300.px
+                    height = 400.px
                     background = Color.rgb(255, 0, 255)
                 }
             }
 
-            linearLayout(vertical) {
+            verticalLayout {
                 background = Color.rgb(220, 220, 220)
                 width = 500.px
-                height = 400.px
+                height = 600.px
                 setPadding(20.px)
+                marginStart = 30.px
                 isScrollableVertically = true
 
                 view {

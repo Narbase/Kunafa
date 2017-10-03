@@ -1,10 +1,11 @@
-package net.avatarapps.modernweb.core.components.layout
+package net.avatarapps.kunafa.core.components.layout
 
-import net.avatarapps.modernweb.core.components.View
-import net.avatarapps.modernweb.core.components.layout.LinearLayout.Orientation.horizontal
-import net.avatarapps.modernweb.core.components.layout.LinearLayout.Orientation.vertical
-import net.avatarapps.modernweb.core.dimensions.ExplicitDimension
-import net.avatarapps.modernweb.core.dimensions.px
+import net.avatarapps.kunafa.core.components.View
+import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.horizontal
+import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.vertical
+import net.avatarapps.kunafa.core.dimensions.CalculatedDimension
+import net.avatarapps.kunafa.core.dimensions.ExplicitDimension
+import net.avatarapps.kunafa.core.dimensions.px
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -30,7 +31,7 @@ class LinearLayout(
                 horizontal -> {
                     val pixels = 0.px
                     children.forEach {
-                        pixels.pixels += it.width.pixels
+                        pixels.pixels += (it.width.takeUnless { (it as? CalculatedDimension)?.dependsOnParent ?: false }?.pixels) ?: 0
                     }
                     pixels
                 }

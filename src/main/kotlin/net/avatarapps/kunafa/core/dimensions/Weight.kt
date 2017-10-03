@@ -1,4 +1,4 @@
-package net.avatarapps.modernweb.core.dimensions
+package net.avatarapps.kunafa.core.dimensions
 
 /**
  * AVATAR APPS CONFIDENTIAL

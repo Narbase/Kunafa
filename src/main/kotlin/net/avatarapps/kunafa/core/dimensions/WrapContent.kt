@@ -1,6 +1,6 @@
-package net.avatarapps.modernweb.core.dimensions
+package net.avatarapps.kunafa.core.dimensions
 
-import net.avatarapps.modernweb.core.components.layout.Container
+import net.avatarapps.kunafa.core.components.layout.Container
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -11,6 +11,7 @@ import net.avatarapps.modernweb.core.components.layout.Container
  * On: 10/1/17.
  */
 class WrapContent internal constructor(val container: Container): CalculatedDimension(container) {
+    override val dependsOnParent: Boolean = false
     override var pixels: Int
         get() = when(type){
             CalculatedDimension.Type.width -> container.wrappedContentWidth.pixels

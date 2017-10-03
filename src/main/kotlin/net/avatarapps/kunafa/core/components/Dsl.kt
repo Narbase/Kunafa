@@ -1,7 +1,7 @@
-package net.avatarapps.modernweb.core.components
+package net.avatarapps.kunafa.core.components
 
-import net.avatarapps.modernweb.core.components.layout.Container
-import net.avatarapps.modernweb.core.components.layout.LinearLayout
+import net.avatarapps.kunafa.core.components.layout.Container
+import net.avatarapps.kunafa.core.components.layout.LinearLayout
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -18,6 +18,8 @@ fun page(block: Page.() -> Unit = {}){
 }
 
 fun Container.linearLayout(orientation: LinearLayout.Orientation, block: Container.() -> Unit): Container = LinearLayout(this, orientation).visit(block).addToParent()
+fun Container.verticalLayout(block: Container.() -> Unit): Container = LinearLayout(this, LinearLayout.Orientation.vertical).visit(block).addToParent()
+fun Container.horizontalLayout(block: Container.() -> Unit): Container = LinearLayout(this, LinearLayout.Orientation.horizontal).visit(block).addToParent()
 
 fun Container.view(block: View.() -> Unit): View = View(this).visit(block).addToParent()
 

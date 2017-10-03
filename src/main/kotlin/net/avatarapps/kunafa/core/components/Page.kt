@@ -1,7 +1,7 @@
-package net.avatarapps.modernweb.core.components
+package net.avatarapps.kunafa.core.components
 
-import net.avatarapps.modernweb.core.components.layout.Container
-import net.avatarapps.modernweb.core.dimensions.ExplicitDimension
+import net.avatarapps.kunafa.core.components.layout.Container
+import net.avatarapps.kunafa.core.dimensions.ExplicitDimension
 import kotlin.browser.document
 import kotlin.dom.clear
 
