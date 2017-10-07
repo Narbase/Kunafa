@@ -1,8 +1,11 @@
 package net.avatarapps.kunafa.core.components
 
 import net.avatarapps.kunafa.core.components.layout.Container
-import net.avatarapps.kunafa.core.dimensions.ExplicitDimension
+import net.avatarapps.kunafa.core.dimensions.Dimension
+import net.avatarapps.kunafa.core.dimensions.IndependentDimension
+import net.avatarapps.kunafa.core.dimensions.px
 import kotlin.browser.document
+import kotlin.browser.window
 import kotlin.dom.clear
 
 /**
@@ -14,9 +17,13 @@ import kotlin.dom.clear
  * On: 9/30/17.
  */
 object Page : Container(null) {
-    override val wrappedContentWidth: ExplicitDimension
+
+    override var width: Dimension = window.innerHeight.px
+    override var height: Dimension = window.innerHeight.px
+
+    override val wrappedContentWidth: IndependentDimension
         get() = TODO("not implemented")
-    override val wrappedContentHeight: ExplicitDimension
+    override val wrappedContentHeight: IndependentDimension
         get() = TODO("not implemented")
 
     override fun add(child: View){
@@ -25,6 +32,7 @@ object Page : Container(null) {
     }
 
     fun prepare(){
+        id = "Page"
         document.body?.style?.margin = "0"
         document.body?.style?.padding = "0"
         document.body?.style?.overflowY = "hidden"

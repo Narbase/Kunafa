@@ -3,8 +3,8 @@ package net.avatarapps.kunafa.core.components.layout
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.horizontal
 import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.vertical
-import net.avatarapps.kunafa.core.dimensions.CalculatedDimension
-import net.avatarapps.kunafa.core.dimensions.ExplicitDimension
+import net.avatarapps.kunafa.core.dimensions.DependentDimension
+import net.avatarapps.kunafa.core.dimensions.IndependentDimension
 import net.avatarapps.kunafa.core.dimensions.px
 
 /**
@@ -25,13 +25,13 @@ class LinearLayout(
         super.add(child)
     }
 
-    override val wrappedContentWidth: ExplicitDimension
+    override val wrappedContentWidth: IndependentDimension
         get() {
             return when (orientation) {
                 horizontal -> {
                     val pixels = 0.px
                     children.forEach {
-                        pixels.pixels += (it.width.takeUnless { (it as? CalculatedDimension)?.dependsOnParent ?: false }?.pixels) ?: 0
+                        pixels.pixels += (it.width.takeUnless { (it as? DependentDimension)?.dependency == DependentDimension.Dependency.parent} ?.pixels) ?: 0
                     }
                     pixels
                 }
@@ -46,7 +46,7 @@ class LinearLayout(
             }
         }
 
-    override val wrappedContentHeight: ExplicitDimension
+    override val wrappedContentHeight: IndependentDimension
         get() {
             return when (orientation){
                 horizontal -> {

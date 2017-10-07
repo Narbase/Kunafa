@@ -1,6 +1,7 @@
 package net.avatarapps.kunafa.core.components
 
 import net.avatarapps.kunafa.core.components.layout.Container
+import net.avatarapps.kunafa.core.dimensions.DependentDimension
 import net.avatarapps.kunafa.core.dimensions.Dimension
 import net.avatarapps.kunafa.core.dimensions.Point
 import net.avatarapps.kunafa.core.dimensions.px
@@ -22,7 +23,7 @@ open class View(var parent: Container?) {
     var id: String? = null
     open val element = document.createElement("div") as HTMLDivElement
 
-    protected fun updateElementDimensions(){
+    fun updateElementDimensions() {
         updateElementWidth()
         updateElementHeight()
     }
@@ -39,13 +40,13 @@ open class View(var parent: Container?) {
     open var width: Dimension = Point()
         set(value) {
             field = value
-            updateElementWidth()
+            (value as? DependentDimension)?.type = DependentDimension.Type.width
         }
 
     open var height: Dimension = Point()
         set(value) {
             field = value
-            updateElementHeight()
+            (value as? DependentDimension)?.type = DependentDimension.Type.height
         }
 
     var background: Color by observable(Color()) { _, _, _ ->
@@ -112,14 +113,34 @@ open class View(var parent: Container?) {
         isScrollableHorizontally = false
     }
 
-//    fun addToParent(): View {
-//        println("Adding $id to ${parent?.id}")
-//        parent?.add(this)
-//        return this
-//    }
 
-    open fun render(): dynamic {
-        return element
+    fun visit(block: View.() -> Unit): View {
+        this.block()
+        addToParent()
+        println("Adding $id")
+        return this
     }
+
+    open fun render() {
+        println("Rendering: $id")
+        updateElementDimensions()
+    }
+
+    open fun onParentWidthUpdated() {
+        if ((width as? DependentDimension)?.dependency == DependentDimension.Dependency.parent) {
+            (width as? DependentDimension)?.calculate()
+        }
+
+    }
+
+    open fun onParentHeightUpdated() {
+        if ((height as? DependentDimension)?.dependency == DependentDimension.Dependency.parent)
+            (height as? DependentDimension)?.calculate()
+    }
+
+    fun addToParent() {
+        parent?.add(this)
+    }
+
 
 }

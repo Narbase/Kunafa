@@ -22,6 +22,13 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
 }
 
+compileKotlin2Js {
+    kotlinOptions.sourceMap = true
+//    kotlinOptions.outputFile = "${projectDir}/web/output.js"
+    kotlinOptions.moduleKind = "plain"
+
+}
+
 task assembleWeb(type: Sync) {
     configurations.compile.each { File file ->
         from(zipTree(file.absolutePath), {
@@ -40,9 +47,3 @@ task assembleWeb(type: Sync) {
 }
 
 assemble.dependsOn assembleWeb
-
-compileKotlin2Js {
-//    kotlinOptions.outputFile = "${projectDir}/web/output.js"
-    kotlinOptions.moduleKind = "plain"
-    kotlinOptions.sourceMap = true
-}

@@ -1,6 +1,6 @@
 package net.avatarapps.kunafa.core.components.layout
 
-import net.avatarapps.kunafa.core.dimensions.ExplicitDimension
+import net.avatarapps.kunafa.core.dimensions.IndependentDimension
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -12,9 +12,9 @@ import net.avatarapps.kunafa.core.dimensions.ExplicitDimension
  */
 class ScrollView(parent: Container?) : Container(parent) {
 
-    override val wrappedContentWidth: ExplicitDimension
+    override val wrappedContentWidth: IndependentDimension
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-    override val wrappedContentHeight: ExplicitDimension
+    override val wrappedContentHeight: IndependentDimension
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
     init {

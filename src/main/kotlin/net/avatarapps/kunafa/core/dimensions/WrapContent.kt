@@ -10,20 +10,18 @@ import net.avatarapps.kunafa.core.components.layout.Container
  * Created by islam
  * On: 10/1/17.
  */
-class WrapContent internal constructor(val container: Container): CalculatedDimension(container) {
-    override val dependsOnParent: Boolean = false
-    override var pixels: Int
-        get() = when(type){
-            CalculatedDimension.Type.width -> container.wrappedContentWidth.pixels
-            CalculatedDimension.Type.height -> container.wrappedContentHeight.pixels
+class WrapContent internal constructor(val container: Container) : DependentDimension() {
+    override val dependency = Dependency.children
+    override fun calculate() {
+        calculatedDimension = when (type) {
+            DependentDimension.Type.width -> container.wrappedContentWidth
+            DependentDimension.Type.height -> container.wrappedContentHeight
             null -> throw CalculatedDimensionTypeNotDefinedError()
         }
-        set(value) {
-            throw ChangingPixelsOfCalculatedDimensionError()
-        }
+        isCalculated = true
+    }
 }
 
-class ChangingPixelsOfCalculatedDimensionError : Exception()
 
 class CalculatedDimensionTypeNotDefinedError : Exception()
 

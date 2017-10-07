@@ -1,7 +1,5 @@
 package net.avatarapps.kunafa.core.dimensions
 
-import net.avatarapps.kunafa.core.components.layout.Container
-
 /**
  * AVATAR APPS CONFIDENTIAL
  * ______________________________
@@ -13,16 +11,37 @@ import net.avatarapps.kunafa.core.components.layout.Container
 
 abstract class Dimension {
     abstract var pixels: Int
+    open var isCalculated = true
 }
 
-abstract class CalculatedDimension(private var container: Container): Dimension() {
+abstract class DependentDimension : Dimension() {
     var type: Type? = null
-    abstract val dependsOnParent: Boolean
+    abstract val dependency: Dependency
+    override var isCalculated = false
+    var calculatedDimension: IndependentDimension? = null
+    override var pixels
+        get() = calculatedDimension?.pixels ?: throw DimensionNotCalculatedException()
+        set(value) {
+            throw ChangingPixelsOfDependentDimensionError()
+        }
+
+    abstract fun calculate()
 
     enum class Type {
         width,
         height,
     }
+
+    enum class Dependency {
+        parent,
+        children
+    }
 }
 
-abstract class ExplicitDimension : Dimension()
+class ChangingPixelsOfDependentDimensionError : Exception()
+
+class DimensionNotCalculatedException(msg: String = "") : Exception(msg)
+
+abstract class IndependentDimension : Dimension() {
+    override var isCalculated = true
+}

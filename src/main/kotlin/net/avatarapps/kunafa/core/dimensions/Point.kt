@@ -9,7 +9,7 @@ package net.avatarapps.kunafa.core.dimensions
  * On: 9/30/17.
  */
 
-class Point(var value: Int = 0) : ExplicitDimension() {
+class Point(var value: Int = 0) : IndependentDimension() {
     override var pixels: Int
         get() = value
         set(value) {
