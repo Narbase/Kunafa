@@ -8,8 +8,8 @@ package net.avatarapps.kunafa.core.dimensions
  * Created by islam
  * On: 9/30/17.
  */
-class Pixel(var value: Int = 0) : IndependentDimension() {
-    override var pixels = value
+class Pixel(override var pixels: Int = 0) : IndependentDimension() {
+
 }
 
 val Int.px: Pixel

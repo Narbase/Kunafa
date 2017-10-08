@@ -3,8 +3,8 @@ package net.avatarapps.kunafa.core.components.layout
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.horizontal
 import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.vertical
-import net.avatarapps.kunafa.core.dimensions.DependentDimension
 import net.avatarapps.kunafa.core.dimensions.IndependentDimension
+import net.avatarapps.kunafa.core.dimensions.plus
 import net.avatarapps.kunafa.core.dimensions.px
 
 /**
@@ -29,18 +29,22 @@ class LinearLayout(
         get() {
             return when (orientation) {
                 horizontal -> {
-                    val pixels = 0.px
+                    var pixels = 0.px
                     children.forEach {
-                        pixels.pixels += (it.width.takeUnless { (it as? DependentDimension)?.dependency == DependentDimension.Dependency.parent} ?.pixels) ?: 0
+                        pixels += (it.extendedWidth ?: 0.px)
                     }
+                    pixels += paddingStart + paddingEnd
                     pixels
                 }
                 vertical -> {
-                    val pixels = 0.px
+                    var pixels = 0.px
                     children.forEach {
-                        if (it.width.pixels > pixels.pixels)
-                            pixels.pixels = it.width.pixels
+                        it.extendedWidth?.let {
+                            if (it.pixels > pixels.pixels)
+                                pixels = it
+                        }
                     }
+                    pixels += paddingStart + paddingEnd
                     pixels
                 }
             }
@@ -50,19 +54,23 @@ class LinearLayout(
         get() {
             return when (orientation){
                 horizontal -> {
-                    val pixels = 0.px
+                    var pixels = 0.px
                     children.forEach {
-                        if (it.width.pixels > pixels.pixels)
-                            pixels.pixels = it.width.pixels
+                        it.extendedHeight?.let {
+                            if (it.pixels > pixels.pixels)
+                                pixels = it
+                        }
                     }
+                    pixels += paddingTop + paddingBottom
                     pixels
                 }
 
                 vertical -> {
-                    val pixels = 0.px
+                    var pixels = 0.px
                     children.forEach {
-                        pixels.pixels += it.height.pixels
+                        pixels += (it.extendedHeight ?: 0.px)
                     }
+                    pixels += paddingTop + paddingBottom
                     pixels
 
                 }

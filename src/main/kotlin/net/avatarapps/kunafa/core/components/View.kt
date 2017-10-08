@@ -26,12 +26,21 @@ open class View(var parent: Container?) {
     }
 
     protected fun updateElementWidth() {
-        element.style.width = "${width.pixels}px"
+        if (contentWidth == null)
+            throw DimensionNotCalculatedException("$id.width")
+
+        contentWidth?.let {
+            element.style.width = "${it.pixels}px"
+        }
     }
 
     protected fun updateElementHeight() {
-        println("Height of $id: ${height.pixels}")
-        element.style.height = "${height.pixels}px"
+        if (contentHeight == null)
+            throw DimensionNotCalculatedException("$id.height")
+
+        contentHeight?.let {
+            element.style.height = "${it.pixels}px"
+        }
     }
 
     open var width: Dimension = Point()
@@ -46,7 +55,7 @@ open class View(var parent: Container?) {
             (value as? DependentDimension)?.type = DependentDimension.Type.height
         }
 
-    val contentWidth: Pixel
+    val contentWidth: Pixel?
         get() {
             (width as? IndependentDimension)?.let {
                 return it - (paddingStart + paddingEnd)
@@ -57,21 +66,50 @@ open class View(var parent: Container?) {
                         return it - (paddingStart + paddingEnd)
                     }
             }
-            throw DimensionNotCalculatedException("$id.width")
+            return null
         }
 
-    val contentHeight: Pixel
+    val contentHeight: Pixel?
         get() {
             (height as? IndependentDimension)?.let {
-                return it - (paddingStart + paddingEnd)
+                return it - (paddingTop + paddingBottom)
             }
             (height as? DependentDimension)?.let {
                 if (it.isCalculated)
                     it.calculatedDimension?.let {
-                        return it - (paddingStart + paddingEnd)
+                        return it - (paddingTop + paddingBottom)
                     }
             }
-            throw DimensionNotCalculatedException("$id.height")
+            return null
+        }
+
+
+    val extendedWidth: Pixel?
+        get() {
+            (width as? IndependentDimension)?.let {
+                return it + (marginStart + marginEnd)
+            }
+            (width as? DependentDimension)?.let {
+                if (it.isCalculated)
+                    it.calculatedDimension?.let {
+                        return it + (marginStart + marginEnd)
+                    }
+            }
+            return null
+        }
+
+    val extendedHeight: Pixel?
+        get() {
+            (height as? IndependentDimension)?.let {
+                return it + (marginTop + marginBottom)
+            }
+            (height as? DependentDimension)?.let {
+                if (it.isCalculated)
+                    it.calculatedDimension?.let {
+                        return it + (marginTop + marginBottom)
+                    }
+            }
+            return null
         }
 
     var background: Color by observable(Color()) { _, _, _ ->
