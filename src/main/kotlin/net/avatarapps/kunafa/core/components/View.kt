@@ -1,10 +1,7 @@
 package net.avatarapps.kunafa.core.components
 
 import net.avatarapps.kunafa.core.components.layout.Container
-import net.avatarapps.kunafa.core.dimensions.DependentDimension
-import net.avatarapps.kunafa.core.dimensions.Dimension
-import net.avatarapps.kunafa.core.dimensions.Point
-import net.avatarapps.kunafa.core.dimensions.px
+import net.avatarapps.kunafa.core.dimensions.*
 import net.avatarapps.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLDivElement
 import kotlin.browser.document
@@ -49,53 +46,81 @@ open class View(var parent: Container?) {
             (value as? DependentDimension)?.type = DependentDimension.Type.height
         }
 
+    val contentWidth: Pixel
+        get() {
+            (width as? IndependentDimension)?.let {
+                return it - (paddingStart + paddingEnd)
+            }
+            (width as? DependentDimension)?.let {
+                if (it.isCalculated)
+                    it.calculatedDimension?.let {
+                        return it - (paddingStart + paddingEnd)
+                    }
+            }
+            throw DimensionNotCalculatedException("$id.width")
+        }
+
+    val contentHeight: Pixel
+        get() {
+            (height as? IndependentDimension)?.let {
+                return it - (paddingStart + paddingEnd)
+            }
+            (height as? DependentDimension)?.let {
+                if (it.isCalculated)
+                    it.calculatedDimension?.let {
+                        return it - (paddingStart + paddingEnd)
+                    }
+            }
+            throw DimensionNotCalculatedException("$id.height")
+        }
+
     var background: Color by observable(Color()) { _, _, _ ->
         element.style.backgroundColor = "rgba(${background.red},${background.green},${background.blue},${background.alpha})"
     }
 
-    fun setMargin(margin: Dimension) {
+    fun setMargin(margin: IndependentDimension) {
         marginTop = margin
         marginStart = margin
         marginEnd = margin
         marginBottom = margin
     }
 
-    var marginTop: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+    var marginTop: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
         element.style.marginTop = "${newValue.pixels}px"
     }
 
-    var marginStart: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+    var marginStart: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
         element.style.marginLeft = "${newValue.pixels}px"
     }
 
-    var marginEnd: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+    var marginEnd: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
         element.style.marginRight = "${newValue.pixels}px"
     }
 
-    var marginBottom: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+    var marginBottom: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
         element.style.marginBottom = "${newValue.pixels}px"
     }
 
-    fun setPadding(padding: Dimension) {
+    fun setPadding(padding: IndependentDimension) {
         paddingTop = padding
         paddingStart = padding
         paddingEnd = padding
         paddingBottom = padding
     }
 
-    var paddingTop: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+    var paddingTop: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
         element.style.paddingTop = "${newValue.pixels}px"
     }
 
-    var paddingStart: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+    var paddingStart: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
         element.style.paddingLeft = "${newValue.pixels}px"
     }
 
-    var paddingEnd: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+    var paddingEnd: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
         element.style.paddingRight = "${newValue.pixels}px"
     }
 
-    var paddingBottom: Dimension by observable(Point() as Dimension) { _, _, newValue ->
+    var paddingBottom: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
         element.style.paddingBottom = "${newValue.pixels}px"
     }
 

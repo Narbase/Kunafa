@@ -14,6 +14,14 @@ abstract class Dimension {
     open var isCalculated = true
 }
 
+operator fun <D : IndependentDimension> D.minus(dimension: IndependentDimension): Pixel {
+    return (this.pixels - dimension.pixels).px
+}
+
+operator fun <D : IndependentDimension> D.plus(dimension: IndependentDimension): Pixel {
+    return (this.pixels + dimension.pixels).px
+}
+
 abstract class DependentDimension : Dimension() {
     var type: Type? = null
     abstract val dependency: Dependency
