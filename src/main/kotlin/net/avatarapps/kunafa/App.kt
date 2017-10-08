@@ -1,12 +1,9 @@
 package net.avatarapps.kunafa
 
-import net.avatarapps.kunafa.core.components.horizontalLayout
-import net.avatarapps.kunafa.core.components.page
-import net.avatarapps.kunafa.core.components.verticalLayout
-import net.avatarapps.kunafa.core.components.view
-import net.avatarapps.kunafa.core.dimensions.matchParent
-import net.avatarapps.kunafa.core.dimensions.px
-import net.avatarapps.kunafa.core.dimensions.wrapContent
+import net.avatarapps.kunafa.core.components.*
+import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
+import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
+import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
 
 fun main(args: Array<String>) {
@@ -24,6 +21,15 @@ fun main(args: Array<String>) {
                 height = matchParent
                 setPadding(20.px)
                 isScrollableVertically = true
+                textView {
+                    id = "HelloWorld"
+                    text = "Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world "
+                    width = 120.px
+                    height = wrapContent
+                    paddingStart = 10.px
+                    paddingEnd = 10.px
+                }
+
                 val redView = view {
                     id = "redView"
                     width = 120.px
@@ -49,7 +55,7 @@ fun main(args: Array<String>) {
                 id = "Vertical layout"
                 background = Color.rgb(220, 220, 220)
                 width = 800.px
-                height = 600.px
+                height = matchParent
                 setPadding(20.px)
                 marginStart = 30.px
                 isScrollableVertically = true

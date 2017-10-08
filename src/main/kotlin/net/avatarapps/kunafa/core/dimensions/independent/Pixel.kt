@@ -1,4 +1,6 @@
-package net.avatarapps.kunafa.core.dimensions
+package net.avatarapps.kunafa.core.dimensions.independent
+
+import net.avatarapps.kunafa.core.dimensions.IndependentDimension
 
 /**
  * AVATAR APPS CONFIDENTIAL

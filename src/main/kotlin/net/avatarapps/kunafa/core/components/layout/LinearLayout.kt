@@ -4,8 +4,8 @@ import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.horizontal
 import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.vertical
 import net.avatarapps.kunafa.core.dimensions.IndependentDimension
+import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.dimensions.plus
-import net.avatarapps.kunafa.core.dimensions.px
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -52,7 +52,7 @@ class LinearLayout(
 
     override val wrappedContentHeight: IndependentDimension
         get() {
-            return when (orientation){
+            return when (orientation) {
                 horizontal -> {
                     var pixels = 0.px
                     children.forEach {
@@ -64,7 +64,6 @@ class LinearLayout(
                     pixels += paddingTop + paddingBottom
                     pixels
                 }
-
                 vertical -> {
                     var pixels = 0.px
                     children.forEach {

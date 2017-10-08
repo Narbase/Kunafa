@@ -1,8 +1,10 @@
 package net.avatarapps.kunafa.core.components.layout
 
 import net.avatarapps.kunafa.core.components.View
-import net.avatarapps.kunafa.core.dimensions.*
-import net.avatarapps.kunafa.core.dimensions.DependentDimension.Dependency
+import net.avatarapps.kunafa.core.dimensions.DependentDimension
+import net.avatarapps.kunafa.core.dimensions.Dimension
+import net.avatarapps.kunafa.core.dimensions.DimensionNotCalculatedException
+import net.avatarapps.kunafa.core.dimensions.independent.Point
 
 
 /**
@@ -31,9 +33,6 @@ abstract class Container(parent: Container?) : View(parent) {
             (value as? DependentDimension)?.type = DependentDimension.Type.height
         }
 
-    abstract val wrappedContentWidth: IndependentDimension
-
-    abstract val wrappedContentHeight: IndependentDimension
 
     open fun add(child: View) {
         addToElement(child)
@@ -45,31 +44,12 @@ abstract class Container(parent: Container?) : View(parent) {
         element.append(child.element)
     }
 
-    fun <C : Container> C.visitWithChildren(setupAndAddChildren: C.() -> Unit): C {
-        println("1. Adding children")
-        this.setupAndAddChildren()
-        println("2. Adding to parent")
-        this.addToParent()
-        println("3. Calculating dimensions")
-        when {
-            this.width is IndependentDimension -> this.width.isCalculated = true
-            this.width is DependentDimension -> when {
-                (this.width as DependentDimension).dependency == Dependency.children -> calculateCdWidth()
-                (this.width as DependentDimension).dependency == Dependency.parent
-                        && this.parent?.width?.isCalculated ?: false -> calculatePdWidth()
-            }
-        }
-        if (width.isCalculated) updateChildrenWidths()
-        if (height.isCalculated) updateChildrenHeights()
-        return this
-    }
-
     override fun render() {
         super.render()
         children.forEach { it.render() }
     }
 
-    private fun updateChildrenWidths() {
+    fun updateChildrenWidths() {
         if (!width.isCalculated)
             throw DimensionNotCalculatedException("$id.width")
 
@@ -78,7 +58,7 @@ abstract class Container(parent: Container?) : View(parent) {
                 .forEach { it.onParentWidthUpdated() }
     }
 
-    private fun updateChildrenHeights() {
+    fun updateChildrenHeights() {
         if (!height.isCalculated)
             throw DimensionNotCalculatedException("$id.heights")
 
@@ -88,37 +68,14 @@ abstract class Container(parent: Container?) : View(parent) {
 
     }
 
-    override fun onParentWidthUpdated(){
+    override fun onParentWidthUpdated() {
         super.onParentWidthUpdated()
         updateChildrenWidths()
     }
 
-    override fun onParentHeightUpdated(){
+    override fun onParentHeightUpdated() {
         super.onParentHeightUpdated()
         updateChildrenHeights()
     }
-
-
-    private fun calculateCdWidth() {
-        if ((width as? DependentDimension)?.dependency == Dependency.children){
-            (width as? DependentDimension)?.calculate()
-        }
-
-        if ((height as? DependentDimension)?.dependency == Dependency.children){
-            (height as? DependentDimension)?.calculate()
-        }
-    }
-
-
-    private fun calculatePdWidth() {
-        if ((width as? DependentDimension)?.dependency == Dependency.parent){
-            (width as? DependentDimension)?.calculate()
-        }
-
-        if ((height as? DependentDimension)?.dependency == Dependency.parent){
-            (height as? DependentDimension)?.calculate()
-        }
-    }
-
 
 }

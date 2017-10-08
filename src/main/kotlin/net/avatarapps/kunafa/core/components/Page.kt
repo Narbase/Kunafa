@@ -3,7 +3,7 @@ package net.avatarapps.kunafa.core.components
 import net.avatarapps.kunafa.core.components.layout.Container
 import net.avatarapps.kunafa.core.dimensions.Dimension
 import net.avatarapps.kunafa.core.dimensions.IndependentDimension
-import net.avatarapps.kunafa.core.dimensions.px
+import net.avatarapps.kunafa.core.dimensions.independent.px
 import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.dom.clear

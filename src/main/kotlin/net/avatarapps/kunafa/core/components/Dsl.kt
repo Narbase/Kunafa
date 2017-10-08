@@ -1,6 +1,6 @@
 package net.avatarapps.kunafa.core.components
 
-import net.avatarapps.kunafa.core.components.Page.visitWithChildren
+import net.avatarapps.kunafa.core.components.Page.visit
 import net.avatarapps.kunafa.core.components.layout.Container
 import net.avatarapps.kunafa.core.components.layout.LinearLayout
 
@@ -15,14 +15,15 @@ import net.avatarapps.kunafa.core.components.layout.LinearLayout
 
 fun page(setupAndAddChildren: Container.() -> Unit = {}){
     Page.prepare()
-    Page.visitWithChildren(setupAndAddChildren)
+    Page.visit(setupAndAddChildren)
     Page.render()
 }
 
-fun Container.verticalLayout(block: Container.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.vertical).visitWithChildren(block)
-fun Container.horizontalLayout(block: Container.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.horizontal).visitWithChildren(block)
+fun Container.verticalLayout(block: Container.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.vertical).visit(block)
+fun Container.horizontalLayout(block: Container.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.horizontal).visit(block)
 
 fun Container.view(block: View.() -> Unit): View = View(this).visit(block)
+fun Container.textView(block: TextView.() -> Unit): TextView = TextView(this).visit(block)
 
 
 

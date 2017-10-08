@@ -1,6 +1,7 @@
-package net.avatarapps.kunafa.core.dimensions
+package net.avatarapps.kunafa.core.dimensions.dependent
 
-import net.avatarapps.kunafa.core.components.layout.Container
+import net.avatarapps.kunafa.core.components.View
+import net.avatarapps.kunafa.core.dimensions.DependentDimension
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -10,12 +11,12 @@ import net.avatarapps.kunafa.core.components.layout.Container
  * Created by islam
  * On: 10/1/17.
  */
-class WrapContent internal constructor(val container: Container) : DependentDimension() {
+class WrapContent internal constructor(val view: View) : DependentDimension() {
     override val dependency = Dependency.children
     override fun calculate() {
         calculatedDimension = when (type) {
-            DependentDimension.Type.width -> container.wrappedContentWidth
-            DependentDimension.Type.height -> container.wrappedContentHeight
+            Type.width -> view.wrappedContentWidth
+            Type.height -> view.wrappedContentHeight
             null -> throw CalculatedDimensionTypeNotDefinedError()
         }
         isCalculated = true
@@ -25,7 +26,7 @@ class WrapContent internal constructor(val container: Container) : DependentDime
 
 class CalculatedDimensionTypeNotDefinedError : Exception()
 
-val Container.wrapContent: WrapContent
+val View.wrapContent: WrapContent
     get() {
         return WrapContent(this)
     }

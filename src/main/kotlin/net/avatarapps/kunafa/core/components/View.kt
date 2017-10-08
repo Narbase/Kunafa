@@ -2,6 +2,9 @@ package net.avatarapps.kunafa.core.components
 
 import net.avatarapps.kunafa.core.components.layout.Container
 import net.avatarapps.kunafa.core.dimensions.*
+import net.avatarapps.kunafa.core.dimensions.independent.Pixel
+import net.avatarapps.kunafa.core.dimensions.independent.Point
+import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLDivElement
 import kotlin.browser.document
@@ -16,7 +19,7 @@ import kotlin.properties.Delegates.observable
  * Created by islam
  * On: 9/30/17.
  */
-open class View(var parent: Container?) {
+open class View(var parent: Container? = null) {
     var id: String? = null
     open val element = document.createElement("div") as HTMLDivElement
 
@@ -112,6 +115,13 @@ open class View(var parent: Container?) {
             return null
         }
 
+
+    open val wrappedContentWidth: IndependentDimension
+        get() = throw WrapContentNotSupportedException("WrapContent not supported in View")
+
+    open val wrappedContentHeight: IndependentDimension
+        get() = throw WrapContentNotSupportedException("WrapContent not supported in View")
+
     var background: Color by observable(Color()) { _, _, _ ->
         element.style.backgroundColor = "rgba(${background.red},${background.green},${background.blue},${background.alpha})"
     }
@@ -177,12 +187,66 @@ open class View(var parent: Container?) {
     }
 
 
-    fun visit(block: View.() -> Unit): View {
-        this.block()
-        addToParent()
-        println("Adding $id")
+    fun <V : View> V.visit(setup: V.() -> Unit): V {
+        this.setup()
+        this.addToParent()
+        (this.width as? DependentDimension)?.let {
+            when (it.dependency) {
+                DependentDimension.Dependency.children ->
+                    calculateWidthWithChildrenDependency()
+
+                DependentDimension.Dependency.parent ->
+                    if (this.parent?.width?.isCalculated ?: false)
+                        calculateWidthWithParentDependency()
+
+            }
+        }
+
+        (this.height as? DependentDimension)?.let {
+            when (it.dependency) {
+                DependentDimension.Dependency.children ->
+                    calculateHeightWithChildrenDependency()
+
+                DependentDimension.Dependency.parent ->
+                    if (this.parent?.height?.isCalculated ?: false)
+                        calculateHeightWithParentDependency()
+            }
+        }
+        (this as? Container)?.let {
+            if (width.isCalculated) it.updateChildrenWidths()
+            if (height.isCalculated) it.updateChildrenHeights()
+        }
         return this
     }
+
+    open protected fun calculateWidthWithChildrenDependency() {
+        (width as? DependentDimension)?.let {
+            if (it.dependency == DependentDimension.Dependency.children)
+                it.calculate()
+        }
+    }
+
+    open protected fun calculateHeightWithChildrenDependency() {
+        (height as? DependentDimension)?.let {
+            if (it.dependency == DependentDimension.Dependency.children)
+                it.calculate()
+        }
+    }
+
+    open protected fun calculateWidthWithParentDependency() {
+        (width as? DependentDimension)?.let {
+            if (it.dependency == DependentDimension.Dependency.parent)
+                it.calculate()
+        }
+    }
+
+    open protected fun calculateHeightWithParentDependency() {
+        (height as? DependentDimension)?.let {
+            if (it.dependency == DependentDimension.Dependency.parent)
+                it.calculate()
+        }
+    }
+
 
     open fun render() {
         println("Rendering: $id")
@@ -193,7 +257,6 @@ open class View(var parent: Container?) {
         if ((width as? DependentDimension)?.dependency == DependentDimension.Dependency.parent) {
             (width as? DependentDimension)?.calculate()
         }
-
     }
 
     open fun onParentHeightUpdated() {
@@ -207,3 +270,9 @@ open class View(var parent: Container?) {
 
 
 }
+
+class DimensionNotAvailableOnViewException : Exception() {
+
+}
+
+class WrapContentNotSupportedException(message: String) : Exception(message)

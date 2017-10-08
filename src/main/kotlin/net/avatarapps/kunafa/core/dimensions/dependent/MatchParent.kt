@@ -1,6 +1,12 @@
-package net.avatarapps.kunafa.core.dimensions
+package net.avatarapps.kunafa.core.dimensions.dependent
 
 import net.avatarapps.kunafa.core.components.View
+import net.avatarapps.kunafa.core.dimensions.DependentDimension
+import net.avatarapps.kunafa.core.dimensions.DependentDimension.Dependency.parent
+import net.avatarapps.kunafa.core.dimensions.DependentDimension.Type.height
+import net.avatarapps.kunafa.core.dimensions.DependentDimension.Type.width
+import net.avatarapps.kunafa.core.dimensions.DimensionNotCalculatedException
+import net.avatarapps.kunafa.core.dimensions.IndependentDimension
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -12,11 +18,11 @@ import net.avatarapps.kunafa.core.components.View
  */
 
 class MatchParent internal constructor(val view: View) : DependentDimension() {
-    override val dependency = Dependency.parent
+    override val dependency = parent
     override fun calculate() {
         val parentDimension = when (type) {
-            DependentDimension.Type.width -> getParentContentWidth()
-            DependentDimension.Type.height -> getParentContentHeight()
+            width -> getParentContentWidth()
+            height -> getParentContentHeight()
             null -> throw DimensionNotCalculatedException("${view.id}.height")
         }
         calculatedDimension = parentDimension

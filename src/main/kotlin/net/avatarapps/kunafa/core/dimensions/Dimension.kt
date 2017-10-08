@@ -1,5 +1,8 @@
 package net.avatarapps.kunafa.core.dimensions
 
+import net.avatarapps.kunafa.core.dimensions.independent.Pixel
+import net.avatarapps.kunafa.core.dimensions.independent.px
+
 /**
  * AVATAR APPS CONFIDENTIAL
  * ______________________________
