@@ -53,6 +53,7 @@ open class View(var parent: Container? = null) {
         set(value) {
             field = value
             (value as? DependentDimension)?.type = Type.width
+
         }
 
     open var height: Dimension = Point()
@@ -230,6 +231,8 @@ open class View(var parent: Container? = null) {
             if (it.dependency == children)
                 it.calculate()
         }
+        if (width.isCalculated)
+            updateElementWidth()
     }
 
     open protected fun calculateHeightWithChildrenDependency() {
@@ -237,6 +240,8 @@ open class View(var parent: Container? = null) {
             if (it.dependency == children)
                 it.calculate()
         }
+        if (height.isCalculated)
+            updateElementHeight()
     }
 
     open protected fun calculateWidthWithParentDependency() {
@@ -244,6 +249,8 @@ open class View(var parent: Container? = null) {
             if (it.dependency == Dependency.parent)
                 it.calculate()
         }
+        if (width.isCalculated)
+            updateElementWidth()
     }
 
     open protected fun calculateHeightWithParentDependency() {
@@ -251,6 +258,8 @@ open class View(var parent: Container? = null) {
             if (it.dependency == Dependency.parent)
                 it.calculate()
         }
+        if (height.isCalculated)
+            updateElementHeight()
     }
 
     open fun render() {
