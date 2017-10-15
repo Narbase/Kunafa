@@ -31,11 +31,14 @@ open class TextView(parent: Container? = null) : View(parent) {
 
     override val wrappedContentHeight: IndependentDimension
         get(){
-//            console.log((span.offsetHeight))
-//            console.log(window.getComputedStyle(span))
             return span.offsetHeight.px
         }
 
     override val wrappedContentWidth: IndependentDimension
         get() = span.offsetWidth.px
+
+    override fun onParentWidthUpdated() {
+        super.onParentWidthUpdated()
+        parent?.onContentHeightUpdated()
+    }
 }

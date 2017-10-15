@@ -203,7 +203,7 @@ open class View(var parent: Container? = null) {
                     calculateWidthWithChildrenDependency()
 
                 Dependency.parent ->
-                    if (this.parent?.width?.isCalculated ?: false)
+                    if (this.parent?.width?.isCalculated == true)
                         calculateWidthWithParentDependency()
 
             }
@@ -215,7 +215,7 @@ open class View(var parent: Container? = null) {
                     calculateHeightWithChildrenDependency()
 
                 Dependency.parent ->
-                    if (this.parent?.height?.isCalculated ?: false)
+                    if (this.parent?.height?.isCalculated == true)
                         calculateHeightWithParentDependency()
             }
         }
@@ -277,7 +277,8 @@ open class View(var parent: Container? = null) {
             (height as? DependentDimension)?.calculate()
     }
 
-    fun addToParent() {
+    private fun addToParent() {
+        print("Adding $id to parent")
         parent?.add(this)
     }
 

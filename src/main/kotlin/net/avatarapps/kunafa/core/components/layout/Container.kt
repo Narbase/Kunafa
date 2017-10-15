@@ -69,6 +69,15 @@ abstract class Container(parent: Container?) : View(parent) {
 
     }
 
+    open fun onContentWidthUpdated(){
+        calculateWidthWithChildrenDependency()
+    }
+
+    open fun onContentHeightUpdated(){
+        calculateHeightWithChildrenDependency()
+
+    }
+
     override fun onParentWidthUpdated() {
         super.onParentWidthUpdated()
         updateChildrenWidths()

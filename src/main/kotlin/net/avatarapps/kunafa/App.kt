@@ -28,7 +28,16 @@ fun main(args: Array<String>) {
                     height = wrapContent
                     paddingStart = 10.px
                     paddingEnd = 10.px
+                    marginBottom = 24.px
                 }
+
+                button {
+                    id = "Button"
+                    width = 200.px
+                    height = 44.px
+                    marginBottom = 16.px
+                }
+
 
                 val redView = view {
                     id = "redView"
