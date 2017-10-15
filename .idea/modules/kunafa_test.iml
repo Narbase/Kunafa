@@ -9,17 +9,16 @@
           <option name="noStdlib" value="true" />
           <option name="metaInfo" value="true" />
           <option name="target" value="v5" />
-          <option name="moduleKind" value="plain" />
           <option name="main" value="call" />
           <option name="languageVersion" value="1.1" />
           <option name="apiVersion" value="1.1" />
+          <option name="pluginOptions">
+            <array />
+          </option>
           <option name="pluginClasspaths">
             <array />
           </option>
           <option name="coroutinesWarn" value="true" />
-          <option name="pluginOptions">
-            <array />
-          </option>
         </compilerArguments>
       </configuration>
     </facet>

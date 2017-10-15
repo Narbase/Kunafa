@@ -16,7 +16,7 @@ import kotlin.browser.window
  * On: 10/9/17.
  */
 open class TextView(parent: Container? = null) : View(parent) {
-    protected val span by lazy {
+    val span by lazy {
         val s = document.createElement("span") as HTMLSpanElement
         element.append(s)
         return@lazy s
@@ -28,16 +28,14 @@ open class TextView(parent: Container? = null) : View(parent) {
             span.innerHTML = value
         }
 
-    override fun render() {
-        super.render()
-    }
 
     override val wrappedContentHeight: IndependentDimension
         get(){
-            println("Computed: ${window.getComputedStyle(span).fontSize}")
-            return span.clientHeight.px
+//            console.log((span.offsetHeight))
+//            console.log(window.getComputedStyle(span))
+            return span.offsetHeight.px
         }
 
     override val wrappedContentWidth: IndependentDimension
-        get() = span.clientWidth.px
+        get() = span.offsetWidth.px
 }

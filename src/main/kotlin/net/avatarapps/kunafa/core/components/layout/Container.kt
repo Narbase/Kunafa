@@ -47,6 +47,7 @@ abstract class Container(parent: Container?) : View(parent) {
     override fun render() {
         super.render()
         children.forEach { it.render() }
+
     }
 
     fun updateChildrenWidths() {
@@ -54,7 +55,7 @@ abstract class Container(parent: Container?) : View(parent) {
             throw DimensionNotCalculatedException("$id.width")
 
         children
-                .filter { !it.width.isCalculated }
+//                .filter { !it.width.isCalculated }
                 .forEach { it.onParentWidthUpdated() }
     }
 
@@ -63,7 +64,7 @@ abstract class Container(parent: Container?) : View(parent) {
             throw DimensionNotCalculatedException("$id.heights")
 
         children
-                .filter { !it.height.isCalculated }
+//                .filter { !it.height.isCalculated }
                 .forEach { it.onParentHeightUpdated() }
 
     }
