@@ -16,7 +16,7 @@ import net.avatarapps.kunafa.core.components.layout.LinearLayout
 fun page(setupAndAddChildren: Container.() -> Unit = {}){
     Page.prepare()
     Page.visit(setupAndAddChildren)
-    Page.render()
+//    Page.render()
 }
 
 fun Container.verticalLayout(block: Container.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(block)

@@ -18,22 +18,6 @@ import net.avatarapps.kunafa.core.dimensions.independent.Point
 abstract class Container(parent: Container?) : View(parent) {
     val children: ArrayList<View> = arrayListOf()
 
-    override var width: Dimension = Point()
-        set(value) {
-            field = value
-            if (value is DependentDimension) {
-                value.type = DependentDimension.Type.width
-            }
-
-        }
-
-    override var height: Dimension = Point()
-        set(value) {
-            field = value
-            (value as? DependentDimension)?.type = DependentDimension.Type.height
-        }
-
-
     open fun add(child: View) {
         addToElement(child)
         child.parent = this
@@ -51,8 +35,8 @@ abstract class Container(parent: Container?) : View(parent) {
     }
 
     fun updateChildrenWidths() {
-        if (!width.isCalculated)
-            throw DimensionNotCalculatedException("$id.width")
+//        if (!width.isCalculated)
+//            throw DimensionNotCalculatedException("$id.width")
 
         children
 //                .filter { !it.width.isCalculated }
@@ -60,8 +44,8 @@ abstract class Container(parent: Container?) : View(parent) {
     }
 
     fun updateChildrenHeights() {
-        if (!height.isCalculated)
-            throw DimensionNotCalculatedException("$id.heights")
+//        if (!height.isCalculated)
+//            throw DimensionNotCalculatedException("$id.heights")
 
         children
 //                .filter { !it.height.isCalculated }

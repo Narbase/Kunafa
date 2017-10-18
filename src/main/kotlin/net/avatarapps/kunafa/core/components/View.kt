@@ -32,17 +32,16 @@ open class View(var parent: Container? = null) {
     }
 
      open fun updateElementWidth() {
-        if (contentWidth == null)
-            throw DimensionNotCalculatedException("$id.width")
-
+//        if (contentWidth == null)
+//            throw DimensionNotCalculatedException("$id.width")
         contentWidth?.let {
             element.style.width = "${it.pixels}px"
         }
     }
 
      open fun updateElementHeight() {
-        if (contentHeight == null)
-            throw DimensionNotCalculatedException("$id.height")
+//        if (contentHeight == null)
+//            throw DimensionNotCalculatedException("$id.height")
 
         contentHeight?.let {
             element.style.height = "${it.pixels}px"
@@ -52,42 +51,57 @@ open class View(var parent: Container? = null) {
     open var width: Dimension = Point()
         set(value) {
             field = value
-            (value as? DependentDimension)?.type = Type.width
-
+            if (value is DependentDimension){
+                value.type = Type.width
+                value.setListeners()
+                value.onChange = {
+                    updateElementWidth()
+                }
+            }
+            updateElementWidth()
         }
 
     open var height: Dimension = Point()
         set(value) {
             field = value
-            (value as? DependentDimension)?.type = Type.height
+            if (value is DependentDimension){
+                value.type = Type.height
+                value.setListeners()
+                value.onChange = {
+                    updateElementHeight()
+                }
+            }
+            updateElementHeight()
         }
 
     val contentWidth: Pixel?
         get() {
-            (width as? IndependentDimension)?.let {
-                return it - (paddingStart + paddingEnd)
-            }
-            (width as? DependentDimension)?.let {
-                if (it.isCalculated)
-                    it.calculatedDimension?.let {
-                        return it - (paddingStart + paddingEnd)
-                    }
-            }
-            return null
+            return Pixel((width.pixels - (paddingStart.pixels + paddingEnd.pixels)).takeIf { it > 0 }?:0)
+//            (width as? IndependentDimension)?.let {
+//                return it - (paddingStart + paddingEnd)
+//            }
+//            (width as? DependentDimension)?.let {
+//                if (it.isCalculated)
+//                    it.calculatedDimension?.let {
+//                        return it - (paddingStart + paddingEnd)
+//                    }
+//            }
+//            return null
         }
 
     val contentHeight: Pixel?
         get() {
-            (height as? IndependentDimension)?.let {
-                return it - (paddingTop + paddingBottom)
-            }
-            (height as? DependentDimension)?.let {
-                if (it.isCalculated)
-                    it.calculatedDimension?.let {
-                        return it - (paddingTop + paddingBottom)
-                    }
-            }
-            return null
+            return Pixel((height.pixels - (paddingTop.pixels + paddingBottom.pixels)).takeIf { it > 0 }?:0)
+//            (height as? IndependentDimension)?.let {
+//                return it - (paddingTop + paddingBottom)
+//            }
+//            (height as? DependentDimension)?.let {
+//                if (it.isCalculated)
+//                    it.calculatedDimension?.let {
+//                        return it - (paddingTop + paddingBottom)
+//                    }
+//            }
+//            return null
         }
 
     val extendedWidth: Pixel?
@@ -95,12 +109,12 @@ open class View(var parent: Container? = null) {
             (width as? IndependentDimension)?.let {
                 return it + (marginStart + marginEnd)
             }
-            (width as? DependentDimension)?.let {
-                if (it.isCalculated)
-                    it.calculatedDimension?.let {
-                        return it + (marginStart + marginEnd)
-                    }
-            }
+//            (width as? DependentDimension)?.let {
+//                if (it.isCalculated)
+//                    it.calculatedDimension?.let {
+//                        return it + (marginStart + marginEnd)
+//                    }
+//            }
             return null
         }
 
@@ -109,12 +123,12 @@ open class View(var parent: Container? = null) {
             (height as? IndependentDimension)?.let {
                 return it + (marginTop + marginBottom)
             }
-            (height as? DependentDimension)?.let {
-                if (it.isCalculated)
-                    it.calculatedDimension?.let {
-                        return it + (marginTop + marginBottom)
-                    }
-            }
+//            (height as? DependentDimension)?.let {
+//                if (it.isCalculated)
+//                    it.calculatedDimension?.let {
+//                        return it + (marginTop + marginBottom)
+//                    }
+//            }
             return null
         }
 
@@ -184,45 +198,41 @@ open class View(var parent: Container? = null) {
     init {
         setMargin(0.px)
         setPadding(0.px)
-        isScrollableVertically = false
-        isScrollableHorizontally = false
 
         element.onresize = {
-            updateElementDimensions()
-            onParentWidthUpdated()
-            onParentHeightUpdated()
+            onResizedListeners.forEach { it.second() }
         }
     }
 
     fun <V : View> V.visit(setup: V.() -> Unit): V {
-        this.setup()
         this.addToParent()
-        (this.width as? DependentDimension)?.let {
-            when (it.dependency) {
-                children ->
-                    calculateWidthWithChildrenDependency()
+        this.setup()
 
-                Dependency.parent ->
-                    if (this.parent?.width?.isCalculated == true)
-                        calculateWidthWithParentDependency()
-
-            }
-        }
-
-        (this.height as? DependentDimension)?.let {
-            when (it.dependency) {
-                children ->
-                    calculateHeightWithChildrenDependency()
-
-                Dependency.parent ->
-                    if (this.parent?.height?.isCalculated == true)
-                        calculateHeightWithParentDependency()
-            }
-        }
-        (this as? Container)?.let {
-            if (width.isCalculated) it.updateChildrenWidths()
-            if (height.isCalculated) it.updateChildrenHeights()
-        }
+//        (this.width as? DependentDimension)?.let {
+//            when (it.dependency) {
+//                children ->
+//                    calculateWidthWithChildrenDependency()
+//
+//                Dependency.parent ->
+//                    if (this.parent?.width?.isCalculated == true)
+//                        calculateWidthWithParentDependency()
+//            }
+//        }
+//
+//        (this.height as? DependentDimension)?.let {
+//            when (it.dependency) {
+//                children ->
+//                    calculateHeightWithChildrenDependency()
+//
+//                Dependency.parent ->
+//                    if (this.parent?.height?.isCalculated == true)
+//                        calculateHeightWithParentDependency()
+//            }
+//        }
+//        (this as? Container)?.let {
+//            if (width.isCalculated) it.updateChildrenWidths()
+//            if (height.isCalculated) it.updateChildrenHeights()
+//        }
         return this
     }
 
@@ -231,8 +241,8 @@ open class View(var parent: Container? = null) {
             if (it.dependency == children)
                 it.calculate()
         }
-        if (width.isCalculated)
-            updateElementWidth()
+//        if (width.isCalculated)
+//            updateElementWidth()
     }
 
     open protected fun calculateHeightWithChildrenDependency() {
@@ -240,8 +250,8 @@ open class View(var parent: Container? = null) {
             if (it.dependency == children)
                 it.calculate()
         }
-        if (height.isCalculated)
-            updateElementHeight()
+//        if (height.isCalculated)
+//            updateElementHeight()
     }
 
     open protected fun calculateWidthWithParentDependency() {
@@ -249,8 +259,8 @@ open class View(var parent: Container? = null) {
             if (it.dependency == Dependency.parent)
                 it.calculate()
         }
-        if (width.isCalculated)
-            updateElementWidth()
+//        if (width.isCalculated)
+//            updateElementWidth()
     }
 
     open protected fun calculateHeightWithParentDependency() {
@@ -258,8 +268,8 @@ open class View(var parent: Container? = null) {
             if (it.dependency == Dependency.parent)
                 it.calculate()
         }
-        if (height.isCalculated)
-            updateElementHeight()
+//        if (height.isCalculated)
+//            updateElementHeight()
     }
 
     open fun render() {
@@ -277,12 +287,42 @@ open class View(var parent: Container? = null) {
             (height as? DependentDimension)?.calculate()
     }
 
-    private fun addToParent() {
-        print("Adding $id to parent")
-        parent?.add(this)
+    internal open fun addToParent() {
+        val validParent = parent ?: throw ParentNotFoundException()
+        validParent.add(this)
+        validParent.addOnResizedListener(this, this::onParentResized)
+        addOnResizedListener(validParent, validParent::onChildrenResized)
     }
 
+
+    protected val onResizedListeners: ArrayList<Pair<View, () -> Unit>> = arrayListOf()
+    protected val onChildrenResizedListeners: ArrayList<Pair<View, () -> Unit>> = arrayListOf()
+    protected val onParentResizedListeners: ArrayList<Pair<View, () -> Unit>> = arrayListOf()
+
+    fun addOnResizedListener(listener: View, onResizeListener: () -> Unit){
+        onResizedListeners.add(Pair(listener, onResizeListener))
+    }
+
+    fun addOnParentResizedListener(listener: View, onResizeListener: () -> Unit){
+        onParentResizedListeners.add(Pair(listener, onResizeListener))
+    }
+
+    fun addOnChildrenResizedListener(listener: View, onResizeListener: () -> Unit){
+        onChildrenResizedListeners.add(Pair(listener, onResizeListener))
+    }
+
+    private fun onParentResized(){
+        onParentResizedListeners.forEach { it.second()}
+    }
+
+    internal fun onChildrenResized(){
+        onChildrenResizedListeners.forEach { it.second() }
+    }
+
+
 }
+
+class ParentNotFoundException : Exception()
 
 class DimensionNotAvailableOnViewException : Exception()
 

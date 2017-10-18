@@ -13,14 +13,18 @@ import net.avatarapps.kunafa.core.dimensions.DependentDimension
  * On: 10/1/17.
  */
 open class WrapContent internal constructor(val view: View) : DependentDimension() {
+    override fun setListeners() {
+
+    }
+
     override val dependency = Dependency.children
     override fun calculate() {
-        calculatedDimension = when (type) {
-            Type.width -> view.wrappedContentWidth
-            Type.height -> view.wrappedContentHeight
-            null -> throw CalculatedDimensionTypeNotDefinedError()
-        }
-        isCalculated = true
+//        calculatedDimension = when (type) {
+//            Type.width -> view.wrappedContentWidth
+//            Type.height -> view.wrappedContentHeight
+//            null -> throw CalculatedDimensionTypeNotDefinedError()
+//        }
+//        isCalculated = true
     }
 }
 
