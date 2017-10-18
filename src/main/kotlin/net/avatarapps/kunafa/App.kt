@@ -32,12 +32,12 @@ fun main(args: Array<String>) {
                     marginBottom = 24.px
                 }
 
-//                button {
-//                    id = "Button"
-//                    width = 200.px
-//                    height = 44.px
-//                    marginBottom = 16.px
-//                }
+                button {
+                    id = "Button"
+                    width = 200.px
+                    height = 44.px
+                    marginBottom = 16.px
+                }
 
                 val redView = view {
                     id = "redView"
@@ -47,47 +47,47 @@ fun main(args: Array<String>) {
                 }
                 view {
                     id = "anotherView"
-                    width = 300.px
+                    width = 130.px
                     height = 200.px
                     background = Color.blue
                 }
 
                 view {
                     id = "ThirdView"
-                    width = 130.px
+                    width = matchParent
                     height = 400.px
                     background = Color.rgb(255, 0, 255)
                 }
             }
 
-//            verticalLayout {
-//                id = "Vertical layout"
-//                background = Color.rgb(220, 220, 220)
-//                width = 800.px
-//                height = matchParent
-//                setPadding(20.px)
-//                marginStart = 30.px
-//                isScrollableVertically = true
-//
-//                view {
-//                    id = "View1"
-//                    width = matchParent
-//                    height = 500.px
-//                    background = Color.rgb(0, 255, 0)
-//                }
-//                view {
-//                    id = "View2"
-//                    width = 500.px
-//                    height = 500.px
-//                    background = Color.rgb(0, 0, 255)
-//                }
-//                view {
-//                    id = "View3"
-//                    width = 500.px
-//                    height = 500.px
-//                    background = Color.rgb(255, 0, 0)
-//                }
-//            }
+            verticalLayout {
+                id = "Vertical layout"
+                background = Color.rgb(220, 220, 220)
+                width = 800.px
+                height = matchParent
+                setPadding(20.px)
+                marginStart = 30.px
+                isScrollableVertically = true
+
+                view {
+                    id = "View1"
+                    width = matchParent
+                    height = 500.px
+                    background = Color.rgb(0, 255, 0)
+                }
+                view {
+                    id = "View2"
+                    width = 500.px
+                    height = 500.px
+                    background = Color.rgb(0, 0, 255)
+                }
+                view {
+                    id = "View3"
+                    width = 500.px
+                    height = 500.px
+                    background = Color.rgb(255, 0, 0)
+                }
+            }
         }
     }
 }

@@ -35,7 +35,8 @@ open class View(var parent: Container? = null) {
 //        if (contentWidth == null)
 //            throw DimensionNotCalculatedException("$id.width")
         contentWidth?.let {
-            println("${element.style.width} and after ${it.pixels}")
+            println("${element.offsetWidth} and after ${it.pixels}")
+            if (element.offsetWidth == it.pixels) return
             element.style.width = "${it.pixels}px"
             onResizedListeners.forEach { it.second() }
         }
@@ -46,6 +47,7 @@ open class View(var parent: Container? = null) {
 //            throw DimensionNotCalculatedException("$id.height")
 
         contentHeight?.let {
+            if (element.offsetHeight == it.pixels) return
             element.style.height = "${it.pixels}px"
             onResizedListeners.forEach { it.second() }
         }
