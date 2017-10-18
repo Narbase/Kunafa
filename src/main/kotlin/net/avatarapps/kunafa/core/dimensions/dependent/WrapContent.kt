@@ -3,6 +3,7 @@ package net.avatarapps.kunafa.core.dimensions.dependent
 import net.avatarapps.kunafa.core.components.TextView
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.dimensions.DependentDimension
+import net.avatarapps.kunafa.core.dimensions.DimensionNotCalculatedException
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -14,6 +15,22 @@ import net.avatarapps.kunafa.core.dimensions.DependentDimension
  */
 open class WrapContent internal constructor(val view: View) : DependentDimension() {
     override fun setListeners() {
+        when (type) {
+            Type.width -> {
+                view.addOnChildrenResizedListener(view){
+                    println("WrapContent Resized")
+                    pixels = view.wrappedContentWidth.pixels
+                }
+                pixels = view.wrappedContentWidth.pixels
+            }
+            Type.height -> {
+                view.addOnChildrenResizedListener(view){
+                    pixels = view.wrappedContentHeight.pixels
+                }
+                pixels = view.wrappedContentHeight.pixels
+            }
+            null -> throw DimensionNotCalculatedException("${view.id}.type")
+        }
 
     }
 
@@ -30,6 +47,23 @@ open class WrapContent internal constructor(val view: View) : DependentDimension
 
 open class ParentDependentWrapContent(view: View) : WrapContent(view) {
     override val dependency = Dependency.parent
+    override fun setListeners() {
+        when (type) {
+            Type.width -> {
+                view.addOnChildrenResizedListener(view){
+                    pixels = view.wrappedContentWidth.pixels
+                }
+                pixels = view.wrappedContentWidth.pixels
+            }
+            Type.height -> {
+                view.addOnChildrenResizedListener(view){
+                    pixels = view.wrappedContentHeight.pixels
+                }
+                pixels = view.wrappedContentHeight.pixels
+            }
+            null -> throw DimensionNotCalculatedException("${view.id}.type")
+        }
+    }
 }
 
 

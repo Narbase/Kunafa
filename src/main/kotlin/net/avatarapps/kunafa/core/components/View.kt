@@ -35,7 +35,9 @@ open class View(var parent: Container? = null) {
 //        if (contentWidth == null)
 //            throw DimensionNotCalculatedException("$id.width")
         contentWidth?.let {
+            println("${element.style.width} and after ${it.pixels}")
             element.style.width = "${it.pixels}px"
+            onResizedListeners.forEach { it.second() }
         }
     }
 
@@ -45,6 +47,7 @@ open class View(var parent: Container? = null) {
 
         contentHeight?.let {
             element.style.height = "${it.pixels}px"
+            onResizedListeners.forEach { it.second() }
         }
     }
 
@@ -199,9 +202,6 @@ open class View(var parent: Container? = null) {
         setMargin(0.px)
         setPadding(0.px)
 
-        element.onresize = {
-            onResizedListeners.forEach { it.second() }
-        }
     }
 
     fun <V : View> V.visit(setup: V.() -> Unit): V {

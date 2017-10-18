@@ -39,7 +39,9 @@ class LinearLayout(
                 Vertical -> {
                     var pixels = 0.px
                     children.forEach {
+                        println("$id ew: ${it.extendedWidth}")
                         it.extendedWidth?.let {
+
                             if (it.pixels > pixels.pixels)
                                 pixels = it
                         }

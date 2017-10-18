@@ -31,17 +31,17 @@ object Page : Container(null) {
         width = window.innerWidth.px
         height = window.innerHeight.px
         window.onresize = {
-            element.onresize?.let { it1 -> it1(asDynamic()) }
+            onResizedListeners.forEach { it.second() }
         }
         id = "Page"
-        element.id = id?:""
+        element.id = id ?: ""
         document.body?.style?.margin = "0"
         document.body?.style?.padding = "0"
         document.body?.style?.overflowY = "hidden"
         document.body?.style?.overflowX = "hidden"
         document.body?.clear()
 
-        addOnResizedListener(this){
+        addOnResizedListener(this) {
             width = window.innerWidth.px
             height = window.innerHeight.px
         }
