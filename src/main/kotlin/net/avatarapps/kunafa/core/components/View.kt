@@ -32,23 +32,20 @@ open class View(var parent: Container? = null) {
     }
 
      open fun updateElementWidth() {
-//        if (contentWidth == null)
-//            throw DimensionNotCalculatedException("$id.width")
         contentWidth?.let {
-            println("${element.offsetWidth} and after ${it.pixels}")
-            if (element.offsetWidth == it.pixels) return
+            println("Updating dimensions")
+            if (element.style.width == "${it.pixels}px") return
             element.style.width = "${it.pixels}px"
+            println("$id width changed to ${it.pixels}px")
             onResizedListeners.forEach { it.second() }
         }
     }
 
      open fun updateElementHeight() {
-//        if (contentHeight == null)
-//            throw DimensionNotCalculatedException("$id.height")
-
         contentHeight?.let {
-            if (element.offsetHeight == it.pixels) return
+            if (element.style.height == "${it.pixels}px") return
             element.style.height = "${it.pixels}px"
+            println("$id height changed to ${it.pixels}px")
             onResizedListeners.forEach { it.second() }
         }
     }
@@ -60,10 +57,10 @@ open class View(var parent: Container? = null) {
                 value.type = Type.width
                 value.setListeners()
                 value.onChange = {
-                    updateElementWidth()
+                    updateElementDimensions()
                 }
             }
-            updateElementWidth()
+            updateElementDimensions()
         }
 
     open var height: Dimension = Point()
@@ -73,68 +70,30 @@ open class View(var parent: Container? = null) {
                 value.type = Type.height
                 value.setListeners()
                 value.onChange = {
-                    updateElementHeight()
+                    updateElementDimensions()
                 }
             }
-            updateElementHeight()
+            updateElementDimensions()
         }
 
     val contentWidth: Pixel?
         get() {
             return Pixel((width.pixels - (paddingStart.pixels + paddingEnd.pixels)).takeIf { it > 0 }?:0)
-//            (width as? IndependentDimension)?.let {
-//                return it - (paddingStart + paddingEnd)
-//            }
-//            (width as? DependentDimension)?.let {
-//                if (it.isCalculated)
-//                    it.calculatedDimension?.let {
-//                        return it - (paddingStart + paddingEnd)
-//                    }
-//            }
-//            return null
         }
 
     val contentHeight: Pixel?
         get() {
             return Pixel((height.pixels - (paddingTop.pixels + paddingBottom.pixels)).takeIf { it > 0 }?:0)
-//            (height as? IndependentDimension)?.let {
-//                return it - (paddingTop + paddingBottom)
-//            }
-//            (height as? DependentDimension)?.let {
-//                if (it.isCalculated)
-//                    it.calculatedDimension?.let {
-//                        return it - (paddingTop + paddingBottom)
-//                    }
-//            }
-//            return null
         }
 
     val extendedWidth: Pixel?
         get() {
-            (width as? IndependentDimension)?.let {
-                return it + (marginStart + marginEnd)
-            }
-//            (width as? DependentDimension)?.let {
-//                if (it.isCalculated)
-//                    it.calculatedDimension?.let {
-//                        return it + (marginStart + marginEnd)
-//                    }
-//            }
-            return null
+            return Pixel(width.pixels + (marginStart.pixels + marginEnd.pixels))
         }
 
     val extendedHeight: Pixel?
         get() {
-            (height as? IndependentDimension)?.let {
-                return it + (marginTop + marginBottom)
-            }
-//            (height as? DependentDimension)?.let {
-//                if (it.isCalculated)
-//                    it.calculatedDimension?.let {
-//                        return it + (marginTop + marginBottom)
-//                    }
-//            }
-            return null
+            return Pixel(height.pixels + (marginTop.pixels + marginBottom.pixels))
         }
 
     open val wrappedContentWidth: IndependentDimension

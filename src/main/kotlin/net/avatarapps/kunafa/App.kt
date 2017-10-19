@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
                 textView {
                     id = "HelloWorld"
                     text = "Hello world Hello world Hello world\n\n\n Hello world Hello world Hello\n world Hello world Hello world "
-                    width = 120.px
+                    width = matchParent
                     height = wrapContent
                     paddingStart = 10.px
                     paddingEnd = 10.px
@@ -47,26 +47,33 @@ fun main(args: Array<String>) {
                 }
                 view {
                     id = "anotherView"
-                    width = 130.px
+                    width = matchParent
                     height = 200.px
                     background = Color.blue
                 }
 
                 view {
                     id = "ThirdView"
-                    width = matchParent
+                    width = 130.px
                     height = 400.px
                     background = Color.rgb(255, 0, 255)
+                }
+
+                view {
+                    id = "ThirdView"
+                    width = 270.px
+                    height = 400.px
+                    background = Color.rgb(255, 255, 255)
                 }
             }
 
             verticalLayout {
                 id = "Vertical layout"
                 background = Color.rgb(220, 220, 220)
-                width = 800.px
-                height = matchParent
                 setPadding(20.px)
                 marginStart = 30.px
+                width = 800.px
+                height = matchParent
                 isScrollableVertically = true
 
                 view {

@@ -50,13 +50,13 @@ open class ParentDependentWrapContent(view: View) : WrapContent(view) {
     override fun setListeners() {
         when (type) {
             Type.width -> {
-                view.addOnChildrenResizedListener(view){
+                view.addOnResizedListener(view){
                     pixels = view.wrappedContentWidth.pixels
                 }
                 pixels = view.wrappedContentWidth.pixels
             }
             Type.height -> {
-                view.addOnChildrenResizedListener(view){
+                view.addOnResizedListener(view){
                     pixels = view.wrappedContentHeight.pixels
                 }
                 pixels = view.wrappedContentHeight.pixels
