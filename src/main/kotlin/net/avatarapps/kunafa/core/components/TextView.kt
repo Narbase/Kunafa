@@ -37,8 +37,4 @@ open class TextView(parent: Container? = null) : View(parent) {
     override val wrappedContentWidth: IndependentDimension
         get() = span.offsetWidth.px
 
-    override fun onParentWidthUpdated() {
-        super.onParentWidthUpdated()
-        parent?.onContentHeightUpdated()
-    }
 }

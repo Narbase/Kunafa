@@ -29,24 +29,12 @@ open class WrapContent internal constructor(val view: View) : DependentDimension
                 }
                 pixels = view.wrappedContentHeight.pixels
             }
-            null -> throw DimensionNotCalculatedException("${view.id}.type")
+            null -> throw CalculatedDimensionTypeNotDefinedError("${view.id}.type")
         }
-
-    }
-
-    override val dependency = Dependency.children
-    override fun calculate() {
-//        calculatedDimension = when (type) {
-//            Type.width -> view.wrappedContentWidth
-//            Type.height -> view.wrappedContentHeight
-//            null -> throw CalculatedDimensionTypeNotDefinedError()
-//        }
-//        isCalculated = true
     }
 }
 
 open class ParentDependentWrapContent(view: View) : WrapContent(view) {
-    override val dependency = Dependency.parent
     override fun setListeners() {
         when (type) {
             Type.width -> {
@@ -61,13 +49,12 @@ open class ParentDependentWrapContent(view: View) : WrapContent(view) {
                 }
                 pixels = view.wrappedContentHeight.pixels
             }
-            null -> throw DimensionNotCalculatedException("${view.id}.type")
+            null -> throw CalculatedDimensionTypeNotDefinedError("${view.id}.type")
         }
     }
 }
 
-
-class CalculatedDimensionTypeNotDefinedError : Exception()
+class CalculatedDimensionTypeNotDefinedError(msg: String) : Exception(msg)
 
 val View.wrapContent: WrapContent
     get() {

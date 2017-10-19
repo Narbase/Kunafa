@@ -14,7 +14,6 @@ import net.avatarapps.kunafa.core.dimensions.independent.px
 
 abstract class Dimension {
     abstract var pixels: Int
-//    open var isCalculated = true
 }
 
 operator fun <D : IndependentDimension> D.minus(dimension: IndependentDimension): Pixel {
@@ -27,18 +26,13 @@ operator fun <D : IndependentDimension> D.plus(dimension: IndependentDimension):
 
 abstract class DependentDimension : Dimension() {
     var type: Type? = null
-    abstract val dependency: Dependency
     abstract fun setListeners()
     var onChange: (() -> Unit)? = null
-//    override var isCalculated = false
-//    var calculatedDimension: IndependentDimension? = null
     override var pixels = 0
         set(value) {
             field = value
             onChange?.invoke()
         }
-
-    abstract fun calculate()
 
     enum class Type {
         width,

@@ -28,48 +28,4 @@ abstract class Container(parent: Container?) : View(parent) {
         element.append(child.element)
     }
 
-    override fun render() {
-        super.render()
-        children.forEach { it.render() }
-
-    }
-
-    fun updateChildrenWidths() {
-//        if (!width.isCalculated)
-//            throw DimensionNotCalculatedException("$id.width")
-
-        children
-//                .filter { !it.width.isCalculated }
-                .forEach { it.onParentWidthUpdated() }
-    }
-
-    fun updateChildrenHeights() {
-//        if (!height.isCalculated)
-//            throw DimensionNotCalculatedException("$id.heights")
-
-        children
-//                .filter { !it.height.isCalculated }
-                .forEach { it.onParentHeightUpdated() }
-
-    }
-
-    open fun onContentWidthUpdated(){
-        calculateWidthWithChildrenDependency()
-    }
-
-    open fun onContentHeightUpdated(){
-        calculateHeightWithChildrenDependency()
-
-    }
-
-    override fun onParentWidthUpdated() {
-        super.onParentWidthUpdated()
-        updateChildrenWidths()
-    }
-
-    override fun onParentHeightUpdated() {
-        super.onParentHeightUpdated()
-        updateChildrenHeights()
-    }
-
 }

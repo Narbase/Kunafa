@@ -39,10 +39,6 @@ class MatchParent internal constructor(val view: View) : DependentDimension() {
             null -> throw DimensionNotCalculatedException("${view.id}.type")
         }
     }
-
-    override val dependency = parent
-    override fun calculate() {
-    }
 }
 
 val View.matchParent: MatchParent

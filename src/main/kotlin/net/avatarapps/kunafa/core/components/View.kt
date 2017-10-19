@@ -168,85 +168,9 @@ open class View(var parent: Container? = null) {
     fun <V : View> V.visit(setup: V.() -> Unit): V {
         this.addToParent()
         this.setup()
-
-//        (this.width as? DependentDimension)?.let {
-//            when (it.dependency) {
-//                children ->
-//                    calculateWidthWithChildrenDependency()
-//
-//                Dependency.parent ->
-//                    if (this.parent?.width?.isCalculated == true)
-//                        calculateWidthWithParentDependency()
-//            }
-//        }
-//
-//        (this.height as? DependentDimension)?.let {
-//            when (it.dependency) {
-//                children ->
-//                    calculateHeightWithChildrenDependency()
-//
-//                Dependency.parent ->
-//                    if (this.parent?.height?.isCalculated == true)
-//                        calculateHeightWithParentDependency()
-//            }
-//        }
-//        (this as? Container)?.let {
-//            if (width.isCalculated) it.updateChildrenWidths()
-//            if (height.isCalculated) it.updateChildrenHeights()
-//        }
         return this
     }
 
-    open protected fun calculateWidthWithChildrenDependency() {
-        (width as? DependentDimension)?.let {
-            if (it.dependency == children)
-                it.calculate()
-        }
-//        if (width.isCalculated)
-//            updateElementWidth()
-    }
-
-    open protected fun calculateHeightWithChildrenDependency() {
-        (height as? DependentDimension)?.let {
-            if (it.dependency == children)
-                it.calculate()
-        }
-//        if (height.isCalculated)
-//            updateElementHeight()
-    }
-
-    open protected fun calculateWidthWithParentDependency() {
-        (width as? DependentDimension)?.let {
-            if (it.dependency == Dependency.parent)
-                it.calculate()
-        }
-//        if (width.isCalculated)
-//            updateElementWidth()
-    }
-
-    open protected fun calculateHeightWithParentDependency() {
-        (height as? DependentDimension)?.let {
-            if (it.dependency == Dependency.parent)
-                it.calculate()
-        }
-//        if (height.isCalculated)
-//            updateElementHeight()
-    }
-
-    open fun render() {
-        updateElementDimensions()
-    }
-
-    open fun onParentWidthUpdated() {
-        if ((width as? DependentDimension)?.dependency == Dependency.parent) {
-            (width as? DependentDimension)?.calculate()
-        }
-    }
-
-    open fun onParentHeightUpdated() {
-        if ((height as? DependentDimension)?.dependency == Dependency.parent)
-            (height as? DependentDimension)?.calculate()
-    }
 
     internal open fun addToParent() {
         val validParent = parent ?: throw ParentNotFoundException()
