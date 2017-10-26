@@ -18,7 +18,6 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
             Type.height -> {
                 element.style.height = "auto"
                 element.style.flex = "$value 0 0px"
-
             }
             Type.width -> {
                 element.style.width = "auto"
@@ -26,7 +25,6 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
             }
         }
     }
-
 }
 
 infix fun View.weightOf(value: Int): Weight {

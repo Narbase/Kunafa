@@ -5,6 +5,7 @@ import net.avatarapps.kunafa.core.dimensions.CalculatedDimension
 import net.avatarapps.kunafa.core.dimensions.Dimension
 import net.avatarapps.kunafa.core.dimensions.DynamicDimension
 import org.w3c.dom.HTMLButtonElement
+import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLSpanElement
 import kotlin.browser.document
 
@@ -18,6 +19,7 @@ import kotlin.browser.document
  */
 class ButtonView(parent: Container? = null) : View(parent) {
     val button by lazy {
+        element.hidden = true
         val b = document.createElement("button") as HTMLButtonElement
         element.append(b)
         return@lazy b

@@ -47,7 +47,7 @@ fun main(args: Array<String>) {
                 textView {
                     id = "HelloWorld"
                     text = "Second item in list"
-                    width = wrapContent
+                    width = matchParent
                     height = wrapContent
                     paddingStart = 10.px
                     paddingEnd = 10.px
@@ -61,7 +61,7 @@ fun main(args: Array<String>) {
                     marginTop = 8.px
                     marginBottom = 8.px
                 }
-                textView {
+                val thirdText = textView {
                     id = "HelloWorld"
                     text = "Third item in list"
                     width = matchParent
@@ -184,7 +184,6 @@ fun main(args: Array<String>) {
                     marginTop = 8.px
                     marginBottom = 8.px
                 }
-
             }
 
             verticalLayout {

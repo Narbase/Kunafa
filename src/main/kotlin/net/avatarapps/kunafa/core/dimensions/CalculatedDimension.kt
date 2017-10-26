@@ -38,8 +38,6 @@ abstract class DynamicDimension : Dimension(){
 }
 
 
-class DimensionNotCalculatedException(msg: String = "") : Exception(msg)
-
 abstract class IndependentDimension : CalculatedDimension() {
 //    override var isCalculated = true
 }

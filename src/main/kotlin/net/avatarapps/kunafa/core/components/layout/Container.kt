@@ -20,8 +20,15 @@ abstract class Container(parent: Container?) : View(parent) {
         children.add(child)
     }
 
-    fun addToElement(child: View) {
+    private fun addToElement(child: View) {
         element.append(child.element)
+    }
+
+    fun removeChild(child: View) {
+        children.remove(child)
+        element.removeChild(child.element)
+        child.parent = null
+
     }
 
 }

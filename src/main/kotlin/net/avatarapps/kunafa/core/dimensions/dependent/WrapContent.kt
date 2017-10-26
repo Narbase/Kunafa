@@ -4,6 +4,7 @@ import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.dimensions.Dimension
 import net.avatarapps.kunafa.core.dimensions.DynamicDimension
 import org.w3c.dom.HTMLElement
+import org.w3c.xhr.XMLHttpRequest
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -25,7 +26,6 @@ internal class WrapContent: DynamicDimension(){
             }
         }
     }
-
 }
 
 val View.wrapContent: DynamicDimension
