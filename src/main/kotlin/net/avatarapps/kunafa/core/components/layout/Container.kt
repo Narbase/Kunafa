@@ -14,7 +14,7 @@ import net.avatarapps.kunafa.core.components.View
 abstract class Container(parent: Container?) : View(parent) {
     val children: ArrayList<View> = arrayListOf()
 
-    open fun add(child: View) {
+    open fun addChild(child: View) {
         addToElement(child)
         child.parent = this
         children.add(child)
@@ -24,7 +24,7 @@ abstract class Container(parent: Container?) : View(parent) {
         element.append(child.element)
     }
 
-    fun removeChild(child: View) {
+    open fun removeChild(child: View) {
         children.remove(child)
         element.removeChild(child.element)
         child.parent = null

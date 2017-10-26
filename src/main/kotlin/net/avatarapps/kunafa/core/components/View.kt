@@ -170,7 +170,7 @@ open class View(var parent: Container? = null) {
 
     internal open fun addToParent() {
         val validParent = parent ?: throw ParentNotFoundException()
-        validParent.add(this)
+        validParent.addChild(this)
         validParent.addOnResizedListener(this, this::onParentResized)
         addOnResizedListener(validParent, validParent::onChildrenResized)
     }

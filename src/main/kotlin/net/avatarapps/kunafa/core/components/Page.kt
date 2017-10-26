@@ -22,9 +22,15 @@ object Page : Container(null) {
     override val wrappedContentHeight: IndependentDimension
         get() = throw DimensionNotAvailableOnViewException()
 
-    override fun add(child: View) {
+    override fun addChild(child: View) {
         document.body?.append(child.element)
         children.add(child)
+    }
+
+    override fun removeChild(child: View) {
+        children.remove(child)
+        document.body?.removeChild(child.element)
+        child.parent = null
     }
 
     fun prepare() {
