@@ -4,6 +4,7 @@ import net.avatarapps.kunafa.core.components.TextView
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.dimensions.DependentDimension
 import net.avatarapps.kunafa.core.dimensions.DimensionNotCalculatedException
+import net.avatarapps.kunafa.core.dimensions.DynamicDimension
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -56,12 +57,12 @@ open class ParentDependentWrapContent(view: View) : WrapContent(view) {
 
 class CalculatedDimensionTypeNotDefinedError(msg: String) : Exception(msg)
 
-val View.wrapContent: WrapContent
+val View.wrapContent: DynamicDimension
     get() {
-        return WrapContent(this)
+        return DynamicDimension("auto")
     }
 
-val TextView.wrapContent: ParentDependentWrapContent
+val TextView.wrapContent: DynamicDimension
     get() {
-        return ParentDependentWrapContent(this)
+        return DynamicDimension("auto")
     }

@@ -2,8 +2,6 @@ package net.avatarapps.kunafa.core.components
 
 import net.avatarapps.kunafa.core.components.layout.Container
 import net.avatarapps.kunafa.core.dimensions.*
-import net.avatarapps.kunafa.core.dimensions.DependentDimension.Dependency
-import net.avatarapps.kunafa.core.dimensions.DependentDimension.Dependency.children
 import net.avatarapps.kunafa.core.dimensions.DependentDimension.Type
 import net.avatarapps.kunafa.core.dimensions.independent.Pixel
 import net.avatarapps.kunafa.core.dimensions.independent.Point
@@ -32,20 +30,27 @@ open class View(var parent: Container? = null) {
     }
 
      open fun updateElementWidth() {
-        contentWidth?.let {
-            println("Updating dimensions")
+         if (width is DynamicDimension) {
+             (width as? DynamicDimension)?.let{
+                 element.style.width = it.value
+             }
+         } else contentWidth?.let {
             if (element.style.width == "${it.pixels}px") return
             element.style.width = "${it.pixels}px"
-            println("$id width changed to ${it.pixels}px")
+            element.style.minWidth = "${it.pixels}px"
             onResizedListeners.forEach { it.second() }
         }
     }
 
      open fun updateElementHeight() {
-        contentHeight?.let {
+         if (height is DynamicDimension) {
+             (height as? DynamicDimension)?.let{
+                 element.style.height = it.value
+             }
+         } else contentHeight?.let {
             if (element.style.height == "${it.pixels}px") return
             element.style.height = "${it.pixels}px"
-            println("$id height changed to ${it.pixels}px")
+            element.style.minHeight = "${it.pixels}px"
             onResizedListeners.forEach { it.second() }
         }
     }
@@ -78,22 +83,30 @@ open class View(var parent: Container? = null) {
 
     val contentWidth: Pixel?
         get() {
-            return Pixel((width.pixels - (paddingStart.pixels + paddingEnd.pixels)).takeIf { it > 0 }?:0)
+            return (width as? CalculatedDimension)?.let {
+                 Pixel((it.pixels - (paddingStart.pixels + paddingEnd.pixels)).takeIf { it > 0 }?:0)
+            }
         }
 
     val contentHeight: Pixel?
         get() {
-            return Pixel((height.pixels - (paddingTop.pixels + paddingBottom.pixels)).takeIf { it > 0 }?:0)
+            return  (height as? CalculatedDimension)?.let {
+             Pixel((it.pixels - (paddingTop.pixels + paddingBottom.pixels)).takeIf { it > 0 }?:0)
+        }
         }
 
     val extendedWidth: Pixel?
         get() {
-            return Pixel(width.pixels + (marginStart.pixels + marginEnd.pixels))
+            return (width as? CalculatedDimension)?.let {
+                 Pixel(it.pixels + (marginStart.pixels + marginEnd.pixels))
+            }
         }
 
     val extendedHeight: Pixel?
         get() {
-            return Pixel(height.pixels + (marginTop.pixels + marginBottom.pixels))
+            return (height as? CalculatedDimension)?.let {
+                 Pixel(it.pixels + (marginTop.pixels + marginBottom.pixels))
+            }
         }
 
     open val wrappedContentWidth: IndependentDimension
@@ -162,10 +175,14 @@ open class View(var parent: Container? = null) {
     init {
         setMargin(0.px)
         setPadding(0.px)
+    }
 
+    open fun configureElement() {
+        element.style.boxSizing = "border-box"
     }
 
     fun <V : View> V.visit(setup: V.() -> Unit): V {
+        configureElement()
         this.addToParent()
         this.setup()
         return this

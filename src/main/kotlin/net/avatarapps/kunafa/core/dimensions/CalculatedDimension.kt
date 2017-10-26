@@ -12,7 +12,9 @@ import net.avatarapps.kunafa.core.dimensions.independent.px
  * On: 9/30/17.
  */
 
-abstract class Dimension {
+abstract class Dimension
+
+abstract class CalculatedDimension : Dimension() {
     abstract var pixels: Int
 }
 
@@ -24,7 +26,7 @@ operator fun <D : IndependentDimension> D.plus(dimension: IndependentDimension):
     return (this.pixels + dimension.pixels).px
 }
 
-abstract class DependentDimension : Dimension() {
+abstract class DependentDimension : CalculatedDimension() {
     var type: Type? = null
     abstract fun setListeners()
     var onChange: (() -> Unit)? = null
@@ -45,10 +47,12 @@ abstract class DependentDimension : Dimension() {
     }
 }
 
+class DynamicDimension(var value: String) : Dimension()
+
 class ChangingPixelsOfDependentDimensionError : Exception()
 
 class DimensionNotCalculatedException(msg: String = "") : Exception(msg)
 
-abstract class IndependentDimension : Dimension() {
+abstract class IndependentDimension : CalculatedDimension() {
 //    override var isCalculated = true
 }

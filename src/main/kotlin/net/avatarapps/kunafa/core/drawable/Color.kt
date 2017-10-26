@@ -25,5 +25,7 @@ class Color {
         }
         val red = Color.rgb(255,0,0)
         val blue = Color.rgb(0,0,255)
+        val white = Color.rgb(255,255,255)
+        val black = Color.rgb(0,0,0)
     }
 }

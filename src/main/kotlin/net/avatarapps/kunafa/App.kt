@@ -1,100 +1,219 @@
 package net.avatarapps.kunafa
 
 import net.avatarapps.kunafa.core.components.*
+import net.avatarapps.kunafa.core.components.layout.AlignItems
 import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
 
 fun main(args: Array<String>) {
+    val lightGrey = Color.rgb(240, 240, 240)
     page {
         horizontalLayout {
             id = "horizontalLayout"
-            background = Color.rgb(200, 200, 200)
-            setMargin(10.px)
-            setPadding(20.px)
+            background = lightGrey
+            setMargin(0.px)
+            setPadding(0.px)
             width = matchParent
             height = matchParent
             verticalLayout {
                 id = "Vertical Layout"
-                background = Color.rgb(220, 220, 220)
+                background = Color.white
                 setPadding(20.px)
                 width = wrapContent
                 height = matchParent
                 isScrollableVertically = true
+                alignItems = AlignItems.Center
                 textView {
                     id = "HelloWorld"
-                    text = "Hello world Hello world Hello world\n\n\n Hello world Hello world Hello\n world Hello world Hello world "
+                    text = "First item in list and also a very long string that takes more than one line but it is wrap content"
                     width = matchParent
                     height = wrapContent
                     paddingStart = 10.px
                     paddingEnd = 10.px
-                    marginBottom = 24.px
+                    marginTop = 8.px
+                    marginBottom = 8.px
+                }
+                view {
+                    width = matchParent
+                    height = 1.px
+                    background = lightGrey
+                    marginTop = 8.px
+                    marginBottom = 8.px
+                }
+
+                textView {
+                    id = "HelloWorld"
+                    text = "Second item in list"
+                    width = wrapContent
+                    height = wrapContent
+                    paddingStart = 10.px
+                    paddingEnd = 10.px
+                    marginTop = 8.px
+                    marginBottom = 8.px
+                }
+                view {
+                    width = matchParent
+                    height = 1.px
+                    background = lightGrey
+                    marginTop = 8.px
+                    marginBottom = 8.px
+                }
+                textView {
+                    id = "HelloWorld"
+                    text = "Third item in list"
+                    width = matchParent
+                    height = wrapContent
+                    paddingStart = 10.px
+                    paddingEnd = 10.px
+                    marginTop = 8.px
+                    marginBottom = 8.px
+                }
+                view {
+                    width = matchParent
+                    height = 1.px
+                    background = lightGrey
+                    marginTop = 8.px
+                    marginBottom = 8.px
                 }
 
                 button {
                     id = "Button"
-                    width = 200.px
+                    width = matchParent
                     height = 44.px
                     marginBottom = 16.px
                 }
 
                 val redView = view {
                     id = "redView"
-                    width = 150.px
-                    height = 500.px
+                    width = matchParent
+                    height = 40.px
+                    marginBottom = 40.px
                     background = Color.red
                 }
                 view {
                     id = "anotherView"
                     width = matchParent
-                    height = 200.px
+                    height = 40.px
+                    marginBottom = 40.px
                     background = Color.blue
                 }
 
                 view {
                     id = "ThirdView"
                     width = 130.px
-                    height = 400.px
+                    height = 40.px
+                    marginBottom = 40.px
                     background = Color.rgb(255, 0, 255)
                 }
 
                 view {
                     id = "ThirdView"
-                    width = 270.px
-                    height = 400.px
-                    background = Color.rgb(255, 255, 255)
+                    width = 370.px
+                    height = 40.px
+                    marginBottom = 40.px
+                    background = lightGrey
                 }
-            }
 
-            verticalLayout {
-                id = "Vertical layout"
-                background = Color.rgb(220, 220, 220)
-                setPadding(20.px)
-                marginStart = 30.px
-                width = 800.px
-                height = matchParent
-                isScrollableVertically = true
-
-                view {
-                    id = "View1"
+                textView {
+                    id = "HelloWorld"
+                    text = "First item in list"
                     width = matchParent
-                    height = 500.px
-                    background = Color.rgb(0, 255, 0)
+                    height = wrapContent
+                    paddingStart = 10.px
+                    paddingEnd = 10.px
+                    marginTop = 8.px
+                    marginBottom = 8.px
                 }
                 view {
-                    id = "View2"
-                    width = 500.px
-                    height = 500.px
-                    background = Color.rgb(0, 0, 255)
+                    width = matchParent
+                    height = 1.px
+                    background = lightGrey
+                    marginTop = 8.px
+                    marginBottom = 8.px
                 }
                 view {
-                    id = "View3"
-                    width = 500.px
-                    height = 500.px
-                    background = Color.rgb(255, 0, 0)
+                    id = "ThirdView"
+                    width = 370.px
+                    height = 40.px
+                    marginBottom = 40.px
+                    background = lightGrey
                 }
+
+                textView {
+                    id = "HelloWorld"
+                    text = "First item in list"
+                    width = matchParent
+                    height = wrapContent
+                    paddingStart = 10.px
+                    paddingEnd = 10.px
+                    marginTop = 8.px
+                    marginBottom = 8.px
+                }
+                view {
+                    width = matchParent
+                    height = 1.px
+                    background = lightGrey
+                    marginTop = 8.px
+                    marginBottom = 8.px
+                }
+                view {
+                    id = "ThirdView"
+                    width = 370.px
+                    height = 40.px
+                    marginBottom = 40.px
+                    background = lightGrey
+                }
+
+                textView {
+                    id = "HelloWorld"
+                    text = "First item in list"
+                    width = matchParent
+                    height = wrapContent
+                    paddingStart = 10.px
+                    paddingEnd = 10.px
+                    marginTop = 8.px
+                    marginBottom = 8.px
+                }
+                view {
+                    width = matchParent
+                    height = 1.px
+                    background = lightGrey
+                    marginTop = 8.px
+                    marginBottom = 8.px
+                }
+
             }
+
+//            verticalLayout {
+//                id = "Vertical layout"
+//                background = Color.white
+//                setPadding(20.px)
+//                marginStart = 2.px
+//                width = 800.px
+//                height = matchParent
+//                isScrollableVertically = true
+//
+//                view {
+//                    id = "View1"
+//                    width = matchParent
+//                    height = 500.px
+//                    background = Color.rgb(0, 255, 0)
+//                }
+//                view {
+//                    id = "View2"
+//                    width = 500.px
+//                    height = 500.px
+//                    background = Color.rgb(0, 0, 255)
+//                }
+//                view {
+//                    id = "View3"
+//                    width = 500.px
+//                    height = 500.px
+//                    background = Color.rgb(255, 0, 0)
+//                }
+//            }
         }
     }
 }

@@ -18,8 +18,8 @@ fun page(setupAndAddChildren: Container.() -> Unit = {}){
     Page.visit(setupAndAddChildren)
 }
 
-fun Container.verticalLayout(block: Container.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(block)
-fun Container.horizontalLayout(block: Container.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(block)
+fun Container.verticalLayout(block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(block)
+fun Container.horizontalLayout(block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(block)
 
 fun Container.view(block: View.() -> Unit): View = View(this).visit(block)
 fun Container.textView(block: TextView.() -> Unit): TextView = TextView(this).visit(block)

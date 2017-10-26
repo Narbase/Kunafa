@@ -17,7 +17,7 @@ class Point(var value: Int = 0) : net.avatarapps.kunafa.core.dimensions.Independ
         }
 }
 
-val Int.points: net.avatarapps.kunafa.core.dimensions.Dimension
+val Int.points: net.avatarapps.kunafa.core.dimensions.CalculatedDimension
     get() {
         return net.avatarapps.kunafa.core.dimensions.independent.Point(this)
     }
