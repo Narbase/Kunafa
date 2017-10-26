@@ -186,34 +186,34 @@ fun main(args: Array<String>) {
 
             }
 
-//            verticalLayout {
-//                id = "Vertical layout"
-//                background = Color.white
-//                setPadding(20.px)
-//                marginStart = 2.px
-//                width = 800.px
-//                height = matchParent
-//                isScrollableVertically = true
-//
-//                view {
-//                    id = "View1"
-//                    width = matchParent
-//                    height = 500.px
-//                    background = Color.rgb(0, 255, 0)
-//                }
-//                view {
-//                    id = "View2"
-//                    width = 500.px
-//                    height = 500.px
-//                    background = Color.rgb(0, 0, 255)
-//                }
-//                view {
-//                    id = "View3"
-//                    width = 500.px
-//                    height = 500.px
-//                    background = Color.rgb(255, 0, 0)
-//                }
-//            }
+            verticalLayout {
+                id = "Vertical layout"
+                background = Color.white
+                setPadding(20.px)
+                marginStart = 2.px
+                width = 800.px
+                height = matchParent
+                isScrollableVertically = true
+
+                view {
+                    id = "View1"
+                    width = matchParent
+                    height = 500.px
+                    background = Color.rgb(0, 255, 0)
+                }
+                view {
+                    id = "View2"
+                    width = 500.px
+                    height = 500.px
+                    background = Color.rgb(0, 0, 255)
+                }
+                view {
+                    id = "View3"
+                    width = 500.px
+                    height = 500.px
+                    background = Color.rgb(255, 0, 0)
+                }
+            }
         }
     }
 }

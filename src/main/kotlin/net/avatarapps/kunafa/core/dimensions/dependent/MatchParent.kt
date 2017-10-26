@@ -2,11 +2,9 @@ package net.avatarapps.kunafa.core.dimensions.dependent
 
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.dimensions.DependentDimension
-import net.avatarapps.kunafa.core.dimensions.DependentDimension.Dependency.parent
-import net.avatarapps.kunafa.core.dimensions.DependentDimension.Type.height
-import net.avatarapps.kunafa.core.dimensions.DependentDimension.Type.width
 import net.avatarapps.kunafa.core.dimensions.DimensionNotCalculatedException
-import net.avatarapps.kunafa.core.dimensions.IndependentDimension
+import net.avatarapps.kunafa.core.dimensions.DynamicDimension
+import org.w3c.dom.HTMLElement
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -17,28 +15,14 @@ import net.avatarapps.kunafa.core.dimensions.IndependentDimension
  * On: 10/6/17.
  */
 
-class MatchParent internal constructor(val view: View) : DependentDimension() {
-    override fun setListeners() {
+class MatchParent internal constructor(val view: View) : DynamicDimension() {
+    override fun configure(element: HTMLElement, type: Type) {
         when (type) {
-            width -> {
-                val updatePixels = {
-                    val parentContent = view.parent?.contentWidth?.pixels ?: 0
-                    pixels = (parentContent - (view.marginStart.pixels + view.marginEnd.pixels)).takeIf { it > 0 } ?: 0
-                }
-                view.addOnParentResizedListener(view, updatePixels)
-                updatePixels()
-            }
-            height -> {
-                val updatePixels = {
-                    val parentContent = view.parent?.contentHeight?.pixels ?: 0
-                    pixels = (parentContent - (view.marginTop.pixels + view.marginBottom.pixels)).takeIf { it > 0 } ?: 0
-                }
-                view.addOnParentResizedListener(view, updatePixels)
-                updatePixels()
-            }
-            null -> throw DimensionNotCalculatedException("${view.id}.type")
+            Type.height -> element.style.height = "100%"
+            Type.width -> element.style.width = "100%"
         }
     }
+
 }
 
 val View.matchParent: MatchParent

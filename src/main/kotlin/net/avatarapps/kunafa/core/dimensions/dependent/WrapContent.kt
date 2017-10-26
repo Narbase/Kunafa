@@ -3,8 +3,10 @@ package net.avatarapps.kunafa.core.dimensions.dependent
 import net.avatarapps.kunafa.core.components.TextView
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.dimensions.DependentDimension
+import net.avatarapps.kunafa.core.dimensions.Dimension
 import net.avatarapps.kunafa.core.dimensions.DimensionNotCalculatedException
 import net.avatarapps.kunafa.core.dimensions.DynamicDimension
+import org.w3c.dom.HTMLElement
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -14,55 +16,25 @@ import net.avatarapps.kunafa.core.dimensions.DynamicDimension
  * Created by islam
  * On: 10/1/17.
  */
-open class WrapContent internal constructor(val view: View) : DependentDimension() {
-    override fun setListeners() {
+
+internal class WrapContent: DynamicDimension(){
+    override fun configure(element: HTMLElement, type: Dimension.Type) {
         when (type) {
-            Type.width -> {
-                view.addOnChildrenResizedListener(view){
-                    println("WrapContent Resized")
-                    pixels = view.wrappedContentWidth.pixels
-                }
-                pixels = view.wrappedContentWidth.pixels
-            }
             Type.height -> {
-                view.addOnChildrenResizedListener(view){
-                    pixels = view.wrappedContentHeight.pixels
-                }
-                pixels = view.wrappedContentHeight.pixels
+                element.style.height = "auto"
+//                element.style.overflowY = "auto"
             }
-            null -> throw CalculatedDimensionTypeNotDefinedError("${view.id}.type")
+            Type.width -> {
+                element.style.width = "auto"
+//                element.style.overflowX = "auto"
+            }
         }
     }
-}
 
-open class ParentDependentWrapContent(view: View) : WrapContent(view) {
-    override fun setListeners() {
-        when (type) {
-            Type.width -> {
-                view.addOnResizedListener(view){
-                    pixels = view.wrappedContentWidth.pixels
-                }
-                pixels = view.wrappedContentWidth.pixels
-            }
-            Type.height -> {
-                view.addOnResizedListener(view){
-                    pixels = view.wrappedContentHeight.pixels
-                }
-                pixels = view.wrappedContentHeight.pixels
-            }
-            null -> throw CalculatedDimensionTypeNotDefinedError("${view.id}.type")
-        }
-    }
 }
-
-class CalculatedDimensionTypeNotDefinedError(msg: String) : Exception(msg)
 
 val View.wrapContent: DynamicDimension
     get() {
-        return DynamicDimension("auto")
+        return WrapContent()
     }
 
-val TextView.wrapContent: DynamicDimension
-    get() {
-        return DynamicDimension("auto")
-    }

@@ -2,6 +2,7 @@ package net.avatarapps.kunafa.core.dimensions
 
 import net.avatarapps.kunafa.core.dimensions.independent.Pixel
 import net.avatarapps.kunafa.core.dimensions.independent.px
+import org.w3c.dom.HTMLElement
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -12,7 +13,12 @@ import net.avatarapps.kunafa.core.dimensions.independent.px
  * On: 9/30/17.
  */
 
-abstract class Dimension
+abstract class Dimension {
+    enum class Type {
+        width,
+        height,
+    }
+}
 
 abstract class CalculatedDimension : Dimension() {
     abstract var pixels: Int
@@ -36,10 +42,6 @@ abstract class DependentDimension : CalculatedDimension() {
             onChange?.invoke()
         }
 
-    enum class Type {
-        width,
-        height,
-    }
 
     enum class Dependency {
         parent,
@@ -47,7 +49,9 @@ abstract class DependentDimension : CalculatedDimension() {
     }
 }
 
-class DynamicDimension(var value: String) : Dimension()
+abstract class DynamicDimension : Dimension(){
+    abstract fun configure(element: HTMLElement, type: Dimension.Type)
+}
 
 class ChangingPixelsOfDependentDimensionError : Exception()
 

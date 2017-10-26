@@ -40,59 +40,6 @@ class LinearLayout(
             element.style.alignItems = value.cssName
         }
 
-    override val wrappedContentWidth: IndependentDimension
-        get() {
-            return when (orientation) {
-                Horizontal -> {
-                    var pixels = 0.px
-                    children.forEach {
-                        pixels += (it.extendedWidth ?: 0.px)
-                    }
-                    pixels += paddingStart + paddingEnd
-                    pixels
-                }
-                Vertical -> {
-                    var pixels = 0.px
-                    children.forEach {
-                        println("$id ew: ${it.extendedWidth}")
-                        it.extendedWidth?.let {
-
-                            if (it.pixels > pixels.pixels)
-                                pixels = it
-                        }
-                    }
-                    pixels += paddingStart + paddingEnd
-                    pixels
-                }
-            }
-        }
-
-    override val wrappedContentHeight: IndependentDimension
-        get() {
-            return when (orientation) {
-                Horizontal -> {
-                    var pixels = 0.px
-                    children.forEach {
-                        it.extendedHeight?.let {
-                            if (it.pixels > pixels.pixels)
-                                pixels = it
-                        }
-                    }
-                    pixels += paddingTop + paddingBottom
-                    pixels
-                }
-                Vertical -> {
-                    var pixels = 0.px
-                    children.forEach {
-                        pixels += (it.extendedHeight ?: 0.px)
-                    }
-                    pixels += paddingTop + paddingBottom
-                    pixels
-
-                }
-            }
-        }
-
     enum class Orientation {
         Horizontal,
         Vertical

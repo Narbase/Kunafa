@@ -2,7 +2,7 @@ package net.avatarapps.kunafa.core.components
 
 import net.avatarapps.kunafa.core.components.layout.Container
 import net.avatarapps.kunafa.core.dimensions.*
-import net.avatarapps.kunafa.core.dimensions.DependentDimension.Type
+import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
 import net.avatarapps.kunafa.core.dimensions.independent.Pixel
 import net.avatarapps.kunafa.core.dimensions.independent.Point
 import net.avatarapps.kunafa.core.dimensions.independent.px
@@ -29,37 +29,43 @@ open class View(var parent: Container? = null) {
         updateElementHeight()
     }
 
-     open fun updateElementWidth() {
-         if (width is DynamicDimension) {
-             (width as? DynamicDimension)?.let{
-                 element.style.width = it.value
-             }
-         } else contentWidth?.let {
+    open fun updateElementWidth() {
+        if (width is DynamicDimension) {
+            (width as? DynamicDimension)?.configure(element, Dimension.Type.width)
+        } else (width as? CalculatedDimension)?.let {
             if (element.style.width == "${it.pixels}px") return
             element.style.width = "${it.pixels}px"
             element.style.minWidth = "${it.pixels}px"
             onResizedListeners.forEach { it.second() }
         }
+        updateContentWidth()
     }
 
-     open fun updateElementHeight() {
-         if (height is DynamicDimension) {
-             (height as? DynamicDimension)?.let{
-                 element.style.height = it.value
-             }
-         } else contentHeight?.let {
+    open internal fun updateContentWidth() {
+
+    }
+
+    open fun updateElementHeight() {
+        if (height is DynamicDimension) {
+            (height as? DynamicDimension)?.configure(element, Dimension.Type.height)
+        } else (height as? CalculatedDimension)?.let {
             if (element.style.height == "${it.pixels}px") return
             element.style.height = "${it.pixels}px"
             element.style.minHeight = "${it.pixels}px"
             onResizedListeners.forEach { it.second() }
         }
+        updateContentHeight()
     }
 
-    open var width: Dimension = Point()
+    open internal fun updateContentHeight() {
+
+    }
+
+    open var width: Dimension = wrapContent
         set(value) {
             field = value
-            if (value is DependentDimension){
-                value.type = Type.width
+            if (value is DependentDimension) {
+                value.type = Dimension.Type.width
                 value.setListeners()
                 value.onChange = {
                     updateElementDimensions()
@@ -68,44 +74,30 @@ open class View(var parent: Container? = null) {
             updateElementDimensions()
         }
 
-    open var height: Dimension = Point()
+    open var height: Dimension = wrapContent
         set(value) {
             field = value
-            if (value is DependentDimension){
-                value.type = Type.height
+            if (value is DependentDimension) {
+                value.type = Dimension.Type.height
                 value.setListeners()
                 value.onChange = {
                     updateElementDimensions()
                 }
             }
             updateElementDimensions()
-        }
-
-    val contentWidth: Pixel?
-        get() {
-            return (width as? CalculatedDimension)?.let {
-                 Pixel((it.pixels - (paddingStart.pixels + paddingEnd.pixels)).takeIf { it > 0 }?:0)
-            }
-        }
-
-    val contentHeight: Pixel?
-        get() {
-            return  (height as? CalculatedDimension)?.let {
-             Pixel((it.pixels - (paddingTop.pixels + paddingBottom.pixels)).takeIf { it > 0 }?:0)
-        }
         }
 
     val extendedWidth: Pixel?
         get() {
             return (width as? CalculatedDimension)?.let {
-                 Pixel(it.pixels + (marginStart.pixels + marginEnd.pixels))
+                Pixel(it.pixels + (marginStart.pixels + marginEnd.pixels))
             }
         }
 
     val extendedHeight: Pixel?
         get() {
             return (height as? CalculatedDimension)?.let {
-                 Pixel(it.pixels + (marginTop.pixels + marginBottom.pixels))
+                Pixel(it.pixels + (marginTop.pixels + marginBottom.pixels))
             }
         }
 
@@ -201,23 +193,23 @@ open class View(var parent: Container? = null) {
     protected val onChildrenResizedListeners: ArrayList<Pair<View, () -> Unit>> = arrayListOf()
     protected val onParentResizedListeners: ArrayList<Pair<View, () -> Unit>> = arrayListOf()
 
-    fun addOnResizedListener(listener: View, onResizeListener: () -> Unit){
+    fun addOnResizedListener(listener: View, onResizeListener: () -> Unit) {
         onResizedListeners.add(Pair(listener, onResizeListener))
     }
 
-    fun addOnParentResizedListener(listener: View, onResizeListener: () -> Unit){
+    fun addOnParentResizedListener(listener: View, onResizeListener: () -> Unit) {
         onParentResizedListeners.add(Pair(listener, onResizeListener))
     }
 
-    fun addOnChildrenResizedListener(listener: View, onResizeListener: () -> Unit){
+    fun addOnChildrenResizedListener(listener: View, onResizeListener: () -> Unit) {
         onChildrenResizedListeners.add(Pair(listener, onResizeListener))
     }
 
-    private fun onParentResized(){
-        onParentResizedListeners.forEach { it.second()}
+    private fun onParentResized() {
+        onParentResizedListeners.forEach { it.second() }
     }
 
-    internal fun onChildrenResized(){
+    internal fun onChildrenResized() {
         onChildrenResizedListeners.forEach { it.second() }
     }
 
