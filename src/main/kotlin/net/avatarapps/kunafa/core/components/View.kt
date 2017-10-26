@@ -64,26 +64,12 @@ open class View(var parent: Container? = null) {
     open var width: Dimension = wrapContent
         set(value) {
             field = value
-            if (value is DependentDimension) {
-                value.type = Dimension.Type.width
-                value.setListeners()
-                value.onChange = {
-                    updateElementDimensions()
-                }
-            }
             updateElementDimensions()
         }
 
     open var height: Dimension = wrapContent
         set(value) {
             field = value
-            if (value is DependentDimension) {
-                value.type = Dimension.Type.height
-                value.setListeners()
-                value.onChange = {
-                    updateElementDimensions()
-                }
-            }
             updateElementDimensions()
         }
 

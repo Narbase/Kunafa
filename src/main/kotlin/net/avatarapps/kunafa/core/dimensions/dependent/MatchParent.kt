@@ -1,8 +1,6 @@
 package net.avatarapps.kunafa.core.dimensions.dependent
 
 import net.avatarapps.kunafa.core.components.View
-import net.avatarapps.kunafa.core.dimensions.DependentDimension
-import net.avatarapps.kunafa.core.dimensions.DimensionNotCalculatedException
 import net.avatarapps.kunafa.core.dimensions.DynamicDimension
 import org.w3c.dom.HTMLElement
 

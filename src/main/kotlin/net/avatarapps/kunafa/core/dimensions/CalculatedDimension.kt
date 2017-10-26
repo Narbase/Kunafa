@@ -32,28 +32,11 @@ operator fun <D : IndependentDimension> D.plus(dimension: IndependentDimension):
     return (this.pixels + dimension.pixels).px
 }
 
-abstract class DependentDimension : CalculatedDimension() {
-    var type: Type? = null
-    abstract fun setListeners()
-    var onChange: (() -> Unit)? = null
-    override var pixels = 0
-        set(value) {
-            field = value
-            onChange?.invoke()
-        }
-
-
-    enum class Dependency {
-        parent,
-        children
-    }
-}
 
 abstract class DynamicDimension : Dimension(){
     abstract fun configure(element: HTMLElement, type: Dimension.Type)
 }
 
-class ChangingPixelsOfDependentDimensionError : Exception()
 
 class DimensionNotCalculatedException(msg: String = "") : Exception(msg)
 

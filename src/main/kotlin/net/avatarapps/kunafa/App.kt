@@ -3,6 +3,7 @@ package net.avatarapps.kunafa
 import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.AlignItems
 import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
+import net.avatarapps.kunafa.core.dimensions.dependent.weightOf
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
@@ -21,14 +22,14 @@ fun main(args: Array<String>) {
                 id = "Vertical Layout"
                 background = Color.white
                 setPadding(20.px)
-                width = wrapContent
+                width = weightOf(1)
                 height = matchParent
                 isScrollableVertically = true
                 alignItems = AlignItems.Center
                 textView {
                     id = "HelloWorld"
                     text = "First item in list and also a very long string that takes more than one line but it is wrap content"
-                    width = matchParent
+                    width = wrapContent
                     height = wrapContent
                     paddingStart = 10.px
                     paddingEnd = 10.px
@@ -191,7 +192,7 @@ fun main(args: Array<String>) {
                 background = Color.white
                 setPadding(20.px)
                 marginStart = 2.px
-                width = 800.px
+                width = weightOf(1)
                 height = matchParent
                 isScrollableVertically = true
 
