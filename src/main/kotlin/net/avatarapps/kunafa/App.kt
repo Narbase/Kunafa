@@ -1,7 +1,7 @@
 package net.avatarapps.kunafa
 
 import net.avatarapps.kunafa.core.components.*
-import net.avatarapps.kunafa.core.components.layout.AlignItems
+import net.avatarapps.kunafa.core.components.layout.Alignment
 import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
 import net.avatarapps.kunafa.core.dimensions.dependent.weightOf
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
                 width = weightOf(1)
                 height = matchParent
                 isScrollableVertically = true
-                alignItems = AlignItems.Center
+                alignItems = Alignment.Center
                 textView {
                     id = "HelloWorld"
                     text = "First item in list and also a very long string that takes more than one line but it is wrap content"

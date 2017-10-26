@@ -2,12 +2,7 @@
 
 package net.avatarapps.kunafa.core.components.layout
 
-import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.Horizontal
-import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.Vertical
-import net.avatarapps.kunafa.core.dimensions.IndependentDimension
-import net.avatarapps.kunafa.core.dimensions.independent.px
-import net.avatarapps.kunafa.core.dimensions.plus
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -34,7 +29,7 @@ class LinearLayout(
         element.style.justifyContent = value.cssName
     }
 
-    var alignItems: AlignItems = AlignItems.Start
+    var alignItems: Alignment = Alignment.Start
         set(value) {
             field = value
             element.style.alignItems = value.cssName
@@ -46,7 +41,7 @@ class LinearLayout(
     }
 }
 
-enum class AlignItems(
+enum class Alignment(
         val cssName: String
 ) {
 

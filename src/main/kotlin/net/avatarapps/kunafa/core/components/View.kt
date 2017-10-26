@@ -1,5 +1,6 @@
 package net.avatarapps.kunafa.core.components
 
+import net.avatarapps.kunafa.core.components.layout.Alignment
 import net.avatarapps.kunafa.core.components.layout.Container
 import net.avatarapps.kunafa.core.dimensions.*
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
@@ -199,8 +200,13 @@ open class View(var parent: Container? = null) {
         onChildrenResizedListeners.forEach { it.second() }
     }
 
+    var alignSelf: Alignment = Alignment.Start
+    set(value) {
+        element.style.alignSelf = value.cssName
+    }
 
 }
+
 
 class ParentNotFoundException : Exception()
 
