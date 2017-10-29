@@ -28,7 +28,7 @@ class ButtonView(parent: Container? = null) : View(parent) {
         return@lazy b
     }
 
-    override var onClick: ((Event) -> dynamic)? = null
+    override var onClick: ((Event) -> Unit)? = null
         set(value) {
             field = value
             button.onclick = onClick

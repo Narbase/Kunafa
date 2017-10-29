@@ -49,7 +49,6 @@ enum class Alignment(
     Center("center"),
     Baseline("baseline"),
     Stretch("stretch")
-
 }
 
 enum class JustifyContent(

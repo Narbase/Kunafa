@@ -22,7 +22,17 @@ fun main(args: Array<String>) {
 
             addSideBar(lightGrey)
 
-            addMainContent()
+            verticalLayout {
+                id = "mainView"
+                background = Color.white
+                padding = 20.px
+                marginStart = 2.px
+                width = weightOf(1)
+                height = matchParent
+                isScrollableVertically = true
+                alignItems = Alignment.Center
+                addMainContent()
+            }
         }
     }
 }
@@ -33,26 +43,53 @@ private fun LinearLayout.addMainContent(): LinearLayout {
         background = Color.white
         padding = 20.px
         marginStart = 2.px
-        width = weightOf(1)
+        width = matchParent
         height = matchParent
         isScrollableVertically = true
+        alignItems = Alignment.Center
+
+        val title = textView {
+            text = "First view"
+            width = matchParent
+            height = wrapContent
+            paddingStart = 10.px
+            paddingEnd = 10.px
+            marginTop = 8.px
+            marginBottom = 8.px
+            textAlign = TextView.TextAlign.Center
+            textSize = 24.px
+            textColor = Color.rgb(120, 120, 120)
+        }
+
+        button {
+            id = "Button"
+            width = matchParent
+            height = 44.px
+            marginBottom = 16.px
+            onClick = {
+                title.text = "Button clicked"
+            }
+        }
         view {
             id = "View1"
             width = matchParent
             height = 500.px
-            background = Color.rgb(0, 255, 0)
+            background = Color.rgb(200, 200, 220)
+            marginBottom = 10.px
         }
         view {
             id = "View2"
             width = 500.px
             height = 500.px
-            background = Color.rgb(0, 0, 255)
+            marginBottom = 10.px
+            background = Color.rgb(140, 140, 180)
         }
+
         view {
             id = "View3"
             width = 500.px
             height = 500.px
-            background = Color.rgb(255, 0, 0)
+            background = Color.rgb(180, 180, 200)
         }
     }
 }
@@ -62,141 +99,68 @@ private fun LinearLayout.addSideBar(lightGrey: Color) {
         id = "Vertical Layout"
         background = Color.white
         padding = 20.px
-        width = 380.px
+        width = 280.px
         height = matchParent
         isScrollableVertically = true
         alignItems = Alignment.Center
 
         textView {
             id = "HelloWorld"
-            text = "First item in list and also a very long string that takes more than one line but it is wrap content"
-            width = wrapContent
-            height = wrapContent
-            paddingStart = 10.px
-            paddingEnd = 10.px
-            marginTop = 8.px
-            marginBottom = 8.px
-        }
-
-        addSeparator(lightGrey)
-
-        textView {
-            id = "HelloWorld"
-            text = "Second item in list"
+            text = "First view"
             width = matchParent
             height = wrapContent
             paddingStart = 10.px
             paddingEnd = 10.px
             marginTop = 8.px
             marginBottom = 8.px
+            textAlign = TextView.TextAlign.Center
+        }
+
+        addSeparator(lightGrey)
+
+        textView {
+            id = "HelloWorld"
+            text = "Second view"
+            width = matchParent
+            height = wrapContent
+            paddingStart = 10.px
+            paddingEnd = 10.px
+            marginTop = 8.px
+            marginBottom = 8.px
+            textAlign = TextView.TextAlign.Center
         }
 
         addSeparator(lightGrey)
 
         val thirdText = textView {
-            id = "HelloWorld"
-            text = "Third item in list"
+            id = "third_view"
+            text = "Third view"
             width = matchParent
             height = wrapContent
             paddingStart = 10.px
             paddingEnd = 10.px
             marginTop = 8.px
             marginBottom = 8.px
+            textAlign = TextView.TextAlign.Center
         }
 
         addSeparator(lightGrey)
 
-        button {
-            id = "Button"
-            width = matchParent
-            height = 44.px
-            marginBottom = 16.px
-            onClick = {
-                println("Button clicked")
-            }
-        }
 
-        val redView = view {
-            id = "redView"
-            width = matchParent
-            height = 40.px
-            marginBottom = 8.px
-            background = Color.red
-            onClick = {
-                println("Red view clicked")
-            }
-        }
+//
+//        val redView = view {
+//            id = "redView"
+//            width = matchParent
+//            height = 40.px
+//            marginBottom = 8.px
+//            background = Color.red
+//            onClick = {
+//                println("Red view clicked")
+//            }
+//        }
+//
+//        addSeparator(lightGrey)
 
-        addSeparator(lightGrey)
-
-        view {
-            id = "ThirdView"
-            width = 130.px
-            height = 40.px
-            marginBottom = 8.px
-            background = Color.rgb(255, 0, 255)
-        }
-
-        view {
-            id = "ThirdView"
-            width = 370.px
-            height = 40.px
-            marginBottom = 8.px
-            background = lightGrey
-        }
-
-        textView {
-            id = "HelloWorld"
-            text = "First item in list"
-            width = matchParent
-            height = wrapContent
-            paddingStart = 10.px
-            paddingEnd = 10.px
-            marginTop = 8.px
-            marginBottom = 8.px
-        }
-
-        addSeparator(lightGrey)
-
-        view {
-            id = "ThirdView"
-            width = 370.px
-            height = 40.px
-            marginBottom = 8.px
-            background = lightGrey
-        }
-
-        textView {
-            id = "HelloWorld"
-            text = "First item in list"
-            width = matchParent
-            height = wrapContent
-            paddingStart = 10.px
-            paddingEnd = 10.px
-            marginTop = 8.px
-            marginBottom = 8.px
-        }
-
-        addSeparator(lightGrey)
-
-        view {
-            id = "ThirdView"
-            width = 370.px
-            height = 40.px
-            marginBottom = 8.px
-            background = lightGrey
-        }
-
-        textView {
-            id = "HelloWorld"
-            text = "First item in list"
-            width = matchParent
-            height = wrapContent
-            paddingStart = 10.px
-            paddingEnd = 10.px
-            marginTop = 8.px
-            marginBottom = 8.px
-        }
     }
 }
 

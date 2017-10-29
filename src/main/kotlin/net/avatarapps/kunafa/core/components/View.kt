@@ -26,6 +26,13 @@ import kotlin.properties.Delegates.observable
  */
 open class View(var parent: Container? = null) {
     var id: String? = null
+        set(value) {
+            field = value
+            value?.let {
+                element.id = it
+            }
+        }
+
     open val element: HTMLElement = document.createElement("div") as HTMLDivElement
 
     var viewController: ViewController? = null
@@ -67,7 +74,7 @@ open class View(var parent: Container? = null) {
 
     }
 
-    open var onClick: ((Event) -> dynamic)? = null
+    open var onClick: ((Event) -> Unit)? = null
         set(value) {
             field = value
             element.onclick = value

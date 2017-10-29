@@ -11,8 +11,15 @@ import net.avatarapps.kunafa.core.components.View
  * Created by islam
  * On: 9/30/17.
  */
-abstract class Container(parent: Container?) : View(parent) {
+open class Container(parent: Container?) : View(parent) {
     val children: ArrayList<View> = arrayListOf()
+
+    override fun configureElement() {
+        super.configureElement()
+
+        isScrollableVertically = true
+        isScrollableHorizontally = true
+    }
 
     open fun addChild(child: View) {
         addToElement(child)
