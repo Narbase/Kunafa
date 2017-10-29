@@ -15,8 +15,8 @@ fun main(args: Array<String>) {
         horizontalLayout {
             id = "horizontalLayout"
             background = lightGrey
-            setMargin(0.px)
-            setPadding(0.px)
+            margin = 0.px
+            padding = 0.px
             width = matchParent
             height = matchParent
 
@@ -31,7 +31,7 @@ private fun LinearLayout.addMainContent(): LinearLayout {
     return verticalLayout {
         id = "Vertical layout"
         background = Color.white
-        setPadding(20.px)
+        padding = 20.px
         marginStart = 2.px
         width = weightOf(1)
         height = matchParent
@@ -61,7 +61,7 @@ private fun LinearLayout.addSideBar(lightGrey: Color) {
     verticalLayout {
         id = "Vertical Layout"
         background = Color.white
-        setPadding(20.px)
+        padding = 20.px
         width = 380.px
         height = matchParent
         isScrollableVertically = true
