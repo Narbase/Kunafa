@@ -8,7 +8,10 @@ import net.avatarapps.kunafa.core.dimensions.independent.Pixel
 import net.avatarapps.kunafa.core.dimensions.independent.Point
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
+import net.avatarapps.kunafa.core.viewcontroller.ViewController
 import org.w3c.dom.HTMLDivElement
+import org.w3c.dom.HTMLElement
+import org.w3c.dom.events.Event
 import kotlin.browser.document
 import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
@@ -23,7 +26,9 @@ import kotlin.properties.Delegates.observable
  */
 open class View(var parent: Container? = null) {
     var id: String? = null
-    val element = document.createElement("div") as HTMLDivElement
+    open val element: HTMLElement = document.createElement("div") as HTMLDivElement
+
+    var viewController: ViewController? = null
 
     private fun updateElementDimensions() {
         updateElementWidth()
@@ -62,6 +67,12 @@ open class View(var parent: Container? = null) {
 
     }
 
+    open var onClick: ((Event) -> dynamic)? = null
+        set(value) {
+            field = value
+            element.onclick = value
+        }
+
     open var width: Dimension = wrapContent
         set(value) {
             field = value
@@ -72,20 +83,6 @@ open class View(var parent: Container? = null) {
         set(value) {
             field = value
             updateElementDimensions()
-        }
-
-    val extendedWidth: Pixel?
-        get() {
-            return (width as? CalculatedDimension)?.let {
-                Pixel(it.pixels + (marginStart.pixels + marginEnd.pixels))
-            }
-        }
-
-    val extendedHeight: Pixel?
-        get() {
-            return (height as? CalculatedDimension)?.let {
-                Pixel(it.pixels + (marginTop.pixels + marginBottom.pixels))
-            }
         }
 
     open val wrappedContentWidth: IndependentDimension
@@ -151,19 +148,17 @@ open class View(var parent: Container? = null) {
         element.style.overflowY = if (newValue) "scroll" else "hidden"
     }
 
-    init {
-        setMargin(0.px)
-        setPadding(0.px)
-    }
-
     open fun configureElement() {
         element.style.boxSizing = "border-box"
+        setMargin(0.px)
+        setPadding(0.px)
     }
 
     fun <V : View> V.visit(setup: V.() -> Unit): V {
         configureElement()
         this.addToParent()
         this.setup()
+        this.viewController?.onViewCreated()
         return this
     }
 
@@ -201,9 +196,9 @@ open class View(var parent: Container? = null) {
     }
 
     var alignSelf: Alignment = Alignment.Start
-    set(value) {
-        element.style.alignSelf = value.cssName
-    }
+        set(value) {
+            element.style.alignSelf = value.cssName
+        }
 
 }
 

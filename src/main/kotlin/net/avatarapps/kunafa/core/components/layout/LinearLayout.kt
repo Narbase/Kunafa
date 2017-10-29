@@ -44,7 +44,6 @@ class LinearLayout(
 enum class Alignment(
         val cssName: String
 ) {
-
     Start("flex-start"),
     End("flex-end"),
     Center("center"),

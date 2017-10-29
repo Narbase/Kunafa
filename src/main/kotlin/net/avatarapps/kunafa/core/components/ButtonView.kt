@@ -6,7 +6,9 @@ import net.avatarapps.kunafa.core.dimensions.Dimension
 import net.avatarapps.kunafa.core.dimensions.DynamicDimension
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
+import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLSpanElement
+import org.w3c.dom.events.Event
 import kotlin.browser.document
 
 /**
@@ -18,12 +20,20 @@ import kotlin.browser.document
  * On: 10/15/17.
  */
 class ButtonView(parent: Container? = null) : View(parent) {
+//    override val element: HTMLElement = document.createElement("button") as HTMLButtonElement
+
     val button by lazy {
-        element.hidden = true
         val b = document.createElement("button") as HTMLButtonElement
         element.append(b)
         return@lazy b
     }
+
+    override var onClick: ((Event) -> dynamic)? = null
+        set(value) {
+            field = value
+            button.onclick = onClick
+            println("Added click listener: ${button.onclick}")
+        }
 
     override fun updateContentWidth() {
         super.updateContentWidth()
