@@ -170,7 +170,7 @@ private fun LinearLayout.addSideBar(
         isScrollableVertically = true
         alignItems = Alignment.Center
 
-        val text1 = textView {
+        textView {
             id = "firstView"
             text = "First view"
             width = matchParent
@@ -205,7 +205,7 @@ private fun LinearLayout.addSideBar(
 
         addSeparator(lightGrey)
 
-        val thirdText = textView {
+        textView {
             id = "thirdView"
             text = "Third view"
             width = matchParent
@@ -221,17 +221,6 @@ private fun LinearLayout.addSideBar(
         }
 
         addSeparator(lightGrey)
-
-//
-//        val redView = view {
-//            id = "redView"
-//            width = matchParent
-//            height = 40.px
-//            marginBottom = 8.px
-//            background = Color.red
-//        }
-//
-//        addSeparator(lightGrey)
 
     }
 }
