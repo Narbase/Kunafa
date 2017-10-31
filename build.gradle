@@ -5,45 +5,65 @@ buildscript {
     ext.kotlin_version = '1.1.2-2'
 
     repositories {
-        mavenCentral()
+        jcenter()
+        maven {
+            url "https://dl.bintray.com/kotlin/kotlin-eap"
+        }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.19"
     }
 }
 
+
+
 apply plugin: 'kotlin2js'
+apply plugin: 'org.jetbrains.kotlin.frontend'
+
+
+compileKotlin2Js {
+    kotlinOptions.sourceMap = true
+    kotlinOptions.outputFile = "${projectDir}/src/main/web/js/kunafa_main.js"
+    kotlinOptions.moduleKind = "plain"
+}
+
+kotlinFrontend {
+    webpackBundle {
+        bundleName = "main"
+        sourceMapEnabled = true   // enable/disable source maps
+        contentPath = file('src/main/web') // a file that represents a directory to be served by dev server)
+        publicPath = "/"  // web prefix
+        port = 8088   // dev server port
+        stats = "errors-only"  // log level
+    }
+}
+
+
+//task assembleWeb(type: Sync) {
+//    configurations.compile.each { File file ->
+//        from(zipTree(file.absolutePath), {
+//            includeEmptyDirs = false
+//            include { fileTreeElement ->
+//                def path = fileTreeElement.path
+//                path.endsWith(".js") && (path.startsWith("META-INF/resources/") ||
+//                        !path.startsWith("META-INF/"))
+//            }
+//        })
+//    }
+//    from compileKotlin2Js.destinationDir
+//    into "${projectDir}/src/main/web/js"
+//
+//    dependsOn classes
+//}
+
+//assemble.dependsOn assembleWeb
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
 }
-
-compileKotlin2Js {
-    kotlinOptions.sourceMap = true
-//    kotlinOptions.outputFile = "${projectDir}/web/output.js"
-    kotlinOptions.moduleKind = "plain"
-
-}
-
-task assembleWeb(type: Sync) {
-    configurations.compile.each { File file ->
-        from(zipTree(file.absolutePath), {
-            includeEmptyDirs = false
-            include { fileTreeElement ->
-                def path = fileTreeElement.path
-                path.endsWith(".js") && (path.startsWith("META-INF/resources/") ||
-                        !path.startsWith("META-INF/"))
-            }
-        })
-    }
-    from compileKotlin2Js.destinationDir
-    into "${projectDir}/web"
-
-    dependsOn classes
-}
-
-assemble.dependsOn assembleWeb

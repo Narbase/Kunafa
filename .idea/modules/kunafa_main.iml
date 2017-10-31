@@ -5,7 +5,7 @@
       <configuration version="2" platform="JavaScript " useProjectSettings="false">
         <compilerSettings />
         <compilerArguments>
-          <option name="outputFile" value="$MODULE_DIR$/../../build/classes/main/kunafa_main.js" />
+          <option name="outputFile" value="$MODULE_DIR$/../../src/main/web/js/kunafa_main.js" />
           <option name="noStdlib" value="true" />
           <option name="sourceMap" value="true" />
           <option name="metaInfo" value="true" />
@@ -25,7 +25,7 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output url="file://$MODULE_DIR$/../../build/classes/main" />
+    <output url="file://$MODULE_DIR$/../../src/main/web/js" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/java" isTestSource="false" />
@@ -35,5 +35,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-js:1.1.2-2" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-test-js:1.1.2-2" level="project" />
   </component>
 </module>
