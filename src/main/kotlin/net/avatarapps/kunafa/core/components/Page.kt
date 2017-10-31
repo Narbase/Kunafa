@@ -17,10 +17,13 @@ import kotlin.dom.clear
  */
 object Page : Container(null) {
 
-    override val wrappedContentWidth: IndependentDimension
-        get() = throw DimensionNotAvailableOnViewException()
-    override val wrappedContentHeight: IndependentDimension
-        get() = throw DimensionNotAvailableOnViewException()
+    override fun updateElementWidth() {
+        document.body?.style?.width = "${window.innerWidth}px"
+    }
+
+    override fun updateElementHeight() {
+        document.body?.style?.height = "${window.innerHeight}px"
+    }
 
     override fun addChild(child: View) {
         document.body?.append(child.element)
@@ -34,34 +37,32 @@ object Page : Container(null) {
     }
 
     fun prepare() {
-        width = window.innerWidth.px
-        height = window.innerHeight.px
-        window.onresize = {
-            onResizedListeners.forEach { it.second() }
-        }
-        id = "Page"
-        element.id = id ?: ""
+        id = "page"
         document.body?.style?.margin = "0"
         document.body?.style?.padding = "0"
         document.body?.style?.overflowY = "hidden"
         document.body?.style?.overflowX = "hidden"
         document.body?.clear()
 
+        width = window.innerWidth.px
+        height = window.innerHeight.px
+
         addOnResizedListener(this) {
             width = window.innerWidth.px
             height = window.innerHeight.px
         }
+
+        window.onresize = {
+            onResizedListeners.forEach { it.second() }
+        }
+
+
     }
 
     override fun addToParent() {
-    }
-
-    override fun updateElementWidth() {
-        document.body?.style?.width = "${window.innerWidth}px"
-    }
-
-    override fun updateElementHeight() {
-        document.body?.style?.height = "${window.innerHeight}px"
+        /*
+        Should be empty. Page cannot be added to parent
+         */
     }
 
 }

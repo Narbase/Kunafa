@@ -2,8 +2,9 @@ package net.avatarapps.kunafa.core.components
 
 import net.avatarapps.kunafa.core.components.Page.visit
 import net.avatarapps.kunafa.core.components.layout.Container
+import net.avatarapps.kunafa.core.components.layout.DetachedView
 import net.avatarapps.kunafa.core.components.layout.LinearLayout
-import net.avatarapps.kunafa.core.dimensions.Dimension
+import net.avatarapps.kunafa.core.components.layout.ViewContainer
 import net.avatarapps.kunafa.core.dimensions.IndependentDimension
 
 /**
@@ -20,8 +21,10 @@ fun page(setupAndAddChildren: Container.() -> Unit = {}){
     Page.visit(setupAndAddChildren)
 }
 
+fun detachedView(block: DetachedView.() -> Unit): DetachedView = DetachedView().visit(block)
 fun Container.verticalLayout(block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(block)
 fun Container.horizontalLayout(block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(block)
+fun Container.viewContainer(block: ViewContainer.() -> Unit): ViewContainer = ViewContainer(this).visit(block)
 
 fun Container.view(block: View.() -> Unit): View = View(this).visit(block)
 fun Container.textView(block: TextView.() -> Unit): TextView = TextView(this).visit(block)

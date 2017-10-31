@@ -32,7 +32,6 @@ class ButtonView(parent: Container? = null) : View(parent) {
         set(value) {
             field = value
             button.onclick = onClick
-            println("Added click listener: ${button.onclick}")
         }
 
     override fun updateContentWidth() {

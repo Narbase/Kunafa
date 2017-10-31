@@ -16,7 +16,6 @@ open class Container(parent: Container?) : View(parent) {
 
     override fun configureElement() {
         super.configureElement()
-
         isScrollableVertically = true
         isScrollableHorizontally = true
     }
@@ -35,7 +34,6 @@ open class Container(parent: Container?) : View(parent) {
         children.remove(child)
         element.removeChild(child.element)
         child.parent = null
-
     }
 
 }

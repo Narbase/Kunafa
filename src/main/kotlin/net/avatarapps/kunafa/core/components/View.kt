@@ -4,11 +4,10 @@ import net.avatarapps.kunafa.core.components.layout.Alignment
 import net.avatarapps.kunafa.core.components.layout.Container
 import net.avatarapps.kunafa.core.dimensions.*
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
-import net.avatarapps.kunafa.core.dimensions.independent.Pixel
 import net.avatarapps.kunafa.core.dimensions.independent.Point
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
-import net.avatarapps.kunafa.core.viewcontroller.ViewController
+import net.avatarapps.kunafa.core.presenter.Presenter
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -35,7 +34,7 @@ open class View(var parent: Container? = null) {
 
     open val element: HTMLElement = document.createElement("div") as HTMLDivElement
 
-    var viewController: ViewController? = null
+    var presenter: Presenter? = null
 
     private fun updateElementDimensions() {
         updateElementWidth()
@@ -165,7 +164,7 @@ open class View(var parent: Container? = null) {
         configureElement()
         this.addToParent()
         this.setup()
-        this.viewController?.onViewCreated()
+        this.presenter?.onViewCreated()
         return this
     }
 

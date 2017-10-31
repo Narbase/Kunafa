@@ -1,4 +1,4 @@
-package net.avatarapps.kunafa.core.components.layout
+package net.avatarapps.kunafa.core.presenter
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -8,6 +8,8 @@ package net.avatarapps.kunafa.core.components.layout
  * Created by islam
  * On: 10/26/17.
  */
-class DetachedContainer: Container(null) {
+class Presenter {
+    open fun onViewCreated(){
 
+    }
 }
