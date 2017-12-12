@@ -32,7 +32,6 @@ class App {
                 id = "mainView"
                 width = matchParent
                 height = matchParent
-                content = loginPage
             }
         }
     }

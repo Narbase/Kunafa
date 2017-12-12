@@ -30,6 +30,7 @@ class LoginPageContent(
             background = Color.rgb(245, 245, 245)
             margin = 0.px
             padding = 0.px
+            paddingBottom = 100.px
             width = matchParent
             height = matchParent
             alignItems = Alignment.Center

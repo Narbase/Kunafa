@@ -40,7 +40,7 @@ class DashboardPageContent(
             mainView =  viewContainer {
                 id = "mainView"
                 background = Color.rgb(245, 245, 245)
-                padding = 20.px
+                paddingStart = 2.px
                 marginStart = 2.px
                 width = weightOf(1)
                 height = matchParent
@@ -64,7 +64,7 @@ class DashboardPageContent(
 
             textView {
                 id = "firstView"
-                text = "First view"
+                text = "Salesmen"
                 width = matchParent
                 height = wrapContent
                 paddingStart = 10.px
@@ -82,7 +82,7 @@ class DashboardPageContent(
 
             textView {
                 id = "secondView"
-                text = "Second view"
+                text = "Salesmen requests"
                 width = matchParent
                 height = wrapContent
                 paddingStart = 10.px
@@ -99,7 +99,24 @@ class DashboardPageContent(
 
             textView {
                 id = "thirdView"
-                text = "Third view"
+                text = "Zones"
+                width = matchParent
+                height = wrapContent
+                paddingStart = 10.px
+                paddingEnd = 10.px
+                marginTop = 8.px
+                marginBottom = 8.px
+                textAlign = TextView.TextAlign.Center
+                onClick = {
+                    mainView?.content = ThirdView()
+                }
+            }
+
+            addSeparator(lightGrey)
+
+            textView {
+                id = "fourthView"
+                text = "Reports"
                 width = matchParent
                 height = wrapContent
                 paddingStart = 10.px
@@ -201,7 +218,7 @@ class FirstView : ViewContent() {
             id = "Vertical layout"
             background = Color.white
             padding = 20.px
-            marginStart = 2.px
+            marginStart = 0.px
             width = matchParent
             height = matchParent
             isScrollableVertically = true

@@ -33,5 +33,6 @@ class AppPresenter(
 
     override fun onViewCreated(view: View) {
         mainView = view as? ViewContainer
+        mainView?.content = loginPage
     }
 }
