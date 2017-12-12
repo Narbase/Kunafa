@@ -27,7 +27,7 @@ class App {
         appPresenter.dashboardPage = dashboardPage
 
         page {
-            appPresenter.mainView = viewContainer {
+            viewContainer {
                 presenter = appPresenter
                 id = "mainView"
                 width = matchParent

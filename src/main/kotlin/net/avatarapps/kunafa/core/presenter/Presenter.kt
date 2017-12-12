@@ -11,5 +11,5 @@ import net.avatarapps.kunafa.core.components.View
  * On: 10/26/17.
  */
 abstract class Presenter {
-    abstract fun onViewCreated()
+    abstract fun onViewCreated(view: View)
 }

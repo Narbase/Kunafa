@@ -1,6 +1,7 @@
 package net.avatarapps.dopa.dashboard.login
 
 import net.avatarapps.kunafa.core.components.ButtonView
+import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.presenter.Presenter
 
 /**
@@ -13,7 +14,7 @@ import net.avatarapps.kunafa.core.presenter.Presenter
  */
 class LoginPresenter : Presenter() {
     var loginButton : ButtonView? = null
-    override fun onViewCreated() {
+    override fun onViewCreated(view: View) {
 
     }
 

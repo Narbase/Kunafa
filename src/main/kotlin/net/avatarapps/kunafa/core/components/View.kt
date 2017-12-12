@@ -164,7 +164,7 @@ open class View(var parent: Container? = null) {
         configureElement()
         this.addToParent()
         this.setup()
-        this.presenter?.onViewCreated()
+        this.presenter?.onViewCreated(this)
         return this
     }
 
