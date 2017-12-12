@@ -1,10 +1,7 @@
 package net.avatarapps.booking
 
 import net.avatarapps.kunafa.core.components.*
-import net.avatarapps.kunafa.core.components.layout.Alignment
-import net.avatarapps.kunafa.core.components.layout.DetachedView
-import net.avatarapps.kunafa.core.components.layout.LinearLayout
-import net.avatarapps.kunafa.core.components.layout.ViewContainer
+import net.avatarapps.kunafa.core.components.layout.*
 import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
 import net.avatarapps.kunafa.core.dimensions.dependent.weightOf
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
@@ -21,25 +18,86 @@ fun main(args: Array<String>) {
     page {
         horizontalLayout {
             id = "horizontalLayout"
-            background = lightGrey
+            background = Color.rgb(245, 245, 245)
             margin = 0.px
             padding = 0.px
             width = matchParent
             height = matchParent
+            alignItems = Alignment.Center
+            justifyContent = JustifyContent.Center
 
-            addSideBar(lightGrey, firstView, secondView, thirdView)
-
-            mainView =  viewContainer {
-                id = "mainView"
-                background = Color.rgb(245, 245, 245)
-                padding = 20.px
-                marginStart = 2.px
-                width = weightOf(1)
-                height = matchParent
-                isScrollableVertically = true
+            verticalLayout {
+                background = Color.rgb(255, 255, 255)
+                width = 480.px
+                padding = 24.px
+                height = wrapContent
                 alignItems = Alignment.Center
-                content = firstView
+                justifyContent = JustifyContent.Center
+
+                imageView {
+                    width = 188.px
+                    height = 148.px
+                    img.src = "https://www.clker.com/cliparts/E/G/n/Y/R/v/blue-pharmacy-logo.svg"
+                }
+
+                textView {
+                    width = matchParent
+                    height = wrapContent
+                    text = "Dopa Dashboard"
+                    textColor = Color.rgb(55, 55, 55)
+                    textSize = 32.px
+                    textAlign = TextView.TextAlign.Center
+                }
+
+                textInput {
+                    width = matchParent
+                    height = wrapContent
+                    placeholder = "Email"
+                    textSize = 18.px
+                    margin = 4.px
+                }
+
+                textInput {
+                    width = matchParent
+                    height = wrapContent
+                    placeholder = "password"
+                    textSize = 18.px
+                    margin = 4.px
+                }
+
+                button {
+                    width = matchParent
+                    height = 38.px
+                    button.textContent = "Login"
+                    marginTop = 18.px
+
+                }
             }
+        }
+    }
+}
+
+private fun Container.addPageContent(lightGrey: Color, firstView: DetachedView, secondView: DetachedView, thirdView: DetachedView) {
+    horizontalLayout {
+        id = "horizontalLayout"
+        background = lightGrey
+        margin = 0.px
+        padding = 0.px
+        width = matchParent
+        height = matchParent
+
+        addSideBar(lightGrey, firstView, secondView, thirdView)
+
+        mainView = viewContainer {
+            id = "mainView"
+            background = Color.rgb(245, 245, 245)
+            padding = 20.px
+            marginStart = 2.px
+            width = weightOf(1)
+            height = matchParent
+            isScrollableVertically = true
+            alignItems = Alignment.Center
+            content = firstView
         }
     }
 }
