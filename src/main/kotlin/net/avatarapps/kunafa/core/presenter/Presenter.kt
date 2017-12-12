@@ -1,5 +1,7 @@
 package net.avatarapps.kunafa.core.presenter
 
+import net.avatarapps.kunafa.core.components.View
+
 /**
  * AVATAR APPS CONFIDENTIAL
  * ______________________________

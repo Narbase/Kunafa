@@ -1,4 +1,4 @@
-package net.avatarapps.dopa.dashboard
+package net.avatarapps.dopa.dashboard.dashboard
 
 import net.avatarapps.kunafa.core.presenter.Presenter
 

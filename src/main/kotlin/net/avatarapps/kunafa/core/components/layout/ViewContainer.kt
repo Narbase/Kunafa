@@ -1,5 +1,6 @@
 package net.avatarapps.kunafa.core.components.layout
 
+import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.View
 
 /**
@@ -20,17 +21,31 @@ open class ViewContainer(
         super.addChild(child)
     }
 
-    var content: DetachedView? = null
+    var content: ViewContent? = null
         set(value) {
-            field = value
-            children.forEach {
-                removeChild(it)
-            }
-            value?.content?.let {
+            value?.content?.content?.let {
+                field = value
+
+                this.children.forEach {
+                    this.removeChild(it)
+                }
+
                 console.log(it)
-                addChild(it)
+                this.addChild(it)
             }
         }
+
+//    var content: DetachedView? = null
+//        set(value) {
+//            field = value
+//            children.forEach {
+//                removeChild(it)
+//            }
+//            value?.content?.let {
+//                console.log(it)
+//                addChild(it)
+//            }
+//        }
 }
 
 class MoreThanOneChildInViewContainerException : Exception() {

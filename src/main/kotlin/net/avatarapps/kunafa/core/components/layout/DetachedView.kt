@@ -20,8 +20,8 @@ class DetachedView : Container(null) {
     }
 
     override fun addToParent() {
-
     }
+
     val content: View?
         get() {
             return if (children.size > 0) children[0]

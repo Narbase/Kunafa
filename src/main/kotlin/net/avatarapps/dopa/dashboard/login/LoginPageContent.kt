@@ -18,14 +18,15 @@ import net.avatarapps.kunafa.core.drawable.Color
  * Created by islam
  * On: 12/12/17.
  */
-class LoginPageContent : ViewContent() {
-
-
+class LoginPageContent(
+        val loginPresenter: LoginPresenter,
+        val navigator: LoginPageNavigator
+) : ViewContent() {
 
     override fun DetachedView.contentDefinition() {
         horizontalLayout {
             id = "horizontalLayout"
-            presenter = LoginPresenter()
+            presenter = loginPresenter
             background = Color.rgb(245, 245, 245)
             margin = 0.px
             padding = 0.px
@@ -80,10 +81,16 @@ class LoginPageContent : ViewContent() {
                     height = 38.px
                     button.textContent = "Login"
                     marginTop = 18.px
-
-
+                    onClick = {
+                        println("I am clicked")
+                        navigator.onLoggedInSuccessful()
+                    }
                 }
             }
         }
     }
+}
+
+interface LoginPageNavigator {
+    fun onLoggedInSuccessful()
 }
