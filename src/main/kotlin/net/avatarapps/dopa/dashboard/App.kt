@@ -1,9 +1,9 @@
-package net.avatarapps.booking
+package net.avatarapps.dopa.dashboard
 
+import net.avatarapps.dopa.dashboard.login.LoginPageContent
 import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.*
 import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
-import net.avatarapps.kunafa.core.dimensions.dependent.weightOf
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
@@ -14,65 +14,15 @@ fun main(args: Array<String>) {
     val firstView = getFirstView()
     val secondView = getSecondView()
     val thirdView = getThirdView()
+    val loginPage = LoginPageContent()
 
     page {
-        horizontalLayout {
-            id = "horizontalLayout"
-            background = Color.rgb(245, 245, 245)
-            margin = 0.px
-            padding = 0.px
+        mainView = viewContainer {
+            presenter = DashboardPresenter()
+            id = "mainView"
             width = matchParent
             height = matchParent
-            alignItems = Alignment.Center
-            justifyContent = JustifyContent.Center
-
-            verticalLayout {
-                background = Color.rgb(255, 255, 255)
-                width = 480.px
-                padding = 24.px
-                height = wrapContent
-                alignItems = Alignment.Center
-                justifyContent = JustifyContent.Center
-
-                imageView {
-                    width = 188.px
-                    height = 148.px
-                    img.src = "https://www.clker.com/cliparts/E/G/n/Y/R/v/blue-pharmacy-logo.svg"
-                }
-
-                textView {
-                    width = matchParent
-                    height = wrapContent
-                    text = "Dopa Dashboard"
-                    textColor = Color.rgb(55, 55, 55)
-                    textSize = 32.px
-                    textAlign = TextView.TextAlign.Center
-                }
-
-                textInput {
-                    width = matchParent
-                    height = wrapContent
-                    placeholder = "Email"
-                    textSize = 18.px
-                    margin = 4.px
-                }
-
-                textInput {
-                    width = matchParent
-                    height = wrapContent
-                    placeholder = "password"
-                    textSize = 18.px
-                    margin = 4.px
-                }
-
-                button {
-                    width = matchParent
-                    height = 38.px
-                    button.textContent = "Login"
-                    marginTop = 18.px
-
-                }
-            }
+            content = loginPage.content
         }
     }
 }
@@ -85,22 +35,10 @@ private fun Container.addPageContent(lightGrey: Color, firstView: DetachedView, 
         padding = 0.px
         width = matchParent
         height = matchParent
-
         addSideBar(lightGrey, firstView, secondView, thirdView)
-
-        mainView = viewContainer {
-            id = "mainView"
-            background = Color.rgb(245, 245, 245)
-            padding = 20.px
-            marginStart = 2.px
-            width = weightOf(1)
-            height = matchParent
-            isScrollableVertically = true
-            alignItems = Alignment.Center
-            content = firstView
-        }
     }
 }
+
 
 private fun getThirdView(): DetachedView {
     return detachedView {

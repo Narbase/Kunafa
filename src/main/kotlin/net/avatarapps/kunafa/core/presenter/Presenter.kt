@@ -8,8 +8,6 @@ package net.avatarapps.kunafa.core.presenter
  * Created by islam
  * On: 10/26/17.
  */
-open class Presenter {
-    open fun onViewCreated(){
-
-    }
+abstract class Presenter {
+    abstract fun onViewCreated()
 }
