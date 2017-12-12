@@ -70,14 +70,29 @@ private fun getSecondView(): DetachedView {
             height = matchParent
             background = Color.white
             padding = 20.px
+
             textView {
                 width = matchParent
-                height = matchParent
+                height = wrapContent
                 text = "Hi, I am second view"
                 textAlign = TextView.TextAlign.Center
                 textSize = 24.px
                 textColor = Color.rgb(100, 100, 100)
             }
+
+            textInput {
+                width = matchParent
+                height = wrapContent
+                placeholder = "Fill me in, baby"
+                textAlign = TextView.TextAlign.Left
+                textSize = 24.px
+                textColor = Color.rgb(100, 100, 100)
+                onChange = {event ->
+                    println("Printed: ${this@textInput.text}")
+                }
+            }
+
+
         }
     }
 }

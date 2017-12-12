@@ -52,9 +52,6 @@ class ButtonView(parent: Container? = null) : View(parent) {
             button.style.height = "${it.pixels}px"
             button.style.minHeight = "${it.pixels}px"
         }
-
-
-
     }
 
 }

@@ -28,6 +28,7 @@ fun Container.viewContainer(block: ViewContainer.() -> Unit): ViewContainer = Vi
 
 fun Container.view(block: View.() -> Unit): View = View(this).visit(block)
 fun Container.textView(block: TextView.() -> Unit): TextView = TextView(this).visit(block)
+fun Container.textInput(block: TextInput.() -> Unit): TextInput = TextInput(this).visit(block)
 fun Container.button(block: ButtonView.() -> Unit): ButtonView = ButtonView(this).visit(block)
 
 
