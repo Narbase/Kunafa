@@ -11,6 +11,7 @@ import net.avatarapps.kunafa.core.dimensions.dependent.weightOf
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
+import org.w3c.dom.events.Event
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -28,6 +29,8 @@ class DashboardPageContent(
     private val drugsView = DrugsView()
     private val salesmenRequestsView = SalesmenRequestsView()
     private val zonesView = ZonesView()
+    private val salesmenView = SalesmenView()
+    private val reportsView = ReportsView()
 
     override fun DetachedView.contentDefinition() {
         horizontalLayout {
@@ -39,7 +42,7 @@ class DashboardPageContent(
             height = matchParent
             addSideBar(navigator)
 
-            mainView =  viewContainer {
+            mainView = viewContainer {
                 id = "mainView"
                 background = Color.rgb(245, 245, 245)
                 paddingStart = 2.px
@@ -56,7 +59,7 @@ class DashboardPageContent(
     private fun LinearLayout.addSideBar(navigator: DashboardNavigator) {
 
         verticalLayout {
-            id = "Vertical Layout"
+            id = "sidebar"
             background = Color.rgb(65, 38, 58)
             width = 280.px
             paddingTop = 40.px
@@ -64,114 +67,39 @@ class DashboardPageContent(
             isScrollableVertically = true
             alignItems = Alignment.Start
 
-            textView {
-                id = "drugsView"
-                text = "Drugs"
-                width = matchParent
-                height = wrapContent
-                paddingStart = 20.px
-                paddingEnd = 10.px
-                marginTop = 8.px
-                textColor = Color.white
-                marginBottom = 8.px
-                textAlign = TextView.TextAlign.Left
-                onClick = {
-
-                    mainView?.content = drugsView
-                }
+            addMenuItem("drugsView", "Drugs") {
+                mainView?.content = drugsView
             }
 
             addSeparator(lightPurple)
 
-            textView {
-                id = "salesmenView"
-                text = "Salesmen"
-                width = matchParent
-                height = wrapContent
-                paddingStart = 20.px
-                paddingEnd = 10.px
-                marginTop = 8.px
-                textColor = Color.white
-                marginBottom = 8.px
-                textAlign = TextView.TextAlign.Left
-                onClick = {
-
-                    mainView?.content = drugsView
-                }
+            addMenuItem("salesmenView", "Salesmen") {
+                mainView?.content = salesmenView
             }
 
             addSeparator(lightPurple)
 
-            textView {
-                id = "salesmenRequestsView"
-                text = "Salesmen requests"
-                width = matchParent
-                height = wrapContent
-                paddingStart = 20.px
-                paddingEnd = 10.px
-                marginTop = 8.px
-                marginBottom = 8.px
-                textColor = Color.white
-                textAlign = TextView.TextAlign.Left
-                onClick = {
-                    mainView?.content = salesmenRequestsView
-                }
+            addMenuItem("salesmenRequestsView", "Salesmen requests") {
+                mainView?.content = salesmenRequestsView
             }
 
             addSeparator(lightPurple)
 
-            textView {
-                id = "zonesView"
-                text = "Zones"
-                width = matchParent
-                height = wrapContent
-                paddingStart = 20.px
-                paddingEnd = 10.px
-                marginTop = 8.px
-                marginBottom = 8.px
-                textColor = Color.white
-                textAlign = TextView.TextAlign.Left
-                onClick = {
-                    mainView?.content = zonesView
-                }
+            addMenuItem("zonesView", "Zones") {
+                mainView?.content = zonesView
             }
 
             addSeparator(lightPurple)
 
-            textView {
-                id = "reportsView"
-                text = "Reports"
-                width = matchParent
-                height = wrapContent
-                paddingStart = 20.px
-                paddingEnd = 10.px
-                marginTop = 8.px
-                marginBottom = 8.px
-                textColor = Color.white
-                textAlign = TextView.TextAlign.Left
-                onClick = {
-                    mainView?.content = zonesView
-                }
+            addMenuItem("reportsView", "Reports") {
+                mainView?.content = reportsView
             }
 
             addSeparator(lightPurple)
 
-            textView {
-                id = "logoutView"
-                text = "Logout"
-                width = matchParent
-                height = wrapContent
-                paddingStart = 20.px
-                paddingEnd = 10.px
-                marginTop = 8.px
-                marginBottom = 8.px
-                textColor = Color.white
-                textAlign = TextView.TextAlign.Left
-                onClick = {
-                    navigator.onLogoutSelected()
-                }
+            addMenuItem("logoutView", "Logout") {
+                navigator.onLogoutSelected()
             }
-
         }
     }
 
@@ -185,6 +113,21 @@ class DashboardPageContent(
         }
     }
 
+    private fun LinearLayout.addMenuItem(idString: String, name: String, onClickListener: (Event) -> Unit) {
+        textView {
+            id = idString
+            text = name
+            width = matchParent
+            height = wrapContent
+            paddingStart = 20.px
+            paddingEnd = 10.px
+            marginTop = 8.px
+            marginBottom = 8.px
+            textColor = Color.white
+            textAlign = TextView.TextAlign.Left
+            onClick = onClickListener
+        }
+    }
 }
 
 interface DashboardNavigator {

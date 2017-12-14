@@ -20,7 +20,7 @@ class ZonesView : ViewContent() {
             textView {
                 width = matchParent
                 height = matchParent
-                text = "Welcome\nI am third view"
+                text = "Zones management"
                 textAlign = TextView.TextAlign.Center
                 textSize = 24.px
                 textColor = Color.rgb(100, 100, 100)
