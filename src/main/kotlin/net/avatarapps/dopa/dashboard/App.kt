@@ -1,11 +1,10 @@
 package net.avatarapps.dopa.dashboard
 
-import net.avatarapps.dopa.dashboard.dashboard.DashboardPageContent
+import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPageContent
 import net.avatarapps.dopa.dashboard.dashboard.DashboardPresenter
 import net.avatarapps.dopa.dashboard.login.LoginPageContent
 import net.avatarapps.dopa.dashboard.login.LoginPresenter
 import net.avatarapps.kunafa.core.components.*
-import net.avatarapps.kunafa.core.components.layout.*
 import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
 
 fun main(args: Array<String>) {
