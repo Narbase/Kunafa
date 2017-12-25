@@ -12,11 +12,12 @@ import net.avatarapps.kunafa.core.components.textView
  * Created by islam
  * On: 12/14/17.
  */
-class ReportsView : ViewContent() {
-    override fun DetachedView.contentDefinition() {
-        textView {
-            text = "Reports view"
+class ReportsView : DashboardPlainViewContent("Reports view") {
+    override val pageViewContent = object : ViewContent() {
+        override fun DetachedView.contentDefinition() {
+            textView {
+                text = "Reports view"
+            }
         }
     }
-
 }

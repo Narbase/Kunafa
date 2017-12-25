@@ -16,8 +16,8 @@ open class Container(parent: Container?) : View(parent) {
 
     override fun configureElement() {
         super.configureElement()
-        isScrollableVertically = true
-        isScrollableHorizontally = true
+        isScrollableVertically = false
+        isScrollableHorizontally = false
     }
 
     open fun addChild(child: View) {

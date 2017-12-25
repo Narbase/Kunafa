@@ -4,6 +4,7 @@ import net.avatarapps.dopa.dashboard.dashboard.view.DashboardNavigator
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPageContent
 import net.avatarapps.dopa.dashboard.login.LoginPageContent
 import net.avatarapps.dopa.dashboard.login.LoginPageNavigator
+import net.avatarapps.dopa.dashboard.storage.StorageManager
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.components.layout.ViewContainer
 import net.avatarapps.kunafa.core.presenter.Presenter
@@ -20,19 +21,25 @@ class AppPresenter(
 ) : Presenter(), LoginPageNavigator, DashboardNavigator {
 
     var loginPage: LoginPageContent? = null
-    var dashboardPage : DashboardPageContent? = null
+    var dashboardPage: DashboardPageContent? = null
     private var mainView: ViewContainer? = null
 
     override fun onLoggedInSuccessful() {
-        if (mainView == null) println("Main view is null")
+        StorageManager.setUserLoggedIn(true)
         mainView?.content = dashboardPage
     }
+
     override fun onLogoutSelected() {
+        StorageManager.setUserLoggedIn(false)
         mainView?.content = loginPage
     }
 
     override fun onViewCreated(view: View) {
         mainView = view as? ViewContainer
-        mainView?.content = loginPage
+        if (StorageManager.isUserLoggedIn()) {
+            mainView?.content = dashboardPage
+        } else {
+            mainView?.content = loginPage
+        }
     }
 }

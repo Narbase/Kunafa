@@ -1,5 +1,6 @@
 package net.avatarapps.dopa.dashboard.dashboard.view
 
+import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.Alignment
@@ -40,13 +41,12 @@ class DashboardPageContent(
             padding = 0.px
             width = matchParent
             height = matchParent
+
             addSideBar(navigator)
 
             mainView = viewContainer {
                 id = "mainView"
                 background = Color.rgb(245, 245, 245)
-                paddingStart = 2.px
-                marginStart = 2.px
                 width = weightOf(1)
                 height = matchParent
                 isScrollableVertically = true
@@ -60,42 +60,47 @@ class DashboardPageContent(
 
         verticalLayout {
             id = "sidebar"
-            background = Color.rgb(65, 38, 58)
-            width = 280.px
-            paddingTop = 40.px
+            background = DopaColors.mainDark
+            width = 210.px
             height = matchParent
-            isScrollableVertically = true
+            isScrollableVertically = false
             alignItems = Alignment.Start
+
+            verticalLayout {
+                height = wrapContent
+                padding = 16.px
+                width = matchParent
+                marginBottom = 16.px
+
+                imageView {
+                    width = matchParent
+                    height = matchParent
+                    img.src = "/public/img/logo.png"
+                }
+            }
+
 
             addMenuItem("drugsView", "Drugs") {
                 mainView?.content = drugsView
             }
 
-            addSeparator(lightPurple)
-
             addMenuItem("salesmenView", "Salesmen") {
                 mainView?.content = salesmenView
             }
-
-            addSeparator(lightPurple)
 
             addMenuItem("salesmenRequestsView", "Salesmen requests") {
                 mainView?.content = salesmenRequestsView
             }
 
-            addSeparator(lightPurple)
-
             addMenuItem("zonesView", "Zones") {
                 mainView?.content = zonesView
             }
-
-            addSeparator(lightPurple)
 
             addMenuItem("reportsView", "Reports") {
                 mainView?.content = reportsView
             }
 
-            addSeparator(lightPurple)
+            addSeparator(DopaColors.main)
 
             addMenuItem("logoutView", "Logout") {
                 navigator.onLogoutSelected()
@@ -108,8 +113,6 @@ class DashboardPageContent(
             width = matchParent
             height = 1.px
             background = lightGrey
-            marginTop = 8.px
-            marginBottom = 8.px
         }
     }
 
@@ -121,8 +124,8 @@ class DashboardPageContent(
             height = wrapContent
             paddingStart = 20.px
             paddingEnd = 10.px
-            marginTop = 8.px
-            marginBottom = 8.px
+            paddingTop = 10.px
+            paddingBottom = 10.px
             textColor = Color.white
             textAlign = TextView.TextAlign.Left
             onClick = onClickListener

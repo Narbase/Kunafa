@@ -1,5 +1,6 @@
 package net.avatarapps.dopa.dashboard.login
 
+import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.Alignment
@@ -27,7 +28,7 @@ class LoginPageContent(
         horizontalLayout {
             id = "horizontalLayout"
             presenter = loginPresenter
-            background = Color.rgb(245, 245, 245)
+            background = DopaColors.backgroundLight
             margin = 0.px
             padding = 0.px
             paddingBottom = 100.px
@@ -47,7 +48,8 @@ class LoginPageContent(
                 imageView {
                     width = 188.px
                     height = 148.px
-                    img.src = "https://www.clker.com/cliparts/E/G/n/Y/R/v/blue-pharmacy-logo.svg"
+                    img.src = "/public/img/logo.png"
+//                    img.src = "https://www.clker.com/cliparts/E/G/n/Y/R/v/blue-pharmacy-logo.svg"
                 }
 
                 textView {

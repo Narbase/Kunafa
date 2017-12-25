@@ -147,11 +147,11 @@ open class View(var parent: Container? = null) {
         element.style.paddingBottom = "${newValue.pixels}px"
     }
 
-    var isScrollableHorizontally by Delegates.observable(false) { _, _, newValue ->
-        element.style.overflowX = if (newValue) "scroll" else "hidden"
+    var isScrollableHorizontally by Delegates.observable(false) { _, _, isScrollable ->
+        element.style.overflowX = if (isScrollable) "scroll" else "hidden"
     }
-    var isScrollableVertically by Delegates.observable(false) { _, _, newValue ->
-        element.style.overflowY = if (newValue) "scroll" else "hidden"
+    var isScrollableVertically by Delegates.observable(false) { _, _, isScrollable ->
+        element.style.overflowY = if (isScrollable) "scroll" else "hidden"
     }
 
     open fun configureElement() {

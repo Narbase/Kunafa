@@ -10,20 +10,12 @@ import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
 
-class ZonesView : ViewContent() {
-    override fun DetachedView.contentDefinition() {
-        verticalLayout {
-            width = matchParent
-            height = matchParent
-            background = Color.white
-            padding = 20.px
+
+class ZonesView : DashboardPlainViewContent("Zones management") {
+    override val pageViewContent = object : ViewContent() {
+        override fun DetachedView.contentDefinition() {
             textView {
-                width = matchParent
-                height = matchParent
                 text = "Zones management"
-                textAlign = TextView.TextAlign.Center
-                textSize = 24.px
-                textColor = Color.rgb(100, 100, 100)
             }
         }
     }

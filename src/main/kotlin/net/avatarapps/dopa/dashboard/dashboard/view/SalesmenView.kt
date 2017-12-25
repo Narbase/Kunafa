@@ -1,8 +1,8 @@
 package net.avatarapps.dopa.dashboard.dashboard.view
 
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
+import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.DetachedView
-import net.avatarapps.kunafa.core.components.textView
 
 /**
  * NARBASE CONFIDENTIAL
@@ -12,10 +12,14 @@ import net.avatarapps.kunafa.core.components.textView
  * Created by islam
  * On: 12/14/17.
  */
-class SalesmenView : ViewContent() {
-    override fun DetachedView.contentDefinition() {
-        textView {
-            text = "Salesmen View"
+class SalesmenView : DashboardPlainViewContent("Salesmen view") {
+    override val pageViewContent = object : ViewContent() {
+        override fun DetachedView.contentDefinition() {
+            textView {
+                text = "I am in"
+            }
         }
     }
+
 }
+
