@@ -19,7 +19,7 @@ class LinearLayout(
 
     override fun configureElement() {
         super.configureElement()
-        element.style.display = "flex"
+        element.style.display = "inline-flex"
         element.style.flexDirection = if (orientation == Horizontal) "row" else "column"
     }
 

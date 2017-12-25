@@ -13,6 +13,8 @@ abstract class DashboardPlainViewContent(val title: String) : ViewContent() {
     override fun DetachedView.contentDefinition() {
         verticalLayout {
             padding = 16.px
+            width = matchParent
+            height = matchParent
             textView {
                 text = title
                 textColor = DopaColors.mainLight
