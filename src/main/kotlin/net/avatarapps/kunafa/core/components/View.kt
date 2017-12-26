@@ -79,6 +79,16 @@ open class View(var parent: Container? = null) {
             element.onclick = value
         }
 
+    open var maxWidth: CalculatedDimension? = null
+        set(value) {
+            field = value
+            value?.let {
+                element.style.maxWidth = "${it.pixels}px"
+            }
+            //TODO: Create and call updateContentMaxWidth()
+
+        }
+
     open var width: Dimension = wrapContent
         set(value) {
             field = value

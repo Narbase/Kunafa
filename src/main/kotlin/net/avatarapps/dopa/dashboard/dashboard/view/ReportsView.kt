@@ -1,8 +1,11 @@
 package net.avatarapps.dopa.dashboard.dashboard.view
 
+import net.avatarapps.dopa.dashboard.dashboard.view.salesmen.DashboardPlainPresenter
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
+import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.components.layout.DetachedView
 import net.avatarapps.kunafa.core.components.textView
+import net.avatarapps.kunafa.core.presenter.Presenter
 
 /**
  * AVATAR APPS CONFIDENTIAL
@@ -13,7 +16,13 @@ import net.avatarapps.kunafa.core.components.textView
  * On: 12/14/17.
  */
 class ReportsView : DashboardPlainViewContent("Reports view") {
-    override val pageViewContent = object : ViewContent() {
+    override val plainPresenter = object : DashboardPlainPresenter() {
+        override fun onViewCreated(view: View) {
+
+        }
+    }
+
+    override var pageViewContent = object : ViewContent() {
         override fun DetachedView.contentDefinition() {
             textView {
                 text = "Reports view"

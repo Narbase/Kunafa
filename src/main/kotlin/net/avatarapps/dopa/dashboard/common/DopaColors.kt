@@ -9,5 +9,7 @@ object DopaColors {
     val mainLight = Color.rgb(92, 65, 81)
     val mainDark = Color.rgb(45, 33, 41)
     val separatorLight = Color.rgb(200, 186, 194)
+    val greenLight = Color.rgb(86, 176, 90)
+    val redLight = Color.rgb(231, 82, 82)
 
 }

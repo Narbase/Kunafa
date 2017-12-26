@@ -21,7 +21,9 @@ class LinearLayout(
         super.configureElement()
         element.style.display = "inline-flex"
         element.style.flexDirection = if (orientation == Horizontal) "row" else "column"
+        alignItems = Alignment.Start
     }
+
 
     var justifyContent: JustifyContent = JustifyContent.Start
     set(value) {
