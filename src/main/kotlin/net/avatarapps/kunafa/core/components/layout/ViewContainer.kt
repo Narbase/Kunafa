@@ -29,8 +29,6 @@ open class ViewContainer(
                 this.children.forEach {
                     this.removeChild(it)
                 }
-
-                console.log(it)
                 this.addChild(it)
             }
         }

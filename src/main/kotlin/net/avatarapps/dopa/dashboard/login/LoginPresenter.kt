@@ -1,7 +1,6 @@
 package net.avatarapps.dopa.dashboard.login
 
-import net.avatarapps.kunafa.core.components.ButtonView
-import net.avatarapps.kunafa.core.components.View
+import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.presenter.Presenter
 
 /**
@@ -12,10 +11,30 @@ import net.avatarapps.kunafa.core.presenter.Presenter
  * Created by islam
  * On: 12/12/17.
  */
-class LoginPresenter : Presenter() {
-    var loginButton : ButtonView? = null
-    override fun onViewCreated(view: View) {
+class LoginPresenter(
+        private val navigator: LoginPageNavigator
+) : Presenter() {
+    var loginButton: ButtonView? = null
+    var usernameTextInput: TextInput? = null
+    var passwordTextInput: TextInput? = null
+    var loadingImageView: ImageView? = null
 
+    override fun onViewCreated(view: View) {
+        loginButton?.onClick = {
+            println("I am in presenter clicked")
+//            navigator.onLoggedInSuccessful()
+            loadingImageView?.isVisible = true
+            loginButton?.isVisible = false
+        }
+
+        loadingImageView?.onClick = {
+            println("I am in presenter clicked")
+//            navigator.onLoggedInSuccessful()
+            loadingImageView?.isVisible = false
+            loginButton?.isVisible = true
+        }
     }
+
+
 
 }

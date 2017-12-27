@@ -25,7 +25,6 @@ class SalesmenView : DashboardPlainViewContent("Salesmen view") {
 
     override val plainPresenter = SalesmenPresenter()
     override var pageViewContent: ViewContent = plainPresenter.salesmenListView
-
 }
 
 class SalesmenListView(private val salesmenPresenter: SalesmenPresenter) : ViewContent() {

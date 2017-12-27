@@ -57,6 +57,25 @@ open class View(var parent: Container? = null) {
 
     }
 
+    private var savedDisplayState = "block"
+
+    var isVisible: Boolean = true
+    set(value) {
+        field = value
+        when (value) {
+            true -> {
+                element.style.display = savedDisplayState
+
+            }
+            false -> {
+                savedDisplayState = element.style.display
+                element.style.display = "none"
+            }
+        }
+
+
+    }
+
     open fun updateElementHeight() {
         if (height is DynamicDimension) {
             (height as? DynamicDimension)?.configure(element, Dimension.Type.height)

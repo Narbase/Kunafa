@@ -20,8 +20,7 @@ import net.avatarapps.kunafa.core.drawable.Color
  * On: 12/12/17.
  */
 class LoginPageContent(
-        val loginPresenter: LoginPresenter,
-        val navigator: LoginPageNavigator
+        val loginPresenter: LoginPresenter
 ) : ViewContent() {
 
     override fun DetachedView.contentDefinition() {
@@ -61,16 +60,16 @@ class LoginPageContent(
                     textAlign = TextView.TextAlign.Center
                 }
 
-                textInput {
+                loginPresenter.usernameTextInput = textInput {
                     width = matchParent
                     height = wrapContent
-                    placeholder = "Email"
+                    placeholder = "Username"
                     textSize = 16.px
                     margin = 4.px
                     padding = 4.px
                 }
 
-                textInput {
+                loginPresenter.passwordTextInput = textInput {
                     width = matchParent
                     height = wrapContent
                     placeholder = "password"
@@ -79,15 +78,20 @@ class LoginPageContent(
                     padding = 4.px
                 }
 
-                button {
+                loginPresenter.loginButton = button {
                     width = matchParent
                     height = 38.px
                     button.textContent = "Login"
                     marginTop = 18.px
-                    onClick = {
-                        println("I am clicked")
-                        navigator.onLoggedInSuccessful()
-                    }
+                }
+
+                loginPresenter.loadingImageView = imageView {
+                    marginTop = 18.px
+                    width = 40.px
+                    height = 40.px
+                    alignSelf = Alignment.Center
+                    isVisible = false
+                    img.src = "/public/img/loading.gif"
                 }
             }
         }

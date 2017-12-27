@@ -22,8 +22,8 @@ class App {
     fun setup() {
         val appPresenter = AppPresenter()
 
-        val loginPresenter = LoginPresenter()
-        val loginPage = LoginPageContent(loginPresenter, appPresenter)
+        val loginPresenter = LoginPresenter(appPresenter)
+        val loginPage = LoginPageContent(loginPresenter)
 
         val dashboardPage = DashboardPageContent(appPresenter)
         val dashboardPresenter = DashboardPresenter()
