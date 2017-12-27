@@ -177,10 +177,10 @@ open class View(var parent: Container? = null) {
     }
 
     var isScrollableHorizontally by Delegates.observable(false) { _, _, isScrollable ->
-        element.style.overflowX = if (isScrollable) "scroll" else "hidden"
+        element.style.overflowX = if (isScrollable) "scroll" else "visible"
     }
     var isScrollableVertically by Delegates.observable(false) { _, _, isScrollable ->
-        element.style.overflowY = if (isScrollable) "scroll" else "hidden"
+        element.style.overflowY = if (isScrollable) "scroll" else "visible"
     }
 
     open fun configureElement() {

@@ -26,7 +26,6 @@ import org.w3c.dom.events.Event
 class DashboardPageContent(
         private val navigator: DashboardNavigator
 ) : ViewContent() {
-    private val lightPurple = Color.rgb(92, 65, 81)
     private var mainView: ViewContainer? = null
     private val drugsView = DrugsView()
     private val salesmenRequestsView = SalesmenRequestsView()
@@ -52,7 +51,7 @@ class DashboardPageContent(
                 height = matchParent
                 isScrollableVertically = true
                 alignItems = Alignment.Center
-                content = drugsView
+                content = salesmenView
             }
         }
     }
@@ -81,14 +80,14 @@ class DashboardPageContent(
             }
 
 
-            addMenuItem("drugsView", "Drugs") {
-                mainView?.content = drugsView
-            }
-
             addMenuItem("salesmenView", "Salesmen") {
                 mainView?.content = salesmenView
             }
 
+
+            addMenuItem("drugsView", "Drugs") {
+                mainView?.content = drugsView
+            }
             addMenuItem("salesmenRequestsView", "Salesmen requests") {
                 mainView?.content = salesmenRequestsView
             }

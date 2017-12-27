@@ -63,15 +63,8 @@ class LoginPresenter(
                     }
             )
 
-
         }
 
-        loadingImageView?.onClick = {
-            println("I am in presenter clicked")
-//            navigator.onLoggedInSuccessful()
-            loadingImageView?.isVisible = false
-            loginButton?.isVisible = true
-        }
     }
 
 }

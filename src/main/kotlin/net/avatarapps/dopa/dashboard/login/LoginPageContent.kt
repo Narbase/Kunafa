@@ -20,7 +20,7 @@ import net.avatarapps.kunafa.core.drawable.Color
  * On: 12/12/17.
  */
 class LoginPageContent(
-        val loginPresenter: LoginPresenter
+        private val loginPresenter: LoginPresenter
 ) : ViewContent() {
 
     override fun DetachedView.contentDefinition() {
@@ -55,7 +55,6 @@ class LoginPageContent(
                         width = 188.px
                         height = wrapContent
                         img.src = "/public/img/logo.png"
-//                    img.src = "https://www.clker.com/cliparts/E/G/n/Y/R/v/blue-pharmacy-logo.svg"
                     }
                 }
 
