@@ -39,59 +39,83 @@ class LoginPageContent(
             verticalLayout {
                 background = Color.rgb(255, 255, 255)
                 width = 480.px
-                padding = 24.px
                 height = wrapContent
                 alignItems = Alignment.Center
                 justifyContent = JustifyContent.Center
 
-                imageView {
-                    width = 188.px
-                    height = 148.px
-                    img.src = "/public/img/logo.png"
+                verticalLayout {
+                    width = matchParent
+                    height = wrapContent
+                    background = DopaColors.mainDark
+                    alignItems = Alignment.Center
+                    justifyContent = JustifyContent.Center
+                    padding = 18.px
+
+                    imageView {
+                        width = 188.px
+                        height = wrapContent
+                        img.src = "/public/img/logo.png"
 //                    img.src = "https://www.clker.com/cliparts/E/G/n/Y/R/v/blue-pharmacy-logo.svg"
+                    }
                 }
 
-                textView {
-                    width = matchParent
-                    height = wrapContent
-                    text = "Dopa Dashboard"
-                    textColor = Color.rgb(55, 55, 55)
-                    textSize = 32.px
-                    textAlign = TextView.TextAlign.Center
-                }
+                verticalLayout {
+                    padding = 24.px
 
-                loginPresenter.usernameTextInput = textInput {
-                    width = matchParent
-                    height = wrapContent
-                    placeholder = "Username"
-                    textSize = 16.px
-                    margin = 4.px
-                    padding = 4.px
-                }
 
-                loginPresenter.passwordTextInput = textInput {
-                    width = matchParent
-                    height = wrapContent
-                    placeholder = "password"
-                    textSize = 16.px
-                    margin = 4.px
-                    padding = 4.px
-                }
+                    textView {
+                        width = matchParent
+                        height = wrapContent
+                        text = "Dopa Dashboard"
+                        textColor = DopaColors.mainLight
+                        textSize = 32.px
+                        textAlign = TextView.TextAlign.Center
+                        marginBottom = 16.px
+                    }
 
-                loginPresenter.loginButton = button {
-                    width = matchParent
-                    height = 38.px
-                    button.textContent = "Login"
-                    marginTop = 18.px
-                }
+                    loginPresenter.usernameTextInput = textInput {
+                        width = matchParent
+                        height = wrapContent
+                        placeholder = "Username"
+                        textSize = 16.px
+                        margin = 4.px
+                        padding = 4.px
+                    }
 
-                loginPresenter.loadingImageView = imageView {
-                    marginTop = 18.px
-                    width = 40.px
-                    height = 40.px
-                    alignSelf = Alignment.Center
-                    isVisible = false
-                    img.src = "/public/img/loading.gif"
+                    loginPresenter.passwordTextInput = textInput {
+                        width = matchParent
+                        height = wrapContent
+                        placeholder = "password"
+                        type = "password"
+                        textSize = 16.px
+                        margin = 4.px
+                        padding = 4.px
+                    }
+
+                    loginPresenter.loginButton = button {
+                        width = matchParent
+                        height = 38.px
+                        button.textContent = "Login"
+                        marginTop = 18.px
+                    }
+
+                    loginPresenter.loadingImageView = imageView {
+                        marginTop = 18.px
+                        width = 40.px
+                        height = 40.px
+                        alignSelf = Alignment.Center
+                        isVisible = false
+                        img.src = "/public/img/loading.gif"
+                    }
+
+                    loginPresenter.statusTextView = textView {
+                        marginTop = 8.px
+                        width = matchParent
+                        height = wrapContent
+                        textSize = 14.px
+                        textAlign = TextView.TextAlign.Left
+                        isVisible = true
+                    }
                 }
             }
         }

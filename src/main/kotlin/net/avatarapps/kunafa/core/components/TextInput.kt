@@ -36,6 +36,12 @@ class TextInput (parent: Container? = null) : View(parent) {
             (element as HTMLInputElement).placeholder = value
         }
 
+    var type = ""
+        set(value) {
+            field = value
+            (element as HTMLInputElement).type = value
+        }
+
     var textAlign: TextView.TextAlign? = null
         set(value) {
             field = value

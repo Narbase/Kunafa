@@ -14,6 +14,7 @@ import kotlin.browser.window
 object StorageManager {
 
     private const val LOGGED_IN = "LOGGED_IN"
+    private const val ACCESS_TOKEN = "ACCESS_TOKEN"
 
     fun setUserLoggedIn(isLoggedIn: Boolean) {
         window.localStorage.setItem(LOGGED_IN, if (isLoggedIn) "true" else "false")
@@ -23,6 +24,11 @@ object StorageManager {
         return window.localStorage.get(LOGGED_IN) == "true"
     }
 
+    var accessToken: String?
+        get() = window.localStorage[ACCESS_TOKEN]
+        set(value) {
+            window.localStorage.setItem(ACCESS_TOKEN, value?: "")
+        }
 
 
 }
