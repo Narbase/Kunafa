@@ -28,18 +28,48 @@ object ServerCaller {
 
     }
 
+    fun updateSalesman(dto: UpdateSalesmanRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        val body = JSON.stringify(dto)
+        println(body)
+        post(
+                url = "/api/agent/v1/salesmen/update",
+                headers = mapOf(
+                        "Authorization" to (accessToken?:""),
+                        "Content-Type" to "application/json"),
+                onSuccess = onSuccess,
+                onError = onError,
+                body = body
+        )
+    }
+
+    data class UpdateSalesmanRequestDto(
+            val salesmanDto: UpdateSalesmanDto?
+    )
+
+    data class UpdateSalesmanDto(
+            val id: Int?,
+            val name: String?,
+            val password: String?,
+            val username: String?,
+            val phone: String?,
+            val approval: Boolean?,
+            val zones: ArrayList<Int>
+    )
+
     private fun post(
             url: String,
             headers: Map<String, String>? = null,
             onSuccess: (XMLHttpRequest) -> Unit,
-            onError: () -> Unit) {
+            onError: () -> Unit,
+            body: String? = null) {
 
         makeRequest(
                 HTTP_POST_VERB,
                 url,
                 headers,
                 onSuccess,
-                onError
+                onError,
+                body
         )
     }
 
@@ -63,7 +93,8 @@ object ServerCaller {
             url: String,
             headers: Map<String, String>? = null,
             onSuccess: (XMLHttpRequest) -> Unit,
-            onError: () -> Unit) {
+            onError: () -> Unit,
+            body: String? = null) {
 
         val xmlHttp = XMLHttpRequest()
         xmlHttp.open(requestVerb, "$BASE_URL$url", true)
@@ -72,7 +103,7 @@ object ServerCaller {
         headers?.forEach { xmlHttp.setRequestHeader(it.key, it.value) }
         xmlHttp.onerror = { onError() }
         xmlHttp.onload = { onSuccess(xmlHttp) }
-        xmlHttp.send(null)
+        xmlHttp.send(body)
     }
 
     const val HTTP_GET_VERB = "GET"

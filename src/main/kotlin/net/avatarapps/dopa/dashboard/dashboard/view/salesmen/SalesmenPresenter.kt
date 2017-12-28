@@ -21,6 +21,9 @@ class SalesmenPresenter : DashboardPlainPresenter() {
     var name: TextInput? = null
     var password: TextInput? = null
     var phone: TextInput? = null
+    var addSalesmanControlView: LinearLayout? = null
+    var addSalesmenLoadingImageView: ImageView? = null
+    private var salesmanId: Int? = null
 
     val salesmenListView = SalesmenListView(this)
     private val addSalesmanView = AddSalesmanView(this)
@@ -34,7 +37,33 @@ class SalesmenPresenter : DashboardPlainPresenter() {
     }
 
     fun onSaveNewSalesmanButtonClicked() {
-        getAndShowSalesmen()
+        ServerCaller.updateSalesman(
+                ServerCaller.UpdateSalesmanRequestDto(
+                        ServerCaller.UpdateSalesmanDto(
+                                salesmanId,
+                                name?.text,
+                                password?.text,
+                                username?.text,
+                                phone?.text,
+                                false,
+                                arrayListOf())),
+                onSuccess = { xmlHttpRequest ->
+                    if (xmlHttpRequest.status == 200.toShort()) {
+                        getAndShowSalesmen()
+
+                    } else {
+                    addSalesmanControlView?.isVisible = true
+                    addSalesmenLoadingImageView?.isVisible = false
+
+                    }
+                },
+                onError = {
+                    addSalesmanControlView?.isVisible = true
+                    addSalesmenLoadingImageView?.isVisible = false
+
+                }
+        )
+
     }
 
     fun onCancelAddSalesmanButton() {
@@ -42,11 +71,13 @@ class SalesmenPresenter : DashboardPlainPresenter() {
 
     }
 
+
     fun onEditSalesman(salesman: SalesmanDs) {
         mainViewContent?.content = addSalesmanView
         username?.text = salesman.username
         phone?.text = salesman.phone
         name?.text = salesman.name
+        salesmanId = salesman.id
 
     }
 

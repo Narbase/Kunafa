@@ -68,16 +68,7 @@ class SalesmenListView(private val salesmenPresenter: SalesmenPresenter) : ViewC
     }
 
 
-    private fun LinearLayout.loadingIndicator(): ImageView {
-        return imageView {
-            marginTop = 18.px
-            width = 40.px
-            height = 40.px
-            alignSelf = Alignment.Center
-            isVisible = true
-            img.src = "/public/img/loading.gif"
-        }
-    }
+
 }
 fun LinearLayout.addSalesman(salesman: SalesmanDs, salesmenPresenter: SalesmenPresenter) {
     verticalLayout {
@@ -162,7 +153,7 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                 maxWidth = formWidth
             }
 
-            horizontalLayout {
+            salesmenPresenter.addSalesmanControlView = horizontalLayout {
                 width = matchParent
                 maxWidth = formWidth
 
@@ -192,8 +183,19 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                 }
 
             }
+            salesmenPresenter.addSalesmenLoadingImageView = loadingIndicator()
 
         }
     }
 }
 
+private fun LinearLayout.loadingIndicator(): ImageView {
+    return imageView {
+        marginTop = 18.px
+        width = 40.px
+        height = 40.px
+        alignSelf = Alignment.Center
+        isVisible = false
+        img.src = "/public/img/loading.gif"
+    }
+}
