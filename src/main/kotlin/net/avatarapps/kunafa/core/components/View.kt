@@ -69,8 +69,10 @@ open class View(var parent: Container? = null) {
 
                 }
                 false -> {
-                    savedDisplayState = element.style.display
-                    element.style.display = "none"
+                    if (element.style.display != "none"){
+                        savedDisplayState = element.style.display
+                        element.style.display = "none"
+                    }
                 }
             }
 

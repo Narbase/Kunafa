@@ -185,6 +185,16 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
             }
             salesmenPresenter.addSalesmenLoadingImageView = loadingIndicator()
 
+            salesmenPresenter.addSalesmanStatusText = textView {
+                text = ""
+                textColor = DopaColors.redLight
+                textSize = 14.px
+                width = matchParent
+                textAlign = TextView.TextAlign.Center
+                marginTop = 8.px
+                isVisible = false
+            }
+
         }
     }
 }

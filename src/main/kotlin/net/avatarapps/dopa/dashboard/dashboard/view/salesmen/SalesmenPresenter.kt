@@ -1,11 +1,13 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.salesmen
 
+import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.dopa.dashboard.network.ServerCaller
 import net.avatarapps.kunafa.core.components.ImageView
 import net.avatarapps.kunafa.core.components.TextInput
 import net.avatarapps.kunafa.core.components.TextView
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.components.layout.LinearLayout
+import net.avatarapps.kunafa.core.drawable.Color
 import kotlin.js.Json
 
 class SalesmenPresenter : DashboardPlainPresenter() {
@@ -23,6 +25,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
     var phone: TextInput? = null
     var addSalesmanControlView: LinearLayout? = null
     var addSalesmenLoadingImageView: ImageView? = null
+    var addSalesmanStatusText: TextView? = null
     private var salesmanId: Int? = null
 
     val salesmenListView = SalesmenListView(this)
@@ -37,6 +40,20 @@ class SalesmenPresenter : DashboardPlainPresenter() {
     }
 
     fun onSaveNewSalesmanButtonClicked() {
+
+        println("validating name")
+        if (validateField(name, "Name")) return
+
+        println("validating Username")
+        if (validateField(username, "Username")) return
+
+        println("validating Password")
+        if (validateField(password, "Password")) return
+
+        println("validating Phone")
+        if (validateField(phone, "Phone")) return
+
+
         ServerCaller.updateSalesman(
                 ServerCaller.UpdateSalesmanRequestDto(
                         ServerCaller.UpdateSalesmanDto(
@@ -64,6 +81,18 @@ class SalesmenPresenter : DashboardPlainPresenter() {
                 }
         )
 
+    }
+
+    private fun validateField(field: TextInput?, fieldName: String): Boolean {
+        if (field?.text?.isNotEmpty() != true) {
+            addSalesmanStatusText?.isVisible = true
+            addSalesmanStatusText?.text = "$fieldName cannot be empty"
+            return true
+        } else {
+            addSalesmanStatusText?.isVisible = false
+
+        }
+        return false
     }
 
     fun onCancelAddSalesmanButton() {
@@ -126,6 +155,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
         )
 
     }
+
 
 
 }
