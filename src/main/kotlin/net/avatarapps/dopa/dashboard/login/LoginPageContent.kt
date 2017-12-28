@@ -116,6 +116,11 @@ class LoginPageContent(
                         isVisible = true
                     }
                 }
+                view {
+                    width = matchParent
+                    height = 2.px
+                    background = DopaColors.separatorLight
+                }
             }
         }
     }

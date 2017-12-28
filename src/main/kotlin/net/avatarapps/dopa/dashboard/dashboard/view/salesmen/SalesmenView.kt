@@ -58,67 +58,15 @@ class SalesmenListView(private val salesmenPresenter: SalesmenPresenter) : ViewC
 
             salesmenPresenter.salesmenListLoadingImageView = loadingIndicator()
 
-            verticalLayout {
+            salesmenPresenter.salesmenList = verticalLayout {
                 width = matchParent
                 height = matchParent
                 isScrollableVertically = false
 
-                addSalesman()
-                addSalesman()
-                addSalesman()
-                addSalesman()
-                addSalesman()
-                addSalesman()
-                addSalesman()
-                addSalesman()
-                addSalesman()
-                addSalesman()
-                addSalesman()
-            }
-
-        }
-    }
-
-    private fun LinearLayout.addSalesman() {
-        verticalLayout {
-            width = matchParent
-            horizontalLayout {
-                width = matchParent
-                marginTop = 16.px
-                padding = 16.px
-                background = Color.white
-                justifyContent = JustifyContent.SpaceBetween
-
-                verticalLayout {
-                    textView {
-                        text = "Salesman name"
-                        textColor = DopaColors.main
-                        textSize = 18.px
-                    }
-
-                    textView {
-                        text = "0912324232"
-                        textColor = DopaColors.mainLight
-                        marginTop = 6.px
-                    }
-                }
-
-                textView {
-                    text = "Edit"
-                    background = DopaColors.mainLight
-                    textColor = Color.white
-                    padding = 8.px
-                    alignSelf = Alignment.Center
-                }
-            }
-
-            view {
-                width = matchParent
-                height = 2.px
-                background = DopaColors.separatorLight
             }
         }
     }
+
 
     private fun LinearLayout.loadingIndicator(): ImageView {
         return imageView {
@@ -128,6 +76,47 @@ class SalesmenListView(private val salesmenPresenter: SalesmenPresenter) : ViewC
             alignSelf = Alignment.Center
             isVisible = true
             img.src = "/public/img/loading.gif"
+        }
+    }
+}
+fun LinearLayout.addSalesman(salesman: SalesmanDs, salesmenPresenter: SalesmenPresenter) {
+    verticalLayout {
+        width = matchParent
+        horizontalLayout {
+            width = matchParent
+            marginTop = 16.px
+            padding = 16.px
+            background = Color.white
+            justifyContent = JustifyContent.SpaceBetween
+
+            verticalLayout {
+                textView {
+                    text = salesman.name
+                    textColor = DopaColors.main
+                    textSize = 18.px
+                }
+
+                textView {
+                    text = salesman.phone
+                    textColor = DopaColors.mainLight
+                    marginTop = 6.px
+                }
+            }
+
+            textView {
+                text = "Edit"
+                background = DopaColors.mainLight
+                textColor = Color.white
+                padding = 8.px
+                alignSelf = Alignment.Center
+                onClick = { salesmenPresenter.onEditSalesman(salesman) }
+            }
+        }
+
+        view {
+            width = matchParent
+            height = 2.px
+            background = DopaColors.separatorLight
         }
     }
 }
@@ -141,7 +130,7 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
             alignItems = Alignment.Center
             height = wrapContent
 
-            textInput {
+            salesmenPresenter.name = textInput {
                 placeholder = "Full name"
                 width = matchParent
                 textSize = 18.px
@@ -149,7 +138,7 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                 maxWidth = formWidth
             }
 
-            textInput {
+            salesmenPresenter.username = textInput {
                 placeholder = "Username"
                 width = matchParent
                 textSize = 18.px
@@ -157,7 +146,7 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                 maxWidth = formWidth
             }
 
-            textInput {
+            salesmenPresenter.password = textInput {
                 placeholder = "Password"
                 width = matchParent
                 textSize = 18.px
@@ -165,7 +154,7 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                 maxWidth = formWidth
             }
 
-            textInput {
+            salesmenPresenter.phone = textInput {
                 placeholder = "Phone number"
                 width = matchParent
                 textSize = 18.px
