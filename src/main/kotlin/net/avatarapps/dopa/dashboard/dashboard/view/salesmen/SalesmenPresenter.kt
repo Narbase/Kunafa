@@ -27,6 +27,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
     var addSalesmenLoadingImageView: ImageView? = null
     var addSalesmanStatusText: TextView? = null
     private var salesmanId: Int? = null
+    private var isEditSalesman: Boolean = false
 
     val salesmenListView = SalesmenListView(this)
     private val addSalesmanView = AddSalesmanView(this)
@@ -37,20 +38,20 @@ class SalesmenPresenter : DashboardPlainPresenter() {
 
     fun onAddSalesmanButtonClicked() {
         mainViewContent?.content = addSalesmanView
+        saveNewSalesmanButton?.text = "Save new salesman"
+        password?.placeholder = "Password"
     }
 
     fun onSaveNewSalesmanButtonClicked() {
 
-        println("validating name")
         if (validateField(name, "Name")) return
 
-        println("validating Username")
         if (validateField(username, "Username")) return
 
-        println("validating Password")
-        if (validateField(password, "Password")) return
+        if (isEditSalesman.not()) {
+            if (validateField(password, "Password")) return
+        }
 
-        println("validating Phone")
         if (validateField(phone, "Phone")) return
 
 
@@ -59,7 +60,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
                         ServerCaller.UpdateSalesmanDto(
                                 salesmanId,
                                 name?.text,
-                                password?.text,
+                                password?.text?.takeIf { it.isNotEmpty() },
                                 username?.text,
                                 phone?.text,
                                 false,
@@ -69,8 +70,8 @@ class SalesmenPresenter : DashboardPlainPresenter() {
                         getAndShowSalesmen()
 
                     } else {
-                    addSalesmanControlView?.isVisible = true
-                    addSalesmenLoadingImageView?.isVisible = false
+                        addSalesmanControlView?.isVisible = true
+                        addSalesmenLoadingImageView?.isVisible = false
 
                     }
                 },
@@ -107,6 +108,10 @@ class SalesmenPresenter : DashboardPlainPresenter() {
         phone?.text = salesman.phone
         name?.text = salesman.name
         salesmanId = salesman.id
+        isEditSalesman = true
+        saveNewSalesmanButton?.text = "Update salesman"
+        password?.placeholder = "New password (optional)"
+
 
     }
 
@@ -155,7 +160,6 @@ class SalesmenPresenter : DashboardPlainPresenter() {
         )
 
     }
-
 
 
 }
