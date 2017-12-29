@@ -1,13 +1,12 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.salesmen
 
-import net.avatarapps.dopa.dashboard.common.DopaColors
+import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainPresenter
 import net.avatarapps.dopa.dashboard.network.ServerCaller
 import net.avatarapps.kunafa.core.components.ImageView
 import net.avatarapps.kunafa.core.components.TextInput
 import net.avatarapps.kunafa.core.components.TextView
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.components.layout.LinearLayout
-import net.avatarapps.kunafa.core.drawable.Color
 import kotlin.js.Json
 
 class SalesmenPresenter : DashboardPlainPresenter() {
@@ -37,6 +36,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
     }
 
     fun onAddSalesmanButtonClicked() {
+        salesmanId = null
         mainViewContent?.content = addSalesmanView
         saveNewSalesmanButton?.text = "Save new salesman"
         password?.placeholder = "Password"

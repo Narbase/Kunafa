@@ -22,7 +22,7 @@ import net.avatarapps.kunafa.core.drawable.Color
  * Created by islam
  * On: 12/14/17.
  */
-class SalesmenView : DashboardPlainViewContent("Salesmen view") {
+class SalesmenView : DashboardPlainViewContent("Salesmen management") {
 
     override val plainPresenter = SalesmenPresenter()
     override var pageViewContent: ViewContent = plainPresenter.salesmenListView

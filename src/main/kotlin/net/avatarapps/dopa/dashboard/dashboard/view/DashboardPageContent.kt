@@ -2,6 +2,7 @@ package net.avatarapps.dopa.dashboard.dashboard.view
 
 import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.dopa.dashboard.dashboard.view.salesmen.SalesmenView
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZonesView
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.Alignment
@@ -129,6 +130,15 @@ class DashboardPageContent(
             textColor = Color.white
             textAlign = TextView.TextAlign.Left
             onClick = onClickListener
+            element.onmouseover = {
+                background = DopaColors.mainLight
+                asDynamic()
+            }
+            element.onmouseleave = {
+                background = Color.transparent
+                asDynamic()
+
+            }
         }
     }
 }

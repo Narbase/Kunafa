@@ -1,11 +1,9 @@
 package net.avatarapps.dopa.dashboard.dashboard.view
 
-import net.avatarapps.dopa.dashboard.dashboard.view.salesmen.DashboardPlainPresenter
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.View
 import net.avatarapps.kunafa.core.components.layout.DetachedView
 import net.avatarapps.kunafa.core.components.textView
-import net.avatarapps.kunafa.core.presenter.Presenter
 
 /**
  * AVATAR APPS CONFIDENTIAL

@@ -18,6 +18,29 @@ object ServerCaller {
 
     }
 
+    fun getAllZones(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        get(
+                url = "/api/agent/v1/zones/all",
+                headers = mapOf("Authorization" to (accessToken?:"")),
+                onSuccess = onSuccess,
+                onError = onError
+        )
+
+    }
+
+    fun updateZone(dto: UpdateZoneRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        val body = JSON.stringify(dto)
+        post(
+                url = "/api/agent/v1/zones/update",
+                headers = mapOf("Authorization" to (accessToken?:""),
+                        "Content-Type" to "application/json"),
+                onSuccess = onSuccess,
+                onError = onError,
+                body = body
+        )
+    }
+
+
     fun getAllSalesmen(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
         get(
                 url = "/api/agent/v1/salesmen/all",
@@ -30,7 +53,6 @@ object ServerCaller {
 
     fun updateSalesman(dto: UpdateSalesmanRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
         val body = JSON.stringify(dto)
-        println(body)
         post(
                 url = "/api/agent/v1/salesmen/update",
                 headers = mapOf(
@@ -55,6 +77,19 @@ object ServerCaller {
             val approval: Boolean?,
             val zones: ArrayList<Int>
     )
+
+
+    data class UpdateZoneRequestDto(
+            val zone: UpdateZoneDto?
+    )
+
+
+    data class UpdateZoneDto(
+            val id: Int?,
+            val name: String,
+            val neighbourhoods: List<Int>
+    )
+
 
     private fun post(
             url: String,

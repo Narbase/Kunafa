@@ -31,6 +31,7 @@ fun Container.textView(block: TextView.() -> Unit): TextView = TextView(this).vi
 fun Container.textInput(block: TextInput.() -> Unit): TextInput = TextInput(this).visit(block)
 fun Container.button(block: ButtonView.() -> Unit): ButtonView = ButtonView(this).visit(block)
 fun Container.imageView(block: ImageView.() -> Unit): ImageView = ImageView(this).visit(block)
+fun Container.checkbox(block: Checkbox.() -> Unit): Checkbox = Checkbox(this).visit(block)
 
 
 
