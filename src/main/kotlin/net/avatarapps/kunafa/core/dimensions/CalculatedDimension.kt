@@ -5,9 +5,9 @@ import net.avatarapps.kunafa.core.dimensions.independent.px
 import org.w3c.dom.HTMLElement
 
 /**
- * AVATAR APPS CONFIDENTIAL
+ * NARBASE TECHNOLOGIES CONFIDENTIAL
  * ______________________________
- * [2013] - [2017] Avatar Apps
+ * [2013] - [2018] Narbase Technologies
  * All Rights Reserved.
  * Created by islam
  * On: 9/30/17.
