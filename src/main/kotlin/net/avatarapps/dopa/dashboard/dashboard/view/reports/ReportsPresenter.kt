@@ -26,7 +26,6 @@ class ReportsPresenter : DashboardPlainPresenter() {
                         val salesmenResponse = JSON.parse<Json>(xmlHttpRequest.responseText).get("data") as? Json
                         val salesmen = salesmenResponse?.get("salesmen") as? Array<Json>
 
-                        console.log(salesmen)
                         salesmen?.map {
                             val zonesIds = arrayListOf<Int>()
                             SalesmanDs(it["name"] as? String ?: "",

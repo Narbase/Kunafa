@@ -138,72 +138,79 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
             alignItems = Alignment.Center
             height = wrapContent
 
-            zonesPresenter.addZoneControlView = horizontalLayout {
+            verticalLayout {
                 width = matchParent
                 maxWidth = formWidth
+                alignItems = Alignment.Center
+                height = wrapContent
 
-                zonesPresenter.cancelAddZoneButton = textView {
-                    padding = 8.px
-                    width = weightOf(1)
-                    height = wrapContent
-                    textColor = Color.white
-                    text = "Cancel"
-                    background = DopaColors.redLight
-                    makeClickable(DopaColors.redLight)
-                    width = wrapContent
-                    marginEnd = 18.px
+                zonesPresenter.addZoneControlView = horizontalLayout {
+                    width = matchParent
+                    maxWidth = formWidth
+
+                    zonesPresenter.cancelAddZoneButton = textView {
+                        padding = 8.px
+                        width = weightOf(1)
+                        height = wrapContent
+                        textColor = Color.white
+                        text = "Cancel"
+                        background = DopaColors.redLight
+                        makeClickable(DopaColors.redLight)
+                        width = wrapContent
+                        marginEnd = 18.px
+                        textAlign = TextView.TextAlign.Center
+                        onClick = { zonesPresenter.onCancelAddZoneButton() }
+                    }
+
+                    zonesPresenter.saveNewZoneButton = textView {
+                        padding = 8.px
+                        width = weightOf(1)
+                        height = wrapContent
+                        textColor = Color.white
+                        text = "Save new zone"
+                        makeClickable(DopaColors.greenLight)
+                        background = DopaColors.greenLight
+                        width = wrapContent
+                        textAlign = TextView.TextAlign.Center
+                        onClick = { zonesPresenter.onSaveNewZoneButtonClicked() }
+                    }
+
+                }
+                zonesPresenter.addZonesLoadingImageView = loadingIndicator()
+
+                zonesPresenter.addZoneStatusText = textView {
+                    text = ""
+                    textColor = DopaColors.redLight
+                    textSize = 14.px
+                    width = matchParent
                     textAlign = TextView.TextAlign.Center
-                    onClick = { zonesPresenter.onCancelAddZoneButton() }
+                    marginTop = 8.px
+                    isVisible = false
                 }
 
-                zonesPresenter.saveNewZoneButton = textView {
-                    padding = 8.px
-                    width = weightOf(1)
-                    height = wrapContent
-                    textColor = Color.white
-                    text = "Save new zone"
-                    makeClickable(DopaColors.greenLight)
-                    background = DopaColors.greenLight
-                    width = wrapContent
-                    textAlign = TextView.TextAlign.Center
-                    onClick = { zonesPresenter.onSaveNewZoneButtonClicked() }
+
+                zonesPresenter.name = textInput {
+                    placeholder = "Zone name"
+                    width = matchParent
+                    textSize = 18.px
+                    marginBottom = 12.px
+                    marginTop = 18.px
+                    maxWidth = formWidth
                 }
 
-            }
-            zonesPresenter.addZonesLoadingImageView = loadingIndicator()
+                Areas.states.forEach { state ->
+                    zonesPresenter.states.put(state, addState(state))
 
-            zonesPresenter.addZoneStatusText = textView {
-                text = ""
-                textColor = DopaColors.redLight
-                textSize = 14.px
-                width = matchParent
-                textAlign = TextView.TextAlign.Center
-                marginTop = 8.px
-                isVisible = false
-            }
+                    state.districts.forEach { district ->
+                        zonesPresenter.districts.put(district, addDistrict(district))
 
-
-            zonesPresenter.name = textInput {
-                placeholder = "Zone name"
-                width = matchParent
-                textSize = 18.px
-                marginBottom = 12.px
-                marginTop = 18.px
-                maxWidth = formWidth
-            }
-
-            Areas.states.forEach { state ->
-                zonesPresenter.states.put(state, addState(state))
-
-                state.districts.forEach { district ->
-                    zonesPresenter.districts.put(district, addDistrict(district))
-
-                    district.neighbourhoods.forEach { neighbourhood ->
-                        zonesPresenter.neighbourhoods.put(neighbourhood, addNeighbourhood(neighbourhood))
+                        district.neighbourhoods.forEach { neighbourhood ->
+                            zonesPresenter.neighbourhoods.put(neighbourhood, addNeighbourhood(neighbourhood))
+                        }
                     }
                 }
-            }
 
+            }
         }
     }
 

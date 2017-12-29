@@ -2,6 +2,9 @@ package net.avatarapps.dopa.dashboard.dashboard.view.salesmen
 
 import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainViewContent
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZoneDs
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZonesPresenter
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.makeClickable
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.Alignment
@@ -133,89 +136,149 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
 
         verticalLayout {
             width = matchParent
-            alignItems = Alignment.Center
             height = wrapContent
+            alignItems = Alignment.Center
 
-            salesmenPresenter.name = textInput {
-                placeholder = "Full name"
+            verticalLayout {
                 width = matchParent
-                textSize = 18.px
-                marginBottom = 12.px
-                maxWidth = formWidth
-            }
-
-            salesmenPresenter.username = textInput {
-                placeholder = "Username"
-                width = matchParent
-                textSize = 18.px
-                marginBottom = 12.px
-                maxWidth = formWidth
-            }
-
-            salesmenPresenter.password = textInput {
-                placeholder = "Password"
-                width = matchParent
-                textSize = 18.px
-                marginBottom = 12.px
-                maxWidth = formWidth
-            }
-
-            salesmenPresenter.phone = textInput {
-                placeholder = "Phone number"
-                width = matchParent
-                textSize = 18.px
-                marginBottom = 12.px
-                maxWidth = formWidth
-            }
-
-            salesmenPresenter.addSalesmanControlView = horizontalLayout {
-                width = matchParent
+                height = wrapContent
+                alignItems = Alignment.Center
                 maxWidth = formWidth
 
-                salesmenPresenter.cancelAddSalesmanButton = textView {
-                    padding = 8.px
-                    width = weightOf(1)
-                    height = wrapContent
-                    textColor = Color.white
-                    text = "Cancel"
-                    background = DopaColors.redLight
-
-                    makeClickable(DopaColors.redLight)
-                    width = wrapContent
-                    marginEnd = 18.px
-                    textAlign = TextView.TextAlign.Center
-                    onClick = { salesmenPresenter.onCancelAddSalesmanButton() }
+                salesmenPresenter.name = textInput {
+                    placeholder = "Full name"
+                    width = matchParent
+                    textSize = 18.px
+                    marginBottom = 12.px
+                    maxWidth = formWidth
                 }
 
-                salesmenPresenter.saveNewSalesmanButton = textView {
-                    padding = 8.px
-                    width = weightOf(1)
-                    height = wrapContent
-                    textColor = Color.white
-                    text = "Save new salesman"
-                    background = DopaColors.greenLight
-                    makeClickable(DopaColors.greenLight)
-                    width = wrapContent
-                    textAlign = TextView.TextAlign.Center
-                    onClick = { salesmenPresenter.onSaveNewSalesmanButtonClicked() }
+                salesmenPresenter.username = textInput {
+                    placeholder = "Username"
+                    width = matchParent
+                    textSize = 18.px
+                    marginBottom = 12.px
+                    maxWidth = formWidth
                 }
 
-            }
-            salesmenPresenter.addSalesmenLoadingImageView = loadingIndicator()
+                salesmenPresenter.password = textInput {
+                    placeholder = "Password"
+                    width = matchParent
+                    textSize = 18.px
+                    marginBottom = 12.px
+                    maxWidth = formWidth
+                }
 
-            salesmenPresenter.addSalesmanStatusText = textView {
-                text = ""
-                textColor = DopaColors.redLight
-                textSize = 14.px
-                width = matchParent
-                textAlign = TextView.TextAlign.Center
-                marginTop = 8.px
-                isVisible = false
+                salesmenPresenter.phone = textInput {
+                    placeholder = "Phone number"
+                    width = matchParent
+                    textSize = 18.px
+                    marginBottom = 12.px
+                    maxWidth = formWidth
+                }
+
+
+                textView {
+                    textColor = DopaColors.separatorLight
+                    textSize = 20.px
+                    width = matchParent
+                    textAlign = TextView.TextAlign.Left
+                    text = "Zones"
+                    maxWidth = formWidth
+                }
+
+                salesmenPresenter.noZonesTextView = textView {
+                    text = "No zones were added yet."
+                    textColor = DopaColors.separatorLight
+                    textSize = 24.px
+                    width = matchParent
+                    textAlign = TextView.TextAlign.Center
+                    marginTop = 16.px
+                    isVisible = false
+                    maxWidth = formWidth
+                }
+
+                salesmenPresenter.zonesListLoadingImageView = loadingIndicator()
+
+                salesmenPresenter.zonesList = verticalLayout {
+                    width = matchParent
+                    height = matchParent
+                    maxWidth = formWidth
+                }
+
+                salesmenPresenter.addSalesmanControlView = horizontalLayout {
+                    width = matchParent
+                    maxWidth = formWidth
+
+                    salesmenPresenter.cancelAddSalesmanButton = textView {
+                        padding = 8.px
+                        width = weightOf(1)
+                        height = wrapContent
+                        textColor = Color.white
+                        text = "Cancel"
+                        background = DopaColors.redLight
+
+                        makeClickable(DopaColors.redLight)
+                        width = wrapContent
+                        marginEnd = 18.px
+                        textAlign = TextView.TextAlign.Center
+                        onClick = { salesmenPresenter.onCancelAddSalesmanButton() }
+                    }
+
+                    salesmenPresenter.saveNewSalesmanButton = textView {
+                        padding = 8.px
+                        width = weightOf(1)
+                        height = wrapContent
+                        textColor = Color.white
+                        text = "Save new salesman"
+                        background = DopaColors.greenLight
+                        makeClickable(DopaColors.greenLight)
+                        width = wrapContent
+                        textAlign = TextView.TextAlign.Center
+                        onClick = { salesmenPresenter.onSaveNewSalesmanButtonClicked() }
+                    }
+
+                }
+                salesmenPresenter.addSalesmenLoadingImageView = loadingIndicator()
+
+                salesmenPresenter.addSalesmanStatusText = textView {
+                    text = ""
+                    textColor = DopaColors.redLight
+                    textSize = 14.px
+                    width = matchParent
+                    textAlign = TextView.TextAlign.Center
+                    marginTop = 8.px
+                    isVisible = false
+                }
+
             }
 
         }
     }
 }
+
+fun LinearLayout.addZone(zone: ZoneDs, presenter: SalesmenPresenter, isSelected: Boolean): Checkbox? {
+    var checkbox: Checkbox? = null
+    horizontalLayout {
+        width = matchParent
+        marginTop = 4.px
+        padding = 4.px
+        alignItems = Alignment.Center
+        checkbox = checkbox {
+            margin = 8.px
+            isChecked = isSelected
+        }
+        textView {
+            text = zone.name
+            textColor = DopaColors.main
+            width = matchParent
+            textAlign = TextView.TextAlign.Left
+            textSize = 18.px
+        }
+    }
+    return checkbox
+}
+
 
 private fun LinearLayout.loadingIndicator(): ImageView {
     return imageView {

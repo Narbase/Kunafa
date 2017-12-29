@@ -1,11 +1,9 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.salesmen
 
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainPresenter
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZoneDs
 import net.avatarapps.dopa.dashboard.network.ServerCaller
-import net.avatarapps.kunafa.core.components.ImageView
-import net.avatarapps.kunafa.core.components.TextInput
-import net.avatarapps.kunafa.core.components.TextView
-import net.avatarapps.kunafa.core.components.View
+import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.LinearLayout
 import kotlin.js.Json
 
@@ -25,6 +23,11 @@ class SalesmenPresenter : DashboardPlainPresenter() {
     var addSalesmanControlView: LinearLayout? = null
     var addSalesmenLoadingImageView: ImageView? = null
     var addSalesmanStatusText: TextView? = null
+
+    var noZonesTextView: TextView? = null
+    var zonesListLoadingImageView: ImageView? = null
+    var zonesList: LinearLayout? = null
+
     private var salesmanId: Int? = null
     private var isEditSalesman: Boolean = false
 
@@ -38,8 +41,56 @@ class SalesmenPresenter : DashboardPlainPresenter() {
     fun onAddSalesmanButtonClicked() {
         salesmanId = null
         mainViewContent?.content = addSalesmanView
+        isEditSalesman = false
         saveNewSalesmanButton?.text = "Save new salesman"
         password?.placeholder = "Password"
+        showZones()
+    }
+
+    private val zonesMap: MutableMap<ZoneDs, Checkbox?> = mutableMapOf()
+
+    private fun showZones(salesman: SalesmanDs? = null) {
+        zonesList?.isVisible = false
+        zonesListLoadingImageView?.isVisible = true
+        zonesMap.clear()
+
+        ServerCaller.getAllZones(
+                onSuccess = { xmlHttpRequest ->
+
+                    if (xmlHttpRequest.status == 200.toShort()) {
+                        zonesList?.isVisible = true
+                        zonesListLoadingImageView?.isVisible = false
+
+                        console.log(JSON.parse(xmlHttpRequest.responseText))
+                        val zonesResponse = JSON.parse<Json>(xmlHttpRequest.responseText).get("data") as? Json
+                        val zones = zonesResponse?.get("zones") as? Array<Json>
+
+                        console.log(zones)
+                        zones?.map {
+                            val zonesIds = arrayListOf<Int>()
+                            ZoneDs(it["id"] as? Int ?: 0,
+                                    it["name"] as? String ?: "",
+                                    (it["neighbourhoods"] as? Array<Int>)?.mapTo(zonesIds) { it } ?: arrayListOf()
+                            )
+                        }?.forEach {
+                            val checkbox = zonesList?.addZone(it, this, isSelected =  (it.id in salesman?.zoneId?: arrayListOf()))
+                            zonesMap[it] = checkbox
+                        }
+                    } else {
+
+                        zonesList?.isVisible = false
+                        zonesListLoadingImageView?.isVisible = false
+                        noZonesTextView?.isVisible = true
+                        noZonesTextView?.text = "Unknown error. Refresh page."
+                    }
+                },
+                onError = {
+                    zonesList?.isVisible = false
+                    zonesListLoadingImageView?.isVisible = false
+                    noZonesTextView?.isVisible = true
+                    noZonesTextView?.text = "No internet connection. Refresh page."
+                }
+        )
     }
 
     fun onSaveNewSalesmanButtonClicked() {
@@ -54,6 +105,12 @@ class SalesmenPresenter : DashboardPlainPresenter() {
 
         if (validateField(phone, "Phone")) return
 
+        val zonesIds = arrayListOf<Int>()
+        zonesMap.filter {
+            it.value?.isChecked == true
+        }.mapTo(zonesIds) {
+            it.key.id
+        }
 
         ServerCaller.updateSalesman(
                 ServerCaller.UpdateSalesmanRequestDto(
@@ -64,7 +121,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
                                 username?.text,
                                 phone?.text,
                                 false,
-                                arrayListOf())),
+                                zonesIds)),
                 onSuccess = { xmlHttpRequest ->
                     if (xmlHttpRequest.status == 200.toShort()) {
                         getAndShowSalesmen()
@@ -111,6 +168,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
         isEditSalesman = true
         saveNewSalesmanButton?.text = "Update salesman"
         password?.placeholder = "New password (optional)"
+        showZones(salesman)
 
 
     }
@@ -127,11 +185,9 @@ class SalesmenPresenter : DashboardPlainPresenter() {
                         salesmenList?.isVisible = true
                         salesmenListLoadingImageView?.isVisible = false
 
-                        console.log(JSON.parse(xmlHttpRequest.responseText))
                         val salesmenResponse = JSON.parse<Json>(xmlHttpRequest.responseText).get("data") as? Json
                         val salesmen = salesmenResponse?.get("salesmen") as? Array<Json>
 
-                        console.log(salesmen)
                         salesmen?.map {
                             val zonesIds = arrayListOf<Int>()
                             SalesmanDs(it["name"] as? String ?: "",
@@ -158,9 +214,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
                     noSalesmenTextView?.text = "No internet connection. Refresh page."
                 }
         )
-
     }
-
 
 }
 
