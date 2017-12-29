@@ -46,6 +46,7 @@ class ZonesListView(private val zonesPresenter: ZonesPresenter) : ViewContent() 
                 padding = 8.px
                 background = DopaColors.main
                 text = "+ Add zone"
+                makeClickable()
                 textColor = Color.white
                 width = wrapContent
                 onClick = { zonesPresenter.onAddZoneButtonClicked() }
@@ -75,6 +76,22 @@ class ZonesListView(private val zonesPresenter: ZonesPresenter) : ViewContent() 
 
 }
 
+
+fun TextView.makeClickable(backgroundColor: Color = DopaColors.main) {
+    element.onmouseover = {
+        background = DopaColors.mainLight
+        element.style.cursor = "pointer"
+        asDynamic()
+    }
+    element.onmouseleave = {
+        background = backgroundColor
+        element.style.cursor = ""
+        asDynamic()
+
+    }
+}
+
+
 fun LinearLayout.addZone(zone: ZoneDs, zonesPresenter: ZonesPresenter) {
     verticalLayout {
         width = matchParent
@@ -95,6 +112,7 @@ fun LinearLayout.addZone(zone: ZoneDs, zonesPresenter: ZonesPresenter) {
 
             textView {
                 text = "Edit"
+                makeClickable()
                 background = DopaColors.mainLight
                 textColor = Color.white
                 padding = 8.px
@@ -131,6 +149,7 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
                     textColor = Color.white
                     text = "Cancel"
                     background = DopaColors.redLight
+                    makeClickable(DopaColors.redLight)
                     width = wrapContent
                     marginEnd = 18.px
                     textAlign = TextView.TextAlign.Center
@@ -143,6 +162,7 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
                     height = wrapContent
                     textColor = Color.white
                     text = "Save new zone"
+                    makeClickable(DopaColors.greenLight)
                     background = DopaColors.greenLight
                     width = wrapContent
                     textAlign = TextView.TextAlign.Center

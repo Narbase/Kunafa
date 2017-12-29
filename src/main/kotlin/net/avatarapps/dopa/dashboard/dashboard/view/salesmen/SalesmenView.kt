@@ -36,6 +36,7 @@ class SalesmenListView(private val salesmenPresenter: SalesmenPresenter) : ViewC
             height = wrapContent
 
             salesmenPresenter.addSalesmanButton = textView {
+
                 width = wrapContent
                 height = wrapContent
                 padding = 8.px
@@ -44,6 +45,7 @@ class SalesmenListView(private val salesmenPresenter: SalesmenPresenter) : ViewC
                 textColor = Color.white
                 width = wrapContent
                 onClick = { salesmenPresenter.onAddSalesmanButtonClicked() }
+                makeClickable()
             }
 
             salesmenPresenter.noSalesmenTextView = textView {
@@ -66,10 +68,22 @@ class SalesmenListView(private val salesmenPresenter: SalesmenPresenter) : ViewC
             }
         }
     }
-
-
-
 }
+
+fun TextView.makeClickable(backgroundColor: Color = DopaColors.main) {
+    element.onmouseover = {
+        background = DopaColors.mainLight
+        element.style.cursor = "pointer"
+        asDynamic()
+    }
+    element.onmouseleave = {
+        background = backgroundColor
+        element.style.cursor = ""
+        asDynamic()
+
+    }
+}
+
 fun LinearLayout.addSalesman(salesman: SalesmanDs, salesmenPresenter: SalesmenPresenter) {
     verticalLayout {
         width = matchParent
@@ -101,6 +115,7 @@ fun LinearLayout.addSalesman(salesman: SalesmanDs, salesmenPresenter: SalesmenPr
                 padding = 8.px
                 alignSelf = Alignment.Center
                 onClick = { salesmenPresenter.onEditSalesman(salesman) }
+                makeClickable()
             }
         }
 
@@ -164,6 +179,8 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                     textColor = Color.white
                     text = "Cancel"
                     background = DopaColors.redLight
+
+                    makeClickable(DopaColors.redLight)
                     width = wrapContent
                     marginEnd = 18.px
                     textAlign = TextView.TextAlign.Center
@@ -177,6 +194,7 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                     textColor = Color.white
                     text = "Save new salesman"
                     background = DopaColors.greenLight
+                    makeClickable(DopaColors.greenLight)
                     width = wrapContent
                     textAlign = TextView.TextAlign.Center
                     onClick = { salesmenPresenter.onSaveNewSalesmanButtonClicked() }

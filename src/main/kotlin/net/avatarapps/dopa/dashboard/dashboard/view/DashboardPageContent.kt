@@ -1,6 +1,7 @@
 package net.avatarapps.dopa.dashboard.dashboard.view
 
 import net.avatarapps.dopa.dashboard.common.DopaColors
+import net.avatarapps.dopa.dashboard.dashboard.view.reports.ReportsView
 import net.avatarapps.dopa.dashboard.dashboard.view.salesmen.SalesmenView
 import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZonesView
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
@@ -132,10 +133,12 @@ class DashboardPageContent(
             onClick = onClickListener
             element.onmouseover = {
                 background = DopaColors.mainLight
+                element.style.cursor = "pointer"
                 asDynamic()
             }
             element.onmouseleave = {
                 background = Color.transparent
+                element.style.cursor = ""
                 asDynamic()
 
             }

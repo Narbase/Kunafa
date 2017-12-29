@@ -5,6 +5,7 @@ import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.DetachedView
 import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
+import net.avatarapps.kunafa.core.dimensions.dependent.weightOf
 import net.avatarapps.kunafa.core.dimensions.independent.px
 
 abstract class DashboardPlainViewContent(val title: String) : ViewContent() {
@@ -31,6 +32,25 @@ abstract class DashboardPlainViewContent(val title: String) : ViewContent() {
                 marginBottom = 16.px
             }
 
+//            verticalLayout {
+//
+//                width = matchParent
+//                height = matchParent
+//                background = DopaColors.redLight
+//
+//                view {
+//                    width = matchParent
+//                    height = 1300.px
+//                    background = DopaColors.main
+//
+//                }
+//                view {
+//                    width = matchParent
+//                    height = 300.px
+//                    background = DopaColors.greenLight
+//
+//                }
+//            }
             plainPresenter.mainViewContent = viewContainer {
                 width = matchParent
                 height = matchParent
