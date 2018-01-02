@@ -36,6 +36,12 @@ object Page : Container(null) {
         child.parent = null
     }
 
+    var title: String
+        get() = document.title
+        set(value) {
+            document.title = value
+        }
+
     fun prepare() {
         id = "page"
         document.body?.style?.margin = "0"

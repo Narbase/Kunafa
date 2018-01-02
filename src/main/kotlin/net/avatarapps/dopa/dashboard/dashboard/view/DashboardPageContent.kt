@@ -3,6 +3,7 @@ package net.avatarapps.dopa.dashboard.dashboard.view
 import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.dopa.dashboard.dashboard.view.reports.ReportsView
 import net.avatarapps.dopa.dashboard.dashboard.view.salesmen.SalesmenView
+import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.SmartOffersView
 import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZonesView
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
@@ -34,6 +35,7 @@ class DashboardPageContent(
     private val zonesView = ZonesView()
     private val salesmenView = SalesmenView()
     private val reportsView = ReportsView()
+    private val smartOfferView = SmartOffersView()
 
     override fun DetachedView.contentDefinition() {
         horizontalLayout {
@@ -81,21 +83,25 @@ class DashboardPageContent(
                 }
             }
 
-
             addMenuItem("salesmenView", "Salesmen") {
                 mainView?.content = salesmenView
             }
 
-
             addMenuItem("drugsView", "Drugs") {
                 mainView?.content = drugsView
-            }
-            addMenuItem("salesmenRequestsView", "Salesmen requests") {
-                mainView?.content = salesmenRequestsView
             }
 
             addMenuItem("zonesView", "Zones") {
                 mainView?.content = zonesView
+            }
+
+            addMenuItem("salesmenRequestsView", "Salesmen requests") {
+                mainView?.content = salesmenRequestsView
+            }
+
+
+            addMenuItem("smartOfferView", "Smart offers") {
+                mainView?.content = smartOfferView
             }
 
             addMenuItem("reportsView", "Reports") {

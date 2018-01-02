@@ -1,4 +1,4 @@
-package net.avatarapps.dopa.dashboard.dashboard.view.salesmen
+package net.avatarapps.dopa.dashboard.dashboard.view.smartoffers
 
 import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainViewContent
@@ -24,34 +24,34 @@ import net.avatarapps.kunafa.core.drawable.Color
  * Created by islam
  * On: 12/14/17.
  */
-class SalesmenView : DashboardPlainViewContent("Salesmen management") {
+class SmartOffersView : DashboardPlainViewContent("Smart offers management") {
 
-    override val plainPresenter = SalesmenPresenter()
-    override var pageViewContent: ViewContent = plainPresenter.salesmenListView
+    override val plainPresenter = SmartOffersPresenter()
+    override var pageViewContent: ViewContent = plainPresenter.smartOffersListView
 }
 
-class SalesmenListView(private val salesmenPresenter: SalesmenPresenter) : ViewContent() {
+class SmartOffersListView(private val smartOffersPresenter: SmartOffersPresenter) : ViewContent() {
     override fun DetachedView.contentDefinition() {
 
         verticalLayout {
             width = matchParent
             height = wrapContent
 
-            salesmenPresenter.addSalesmanButton = textView {
+            smartOffersPresenter.addSmartOfferButton = textView {
 
                 width = wrapContent
                 height = wrapContent
                 padding = 8.px
                 background = DopaColors.main
-                text = "+ Add salesman"
+                text = "+ Add smartOffer"
                 textColor = Color.white
                 width = wrapContent
-                onClick = { salesmenPresenter.onAddSalesmanButtonClicked() }
+                onClick = { smartOffersPresenter.onAddSmartOfferButtonClicked() }
                 makeClickable()
             }
 
-            salesmenPresenter.noSalesmenTextView = textView {
-                text = "No salesmen were added yet."
+            smartOffersPresenter.noSmartOffersTextView = textView {
+                text = "No smartOffers were added yet."
                 textColor = DopaColors.separatorLight
                 textSize = 24.px
                 width = matchParent
@@ -60,9 +60,9 @@ class SalesmenListView(private val salesmenPresenter: SalesmenPresenter) : ViewC
                 isVisible = false
             }
 
-            salesmenPresenter.salesmenListLoadingImageView = loadingIndicator()
+            smartOffersPresenter.smartOffersListLoadingImageView = loadingIndicator()
 
-            salesmenPresenter.salesmenList = verticalLayout {
+            smartOffersPresenter.smartOffersList = verticalLayout {
                 width = matchParent
                 height = matchParent
                 isScrollableVertically = false
@@ -86,7 +86,7 @@ fun TextView.makeClickable(backgroundColor: Color = DopaColors.main) {
     }
 }
 
-fun LinearLayout.addSalesman(salesman: SalesmanDs, salesmenPresenter: SalesmenPresenter) {
+fun LinearLayout.addSmartOffer(smartOffer: SmartOfferDs, smartOffersPresenter: SmartOffersPresenter) {
     verticalLayout {
         width = matchParent
         horizontalLayout {
@@ -98,13 +98,13 @@ fun LinearLayout.addSalesman(salesman: SalesmanDs, salesmenPresenter: SalesmenPr
 
             verticalLayout {
                 textView {
-                    text = salesman.name
+                    text = smartOffer.name
                     textColor = DopaColors.main
                     textSize = 18.px
                 }
 
                 textView {
-                    text = salesman.phone
+                    text = smartOffer.phone
                     textColor = DopaColors.mainLight
                     marginTop = 6.px
                 }
@@ -116,7 +116,7 @@ fun LinearLayout.addSalesman(salesman: SalesmanDs, salesmenPresenter: SalesmenPr
                 textColor = Color.white
                 padding = 8.px
                 alignSelf = Alignment.Center
-                onClick = { salesmenPresenter.onEditSalesman(salesman) }
+                onClick = { smartOffersPresenter.onEditSmartOffer(smartOffer) }
                 makeClickable()
             }
         }
@@ -129,7 +129,7 @@ fun LinearLayout.addSalesman(salesman: SalesmanDs, salesmenPresenter: SalesmenPr
     }
 }
 
-class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewContent() {
+class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) : ViewContent() {
     override fun DetachedView.contentDefinition() {
         val formWidth = 640.px
 
@@ -144,72 +144,33 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                 alignItems = Alignment.Center
                 maxWidth = formWidth
 
-                salesmenPresenter.name = textInput {
-                    placeholder = "Full name"
+                smartOffersPresenter.name = textInput {
+                    placeholder = "Drug name"
                     width = matchParent
                     textSize = 18.px
                     marginBottom = 12.px
                     maxWidth = formWidth
                 }
 
-                salesmenPresenter.username = textInput {
-                    placeholder = "Username"
+                smartOffersPresenter.username = textInput {
+                    placeholder = "Description"
                     width = matchParent
                     textSize = 18.px
                     marginBottom = 12.px
                     maxWidth = formWidth
                 }
 
-                salesmenPresenter.password = textInput {
-                    placeholder = "Password"
-                    width = matchParent
-                    textSize = 18.px
-                    marginBottom = 12.px
-                    maxWidth = formWidth
-                }
+                addTarget("All")
+                addTarget("Zone")
+                addTarget("Label")
+                addTarget("All pharmacies with previous interactions")
 
-                salesmenPresenter.phone = textInput {
-                    placeholder = "Phone number"
-                    width = matchParent
-                    textSize = 18.px
-                    marginBottom = 12.px
-                    maxWidth = formWidth
-                }
-
-
-                textView {
-                    textColor = DopaColors.separatorLight
-                    textSize = 20.px
-                    width = matchParent
-                    textAlign = TextView.TextAlign.Left
-                    text = "Zones"
-                    maxWidth = formWidth
-                }
-
-                salesmenPresenter.noZonesTextView = textView {
-                    text = "No zones were added yet."
-                    textColor = DopaColors.separatorLight
-                    textSize = 24.px
-                    width = matchParent
-                    textAlign = TextView.TextAlign.Center
-                    marginTop = 16.px
-                    isVisible = false
-                    maxWidth = formWidth
-                }
-
-                salesmenPresenter.zonesListLoadingImageView = loadingIndicator()
-
-                salesmenPresenter.zonesList = verticalLayout {
-                    width = matchParent
-                    height = matchParent
-                    maxWidth = formWidth
-                }
-
-                salesmenPresenter.addSalesmanControlView = horizontalLayout {
+                smartOffersPresenter.addSmartOfferControlView = horizontalLayout {
                     width = matchParent
                     maxWidth = formWidth
+                    marginTop = 12.px
 
-                    salesmenPresenter.cancelAddSalesmanButton = textView {
+                    smartOffersPresenter.cancelAddSmartOfferButton = textView {
                         padding = 8.px
                         width = weightOf(1)
                         height = wrapContent
@@ -221,26 +182,26 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                         width = wrapContent
                         marginEnd = 18.px
                         textAlign = TextView.TextAlign.Center
-                        onClick = { salesmenPresenter.onCancelAddSalesmanButton() }
+                        onClick = { smartOffersPresenter.onCancelAddSmartOfferButton() }
                     }
 
-                    salesmenPresenter.saveNewSalesmanButton = textView {
+                    smartOffersPresenter.saveNewSmartOfferButton = textView {
                         padding = 8.px
                         width = weightOf(1)
                         height = wrapContent
                         textColor = Color.white
-                        text = "Save new salesman"
+                        text = "Save new smart offer"
                         background = DopaColors.greenLight
                         makeClickable(DopaColors.greenLight)
                         width = wrapContent
                         textAlign = TextView.TextAlign.Center
-                        onClick = { salesmenPresenter.onSaveNewSalesmanButtonClicked() }
+                        onClick = { smartOffersPresenter.onSaveNewSmartOfferButtonClicked() }
                     }
 
                 }
-                salesmenPresenter.addSalesmenLoadingImageView = loadingIndicator()
+                smartOffersPresenter.addSmartOffersLoadingImageView = loadingIndicator()
 
-                salesmenPresenter.addSalesmanStatusText = textView {
+                smartOffersPresenter.addSmartOfferStatusText = textView {
                     text = ""
                     textColor = DopaColors.redLight
                     textSize = 14.px
@@ -256,7 +217,7 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
     }
 }
 
-fun LinearLayout.addZone(zone: ZoneDs, presenter: SalesmenPresenter, isSelected: Boolean): Checkbox? {
+fun LinearLayout.addTarget(name: String): Checkbox? {
     var checkbox: Checkbox? = null
     horizontalLayout {
         width = matchParent
@@ -265,10 +226,9 @@ fun LinearLayout.addZone(zone: ZoneDs, presenter: SalesmenPresenter, isSelected:
         alignItems = Alignment.Center
         checkbox = checkbox {
             margin = 8.px
-            isChecked = isSelected
         }
         textView {
-            text = zone.name
+            text = name
             textColor = DopaColors.main
             width = matchParent
             textAlign = TextView.TextAlign.Left

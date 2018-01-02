@@ -6,6 +6,7 @@ import net.avatarapps.dopa.dashboard.login.LoginPageContent
 import net.avatarapps.dopa.dashboard.login.LoginPresenter
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
+import net.avatarapps.kunafa.core.components.Page.title
 import net.avatarapps.kunafa.core.components.layout.*
 import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
 import net.avatarapps.kunafa.core.dimensions.independent.px
@@ -32,6 +33,7 @@ class App {
         appPresenter.dashboardPage = dashboardPage
 
         page {
+            title = "Dopa dashboard"
             viewContainer {
                 presenter = appPresenter
                 id = "mainView"
