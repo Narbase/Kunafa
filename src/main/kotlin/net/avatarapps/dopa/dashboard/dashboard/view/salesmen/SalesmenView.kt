@@ -176,6 +176,25 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
                     maxWidth = formWidth
                 }
 
+                horizontalLayout {
+                    width = matchParent
+                    marginTop = 4.px
+                    padding = 4.px
+                    alignItems = Alignment.Center
+                    salesmenPresenter.requiresAgentApprovalCheckbox = checkbox {
+                        margin = 8.px
+//                        isChecked = isSelected
+                    }
+                    textView {
+                        text = "Requires agent approval"
+                        textColor = DopaColors.main
+                        width = matchParent
+                        textAlign = TextView.TextAlign.Left
+                        textSize = 18.px
+                    }
+                }
+
+
 
                 textView {
                     textColor = DopaColors.separatorLight

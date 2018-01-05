@@ -6,5 +6,6 @@ data class SalesmanDs(
         val password: String,
         val zoneId: ArrayList<Int>,
         val phone: String,
+        val agentApproval: Boolean,
         var id: Int? = null
 )

@@ -231,7 +231,7 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
                     onChange = { zonesPresenter.onStateViewClicked(state) }
                 }
                 textView {
-                    text = state.nameEn
+                    text = state.nameAr
 
                 }
             }
@@ -261,7 +261,7 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
                 onChange = { zonesPresenter.onDistrictViewClicked(district) }
             }
             textView {
-                text = district.nameEn
+                text = district.nameAr
 
             }
 
@@ -286,7 +286,7 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
                 onChange = { zonesPresenter.onNeighbourhoodViewClicked(neighbourhood) }
             }
             textView {
-                text = neighbourhood.nameEn
+                text = neighbourhood.nameAr
 
             }
 

@@ -23,6 +23,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
     var addSalesmanControlView: LinearLayout? = null
     var addSalesmenLoadingImageView: ImageView? = null
     var addSalesmanStatusText: TextView? = null
+    var requiresAgentApprovalCheckbox: Checkbox? = null
 
     var noZonesTextView: TextView? = null
     var zonesListLoadingImageView: ImageView? = null
@@ -120,7 +121,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
                                 password?.text?.takeIf { it.isNotEmpty() },
                                 username?.text,
                                 phone?.text,
-                                false,
+                                requiresAgentApprovalCheckbox?.isChecked,
                                 zonesIds)),
                 onSuccess = { xmlHttpRequest ->
                     if (xmlHttpRequest.status == 200.toShort()) {
@@ -165,6 +166,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
         phone?.text = salesman.phone
         name?.text = salesman.name
         salesmanId = salesman.id
+        requiresAgentApprovalCheckbox?.isChecked = salesman.agentApproval
         isEditSalesman = true
         saveNewSalesmanButton?.text = "Update salesman"
         password?.placeholder = "New password (optional)"
@@ -195,6 +197,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
                                     "",
                                     (it["zones"] as? Array<Int>)?.mapTo(zonesIds) { it } ?: arrayListOf(),
                                     it["phone"] as? String ?: "",
+                                    it["approval"] as? Boolean ?: false,
                                     it["id"] as? Int)
                         }?.forEach {
                             salesmenList?.addSalesman(it, this)
@@ -215,6 +218,7 @@ class SalesmenPresenter : DashboardPlainPresenter() {
                 }
         )
     }
+
 
 }
 

@@ -33,6 +33,7 @@ class ReportsPresenter : DashboardPlainPresenter() {
                                     "",
                                     (it["zones"] as? Array<Int>)?.mapTo(zonesIds) { it } ?: arrayListOf(),
                                     it["phone"] as? String ?: "",
+                                    it["approval"] as? Boolean ?: false,
                                     it["id"] as? Int)
                         }?.forEach {
                             salesmenList?.addReportSalesman(it, this)

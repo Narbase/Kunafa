@@ -1,6 +1,7 @@
 package net.avatarapps.dopa.dashboard.dashboard.view
 
 import net.avatarapps.dopa.dashboard.common.DopaColors
+import net.avatarapps.dopa.dashboard.dashboard.view.drugs.DrugsView
 import net.avatarapps.dopa.dashboard.dashboard.view.reports.ReportsView
 import net.avatarapps.dopa.dashboard.dashboard.view.salesmen.SalesmenView
 import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.SmartOffersView

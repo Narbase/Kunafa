@@ -7,7 +7,8 @@ import kotlin.browser.window
 object ServerCaller {
 
     private const val BASE_URL = "http://localhost:4567"
-    private val accessToken = StorageManager.accessToken
+    private val accessToken
+        get() = StorageManager.accessToken
 
     fun doLoginRequest(username: String?, password: String?, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
         post(
@@ -21,7 +22,7 @@ object ServerCaller {
     fun getAllZones(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
         get(
                 url = "/api/agent/v1/zones/all",
-                headers = mapOf("Authorization" to (accessToken?:"")),
+                headers = mapOf("Authorization" to (accessToken ?: "")),
                 onSuccess = onSuccess,
                 onError = onError
         )
@@ -32,7 +33,7 @@ object ServerCaller {
         val body = JSON.stringify(dto)
         post(
                 url = "/api/agent/v1/zones/update",
-                headers = mapOf("Authorization" to (accessToken?:""),
+                headers = mapOf("Authorization" to (accessToken ?: ""),
                         "Content-Type" to "application/json"),
                 onSuccess = onSuccess,
                 onError = onError,
@@ -44,7 +45,7 @@ object ServerCaller {
     fun getAllSalesmen(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
         get(
                 url = "/api/agent/v1/salesmen/all",
-                headers = mapOf("Authorization" to (accessToken?:"")),
+                headers = mapOf("Authorization" to (accessToken ?: "")),
                 onSuccess = onSuccess,
                 onError = onError
         )
@@ -56,7 +57,7 @@ object ServerCaller {
         post(
                 url = "/api/agent/v1/salesmen/update",
                 headers = mapOf(
-                        "Authorization" to (accessToken?:""),
+                        "Authorization" to (accessToken ?: ""),
                         "Content-Type" to "application/json"),
                 onSuccess = onSuccess,
                 onError = onError,
