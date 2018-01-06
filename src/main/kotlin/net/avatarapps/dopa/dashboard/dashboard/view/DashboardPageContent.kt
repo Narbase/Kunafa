@@ -4,6 +4,7 @@ import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.dopa.dashboard.dashboard.view.drugs.DrugsView
 import net.avatarapps.dopa.dashboard.dashboard.view.reports.ReportsView
 import net.avatarapps.dopa.dashboard.dashboard.view.salesmen.SalesmenView
+import net.avatarapps.dopa.dashboard.dashboard.view.salesmenrequests.SalesmenRequestsView
 import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.SmartOffersView
 import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZonesView
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
@@ -79,7 +80,6 @@ class DashboardPageContent(
 
                 imageView {
                     width = matchParent
-                    height = matchParent
                     img.src = "/public/img/logo.png"
                 }
             }

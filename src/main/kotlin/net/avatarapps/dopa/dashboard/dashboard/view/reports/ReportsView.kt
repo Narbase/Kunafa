@@ -33,8 +33,6 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
                 width = matchParent
                 height = matchParent
 
-
-
                 plainPresenter.salesmenList = verticalLayout {
                     width = weightOf(1)
                     height = matchParent
