@@ -139,7 +139,7 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
             height = wrapContent
 
             verticalLayout {
-                width = matchParent
+                width = formWidth
                 maxWidth = formWidth
                 alignItems = Alignment.Center
                 height = wrapContent
