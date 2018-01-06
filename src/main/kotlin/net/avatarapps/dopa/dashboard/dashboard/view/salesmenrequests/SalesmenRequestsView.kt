@@ -3,6 +3,10 @@ package net.avatarapps.dopa.dashboard.dashboard.view.salesmenrequests
 import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainViewContent
 import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.loadingIndicator
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.areas.Areas
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.areas.District
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.areas.Neighbourhood
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.areas.State
 import net.avatarapps.dopa.dashboard.dashboard.view.zones.makeClickable
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
@@ -21,6 +25,13 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
     override val plainPresenter = SalesmenRequestsPresenter()
 
     val pendingRequestsListPresenter = PendingRequestsListPresenter(this)
+    val pendingRequestDetailsPresenter = PendingRequestDetailsPresenter(this)
+
+    private var salesmanView: LinearLayout? = null
+    private var pharmacyView: LinearLayout? = null
+    private var orderItemsView: LinearLayout? = null
+    private var paymentsView: LinearLayout? = null
+
 
     override var pageViewContent = object : ViewContent() {
         override fun DetachedView.contentDefinition() {
@@ -50,7 +61,7 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                     }
                     pendingRequestsListPresenter.loadingImage = loadingIndicator()
 
-                    pendingRequestsListPresenter.listView = horizontalLayout {
+                    pendingRequestsListPresenter.listView = verticalLayout {
                         width = matchParent
                         height = matchParent
 
@@ -60,6 +71,7 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                 verticalLayout {
                     width = weightOf(3)
                     marginStart = 8.px
+                    presenter = pendingRequestDetailsPresenter
 
                     textView {
                         text = "Details"
@@ -68,74 +80,112 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                         marginBottom = 8.px
                     }
 
-                    controlButtons()
-
-                    subTitle("Salesman info")
-                    keyValueEntry("Name", "Omar Ali")
-                    keyValueEntry("Phone", "0129232844")
-                    separator()
-
-                    subTitle("Pharmacy info")
-                    keyValueEntry("Name", "Alkarawan - الكروان")
-                    keyValueEntry("Location", "لفة شمبات الاراضي شمال")
-                    keyValueEntry("Phone number", "09121312121 - 0912131298")
-                    keyValueEntry("Pharmacist name", "Omer Ali")
-                    separator()
-
-
-                    subTitle("Request Details")
-                    keyValueEntry("Delivery date", "12-17-2018")
-
-                    horizontalLayout {
+                    pendingRequestDetailsPresenter.noRequestSelectedText = textView {
+                        text = "No request is selected."
+                        textColor = DopaColors.separatorLight
+                        textSize = 24.px
                         width = matchParent
-                        height = wrapContent
-
-                        verticalLayout {
-                            width = weightOf(1)
-                            paddingStart = 8.px
-                            paddingEnd = 8.px
-                            subTitle("Order items")
-                            orderItem("50", "343 SDG", "33", "1", "Panadol", "01-04-2018")
-                            orderItem("50", "343 SDG", "33", "1", "Panadol", "01-04-2018")
-                            orderItem("50", "343 SDG", "33", "1", "Panadol", "01-04-2018")
-
-                        }
-
-                        verticalLayout {
-                            width = weightOf(1)
-                            paddingStart = 8.px
-                            paddingEnd = 8.px
-                            subTitle("Payments")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-                            paymentItem("01-04-2018", "50")
-
-                        }
+                        textAlign = TextView.TextAlign.Center
+                        marginTop = 16.px
+                        isVisible = false
                     }
 
-                    /*
-                     {
-                            "amount": 50,
-                            "price": 343,
-                            "bonus": 33,
-                            "discount": 1,
-                            "productId": 1,
-                            "productName": "Panadol",
-                            "expirationDate": "01-04-2018"
+                    pendingRequestDetailsPresenter.detailsView = verticalLayout {
+                        width = matchParent
+                        height = matchParent
+                        controlButtons()
+
+                        subTitle("Salesman info")
+                        salesmanView = verticalLayout {
+                            width = matchParent
+                            height = matchParent
                         }
-                     */
+                        separator()
+
+                        subTitle("Pharmacy info")
+
+                        pharmacyView = verticalLayout {
+                            width = matchParent
+                            height = matchParent
+
+                        }
+                        separator()
+
+
+                        subTitle("Request Details")
+                        keyValueEntry("Delivery date", "12-17-2018")
+
+                        horizontalLayout {
+                            width = matchParent
+                            height = wrapContent
+
+                            verticalLayout {
+                                width = weightOf(1)
+                                paddingStart = 8.px
+                                paddingEnd = 8.px
+                                subTitle("Order items")
+                                orderItemsView = verticalLayout {
+                                    width = matchParent
+                                    height = wrapContent
+                                    orderItem("50", "343 SDG", "33", "1", "Panadol", "01-04-2018")
+
+                                }
+                            }
+
+                            verticalLayout {
+                                width = weightOf(1)
+                                paddingStart = 8.px
+                                paddingEnd = 8.px
+                                subTitle("Payments")
+                                paymentsView = verticalLayout {
+                                    width = matchParent
+                                    height = wrapContent
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                    paymentItem("01-04-2018", "50")
+                                }
+
+                            }
+                        }
+
+                        /*
+                         {
+                                "amount": 50,
+                                "price": 343,
+                                "bonus": 33,
+                                "discount": 1,
+                                "productId": 1,
+                                "productName": "Panadol",
+                                "expirationDate": "01-04-2018"
+                            }
+                         */
+                    }
 
                 }
             }
         }
+    }
+
+    private fun LinearLayout.displayPharmacyInfo(name: String, locationDescripton: String, phone: String, pharmacistName: String) {
+        clearAllChildren()
+        keyValueEntry("Name", name)
+        keyValueEntry("Location", locationDescripton)
+        keyValueEntry("Phone number", phone)
+        keyValueEntry("Pharmacist name", pharmacistName)
+    }
+
+    private fun LinearLayout.displaySalesmanInfo(name: String, phone: String) {
+        clearAllChildren()
+        keyValueEntry("Name", name)
+        keyValueEntry("Phone", phone)
     }
 
     private fun LinearLayout.controlButtons() {
@@ -211,18 +261,6 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
         }
     }
 
-
-    /*
-     {
-            "amount": 50,
-            "price": 343,
-            "bonus": 33,
-            "discount": 1,
-            "productId": 1,
-            "productName": "Panadol",
-            "expirationDate": "01-04-2018"
-        }
-     */
     fun LinearLayout.orderItem(
             amount: String,
             price: String,
@@ -311,25 +349,33 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
 
 
     fun addPendingRequest(
+            index: Int,
+            request: PendingRequest,
             listView: LinearLayout?,
             salesmanName: String,
             pharmacyName: String
-    ) {
-        if (listView == null) return
+    ): View? {
+        if (listView == null) return null
+        var indicator: View? = null
         with(listView) {
             verticalLayout {
                 width = matchParent
                 marginTop = 8.px
                 background = Color.white
                 height = wrapContent
+
+                onClick = {
+                    pendingRequestDetailsPresenter.onRequestSelected(request)
+                    pendingRequestsListPresenter.onRequestSelected(index)
+                }
+
                 horizontalLayout {
                     width = matchParent
                     height = wrapContent
                     alignItems = Alignment.Stretch
-                    val selector = view {
+                    indicator = view {
                         width = 8.px
                         height = matchParent
-//                    alignSelf = Alignment.Stretch
                         background = Color.transparent
                     }
 
@@ -342,13 +388,13 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                         element.onmouseover = {
                             background = DopaColors.separatorLight
                             element.style.cursor = "pointer"
-                            selector.background = DopaColors.main
+                            indicator?.background = DopaColors.main
                             asDynamic()
                         }
                         element.onmouseleave = {
                             background = Color.white
                             element.style.cursor = ""
-                            selector.background = Color.transparent
+                            indicator?.background = Color.transparent
                             asDynamic()
 
                         }
@@ -377,7 +423,54 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                     height = 2.px
                     background = DopaColors.separatorLight
                 }
+
             }
         }
+        return indicator
+    }
+
+    fun showRequest(request: PendingRequest) {
+        salesmanView?.displaySalesmanInfo(request.salesmanDto.name, request.salesmanDto.phone)
+        with(request.pharmacyDs) {
+            var pharmacyNeighbourhood: Neighbourhood? = null
+            var pharmacyDistrict: District? = null
+            var pharmacyState: State? = null
+            Areas.states.forEach { state ->
+                state.districts.forEach { district ->
+                    district.neighbourhoods.forEach { neighbourhood ->
+                        if (neighbourhood.id == neighborhoodId) {
+                            pharmacyNeighbourhood = neighbourhood
+                            pharmacyDistrict = district
+                            pharmacyState = state
+                        }
+                    }
+                }
+            }
+
+            pharmacyView?.displayPharmacyInfo(
+                    nameEnglish,
+                    locationDescripton = "${pharmacyState?.nameAr?: ""} " +
+                            "${pharmacyDistrict?.nameAr?: ""} " +
+                            "${pharmacyNeighbourhood?.nameAr?: ""} " +
+                            locationDescription,
+                    phone = "$firstPhone - $secondPhone",
+                    pharmacistName = pharmacistName)
+        }
+        orderItemsView?.clearAllChildren()
+        request.request.orderItemsList.forEach {
+            orderItemsView?.orderItem(
+                    it.amount.toString(),
+                    "${it.price} SDG",
+                    it.bonus.toString(),
+                    it.discount.toString(),
+                    it.productName,
+                    it.expirationDate)
+        }
+
+        paymentsView?.clearAllChildren()
+        request.request.payments.forEach {
+            paymentsView?.paymentItem(it.date, "${it.price} SDG")
+        }
+
     }
 }

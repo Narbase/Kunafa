@@ -36,4 +36,12 @@ open class Container(parent: Container?) : View(parent) {
         child.parent = null
     }
 
+    open fun clearAllChildren(){
+        while (element.firstChild != null) {
+            element.firstChild?.let {
+                element.removeChild(it)
+            }
+        }
+    }
+
 }

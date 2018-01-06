@@ -1,9 +1,7 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.salesmenrequests
 
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainPresenter
-import net.avatarapps.dopa.dashboard.network.ServerCaller
 import net.avatarapps.kunafa.core.components.View
-import kotlin.js.Json
 
 class SalesmenRequestsPresenter : DashboardPlainPresenter() {
     override fun onViewCreated(view: View) {
@@ -27,8 +25,8 @@ data class PendingRequest(
 data class PendingRequestDto(
         var id: Int? = null,
         val deliveryDate: String,
-        val orderItemsList: List<PendingRequestItemsDto>,
-        val payments: List<PendingRequestPaymentDto>
+        val orderItemsList: Array<PendingRequestItemsDto>,
+        val payments: Array<PendingRequestPaymentDto>
 )
 
 data class PendingRequestItemsDto(
