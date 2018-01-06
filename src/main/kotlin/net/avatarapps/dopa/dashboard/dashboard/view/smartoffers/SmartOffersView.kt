@@ -239,7 +239,7 @@ fun LinearLayout.addTarget(name: String): Checkbox? {
 }
 
 
-private fun LinearLayout.loadingIndicator(): ImageView {
+fun LinearLayout.loadingIndicator(): ImageView {
     return imageView {
         marginTop = 18.px
         width = 40.px

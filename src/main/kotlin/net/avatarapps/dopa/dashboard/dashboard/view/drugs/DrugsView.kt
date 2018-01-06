@@ -54,7 +54,7 @@ class DrugsView : DashboardPlainViewContent("Drugs management") {
 
                         imageView {
                             height = 160.px
-                            img.src = "public/img/upload_csv.png"
+                            img.src = "/public/img/upload_csv.png"
                         }
 
                         textView {
@@ -95,7 +95,7 @@ class DrugsView : DashboardPlainViewContent("Drugs management") {
 
                         imageView {
                             height = 160.px
-                            img.src = "public/img/download_csv.png"
+                            img.src = "/public/img/download_csv.png"
                         }
 
                         textView {
@@ -137,7 +137,6 @@ class DrugsView : DashboardPlainViewContent("Drugs management") {
 class DrugsPresenter : DashboardPlainPresenter() {
 
     fun onFileChanged(t: TextInput) {
-        val BASE_URL = "http://localhost:4567"
         val url = "/api/agent/v1/drugs/upload"
         val accessToken = StorageManager.accessToken
         val headers = mapOf("Authorization" to (accessToken ?:""))
@@ -148,7 +147,7 @@ class DrugsPresenter : DashboardPlainPresenter() {
         formData.asDynamic().append("csv_file".asDynamic(), files?.get(0).asDynamic())
 
         val request = XMLHttpRequest()
-        request.open("POST", "$BASE_URL$url")
+        request.open("POST", "${ServerCaller.BASE_URL}$url")
         headers?.forEach { request.setRequestHeader(it.key, it.value) }
         request.send(formData)
 

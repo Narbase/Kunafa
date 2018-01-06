@@ -1,8 +1,8 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.salesmenrequests
 
 import net.avatarapps.dopa.dashboard.common.DopaColors
-import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainPresenter
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainViewContent
+import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.loadingIndicator
 import net.avatarapps.dopa.dashboard.dashboard.view.zones.makeClickable
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
@@ -20,6 +20,8 @@ import net.avatarapps.kunafa.core.drawable.Color
 class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
     override val plainPresenter = SalesmenRequestsPresenter()
 
+    val pendingRequestsListPresenter = PendingRequestsListPresenter(this)
+
     override var pageViewContent = object : ViewContent() {
         override fun DetachedView.contentDefinition() {
 //            textView {
@@ -36,21 +38,23 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                 width = matchParent
                 height = matchParent
 
-
                 verticalLayout {
                     width = weightOf(1)
                     height = matchParent
+                    presenter = pendingRequestsListPresenter
 
                     textView {
                         text = "Pending requests"
                         textColor = DopaColors.text
                         textSize = 18.px
                     }
-                    showPendingRequest("Ali", "Islam pharmacy")
-                    showPendingRequest("Ali", "Islam pharmacy")
-                    showPendingRequest("Ali", "Islam pharmacy")
-                    showPendingRequest("Ali", "Islam pharmacy")
+                    pendingRequestsListPresenter.loadingImage = loadingIndicator()
 
+                    pendingRequestsListPresenter.listView = horizontalLayout {
+                        width = matchParent
+                        height = matchParent
+
+                    }
                 }
 
                 verticalLayout {
@@ -64,37 +68,7 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                         marginBottom = 8.px
                     }
 
-                    horizontalLayout {
-                        width = matchParent
-                        textView {
-                            padding = 8.px
-                            width = weightOf(1)
-                            height = wrapContent
-                            textColor = Color.white
-                            text = "Reject"
-                            background = DopaColors.redLight
-
-                            makeClickable(DopaColors.redLight)
-                            width = wrapContent
-                            marginEnd = 18.px
-                            textAlign = TextView.TextAlign.Center
-//                            onClick = { salesmenPresenter.onCancelAddSalesmanButton() }
-                        }
-
-                        textView {
-                            padding = 8.px
-                            width = weightOf(1)
-                            height = wrapContent
-                            textColor = Color.white
-                            text = "Approve request"
-                            background = DopaColors.greenLight
-                            makeClickable(DopaColors.greenLight)
-                            width = wrapContent
-                            textAlign = TextView.TextAlign.Center
-//                            onClick = { salesmenPresenter.onSaveNewSalesmanButtonClicked() }
-                        }
-
-                    }
+                    controlButtons()
 
                     subTitle("Salesman info")
                     keyValueEntry("Name", "Omar Ali")
@@ -118,16 +92,31 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
 
                         verticalLayout {
                             width = weightOf(1)
+                            paddingStart = 8.px
+                            paddingEnd = 8.px
                             subTitle("Order items")
-                            orderItem("50","343 SDG", "33", "1", "Panadol", "01-04-2018")
-                            orderItem("50","343 SDG", "33", "1", "Panadol", "01-04-2018")
-                            orderItem("50","343 SDG", "33", "1", "Panadol", "01-04-2018")
+                            orderItem("50", "343 SDG", "33", "1", "Panadol", "01-04-2018")
+                            orderItem("50", "343 SDG", "33", "1", "Panadol", "01-04-2018")
+                            orderItem("50", "343 SDG", "33", "1", "Panadol", "01-04-2018")
 
                         }
 
                         verticalLayout {
                             width = weightOf(1)
+                            paddingStart = 8.px
+                            paddingEnd = 8.px
                             subTitle("Payments")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
+                            paymentItem("01-04-2018", "50")
 
                         }
                     }
@@ -146,6 +135,40 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
 
                 }
             }
+        }
+    }
+
+    private fun LinearLayout.controlButtons() {
+        horizontalLayout {
+            width = matchParent
+            textView {
+                padding = 8.px
+                width = weightOf(1)
+                height = wrapContent
+                textColor = Color.white
+                text = "Reject"
+                background = DopaColors.redLight
+
+                makeClickable(DopaColors.redLight)
+                width = wrapContent
+                marginEnd = 18.px
+                textAlign = TextView.TextAlign.Center
+                //                            onClick = { salesmenPresenter.onCancelAddSalesmanButton() }
+            }
+
+            textView {
+                padding = 8.px
+                width = weightOf(1)
+                height = wrapContent
+                textColor = Color.white
+                text = "Approve request"
+                background = DopaColors.greenLight
+                makeClickable(DopaColors.greenLight)
+                width = wrapContent
+                textAlign = TextView.TextAlign.Center
+                //                            onClick = { salesmenPresenter.onSaveNewSalesmanButtonClicked() }
+            }
+
         }
     }
 
@@ -169,7 +192,8 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
 
     private fun LinearLayout.keyValueEntry(key: String, value: String) {
         horizontalLayout {
-            marginTop = 8.px
+            marginTop = 4.px
+            marginBottom = 4.px
             width = matchParent
             height = wrapContent
             textView {
@@ -187,70 +211,6 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
         }
     }
 
-
-    fun LinearLayout.showPendingRequest(salesmanName: String, pharmacyName: String) {
-        verticalLayout {
-            width = matchParent
-            marginTop = 8.px
-            background = Color.white
-            height = wrapContent
-            horizontalLayout {
-                width = matchParent
-                height = wrapContent
-                alignItems = Alignment.Stretch
-                val selector = view {
-                    width = 8.px
-                    height = matchParent
-//                    alignSelf = Alignment.Stretch
-                    background = Color.transparent
-                }
-
-                verticalLayout {
-                    padding = 12.px
-                    width = matchParent
-                    height = wrapContent
-                    justifyContent = JustifyContent.SpaceBetween
-
-                    element.onmouseover = {
-                        background = DopaColors.separatorLight
-                        element.style.cursor = "pointer"
-                        selector.background = DopaColors.main
-                        asDynamic()
-                    }
-                    element.onmouseleave = {
-                        background = Color.white
-                        element.style.cursor = ""
-                        selector.background = Color.transparent
-                        asDynamic()
-
-                    }
-
-                    textView {
-                        text = "By: $salesmanName"
-                        textColor = DopaColors.mainDark
-                        textSize = 18.px
-                        height = wrapContent
-                    }
-
-                    textView {
-                        text = "Pharmacy: $pharmacyName"
-                        textColor = DopaColors.mainLight
-                        marginTop = 8.px
-                        textSize = 16.px
-                        height = wrapContent
-                    }
-
-                }
-
-            }
-
-            view {
-                width = matchParent
-                height = 2.px
-                background = DopaColors.separatorLight
-            }
-        }
-    }
 
     /*
      {
@@ -273,7 +233,8 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
     ) {
         verticalLayout {
             width = matchParent
-            marginTop = 8.px
+            marginTop = 4.px
+            marginBottom = 4.px
             background = Color.white
             height = wrapContent
             horizontalLayout {
@@ -306,11 +267,117 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
         }
     }
 
+    /*
+    {
+            "date": "10-02-2018",
+            "price": 100
+        }
+     */
+    fun LinearLayout.paymentItem(
+            date: String,
+            price: String
+    ) {
+        verticalLayout {
+            width = matchParent
+            marginTop = 4.px
+            marginBottom = 4.px
+            background = Color.white
+            height = wrapContent
+            horizontalLayout {
+                width = matchParent
+                height = wrapContent
+                alignItems = Alignment.Stretch
 
-}
+                verticalLayout {
+                    padding = 12.px
+                    width = matchParent
+                    height = wrapContent
+                    justifyContent = JustifyContent.SpaceBetween
 
-class SalesmenRequestsPresenter : DashboardPlainPresenter() {
-    override fun onViewCreated(view: View) {
+                    keyValueEntry("Date", date)
+                    keyValueEntry("Price", price)
 
+                }
+
+            }
+
+            view {
+                width = matchParent
+                height = 2.px
+                background = DopaColors.separatorLight
+            }
+        }
+    }
+
+
+    fun addPendingRequest(
+            listView: LinearLayout?,
+            salesmanName: String,
+            pharmacyName: String
+    ) {
+        if (listView == null) return
+        with(listView) {
+            verticalLayout {
+                width = matchParent
+                marginTop = 8.px
+                background = Color.white
+                height = wrapContent
+                horizontalLayout {
+                    width = matchParent
+                    height = wrapContent
+                    alignItems = Alignment.Stretch
+                    val selector = view {
+                        width = 8.px
+                        height = matchParent
+//                    alignSelf = Alignment.Stretch
+                        background = Color.transparent
+                    }
+
+                    verticalLayout {
+                        padding = 12.px
+                        width = matchParent
+                        height = wrapContent
+                        justifyContent = JustifyContent.SpaceBetween
+
+                        element.onmouseover = {
+                            background = DopaColors.separatorLight
+                            element.style.cursor = "pointer"
+                            selector.background = DopaColors.main
+                            asDynamic()
+                        }
+                        element.onmouseleave = {
+                            background = Color.white
+                            element.style.cursor = ""
+                            selector.background = Color.transparent
+                            asDynamic()
+
+                        }
+
+                        textView {
+                            text = "By: $salesmanName"
+                            textColor = DopaColors.mainDark
+                            textSize = 18.px
+                            height = wrapContent
+                        }
+
+                        textView {
+                            text = "Pharmacy: $pharmacyName"
+                            textColor = DopaColors.mainLight
+                            marginTop = 8.px
+                            textSize = 16.px
+                            height = wrapContent
+                        }
+
+                    }
+
+                }
+
+                view {
+                    width = matchParent
+                    height = 2.px
+                    background = DopaColors.separatorLight
+                }
+            }
+        }
     }
 }

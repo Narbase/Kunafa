@@ -6,7 +6,7 @@ import kotlin.browser.window
 
 object ServerCaller {
 
-    private const val BASE_URL = "http://localhost:4567"
+    const val BASE_URL = "http://localhost:4567"
     private val accessToken
         get() = StorageManager.accessToken
 
@@ -45,6 +45,17 @@ object ServerCaller {
     fun getAllSalesmen(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
         get(
                 url = "/api/agent/v1/salesmen/all",
+                headers = mapOf("Authorization" to (accessToken ?: "")),
+                onSuccess = onSuccess,
+                onError = onError
+        )
+
+    }
+
+
+    fun getAllSalesmenRequests(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        get(
+                url = "/api/agent/v1/salesmen_request/all",
                 headers = mapOf("Authorization" to (accessToken ?: "")),
                 onSuccess = onSuccess,
                 onError = onError
