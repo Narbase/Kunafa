@@ -1,5 +1,6 @@
 package net.avatarapps.dopa.dashboard.network
 
+import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.RemoveSmartOffersRequestDto
 import net.avatarapps.dopa.dashboard.storage.StorageManager
 import org.w3c.xhr.XMLHttpRequest
 import kotlin.browser.window
@@ -73,6 +74,19 @@ object ServerCaller {
                 onError = onError
         )
 
+    }
+
+    fun removeSmartOffer(dto: RemoveSmartOffersRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit ){
+         val body = JSON.stringify(dto)
+        post(
+                url = "/api/agent/v1/smart_offer/remove",
+                headers = mapOf(
+                        "Authorization" to (accessToken ?: ""),
+                        "Content-Type" to "application/json"),
+                onSuccess = onSuccess,
+                onError = onError,
+                body = body
+        )
     }
 
     fun getAllSalesmenRequests(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {

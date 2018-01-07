@@ -1,7 +1,6 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.smartoffers
 
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainPresenter
-import net.avatarapps.dopa.dashboard.dashboard.view.salesmenrequests.ResponseDto
 import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZoneDs
 import net.avatarapps.dopa.dashboard.network.ServerCaller
 import net.avatarapps.kunafa.core.components.*
@@ -49,7 +48,7 @@ class SmartOffersPresenter : DashboardPlainPresenter() {
 
     private val zonesMap: MutableMap<ZoneDs, Checkbox?> = mutableMapOf()
 
-    private fun showZones(smartOffer: SmartOfferDs? = null) {
+    private fun showZones() {
         showLoadingImage()
         zonesMap.clear()
     }
@@ -94,16 +93,29 @@ class SmartOffersPresenter : DashboardPlainPresenter() {
     }
 
 
-    fun onEditSmartOffer(smartOffer: SmartOfferDs) {
-        mainViewContent?.content = addSmartOfferView
+    fun onRemoveSmartOffer(smartOffer: SmartOfferDs, removeButton: TextView) {
+        val oldText = removeButton.text
+        val oldOnClick = removeButton.onClick
+        removeButton.text = "Loading.."
+        ServerCaller.removeSmartOffer(RemoveSmartOffersRequestDto(smartOffer.id),
+                onSuccess = { xmlHttpRequest ->
+                    if (xmlHttpRequest.status == 200.toShort()) {
+                        getAndShowSmartOffers()
+                    }
+                },
+                onError = {
+
+                }
+        )
+//        mainViewContent?.content = addSmartOfferView
 //        username?.text = smartOffer.username
 //        phone?.text = smartOffer.phone
 //        name?.text = smartOffer.name
-        smartOfferId = smartOffer.id
-        isEditSmartOffer = true
-        saveNewSmartOfferButton?.text = "Update smartOffer"
-        password?.placeholder = "New password (optional)"
-        showZones(smartOffer)
+//        smartOfferId = smartOffer.id
+//        isEditSmartOffer = true
+//        saveNewSmartOfferButton?.text = "Update smartOffer"
+//        password?.placeholder = "New password (optional)"
+//        showZones(smartOffer)
 
 
     }
@@ -160,4 +172,8 @@ data class SmartOfferInListDto(
         val offerDescription: String,
         val drugId: Int,
         val drugName: String
+)
+
+data class RemoveSmartOffersRequestDto(
+        val id: Int
 )

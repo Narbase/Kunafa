@@ -1,8 +1,8 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.smartoffers
 
 import net.avatarapps.dopa.dashboard.common.DopaColors
+import net.avatarapps.dopa.dashboard.common.DopaColors.redLight
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainViewContent
-import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZoneDs
 import net.avatarapps.dopa.dashboard.dashboard.view.zones.makeClickable
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
@@ -110,15 +110,25 @@ fun LinearLayout.addSmartOffer(smartOffer: SmartOfferDs, smartOffersPresenter: S
                 }
             }
 
-            textView {
+            val removeButton = textView {
                 text = "Delete"
                 background = DopaColors.redLight
                 textColor = Color.white
                 padding = 8.px
                 alignSelf = Alignment.Center
-                onClick = { smartOffersPresenter.onEditSmartOffer(smartOffer) }
-                makeClickable()
+                element.onmouseover = {
+                    background = DopaColors.mainLight
+                    element.style.cursor = "pointer"
+                    asDynamic()
+                }
+                element.onmouseleave = {
+                    background = redLight
+                    element.style.cursor = ""
+                    asDynamic()
+
+                }
             }
+            removeButton.onClick = { smartOffersPresenter.onRemoveSmartOffer(smartOffer, removeButton) }
         }
 
         view {
@@ -139,7 +149,7 @@ class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) 
             alignItems = Alignment.Center
 
             verticalLayout {
-                width = matchParent
+                width = formWidth
                 height = wrapContent
                 alignItems = Alignment.Center
                 maxWidth = formWidth
@@ -149,7 +159,6 @@ class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) 
                     width = matchParent
                     textSize = 18.px
                     marginBottom = 12.px
-                    maxWidth = formWidth
                 }
 
                 smartOffersPresenter.username = textInput {
@@ -157,7 +166,13 @@ class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) 
                     width = matchParent
                     textSize = 18.px
                     marginBottom = 12.px
-                    maxWidth = formWidth
+                }
+                textView {
+                    text = "Targets"
+                    alignSelf = Alignment.Start
+                    textColor = DopaColors.mainDark
+                    textSize = 18.px
+                    marginTop = 16.px
                 }
 
                 addTarget("All")
