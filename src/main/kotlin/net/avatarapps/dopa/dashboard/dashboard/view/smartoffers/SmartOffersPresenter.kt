@@ -1,7 +1,9 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.smartoffers
 
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainPresenter
+import net.avatarapps.dopa.dashboard.dashboard.view.salesmenrequests.ResponseDto
 import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZoneDs
+import net.avatarapps.dopa.dashboard.network.ServerCaller
 import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.LinearLayout
 
@@ -48,8 +50,7 @@ class SmartOffersPresenter : DashboardPlainPresenter() {
     private val zonesMap: MutableMap<ZoneDs, Checkbox?> = mutableMapOf()
 
     private fun showZones(smartOffer: SmartOfferDs? = null) {
-        zonesList?.isVisible = false
-        zonesListLoadingImageView?.isVisible = true
+        showLoadingImage()
         zonesMap.clear()
     }
 
@@ -95,9 +96,9 @@ class SmartOffersPresenter : DashboardPlainPresenter() {
 
     fun onEditSmartOffer(smartOffer: SmartOfferDs) {
         mainViewContent?.content = addSmartOfferView
-        username?.text = smartOffer.username
-        phone?.text = smartOffer.phone
-        name?.text = smartOffer.name
+//        username?.text = smartOffer.username
+//        phone?.text = smartOffer.phone
+//        name?.text = smartOffer.name
         smartOfferId = smartOffer.id
         isEditSmartOffer = true
         saveNewSmartOfferButton?.text = "Update smartOffer"
@@ -109,29 +110,54 @@ class SmartOffersPresenter : DashboardPlainPresenter() {
 
     private fun getAndShowSmartOffers() {
         mainViewContent?.content = smartOffersListView
-        smartOffersList?.isVisible = false
-        smartOffersListLoadingImageView?.isVisible = true
+        showLoadingImage()
+
+        ServerCaller.getAllSmartOffers(
+                onSuccess = { xmlHttpRequest ->
+                    if (xmlHttpRequest.status == 200.toShort()) {
+                        hideLoadingImage()
+                        val jsonResponse = JSON.parse<GetSmartOffersDataResponseDto>(xmlHttpRequest.responseText)
+                        jsonResponse.data.smartOffersList.forEach {
+                            smartOffersList?.addSmartOffer(
+                                    SmartOfferDs(it.id, it.offerDescription, it.drugId, it.drugName),
+                                    this)
+                        }
+                    }
+                },
+                onError = {
+
+                }
+        )
 
         // Get offers from the server
+    }
+
+    private fun showLoadingImage() {
+        smartOffersList?.isVisible = false
+        smartOffersListLoadingImageView?.isVisible = true
+    }
+
+
+    private fun hideLoadingImage() {
+        smartOffersList?.isVisible = true
+        smartOffersListLoadingImageView?.isVisible = false
     }
 
 }
 
 
-class GetSmartOffersResponseDto(
-        val smartOffers: ArrayList<SmartOfferInListDto>
+data class GetSmartOffersDataResponseDto(
+        val data: GetSmartOffersResponseDto
 )
 
-class SmartOfferInListDto(
-        val id: Int?,
+data class GetSmartOffersResponseDto(
+        val smartOffersList: Array<SmartOfferInListDto>
+)
 
-        val name: String,
 
-        val username: String,
-
-        val phone: String,
-
-        val zones: ArrayList<Int>,
-
-        val approval: Boolean
+data class SmartOfferInListDto(
+        val id: Int,
+        val offerDescription: String,
+        val drugId: Int,
+        val drugName: String
 )

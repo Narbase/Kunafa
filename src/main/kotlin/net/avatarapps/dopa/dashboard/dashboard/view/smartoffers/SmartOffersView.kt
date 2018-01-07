@@ -98,21 +98,21 @@ fun LinearLayout.addSmartOffer(smartOffer: SmartOfferDs, smartOffersPresenter: S
 
             verticalLayout {
                 textView {
-                    text = smartOffer.name
+                    text = smartOffer.drugName
                     textColor = DopaColors.main
                     textSize = 18.px
                 }
 
                 textView {
-                    text = smartOffer.phone
+                    text = smartOffer.offerDescription
                     textColor = DopaColors.mainLight
                     marginTop = 6.px
                 }
             }
 
             textView {
-                text = "Edit"
-                background = DopaColors.mainLight
+                text = "Delete"
+                background = DopaColors.redLight
                 textColor = Color.white
                 padding = 8.px
                 alignSelf = Alignment.Center

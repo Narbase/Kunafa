@@ -65,6 +65,16 @@ object ServerCaller {
         )
     }
 
+    fun getAllSmartOffers(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        get(
+                url = "/api/agent/v1/smart_offer/all",
+                headers = mapOf("Authorization" to (accessToken ?: "")),
+                onSuccess = onSuccess,
+                onError = onError
+        )
+
+    }
+
     fun getAllSalesmenRequests(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
         get(
                 url = "/api/agent/v1/salesmen_request/all",
