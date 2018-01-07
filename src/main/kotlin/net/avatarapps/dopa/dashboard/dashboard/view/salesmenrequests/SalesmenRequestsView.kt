@@ -31,19 +31,12 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
     private var pharmacyView: LinearLayout? = null
     private var orderItemsView: LinearLayout? = null
     private var paymentsView: LinearLayout? = null
+    private var rejectRequestTextView: TextView? = null
+    private var approveRequestTextView: TextView? = null
 
 
     override var pageViewContent = object : ViewContent() {
         override fun DetachedView.contentDefinition() {
-//            textView {
-//                text = "No requests yet."
-//                textColor = DopaColors.separatorLight
-//                textSize = 24.px
-//                width = matchParent
-//                textAlign = TextView.TextAlign.Center
-//                marginTop = 16.px
-//                isVisible = false
-//            }
 
             horizontalLayout {
                 width = matchParent
@@ -58,6 +51,16 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                         text = "Pending requests"
                         textColor = DopaColors.text
                         textSize = 18.px
+                    }
+
+                    pendingRequestsListPresenter.noRequestsText = textView {
+                        text = "No requests."
+                        textColor = DopaColors.separatorLight
+                        textSize = 24.px
+                        width = matchParent
+                        textAlign = TextView.TextAlign.Center
+                        marginTop = 16.px
+                        isVisible = false
                     }
                     pendingRequestsListPresenter.loadingImage = loadingIndicator()
 
@@ -111,7 +114,6 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                         }
                         separator()
 
-
                         subTitle("Request Details")
                         keyValueEntry("Delivery date", "12-17-2018")
 
@@ -127,7 +129,6 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                                 orderItemsView = verticalLayout {
                                     width = matchParent
                                     height = wrapContent
-                                    orderItem("50", "343 SDG", "33", "1", "Panadol", "01-04-2018")
 
                                 }
                             }
@@ -140,17 +141,6 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                                 paymentsView = verticalLayout {
                                     width = matchParent
                                     height = wrapContent
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
-                                    paymentItem("01-04-2018", "50")
                                 }
 
                             }
@@ -188,10 +178,11 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
         keyValueEntry("Phone", phone)
     }
 
+
     private fun LinearLayout.controlButtons() {
         horizontalLayout {
             width = matchParent
-            textView {
+            rejectRequestTextView = textView {
                 padding = 8.px
                 width = weightOf(1)
                 height = wrapContent
@@ -206,7 +197,7 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                 //                            onClick = { salesmenPresenter.onCancelAddSalesmanButton() }
             }
 
-            textView {
+            approveRequestTextView = textView {
                 padding = 8.px
                 width = weightOf(1)
                 height = wrapContent
@@ -261,7 +252,7 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
         }
     }
 
-    fun LinearLayout.orderItem(
+    private fun LinearLayout.orderItem(
             amount: String,
             price: String,
             bonus: String,
@@ -305,13 +296,7 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
         }
     }
 
-    /*
-    {
-            "date": "10-02-2018",
-            "price": 100
-        }
-     */
-    fun LinearLayout.paymentItem(
+    private fun LinearLayout.paymentItem(
             date: String,
             price: String
     ) {
@@ -348,6 +333,7 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
     }
 
 
+
     fun addPendingRequest(
             index: Int,
             request: PendingRequest,
@@ -379,25 +365,24 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                         background = Color.transparent
                     }
 
+                    element.onmouseover = {
+                        background = DopaColors.separatorLight
+                        element.style.cursor = "pointer"
+                        asDynamic()
+                    }
+
+                    element.onmouseleave = {
+                        background = Color.white
+                        element.style.cursor = ""
+                        asDynamic()
+
+                    }
                     verticalLayout {
                         padding = 12.px
                         width = matchParent
                         height = wrapContent
                         justifyContent = JustifyContent.SpaceBetween
 
-                        element.onmouseover = {
-                            background = DopaColors.separatorLight
-                            element.style.cursor = "pointer"
-                            indicator?.background = DopaColors.main
-                            asDynamic()
-                        }
-                        element.onmouseleave = {
-                            background = Color.white
-                            element.style.cursor = ""
-                            indicator?.background = Color.transparent
-                            asDynamic()
-
-                        }
 
                         textView {
                             text = "By: $salesmanName"
@@ -413,9 +398,7 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                             textSize = 16.px
                             height = wrapContent
                         }
-
                     }
-
                 }
 
                 view {
@@ -449,9 +432,9 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
 
             pharmacyView?.displayPharmacyInfo(
                     nameEnglish,
-                    locationDescripton = "${pharmacyState?.nameAr?: ""} " +
-                            "${pharmacyDistrict?.nameAr?: ""} " +
-                            "${pharmacyNeighbourhood?.nameAr?: ""} " +
+                    locationDescripton = "${pharmacyState?.nameAr ?: ""} " +
+                            "${pharmacyDistrict?.nameAr ?: ""} " +
+                            "${pharmacyNeighbourhood?.nameAr ?: ""} " +
                             locationDescription,
                     phone = "$firstPhone - $secondPhone",
                     pharmacistName = pharmacistName)
@@ -472,5 +455,21 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
             paymentsView?.paymentItem(it.date, "${it.price} SDG")
         }
 
+        approveRequestTextView?.onClick = {
+            pendingRequestDetailsPresenter.onRequestUpdated(
+                    requestId = request.request.id,
+                    isApproved = true)
+        }
+
+        rejectRequestTextView?.onClick = {
+            pendingRequestDetailsPresenter.onRequestUpdated(
+                    requestId = request.request.id,
+                    isApproved = false)
+        }
     }
+
+    fun removeSelectedRequest() {
+        pendingRequestsListPresenter.removeSelectedRequest()
+    }
+
 }

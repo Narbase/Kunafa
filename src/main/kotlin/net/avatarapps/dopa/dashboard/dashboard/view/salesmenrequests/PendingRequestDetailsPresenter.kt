@@ -9,7 +9,7 @@ import net.avatarapps.kunafa.core.presenter.Presenter
 import org.w3c.xhr.XMLHttpRequest
 
 class PendingRequestDetailsPresenter(
-        private val salesmenRequestsView: SalesmenRequestsView
+        private val view: SalesmenRequestsView
 ) : Presenter() {
     var noRequestSelectedText: TextView? = null
     var detailsView: LinearLayout? = null
@@ -25,13 +25,27 @@ class PendingRequestDetailsPresenter(
 
     fun onRequestSelected(request: PendingRequest) {
         makeRequestDetailsVisible()
-        salesmenRequestsView.showRequest(request)
+        view.showRequest(request)
     }
 
     private fun makeRequestDetailsVisible() {
         noRequestSelectedText?.isVisible = false
         detailsView?.isVisible = true
 
+    }
+
+    fun onRequestUpdated(requestId: Int?, isApproved: Boolean) {
+        ServerCaller.updateSalesmanRequest(ServerCaller.UpdateRequestRequestDto(requestId, isApproved),
+                onSuccess = { xmlHttpRequest ->
+                    if (xmlHttpRequest.status == 200.toShort()) {
+                        showNoRequestIsSelectedText()
+                        view.removeSelectedRequest()
+                    }
+                },
+                onError = {
+
+                }
+        )
     }
 
 

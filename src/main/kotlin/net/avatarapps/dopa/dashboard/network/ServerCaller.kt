@@ -52,17 +52,6 @@ object ServerCaller {
 
     }
 
-
-    fun getAllSalesmenRequests(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
-        get(
-                url = "/api/agent/v1/salesmen_request/all",
-                headers = mapOf("Authorization" to (accessToken ?: "")),
-                onSuccess = onSuccess,
-                onError = onError
-        )
-
-    }
-
     fun updateSalesman(dto: UpdateSalesmanRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
         val body = JSON.stringify(dto)
         post(
@@ -75,6 +64,34 @@ object ServerCaller {
                 body = body
         )
     }
+
+    fun getAllSalesmenRequests(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        get(
+                url = "/api/agent/v1/salesmen_request/all",
+                headers = mapOf("Authorization" to (accessToken ?: "")),
+                onSuccess = onSuccess,
+                onError = onError
+        )
+
+    }
+
+    fun updateSalesmanRequest(dto: UpdateRequestRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        val body = JSON.stringify(dto)
+        post(
+                url = "/api/agent/v1/salesmen_request/update",
+                headers = mapOf(
+                        "Authorization" to (accessToken ?: ""),
+                        "Content-Type" to "application/json"),
+                onSuccess = onSuccess,
+                onError = onError,
+                body = body
+        )
+    }
+
+    data class UpdateRequestRequestDto(
+            val id: Int?,
+            val isApproved: Boolean?
+    )
 
     data class UpdateSalesmanRequestDto(
             val salesmanDto: UpdateSalesmanDto?
