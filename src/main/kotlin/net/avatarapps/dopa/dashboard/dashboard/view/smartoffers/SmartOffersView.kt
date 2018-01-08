@@ -26,8 +26,22 @@ import net.avatarapps.kunafa.core.drawable.Color
  */
 class SmartOffersView : DashboardPlainViewContent("Smart offers management") {
 
-    override val plainPresenter = SmartOffersPresenter()
-    override var pageViewContent: ViewContent = plainPresenter.smartOffersListView
+    override val plainPresenter = SmartOffersPresenter(this)
+
+    private val smartOffersListView = SmartOffersListView(plainPresenter)
+    private val addSmartOfferPresenter = AddSmartOfferPresenter(plainPresenter)
+
+    private val addSmartOfferView = AddSmartOfferView(addSmartOfferPresenter)
+
+    override var pageViewContent: ViewContent = smartOffersListView
+
+    fun setViewToOffersList() {
+        plainPresenter.mainViewContent?.content = smartOffersListView
+    }
+
+    fun setViewToAddOffer() {
+        plainPresenter.mainViewContent?.content = addSmartOfferView
+    }
 }
 
 class SmartOffersListView(private val smartOffersPresenter: SmartOffersPresenter) : ViewContent() {
@@ -139,7 +153,10 @@ fun LinearLayout.addSmartOffer(smartOffer: SmartOfferDs, smartOffersPresenter: S
     }
 }
 
-class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) : ViewContent() {
+class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresenter) : ViewContent() {
+    init {
+        addSmartOfferPresenter.view = this
+    }
     override fun DetachedView.contentDefinition() {
         val formWidth = 640.px
 
@@ -147,6 +164,7 @@ class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) 
             width = matchParent
             height = wrapContent
             alignItems = Alignment.Center
+            presenter = addSmartOfferPresenter
 
             verticalLayout {
                 width = formWidth
@@ -154,17 +172,56 @@ class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) 
                 alignItems = Alignment.Center
                 maxWidth = formWidth
 
-                smartOffersPresenter.name = textInput {
+
+                addSmartOfferPresenter.drugNameText = textView {
+                    text = "Click to Add drug"
+                    width = matchParent
+                    textSize = 18.px
+                    textColor = DopaColors.mainLight
+                    padding = 6.px
+
+                    element.onmouseover = {
+                        background = Color.rgb(220,220,220)
+                        element.style.cursor = "pointer"
+                        asDynamic()
+                    }
+                    element.onmouseleave = {
+                        background = Color.transparent
+                        element.style.cursor = ""
+                        asDynamic()
+
+                    }
+
+                }
+
+                addSmartOfferPresenter.drugNameTextInput = textInput {
                     placeholder = "Drug name"
                     width = matchParent
                     textSize = 18.px
-                    marginBottom = 12.px
+                    isVisible = false
                 }
 
-                smartOffersPresenter.username = textInput {
+                anchorLayout {
+                    width = formWidth
+                    height = 0.px
+                    addSmartOfferPresenter.suggestionListLayout = verticalLayout {
+                        width = matchParent
+                        height = wrapContent
+                        element.style.position = "relative"
+                        element.style.zIndex = "3"
+                        background = Color.white
+                        isVisible = false
+                        element.style.boxShadow = "0px 2px 10px 1px #00000073"
+
+                    }
+                }
+
+
+                addSmartOfferPresenter.username = textInput {
                     placeholder = "Description"
                     width = matchParent
                     textSize = 18.px
+                    marginTop = 12.px
                     marginBottom = 12.px
                 }
                 textView {
@@ -180,12 +237,13 @@ class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) 
                 addTarget("Label")
                 addTarget("All pharmacies with previous interactions")
 
-                smartOffersPresenter.addSmartOfferControlView = horizontalLayout {
+
+                addSmartOfferPresenter.addSmartOfferControlView = horizontalLayout {
                     width = matchParent
                     maxWidth = formWidth
                     marginTop = 12.px
 
-                    smartOffersPresenter.cancelAddSmartOfferButton = textView {
+                    addSmartOfferPresenter.cancelAddSmartOfferButton = textView {
                         padding = 8.px
                         width = weightOf(1)
                         height = wrapContent
@@ -197,10 +255,10 @@ class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) 
                         width = wrapContent
                         marginEnd = 18.px
                         textAlign = TextView.TextAlign.Center
-                        onClick = { smartOffersPresenter.onCancelAddSmartOfferButton() }
+                        onClick = { addSmartOfferPresenter.onCancelAddSmartOfferButton() }
                     }
 
-                    smartOffersPresenter.saveNewSmartOfferButton = textView {
+                    addSmartOfferPresenter.saveNewSmartOfferButton = textView {
                         padding = 8.px
                         width = weightOf(1)
                         height = wrapContent
@@ -210,13 +268,13 @@ class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) 
                         makeClickable(DopaColors.greenLight)
                         width = wrapContent
                         textAlign = TextView.TextAlign.Center
-                        onClick = { smartOffersPresenter.onSaveNewSmartOfferButtonClicked() }
+                        onClick = { addSmartOfferPresenter.onSaveNewSmartOfferButtonClicked() }
                     }
 
                 }
-                smartOffersPresenter.addSmartOffersLoadingImageView = loadingIndicator()
+                addSmartOfferPresenter.addSmartOffersLoadingImageView = loadingIndicator()
 
-                smartOffersPresenter.addSmartOfferStatusText = textView {
+                addSmartOfferPresenter.addSmartOfferStatusText = textView {
                     text = ""
                     textColor = DopaColors.redLight
                     textSize = 14.px
@@ -228,6 +286,39 @@ class AddSmartOfferView(private val smartOffersPresenter: SmartOffersPresenter) 
 
             }
 
+        }
+    }
+
+    private fun LinearLayout.addDrugSuggestion(drugId: Int, drugName: String) {
+        textView {
+            width = matchParent
+            text = drugName
+            textSize = 18.px
+            textColor = DopaColors.text
+            padding = 4.px
+            paddingTop = 6.px
+            paddingBottom = 6.px
+
+            element.onmouseover = {
+                background = Color.rgb(240,240,240)
+                element.style.cursor = "pointer"
+                asDynamic()
+            }
+            element.onmouseleave = {
+                background = Color.transparent
+                element.style.cursor = ""
+                asDynamic()
+
+            }
+
+            onClick = { addSmartOfferPresenter.onDrugSelected(drugId, drugName) }
+        }
+    }
+
+    fun onSearchResultReady(drugs: Map<Int, String>) {
+        addSmartOfferPresenter.suggestionListLayout?.clearAllChildren()
+        drugs.forEach {
+            addSmartOfferPresenter.suggestionListLayout?.addDrugSuggestion(it.key, it.value)
         }
     }
 }
