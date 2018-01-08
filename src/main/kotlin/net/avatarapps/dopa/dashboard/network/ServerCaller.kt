@@ -1,6 +1,7 @@
 package net.avatarapps.dopa.dashboard.network
 
 import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.RemoveSmartOffersRequestDto
+import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.SearchDrugsRequestDto
 import net.avatarapps.dopa.dashboard.storage.StorageManager
 import org.w3c.xhr.XMLHttpRequest
 import kotlin.browser.window
@@ -112,6 +113,19 @@ object ServerCaller {
         )
     }
 
+    fun searchDrugs(dto: SearchDrugsRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) : XMLHttpRequest{
+        val body = JSON.stringify(dto)
+        return post(
+                url = "/api/agent/v1/drugs/search",
+                headers = mapOf(
+                        "Authorization" to (accessToken ?: ""),
+                        "Content-Type" to "application/json"),
+                onSuccess = onSuccess,
+                onError = onError,
+                body = body
+        )
+    }
+
     data class UpdateRequestRequestDto(
             val id: Int?,
             val isApproved: Boolean?
@@ -149,17 +163,14 @@ object ServerCaller {
             headers: Map<String, String>? = null,
             onSuccess: (XMLHttpRequest) -> Unit,
             onError: () -> Unit,
-            body: String? = null) {
-
-        makeRequest(
-                HTTP_POST_VERB,
-                url,
-                headers,
-                onSuccess,
-                onError,
-                body
-        )
-    }
+            body: String? = null) = makeRequest(
+                    HTTP_POST_VERB,
+                    url,
+                    headers,
+                    onSuccess,
+                    onError,
+                    body
+            )
 
     private fun get(
             url: String,
@@ -182,7 +193,7 @@ object ServerCaller {
             headers: Map<String, String>? = null,
             onSuccess: (XMLHttpRequest) -> Unit,
             onError: () -> Unit,
-            body: String? = null) {
+            body: String? = null): XMLHttpRequest {
 
         val xmlHttp = XMLHttpRequest()
         xmlHttp.open(requestVerb, "$BASE_URL$url", true)
@@ -192,6 +203,7 @@ object ServerCaller {
         xmlHttp.onerror = { onError() }
         xmlHttp.onload = { onSuccess(xmlHttp) }
         xmlHttp.send(body)
+        return xmlHttp
     }
 
     const val HTTP_GET_VERB = "GET"

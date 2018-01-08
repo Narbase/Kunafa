@@ -8,7 +8,7 @@ import net.avatarapps.kunafa.core.components.layout.LinearLayout
 import net.avatarapps.kunafa.core.presenter.Presenter
 
 class AddSmartOfferPresenter(
-        private val smartOffersPresenter: SmartOffersPresenter) : Presenter(){
+        private val smartOffersPresenter: SmartOffersPresenter) : Presenter() {
     var view: AddSmartOfferView? = null
     var saveNewSmartOfferButton: TextView? = null
     var cancelAddSmartOfferButton: TextView? = null
@@ -37,7 +37,9 @@ class AddSmartOfferPresenter(
 
     private fun onDrugSearchTermChanged() {
         val searchTerm = drugNameTextInput?.text ?: ""
-        searchInteractor.searchFor(searchTerm)
+        if (searchTerm.isNotEmpty()) {
+            searchInteractor.searchFor(searchTerm)
+        }
     }
 
     private fun showDrugSearchUi() {
