@@ -1,5 +1,6 @@
 package net.avatarapps.dopa.dashboard.network
 
+import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.AddSmartOfferRequestDto
 import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.RemoveSmartOffersRequestDto
 import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.SearchDrugsRequestDto
 import net.avatarapps.dopa.dashboard.storage.StorageManager
@@ -75,6 +76,18 @@ object ServerCaller {
                 onError = onError
         )
 
+    }
+
+    fun addSmartOffer(dto: AddSmartOfferRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        post(
+                url = "/api/agent/v1/smart_offer/add",
+                headers = mapOf(
+                        "Authorization" to (accessToken ?: ""),
+                        "Content-Type" to "application/json"),
+                onSuccess = onSuccess,
+                onError = onError,
+                body = JSON.stringify(dto)
+        )
     }
 
     fun removeSmartOffer(dto: RemoveSmartOffersRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit ){

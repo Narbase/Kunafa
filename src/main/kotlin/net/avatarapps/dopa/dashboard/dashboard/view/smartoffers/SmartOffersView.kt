@@ -217,7 +217,7 @@ class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresent
                 }
 
 
-                addSmartOfferPresenter.username = textInput {
+                addSmartOfferPresenter.descriptionTextInput = textInput {
                     placeholder = "Description"
                     width = matchParent
                     textSize = 18.px

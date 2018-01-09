@@ -1,5 +1,6 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.smartoffers
 
+import net.avatarapps.dopa.dashboard.network.ServerCaller
 import net.avatarapps.kunafa.core.components.ImageView
 import net.avatarapps.kunafa.core.components.TextInput
 import net.avatarapps.kunafa.core.components.TextView
@@ -13,22 +14,21 @@ class AddSmartOfferPresenter(
     var saveNewSmartOfferButton: TextView? = null
     var cancelAddSmartOfferButton: TextView? = null
 
-    var username: TextInput? = null
     var drugNameTextInput: TextInput? = null
-    var password: TextInput? = null
-    var phone: TextInput? = null
+    var descriptionTextInput: TextInput? = null
     var addSmartOfferControlView: LinearLayout? = null
     var addSmartOffersLoadingImageView: ImageView? = null
     var addSmartOfferStatusText: TextView? = null
 
     var suggestionListLayout: LinearLayout? = null
     var drugNameText: TextView? = null
+    var selectedDrug: SearchDrugDto? = null
 
     private val searchInteractor = DrugsBounceSearchInteractor(this)
 
     override fun onViewCreated(view: View) {
+        selectedDrug = null
         saveNewSmartOfferButton?.text = "Save new smart offer"
-        password?.placeholder = "Password"
         hideDrugSearchUi()
 
         drugNameText?.onClick = { showDrugSearchUi() }
@@ -37,7 +37,7 @@ class AddSmartOfferPresenter(
 
     private fun onDrugSearchTermChanged() {
         val searchTerm = drugNameTextInput?.text ?: ""
-        if (searchTerm.isNotEmpty()) {
+        if (searchTerm.count() > 1) {
             searchInteractor.searchFor(searchTerm)
         }
     }
@@ -46,23 +46,33 @@ class AddSmartOfferPresenter(
         drugNameTextInput?.isVisible = true
         suggestionListLayout?.isVisible = true
         drugNameTextInput?.element?.focus()
-
     }
 
     private fun hideDrugSearchUi() {
         drugNameTextInput?.isVisible = false
         suggestionListLayout?.isVisible = false
-
     }
 
     fun onSaveNewSmartOfferButtonClicked() {
 
-        if (validateField(drugNameTextInput, "Name")) return
-        if (validateField(username, "Username")) return
-        if (validateField(phone, "Phone")) return
+        val drugId = selectedDrug?.id
+        if (drugId == null) {
+            addSmartOfferStatusText?.isVisible = true
+            addSmartOfferStatusText?.text = "No drug is selected"
+            return
+        } else {
+            addSmartOfferStatusText?.isVisible = false
+        }
+        if (validateField(descriptionTextInput, "Description")) return
 
-
-        // Update smart offer
+        ServerCaller.addSmartOffer(AddSmartOfferRequestDto(drugId, descriptionTextInput?.text?: ""),
+                onSuccess = { xmlHttpRequest ->
+                    if (xmlHttpRequest.status == 200.toShort()) {
+                        onCancelAddSmartOfferButton()
+                    }
+                },
+                onError = {}
+        )
     }
 
     private fun validateField(field: TextInput?, fieldName: String): Boolean {
@@ -79,12 +89,13 @@ class AddSmartOfferPresenter(
 
     fun onCancelAddSmartOfferButton() {
         smartOffersPresenter.onCancelAddSmartOfferButton()
-
     }
+
 
     fun onDrugSelected(drugId: Int, drugName: String) {
         hideDrugSearchUi()
         drugNameText?.text = drugName
+        selectedDrug = SearchDrugDto(drugId, drugName)
     }
 
     fun onSearchResultReady(drugs: Map<Int, String>) {
@@ -93,3 +104,9 @@ class AddSmartOfferPresenter(
 
 
 }
+
+data class AddSmartOfferRequestDto(
+        val drugId: Int,
+        val offerDescription: String
+
+)

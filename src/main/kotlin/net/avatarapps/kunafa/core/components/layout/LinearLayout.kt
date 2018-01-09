@@ -3,6 +3,7 @@
 package net.avatarapps.kunafa.core.components.layout
 
 import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.Horizontal
+import net.avatarapps.kunafa.core.components.layout.LinearLayout.Orientation.Vertical
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL

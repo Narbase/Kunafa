@@ -14,7 +14,6 @@ class DrugsBounceSearchInteractor(val presenter: AddSmartOfferPresenter) {
         request?.let { window.clearTimeout(it) }
         serverRequest?.abort()
         this.request = window.setTimeout({
-//            onSearchResultReady(dummyData.filter { it.value.toLowerCase().contains(term.toLowerCase()) })
             searchDrugs(term)
         }, 200)
     }
@@ -27,7 +26,8 @@ class DrugsBounceSearchInteractor(val presenter: AddSmartOfferPresenter) {
                         val dataResponse = JSON.parse<SearchDrugsDataResponseDto>(xmlHttpRequest.responseText)
                         val map = mutableMapOf<Int, String>()
                         dataResponse.data.drugs.forEach {
-                            map.set(it.id, it.name) }
+                            map[it.id] = it.name
+                        }
                         onSearchResultReady(map)
                     }
                 },
