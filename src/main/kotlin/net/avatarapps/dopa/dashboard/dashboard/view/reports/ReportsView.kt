@@ -3,7 +3,7 @@ package net.avatarapps.dopa.dashboard.dashboard.view.reports
 import net.avatarapps.dopa.dashboard.common.DopaColors
 import net.avatarapps.dopa.dashboard.dashboard.view.DashboardPlainViewContent
 import net.avatarapps.dopa.dashboard.dashboard.view.salesmen.SalesmanDs
-import net.avatarapps.dopa.dashboard.dashboard.view.salesmen.makeClickable
+import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.loadingIndicator
 import net.avatarapps.kunafa.core.ViewContent.ViewContent
 import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.Alignment
@@ -27,30 +27,37 @@ import net.avatarapps.kunafa.core.drawable.Color
 class ReportsView : DashboardPlainViewContent("Reports view") {
     override val plainPresenter = ReportsPresenter()
 
+    val listPresenter = SalesmenListReportPresenter(this)
+
+    private var salesmenList: LinearLayout? = null
+    private var salesmenListLoadingImageView: ImageView? = null
+    private var salesmenInListViewsList : ArrayList<SalesmanInListView> = arrayListOf()
+
     override var pageViewContent = object : ViewContent() {
         override fun DetachedView.contentDefinition() {
             horizontalLayout {
                 width = matchParent
                 height = matchParent
 
-                plainPresenter.salesmenList = verticalLayout {
+                verticalLayout {
                     width = weightOf(1)
                     height = matchParent
                     paddingEnd = 24.px
                     isScrollableVertically = true
+                    presenter = listPresenter
                     textView {
                         text = "Salesmen"
                         textSize = 20.px
                         textColor = DopaColors.text
                     }
 
-//                    addSalesman(SalesmanDs("All", "", "", arrayListOf(), "0123123123"), plainPresenter)
-//                    addSalesman(SalesmanDs("Name", "", "", arrayListOf(), "0123123123"), plainPresenter)
-//                    addSalesman(SalesmanDs("Name", "", "", arrayListOf(), "0123123123"), plainPresenter)
-//                    addSalesman(SalesmanDs("Name", "", "", arrayListOf(), "0123123123"), plainPresenter)
-//                    addSalesman(SalesmanDs("Name", "", "", arrayListOf(), "0123123123"), plainPresenter)
-//                    addSalesman(SalesmanDs("Name", "", "", arrayListOf(), "0123123123"), plainPresenter)
-//                    addSalesman(SalesmanDs("Name", "", "", arrayListOf(), "0123123123"), plainPresenter)
+                    salesmenListLoadingImageView = loadingIndicator()
+
+                    salesmenList = verticalLayout {
+                        height = matchParent
+                        width = matchParent
+
+                    }
                 }
 
                 verticalLayout {
@@ -146,7 +153,6 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
     }
 
 
-
     fun LinearLayout.showReportEntry(name: String, isWhite: Boolean, presenter: ReportsPresenter) {
 
         horizontalLayout {
@@ -175,41 +181,105 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
         }
     }
 
-}
-fun LinearLayout.addReportSalesman(salesman: SalesmanDs, presenter: ReportsPresenter) {
-    verticalLayout {
-        width = matchParent
-        horizontalLayout {
+    fun setSalesmenListVisible() {
+        salesmenList?.isVisible = true
+        salesmenListLoadingImageView?.isVisible = false
+    }
+
+    fun setSalesmenLoadingImageVisible() {
+        salesmenList?.isVisible = true
+        salesmenListLoadingImageView?.isVisible = false
+    }
+
+    fun addSalesmanToList(position: Int, salesman: SalesmanDs, salesmenListReportPresenter: SalesmenListReportPresenter) {
+        salesmenList?.addReportSalesman(position, salesman, salesmenListReportPresenter)
+    }
+
+    fun addAllEntryToList(salesmenListReportPresenter: SalesmenListReportPresenter) {
+        salesmenList?.addReportSalesman(0, null, salesmenListReportPresenter)
+    }
+
+    private fun LinearLayout.addReportSalesman(position: Int, salesman: SalesmanDs?, presenter: SalesmenListReportPresenter) {
+        val view = SalesmanInListView()
+        verticalLayout {
             width = matchParent
             marginTop = 16.px
-            padding = 16.px
-            background = Color.white
-            justifyContent = JustifyContent.SpaceBetween
-
-            element.onmouseover = {
-                background = DopaColors.separatorLight
-                element.style.cursor = "pointer"
-                asDynamic()
-            }
-            element.onmouseleave = {
+            horizontalLayout {
+                width = matchParent
                 background = Color.white
-                element.style.cursor = ""
-                asDynamic()
+                onClick = { presenter.onSalesmanSelected(position, salesman) }
+
+                element.onmouseover = {
+                    background = DopaColors.separatorLight
+                    element.style.cursor = "pointer"
+                    asDynamic()
+                }
+                element.onmouseleave = {
+                    background = Color.white
+                    element.style.cursor = ""
+                    asDynamic()
+
+                }
+
+                view.indicator = view {
+                    height = matchParent
+                    width = 8.px
+                    background = Color.transparent
+                }
+
+                textView {
+                    padding = 16.px
+                    text = salesman?.name ?: "All"
+                    textColor = DopaColors.main
+                    textSize = 18.px
+                }
 
             }
 
-            textView {
-                text = salesman.name
-                textColor = DopaColors.main
-                textSize = 18.px
+            view {
+                width = matchParent
+                height = 2.px
+                background = DopaColors.separatorLight
             }
 
         }
 
-        view {
-            width = matchParent
-            height = 2.px
-            background = DopaColors.separatorLight
+        salesmenInListViewsList.add(position, view)
+    }
+
+    class SalesmanInListView {
+        var indicator: View? = null
+
+        fun setSelected(){
+            indicator?.background = DopaColors.main
+        }
+        fun setDeselected(){
+            indicator?.background = Color.transparent
         }
     }
+
+
+    fun setSalesmanSelectedAt(position: Int) {
+        salesmenInListViewsList.forEach {
+            it.setDeselected()
+        }
+
+        try {
+            salesmenInListViewsList[position].setSelected()
+        } catch (e: Exception) {
+
+        }
+
+    }
+
+    fun showSalesmanInfo(salesman: SalesmanDs) {
+        plainPresenter.showSalesmanInfo(salesman)
+
+    }
+
+    fun showAllSalesmenInfo() {
+        plainPresenter.showAllSalesmenInfo()
+    }
 }
+
+

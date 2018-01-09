@@ -222,9 +222,12 @@ class SalesmenPresenter : DashboardPlainPresenter() {
 
 }
 
+data class GetSalesmenDataResponseDto(
+        val data: GetSalesmenResponseDto
+)
 
 class GetSalesmenResponseDto(
-        val salesmen: ArrayList<SalesmanInListDto>
+        val salesmen: Array<SalesmanInListDto>
 )
 
 class SalesmanInListDto(
@@ -236,7 +239,7 @@ class SalesmanInListDto(
 
         val phone: String,
 
-        val zones: ArrayList<Int>,
+        val zones: Array<Int>,
 
         val approval: Boolean
 )

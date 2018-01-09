@@ -142,23 +142,9 @@ class SalesmenRequestsView : DashboardPlainViewContent("Salesmen requests") {
                                     width = matchParent
                                     height = wrapContent
                                 }
-
                             }
                         }
-
-                        /*
-                         {
-                                "amount": 50,
-                                "price": 343,
-                                "bonus": 33,
-                                "discount": 1,
-                                "productId": 1,
-                                "productName": "Panadol",
-                                "expirationDate": "01-04-2018"
-                            }
-                         */
                     }
-
                 }
             }
         }
