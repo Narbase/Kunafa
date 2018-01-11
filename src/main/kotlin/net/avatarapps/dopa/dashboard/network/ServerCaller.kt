@@ -1,5 +1,6 @@
 package net.avatarapps.dopa.dashboard.network
 
+import net.avatarapps.dopa.dashboard.dashboard.view.reports.GetReportsRequestDto
 import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.AddSmartOfferRequestDto
 import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.RemoveSmartOffersRequestDto
 import net.avatarapps.dopa.dashboard.dashboard.view.smartoffers.SearchDrugsRequestDto
@@ -90,8 +91,8 @@ object ServerCaller {
         )
     }
 
-    fun removeSmartOffer(dto: RemoveSmartOffersRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit ){
-         val body = JSON.stringify(dto)
+    fun removeSmartOffer(dto: RemoveSmartOffersRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        val body = JSON.stringify(dto)
         post(
                 url = "/api/agent/v1/smart_offer/remove",
                 headers = mapOf(
@@ -126,7 +127,7 @@ object ServerCaller {
         )
     }
 
-    fun searchDrugs(dto: SearchDrugsRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) : XMLHttpRequest{
+    fun searchDrugs(dto: SearchDrugsRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit): XMLHttpRequest {
         val body = JSON.stringify(dto)
         return post(
                 url = "/api/agent/v1/drugs/search",
@@ -136,6 +137,18 @@ object ServerCaller {
                 onSuccess = onSuccess,
                 onError = onError,
                 body = body
+        )
+    }
+
+    fun getReportStats(dto: GetReportsRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        post(
+                url = "/api/agent/v1/reports/stats",
+                headers = mapOf(
+                        "Authorization" to (accessToken ?: ""),
+                        "Content-Type" to "application/json"),
+                onSuccess = onSuccess,
+                onError = onError,
+                body = JSON.stringify(dto)
         )
     }
 
@@ -177,13 +190,13 @@ object ServerCaller {
             onSuccess: (XMLHttpRequest) -> Unit,
             onError: () -> Unit,
             body: String? = null) = makeRequest(
-                    HTTP_POST_VERB,
-                    url,
-                    headers,
-                    onSuccess,
-                    onError,
-                    body
-            )
+            HTTP_POST_VERB,
+            url,
+            headers,
+            onSuccess,
+            onError,
+            body
+    )
 
     private fun get(
             url: String,

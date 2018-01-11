@@ -15,6 +15,7 @@ import net.avatarapps.kunafa.core.dimensions.dependent.weightOf
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
+import org.w3c.dom.HTMLInputElement
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -25,14 +26,40 @@ import net.avatarapps.kunafa.core.drawable.Color
  * On: 12/14/17.
  */
 class ReportsView : DashboardPlainViewContent("Reports view") {
-    override val plainPresenter = ReportsPresenter()
+    override val plainPresenter = ReportsPresenter(this)
 
     val listPresenter = SalesmenListReportPresenter(this)
 
     private var salesmenList: LinearLayout? = null
     private var salesmenListLoadingImageView: ImageView? = null
-    private var salesmenInListViewsList : ArrayList<SalesmanInListView> = arrayListOf()
+    private var salesmenInListViewsList: ArrayList<SalesmanInListView> = arrayListOf()
 
+    private var noSalesmanIsSelectedTextView: TextView? = null
+
+    /*
+    "Requests"
+"Offers"
+Approved offers
+Orders to be delivered
+Orders actually delivered
+Amount to be collected
+Amount actually collected
+     */
+    private var requestsTextView: TextView? = null
+    private var offersTextView: TextView? = null
+    private var ordersTextView: TextView? = null
+    private var ordersToBeDeliveredTextView: TextView? = null
+    private var ordersActuallyDeliveredTextView: TextView? = null
+    private var paymentsNoToBeCollectedTextView: TextView? = null
+    private var paymentsPriceToBeCollectedTextView: TextView? = null
+    private var paymentsNoActuallyCollectedTextView: TextView? = null
+    private var paymentsPriceActuallyCollectedTextView: TextView? = null
+
+    private var reportsListLayout: LinearLayout? = null
+    private var statsLoadingIndicator: ImageView? = null
+
+    private var startDateInput: TextInput? = null
+    private var endDateInput: TextInput? = null
     override var pageViewContent = object : ViewContent() {
         override fun DetachedView.contentDefinition() {
             horizontalLayout {
@@ -78,7 +105,7 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
                             marginStart = 16.px
                             marginEnd = 16.px
                         }
-                        textInput {
+                        startDateInput = textInput {
                             type = "date"
                             width = weightOf(2)
                             textSize = 20.px
@@ -94,7 +121,7 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
                             marginStart = 16.px
                             marginEnd = 16.px
                         }
-                        textInput {
+                        endDateInput = textInput {
                             type = "date"
                             width = weightOf(2)
                             textSize = 20.px
@@ -115,6 +142,26 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
                             paddingBottom = 4.px
                             textColor = Color.white
 
+                            onClick = {
+                                var startDateString = (startDateInput?.element as? HTMLInputElement)?.value ?: ""
+                                var endDateString = (endDateInput?.element as? HTMLInputElement)?.value ?: ""
+
+                                if (startDateString.isNotEmpty()){
+                                    val (year, month , day) = startDateString.split("-")
+                                    startDateString = "$day-$month-$year"
+                                }
+                                if (endDateString.isNotEmpty()){
+                                    val (year, month , day) = endDateString.split("-")
+                                    endDateString = "$day-$month-$year"
+                                }
+
+
+                                plainPresenter.onDateRefreshed(
+                                        startDateString.takeIf { it.isNotEmpty() },
+                                        endDateString.takeIf { it.isNotEmpty() }
+                                        )
+                            }
+
                             element.onmouseover = {
                                 background = DopaColors.separatorLight
                                 element.style.cursor = "pointer"
@@ -129,32 +176,43 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
                         }
                     }
 
-                    showReportEntry("Requests", true, plainPresenter)
-                    showReportEntry("Offers", false, plainPresenter)
-                    showReportEntry("Approved offers", true, plainPresenter)
-                    showReportEntry("Orders to be delivered", false, plainPresenter)
-                    showReportEntry("Orders actually delivered", true, plainPresenter)
-                    showReportEntry("Amount to be collected", false, plainPresenter)
-                    showReportEntry("Amount actually collected", true, plainPresenter)
+                    statsLoadingIndicator = loadingIndicator()
+
+                    noSalesmanIsSelectedTextView = textView {
+                        text = "No salesman is selected"
+                        width = matchParent
+                        textAlign = TextView.TextAlign.Center
+                        textSize = 20.px
+                        textColor = DopaColors.separatorLight
+                        isVisible = false
+                    }
 
 
-                    /**
-                     * No. of requests.
-                     * No. of offers.
-                     * No. of orders (approved offers)
-                     * No. of should be delivered orders ($ in () )
-                     * No. of actual delivered ($ in () ) .
-                     * No. of should be collected (price in parenthesis) (order time can be outside this period but collection within this period).
-                     * No. of actually collected ($ in () ).
-                     */
+                    reportsListLayout = verticalLayout {
+                        width = matchParent
+
+                        requestsTextView = showIntReportEntry("Requests", true, plainPresenter)
+                        offersTextView = showIntReportEntry("Offers", false, plainPresenter)
+                        ordersTextView = showIntReportEntry("Orders (approved offers)", true, plainPresenter)
+                        ordersToBeDeliveredTextView = showIntReportEntry("Orders to be delivered", false, plainPresenter)
+                        ordersActuallyDeliveredTextView = showIntReportEntry("Orders actually delivered", true, plainPresenter)
+                        showIntAndDoubleReportEntry("Amount to be collected", false, plainPresenter).apply {
+                            paymentsNoToBeCollectedTextView = this.first
+                            paymentsPriceToBeCollectedTextView = this.second
+                        }
+                        showIntAndDoubleReportEntry("Amount actually collected", true, plainPresenter).apply {
+                            paymentsNoActuallyCollectedTextView = this.first
+                            paymentsPriceActuallyCollectedTextView = this.second
+                        }
+                    }
                 }
             }
         }
     }
 
 
-    fun LinearLayout.showReportEntry(name: String, isWhite: Boolean, presenter: ReportsPresenter) {
-
+    fun LinearLayout.showIntReportEntry(name: String, isWhite: Boolean, presenter: ReportsPresenter): TextView? {
+        var valueTextView: TextView? = null
         horizontalLayout {
             width = matchParent
             marginStart = 8.px
@@ -171,7 +229,7 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
                 width = weightOf(1)
             }
 
-            textView {
+            valueTextView = textView {
                 text = "0.0"
                 textColor = DopaColors.main
                 textSize = 18.px
@@ -179,6 +237,48 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
             }
 
         }
+        return valueTextView
+    }
+
+    fun LinearLayout.showIntAndDoubleReportEntry(name: String, isWhite: Boolean, presenter: ReportsPresenter): Pair<TextView?, TextView?> {
+        var numberTextView: TextView? = null
+        var priceTextView: TextView? = null
+        horizontalLayout {
+            width = matchParent
+            marginStart = 8.px
+            marginEnd = 8.px
+            padding = 16.px
+            background = if (isWhite) Color.white else DopaColors.backgroundLight
+            justifyContent = JustifyContent.SpaceBetween
+
+
+            textView {
+                text = name
+                textColor = DopaColors.main
+                textSize = 18.px
+                width = weightOf(5)
+            }
+
+            horizontalLayout {
+                width = weightOf(1)
+                justifyContent = JustifyContent.SpaceBetween
+                priceTextView = textView {
+                    text = "0.0"
+                    textColor = DopaColors.main
+                    textSize = 18.px
+                    width = wrapContent
+                }
+
+                numberTextView = textView {
+                    text = "0.0"
+                    textColor = DopaColors.main
+                    textSize = 18.px
+                    width = wrapContent
+                }
+            }
+        }
+
+        return Pair(numberTextView, priceTextView)
     }
 
     fun setSalesmenListVisible() {
@@ -250,10 +350,11 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
     class SalesmanInListView {
         var indicator: View? = null
 
-        fun setSelected(){
+        fun setSelected() {
             indicator?.background = DopaColors.main
         }
-        fun setDeselected(){
+
+        fun setDeselected() {
             indicator?.background = Color.transparent
         }
     }
@@ -279,6 +380,34 @@ class ReportsView : DashboardPlainViewContent("Reports view") {
 
     fun showAllSalesmenInfo() {
         plainPresenter.showAllSalesmenInfo()
+    }
+
+    fun showNOSalesmanIsSelected() {
+        noSalesmanIsSelectedTextView?.isVisible = true
+        reportsListLayout?.isVisible = false
+        statsLoadingIndicator?.isVisible = false
+    }
+
+    fun showSalesmanStatsInfo(stats: GetReportsResponseDto) {
+        noSalesmanIsSelectedTextView?.isVisible = false
+        statsLoadingIndicator?.isVisible = false
+        reportsListLayout?.isVisible = true
+
+//        requestsTextView
+        offersTextView?.text = stats.noOfOffers.toString()
+        ordersTextView?.text = stats.noOfOrders.toString()
+        ordersToBeDeliveredTextView?.text = stats.noOfShouldBeDelivered.toString()
+        ordersActuallyDeliveredTextView?.text = stats.noOfActuallyDelivered.toString()
+        paymentsNoToBeCollectedTextView?.text = stats.noOfShouldBeCollected.toString()
+        paymentsPriceToBeCollectedTextView?.text = "\$${stats.priceOfShouldBeCollected}"
+        paymentsNoActuallyCollectedTextView?.text = stats.noOfActuallyCollected.toString()
+        paymentsPriceActuallyCollectedTextView?.text = "\$${stats.priceOfActuallyCollected}"
+    }
+
+    fun showLoadingSalesmanStatsInfo() {
+        statsLoadingIndicator?.isVisible = true
+        reportsListLayout?.isVisible = false
+        noSalesmanIsSelectedTextView?.isVisible = false
     }
 }
 
