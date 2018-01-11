@@ -15,6 +15,7 @@ import net.avatarapps.kunafa.core.dimensions.dependent.weightOf
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
+import org.w3c.dom.events.Event
 
 /**
  * NARBASE CONFIDENTIAL
@@ -151,7 +152,7 @@ fun LinearLayout.addSmartOffer(smartOffer: SmartOfferDs, smartOffersPresenter: S
                 background = DopaColors.redLight
                 textColor = Color.white
                 padding = 8.px
-                alignSelf = Alignment.Center
+                alignSelf = Alignment.Start
                 element.onmouseover = {
                     background = DopaColors.mainLight
                     element.style.cursor = "pointer"
@@ -161,7 +162,6 @@ fun LinearLayout.addSmartOffer(smartOffer: SmartOfferDs, smartOffersPresenter: S
                     background = redLight
                     element.style.cursor = ""
                     asDynamic()
-
                 }
             }
             removeButton.onClick = { smartOffersPresenter.onRemoveSmartOffer(smartOffer, removeButton) }
@@ -187,6 +187,25 @@ class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresent
     init {
         addSmartOfferPresenter.view = this
     }
+
+    private var zonesList: LinearLayout? = null
+    private var zonesListLoadingImageView: ImageView? = null
+    var noZonesTextView: TextView? = null
+
+
+    var allCheckbox: Checkbox? = null
+    var labelsCheckbox: Checkbox? = null
+    var zonesCheckbox: Checkbox? = null
+    var previousPharmaciesCheckbox: Checkbox? = null
+
+    private var otherTargetsLayout: LinearLayout? = null
+
+    private var labelsLayout: LinearLayout? = null
+    var labelACheckbox: Checkbox? = null
+    var labelBCheckbox: Checkbox? = null
+    var labelCCheckbox: Checkbox? = null
+    var labelDCheckbox: Checkbox? = null
+    var labelECheckbox: Checkbox? = null
 
     override fun DetachedView.contentDefinition() {
         val formWidth = 640.px
@@ -263,10 +282,58 @@ class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresent
                     marginTop = 16.px
                 }
 
-                addTarget("All")
-                addTarget("Zone")
-                addTarget("Label")
-                addTarget("All pharmacies with previous interactions")
+                allCheckbox = addTarget("All pharmacies") {
+                        onAllCheckboxIsClicked(allCheckbox?.isChecked == true)
+                }
+
+                otherTargetsLayout = verticalLayout {
+                    width = matchParent
+                    zonesCheckbox = addTarget("Custom zones") {
+                        if (zonesCheckbox?.isChecked == true) {
+                            showZonesLayout()
+                        } else {
+                            hideZonesLayout()
+                        }
+                    }
+
+                    zonesList = verticalLayout {
+                        width = matchParent
+                        paddingStart = 24.px
+                        isVisible = false
+                        zonesListLoadingImageView = loadingIndicator()
+                        noZonesTextView = textView {
+                            text = "No zones."
+                            alignSelf = Alignment.Start
+                            textColor = DopaColors.mainDark
+                            textSize = 14.px
+                            marginTop = 16.px
+                        }
+
+
+                    }
+                    labelsCheckbox = addTarget("Custom labels") {
+                        if (labelsCheckbox?.isChecked == true) {
+                            showLabelsLayout()
+                        } else {
+                            hideLabelsLayout()
+                        }
+                    }
+
+                    labelsLayout = verticalLayout {
+                        width = matchParent
+                        paddingStart = 24.px
+                        isVisible = false
+                        labelACheckbox = addLabeldCheckbox("A")
+                        labelBCheckbox = addLabeldCheckbox("B")
+                        labelCCheckbox = addLabeldCheckbox("C")
+                        labelDCheckbox = addLabeldCheckbox("D")
+                        labelECheckbox = addLabeldCheckbox("E")
+
+                    }
+
+                    previousPharmaciesCheckbox = addTarget("All pharmacies with previous interactions"){}
+
+                }
 
 
                 addSmartOfferPresenter.addSmartOfferControlView = horizontalLayout {
@@ -299,7 +366,20 @@ class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresent
                         makeClickable(DopaColors.greenLight)
                         width = wrapContent
                         textAlign = TextView.TextAlign.Center
-                        onClick = { addSmartOfferPresenter.onSaveNewSmartOfferButtonClicked() }
+                        onClick = {
+                            var targetedLabels = ""
+                            if (labelACheckbox?.isChecked == true) targetedLabels +="A"
+                            if (labelBCheckbox?.isChecked == true) targetedLabels +="B"
+                            if (labelCCheckbox?.isChecked == true) targetedLabels +="C"
+                            if (labelDCheckbox?.isChecked == true) targetedLabels +="D"
+                            if (labelECheckbox?.isChecked == true) targetedLabels +="E"
+                            addSmartOfferPresenter.onSaveNewSmartOfferButtonClicked(
+                                targetIsAll =  allCheckbox?.isChecked == true,
+                                targetContainsZones = zonesCheckbox?.isChecked == true,
+                                targetContainsLabels = labelsCheckbox?.isChecked == true,
+                                targetContainsPharmaciesWithPreviousInteractions = previousPharmaciesCheckbox?.isChecked == true,
+                                targetedLabels = targetedLabels
+                        ) }
                     }
 
                 }
@@ -318,6 +398,10 @@ class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresent
             }
 
         }
+    }
+
+    private fun onAllCheckboxIsClicked(isChecked: Boolean) {
+        otherTargetsLayout?.isVisible = isChecked.not()
     }
 
     private fun LinearLayout.addDrugSuggestion(drugId: Int, drugName: String) {
@@ -352,9 +436,83 @@ class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresent
             addSmartOfferPresenter.suggestionListLayout?.addDrugSuggestion(it.key, it.value)
         }
     }
+
+    fun showLabelsLayout(){
+        labelsLayout?.isVisible = true
+    }
+
+    fun hideLabelsLayout(){
+        labelsLayout?.isVisible = false
+    }
+
+    fun showZonesLayout(){
+        zonesList?.isVisible = true
+    }
+
+    fun hideZonesLayout(){
+        zonesList?.isVisible = false
+    }
+
+    fun showZonesLoadingImage(){
+        zonesListLoadingImageView?.isVisible = true
+        noZonesTextView?.isVisible = false
+    }
+
+    fun hideZonesLoadingImage(){
+        zonesListLoadingImageView?.isVisible = false
+        noZonesTextView?.isVisible = false
+    }
+
+    fun showNoZonesText() {
+        noZonesTextView?.isVisible = true
+        zonesListLoadingImageView?.isVisible = false
+    }
+
+    fun addZoneCheckbox(label: String): Checkbox? {
+        var checkbox: Checkbox? = null
+        zonesList?.let {
+           with(it){
+                horizontalLayout {
+                    width = matchParent
+                    marginTop = 4.px
+                    alignItems = Alignment.Center
+                    checkbox = checkbox {
+                        margin = 8.px
+                    }
+                    textView {
+                        text = label
+                        textColor = DopaColors.main
+                        width = matchParent
+                        textAlign = TextView.TextAlign.Left
+                        textSize = 18.px
+                    }
+                }
+            }
+        }
+        return checkbox
+    }
+    fun LinearLayout.addLabeldCheckbox(label: String): Checkbox? {
+        var checkbox: Checkbox? = null
+                horizontalLayout {
+                    width = matchParent
+                    marginTop = 4.px
+                    alignItems = Alignment.Center
+                    checkbox = checkbox {
+                        margin = 8.px
+                    }
+                    textView {
+                        text = label
+                        textColor = DopaColors.main
+                        width = matchParent
+                        textAlign = TextView.TextAlign.Left
+                        textSize = 18.px
+                    }
+                }
+        return checkbox
+    }
 }
 
-fun LinearLayout.addTarget(name: String): Checkbox? {
+fun LinearLayout.addTarget(name: String, onCheckboxChanged: (Event) -> Unit): Checkbox? {
     var checkbox: Checkbox? = null
     horizontalLayout {
         width = matchParent
@@ -363,6 +521,7 @@ fun LinearLayout.addTarget(name: String): Checkbox? {
         alignItems = Alignment.Center
         checkbox = checkbox {
             margin = 8.px
+            onChange = onCheckboxChanged
         }
         textView {
             text = name

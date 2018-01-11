@@ -1,10 +1,8 @@
 package net.avatarapps.dopa.dashboard.dashboard.view.smartoffers
 
+import net.avatarapps.dopa.dashboard.dashboard.view.zones.ZoneDs
 import net.avatarapps.dopa.dashboard.network.ServerCaller
-import net.avatarapps.kunafa.core.components.ImageView
-import net.avatarapps.kunafa.core.components.TextInput
-import net.avatarapps.kunafa.core.components.TextView
-import net.avatarapps.kunafa.core.components.View
+import net.avatarapps.kunafa.core.components.*
 import net.avatarapps.kunafa.core.components.layout.LinearLayout
 import net.avatarapps.kunafa.core.presenter.Presenter
 
@@ -24,6 +22,9 @@ class AddSmartOfferPresenter(
     var drugNameText: TextView? = null
     var selectedDrug: SearchDrugDto? = null
 
+
+    private val zonesMap: MutableMap<ZoneDs, Checkbox?> = mutableMapOf()
+
     private val searchInteractor = DrugsBounceSearchInteractor(this)
 
     override fun onViewCreated(view: View) {
@@ -33,6 +34,7 @@ class AddSmartOfferPresenter(
 
         drugNameText?.onClick = { showDrugSearchUi() }
         drugNameTextInput?.element?.oninput = { onDrugSearchTermChanged() }
+        showZones()
     }
 
     private fun onDrugSearchTermChanged() {
@@ -53,7 +55,12 @@ class AddSmartOfferPresenter(
         suggestionListLayout?.isVisible = false
     }
 
-    fun onSaveNewSmartOfferButtonClicked() {
+    fun onSaveNewSmartOfferButtonClicked(
+            targetIsAll: Boolean,
+            targetContainsZones: Boolean,
+            targetContainsLabels: Boolean,
+            targetContainsPharmaciesWithPreviousInteractions: Boolean,
+            targetedLabels: String) {
 
         val drugId = selectedDrug?.id
         if (drugId == null) {
@@ -65,7 +72,22 @@ class AddSmartOfferPresenter(
         }
         if (validateField(descriptionTextInput, "Description")) return
 
-        ServerCaller.addSmartOffer(AddSmartOfferRequestDto(drugId, descriptionTextInput?.text?: ""),
+        val zonesIds: ArrayList<Int> = arrayListOf()
+        if (targetContainsZones) {
+            zonesMap.filter { it.value?.isChecked == true }
+                    .mapTo(zonesIds) { it.key.id }
+        }
+
+        ServerCaller.addSmartOffer(
+                AddSmartOfferRequestDto(
+                        drugId,
+                        descriptionTextInput?.text ?: "",
+                        targetIsAll,
+                        targetContainsZones,
+                        targetContainsLabels,
+                        targetContainsPharmaciesWithPreviousInteractions,
+                        if (targetContainsLabels) targetedLabels else "",
+                        zonesIds),
                 onSuccess = { xmlHttpRequest ->
                     if (xmlHttpRequest.status == 200.toShort()) {
                         onCancelAddSmartOfferButton()
@@ -74,6 +96,42 @@ class AddSmartOfferPresenter(
                 onError = {}
         )
     }
+
+    private fun showZones() {
+        view?.showZonesLoadingImage()
+        zonesMap.clear()
+
+        ServerCaller.getAllZones(
+                onSuccess = { xmlHttpRequest ->
+
+                    if (xmlHttpRequest.status == 200.toShort()) {
+                        view?.hideZonesLoadingImage()
+
+                        console.log(JSON.parse(xmlHttpRequest.responseText))
+                        val zonesResponse = JSON.parse<GetZonesDataResponse>(xmlHttpRequest.responseText).data
+                        val zones = zonesResponse.zones
+
+                        console.log(zones)
+                        zones.map {
+                            val zonesIds = arrayListOf<Int>()
+                            ZoneDs(it.id,
+                                    it.name,
+                                    it.neighbourhoods.mapTo(zonesIds) { it }
+                            )
+                        }.forEach {
+                            val checkbox = view?.addZoneCheckbox(it.name)
+                            zonesMap[it] = checkbox
+                        }
+                    } else {
+                        view?.showNoZonesText()
+                    }
+                },
+                onError = {
+                    view?.showNoZonesText()
+                }
+        )
+    }
+
 
     private fun validateField(field: TextInput?, fieldName: String): Boolean {
         if (field?.text?.isNotEmpty() != true) {
@@ -107,6 +165,27 @@ class AddSmartOfferPresenter(
 
 data class AddSmartOfferRequestDto(
         val drugId: Int,
-        val offerDescription: String
+        val offerDescription: String,
+        val targetIsAll: Boolean,
+        val targetContainsZones: Boolean,
+        val targetContainsLabels: Boolean,
+        val targetContainsPharmaciesWithPreviousInteractions: Boolean,
+        val targetedLabels: String,
+        var targetedZonesIds: ArrayList<Int> = arrayListOf()
 
+)
+
+
+data class GetZonesDataResponse(
+        val data: GetZonesResponse
+)
+
+data class GetZonesResponse(
+        val zones: Array<GetZoneDto>
+)
+
+data class GetZoneDto(
+        val id: Int,
+        val name: String,
+        val neighbourhoods: Array<Int>
 )
