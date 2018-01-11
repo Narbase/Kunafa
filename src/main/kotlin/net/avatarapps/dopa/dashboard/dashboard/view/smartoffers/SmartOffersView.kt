@@ -122,6 +122,28 @@ fun LinearLayout.addSmartOffer(smartOffer: SmartOfferDs, smartOffersPresenter: S
                     textColor = DopaColors.mainLight
                     marginTop = 6.px
                 }
+
+                addTargetText("Target: ")
+                if (smartOffer.targetIsAll) {
+                    addTargetText(" \t- All pharmacies")
+                } else {
+                    if (smartOffer.targetContainsLabels) {
+                        var target = "\t- Labels: "
+                        smartOffer.targetedLabels?.forEach { target += "$it, " }
+                        target = target.trimEnd().trimEnd(',')
+                        addTargetText(target)
+                    }
+                    if (smartOffer.targetContainsZones) {
+                        var target = "\t- Zones: "
+                        smartOffer.targetedZonesNames.forEach { target += "$it, " }
+                        target = target.trimEnd().trimEnd(',')
+                        addTargetText(target)
+                    }
+                    if (smartOffer.targetContainsPharmaciesWithPreviousInteractions) {
+                        val target = "\t- Pharmacies with previous interactions"
+                        addTargetText(target)
+                    }
+                }
             }
 
             val removeButton = textView {
@@ -153,10 +175,19 @@ fun LinearLayout.addSmartOffer(smartOffer: SmartOfferDs, smartOffersPresenter: S
     }
 }
 
+private fun LinearLayout.addTargetText(target: String) {
+    textView {
+        text = target
+        textColor = DopaColors.mainLight
+        marginTop = 6.px
+    }
+}
+
 class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresenter) : ViewContent() {
     init {
         addSmartOfferPresenter.view = this
     }
+
     override fun DetachedView.contentDefinition() {
         val formWidth = 640.px
 
@@ -181,7 +212,7 @@ class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresent
                     padding = 6.px
 
                     element.onmouseover = {
-                        background = Color.rgb(220,220,220)
+                        background = Color.rgb(220, 220, 220)
                         element.style.cursor = "pointer"
                         asDynamic()
                     }
@@ -300,7 +331,7 @@ class AddSmartOfferView(private val addSmartOfferPresenter: AddSmartOfferPresent
             paddingBottom = 6.px
 
             element.onmouseover = {
-                background = Color.rgb(240,240,240)
+                background = Color.rgb(240, 240, 240)
                 element.style.cursor = "pointer"
                 asDynamic()
             }

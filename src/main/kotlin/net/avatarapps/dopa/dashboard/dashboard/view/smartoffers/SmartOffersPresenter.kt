@@ -61,7 +61,18 @@ class SmartOffersPresenter(val smartOffersView: SmartOffersView) : DashboardPlai
                         val jsonResponse = JSON.parse<GetSmartOffersDataResponseDto>(xmlHttpRequest.responseText)
                         jsonResponse.data.smartOffersList.forEach {
                             smartOffersList?.addSmartOffer(
-                                    SmartOfferDs(it.id, it.offerDescription, it.drugId, it.drugName),
+                                    SmartOfferDs(
+                                            it.id,
+                                            it.offerDescription,
+                                            it.drugId,
+                                            it.drugName,
+                                            it.targetIsAll,
+                                            it.targetContainsZones,
+                                            it.targetContainsLabels,
+                                            it.targetContainsPharmaciesWithPreviousInteractions,
+                                            it.targetedLabels,
+                                            it.targetedZonesNames)
+                                    ,
                                     this)
                         }
                     }
@@ -101,7 +112,13 @@ data class SmartOfferInListDto(
         val id: Int,
         val offerDescription: String,
         val drugId: Int,
-        val drugName: String
+        val drugName: String,
+        val targetIsAll: Boolean,
+        val targetContainsZones: Boolean,
+        val targetContainsLabels: Boolean,
+        val targetContainsPharmaciesWithPreviousInteractions: Boolean,
+        val targetedLabels: String?,
+        var targetedZonesNames: Array<String>
 )
 
 data class RemoveSmartOffersRequestDto(
