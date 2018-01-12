@@ -140,6 +140,17 @@ object ServerCaller {
         )
     }
 
+    fun downloadDrugsFile(onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
+        get(
+                url = "/api/agent/v1/drugs/get",
+                headers = mapOf("Authorization" to (accessToken ?: "")),
+                onSuccess = onSuccess,
+                onError = onError
+        )
+
+
+    }
+
     fun getReportStats(dto: GetReportsRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
         post(
                 url = "/api/agent/v1/reports/stats",
