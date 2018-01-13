@@ -16,10 +16,12 @@ import net.avatarapps.kunafa.core.dimensions.dependent.matchParent
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
+import org.w3c.dom.HTMLAnchorElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.files.get
 import org.w3c.xhr.FormData
 import org.w3c.xhr.XMLHttpRequest
+import kotlin.browser.document
 
 class DrugsView : DashboardPlainViewContent("Drugs management") {
     override val plainPresenter = DrugsPresenter()
@@ -31,9 +33,11 @@ class DrugsView : DashboardPlainViewContent("Drugs management") {
 }
 
 class DrugsLayoutView(private val drugsPresenter: DrugsPresenter) : ViewContent() {
-    private var buttonsLayout: LinearLayout? = null
+    private  var buttonsLayout: LinearLayout? = null
+    var downloadView: LinearLayout? = null
     private var loadingImage: ImageView? = null
     private var statusTextView: TextView? = null
+    var anchor: HTMLAnchorElement? = null
 
     override fun DetachedView.contentDefinition() {
         verticalLayout {
@@ -101,7 +105,7 @@ class DrugsLayoutView(private val drugsPresenter: DrugsPresenter) : ViewContent(
 
                 }
 
-                verticalLayout {
+                downloadView = verticalLayout {
                     padding = 16.px
                     alignItems = Alignment.Center
                     marginStart = 16.px
@@ -117,7 +121,7 @@ class DrugsLayoutView(private val drugsPresenter: DrugsPresenter) : ViewContent(
                     }
 
                     textView {
-                        text = "Download CSV file"
+                        text = "Generate CSV file"
                         width = matchParent
                         height = wrapContent
                         paddingStart = 10.px
@@ -139,6 +143,15 @@ class DrugsLayoutView(private val drugsPresenter: DrugsPresenter) : ViewContent(
                         asDynamic()
 
                     }
+
+                    anchor = document.createElement("a") as HTMLAnchorElement
+                    anchor?.target = "_blank"
+                    anchor?.download = "file.csv"
+                    anchor?.text = "Click to download"
+                    anchor?.style?.display = "none"
+
+
+                    element.append(anchor)
 
                 }
 
@@ -250,10 +263,15 @@ class DrugsPresenter : DashboardPlainPresenter() {
     fun onDownloadFileClicked() {
         view?.showLoadingImage()
 
+        view?.anchor?.style?.display = "none"
+
         ServerCaller.downloadDrugsFile(
                 onSuccess = { xmlHttpRequest ->
                     if (xmlHttpRequest.status >= 200.toShort() || xmlHttpRequest.status < 400.toShort()) {
+                        val response = JSON.parse<FilePathResponse>(xmlHttpRequest.responseText)
                         view?.showButtonsLayout()
+                        view?.anchor?.href = "${ServerCaller.BASE_URL}${response.path}"
+                        view?.anchor?.style?.display = "block"
                     } else {
                         view?.showNetworkError()
                     }
@@ -266,3 +284,7 @@ class DrugsPresenter : DashboardPlainPresenter() {
     }
 
 }
+
+data class FilePathResponse(
+        val path: String
+)

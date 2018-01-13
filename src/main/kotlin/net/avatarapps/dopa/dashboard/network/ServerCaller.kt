@@ -10,8 +10,8 @@ import kotlin.browser.window
 
 object ServerCaller {
 
-    const val BASE_URL = ""
-//    const val BASE_URL = "http://localhost:4567"
+//    const val BASE_URL = ""
+    const val BASE_URL = "http://localhost:4567"
     private val accessToken
         get() = StorageManager.accessToken
 
@@ -148,8 +148,14 @@ object ServerCaller {
                 onSuccess = onSuccess,
                 onError = onError
         )
+    }
 
-
+    fun downloadFile(path: String) {
+        get(
+                url = path,
+                onSuccess = {},
+                onError = {}
+        )
     }
 
     fun getReportStats(dto: GetReportsRequestDto, onSuccess: (XMLHttpRequest) -> Unit, onError: () -> Unit) {
