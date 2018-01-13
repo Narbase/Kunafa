@@ -10,7 +10,8 @@ import kotlin.browser.window
 
 object ServerCaller {
 
-    const val BASE_URL = "http://localhost:4567"
+    const val BASE_URL = ""
+//    const val BASE_URL = "http://localhost:4567"
     private val accessToken
         get() = StorageManager.accessToken
 
