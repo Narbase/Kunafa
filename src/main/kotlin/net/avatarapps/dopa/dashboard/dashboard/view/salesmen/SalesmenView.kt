@@ -139,7 +139,7 @@ class AddSalesmanView(private val salesmenPresenter: SalesmenPresenter) : ViewCo
             alignItems = Alignment.Center
 
             verticalLayout {
-                width = matchParent
+                width = formWidth
                 height = wrapContent
                 alignItems = Alignment.Center
                 maxWidth = formWidth

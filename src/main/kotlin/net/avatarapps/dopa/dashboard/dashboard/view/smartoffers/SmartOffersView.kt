@@ -58,7 +58,7 @@ class SmartOffersListView(private val smartOffersPresenter: SmartOffersPresenter
                 height = wrapContent
                 padding = 8.px
                 background = DopaColors.main
-                text = "+ Add smartOffer"
+                text = "+ Add smart offer"
                 textColor = Color.white
                 width = wrapContent
                 onClick = { smartOffersPresenter.onAddSmartOfferButtonClicked() }
