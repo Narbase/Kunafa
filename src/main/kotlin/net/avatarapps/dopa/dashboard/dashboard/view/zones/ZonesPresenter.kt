@@ -35,7 +35,7 @@ class ZonesPresenter : DashboardPlainPresenter() {
     private val addZoneView = AddZoneView(this)
 
     var states: MutableMap<State, AreaView> = mutableMapOf()
-    var districts: MutableMap<District, AreaView> = mutableMapOf()
+    var districts: MutableMap<District, DistrictAreaView> = mutableMapOf()
     var neighbourhoods: MutableMap<Neighbourhood, AreaView> = mutableMapOf()
 
     override fun onViewCreated(view: View) {
@@ -135,18 +135,16 @@ class ZonesPresenter : DashboardPlainPresenter() {
                         zonesList?.isVisible = true
                         zonesListLoadingImageView?.isVisible = false
 
-                        console.log(JSON.parse(xmlHttpRequest.responseText))
-                        val zonesResponse = JSON.parse<Json>(xmlHttpRequest.responseText).get("data") as? Json
-                        val zones = zonesResponse?.get("zones") as? Array<Json>
+                        val zonesResponse = JSON.parse<GetZonesDataResponseDto>(xmlHttpRequest.responseText).data
+                        val zones = zonesResponse.zones
 
-                        console.log(zones)
-                        zones?.map {
+                        zones.map {
                             val zonesIds = arrayListOf<Int>()
-                            ZoneDs(it["id"] as? Int ?: 0,
-                                    it["name"] as? String ?: "",
-                                    (it["neighbourhoods"] as? Array<Int>)?.mapTo(zonesIds) { it } ?: arrayListOf()
+                            ZoneDs(it.id ?: 0,
+                                    it.name ,
+                                    it.neighbourhoods.mapTo(zonesIds) { it }
                             )
-                        }?.forEach {
+                        }.forEach {
                             zonesList?.addZone(it, this)
                         }
                     } else {
@@ -247,20 +245,16 @@ class ZonesPresenter : DashboardPlainPresenter() {
 }
 
 
+class GetZonesDataResponseDto(
+        val data: GetZonesResponseDto
+)
+
 class GetZonesResponseDto(
-        val zones: ArrayList<ZoneInListDto>
+        val zones: Array<ZoneInListDto>
 )
 
 class ZoneInListDto(
         val id: Int?,
-
         val name: String,
-
-        val username: String,
-
-        val phone: String,
-
-        val zones: ArrayList<Int>,
-
-        val approval: Boolean
+        val neighbourhoods: Array<Int>
 )

@@ -191,7 +191,7 @@ Amount actually collected
                     reportsListLayout = verticalLayout {
                         width = matchParent
 
-                        requestsTextView = showIntReportEntry("Requests", true, plainPresenter)
+//                        requestsTextView = showIntReportEntry("Requests", true, plainPresenter)
                         offersTextView = showIntReportEntry("Offers", false, plainPresenter)
                         ordersTextView = showIntReportEntry("Orders (approved offers)", true, plainPresenter)
                         ordersToBeDeliveredTextView = showIntReportEntry("Orders to be delivered", false, plainPresenter)

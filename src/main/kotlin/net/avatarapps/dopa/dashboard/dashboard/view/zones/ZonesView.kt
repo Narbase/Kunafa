@@ -17,6 +17,7 @@ import net.avatarapps.kunafa.core.dimensions.dependent.weightOf
 import net.avatarapps.kunafa.core.dimensions.dependent.wrapContent
 import net.avatarapps.kunafa.core.dimensions.independent.px
 import net.avatarapps.kunafa.core.drawable.Color
+import org.w3c.dom.events.Event
 
 
 class ZonesView : DashboardPlainViewContent("Zones management") {
@@ -202,10 +203,14 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
                     zonesPresenter.states.put(state, addState(state))
 
                     state.districts.forEach { district ->
-                        zonesPresenter.districts.put(district, addDistrict(district))
-
-                        district.neighbourhoods.forEach { neighbourhood ->
-                            zonesPresenter.neighbourhoods.put(neighbourhood, addNeighbourhood(neighbourhood))
+                        val districtView = addDistrict(district)
+                        zonesPresenter.districts.put(district, districtView)
+                        districtView.neighbourhoodsLayout = verticalLayout {
+                            width = matchParent
+                            isVisible = false
+                            district.neighbourhoods.forEach { neighbourhood ->
+                                zonesPresenter.neighbourhoods.put(neighbourhood, addNeighbourhood(neighbourhood))
+                            }
                         }
                     }
                 }
@@ -245,8 +250,9 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
     }
 
 
-    private fun LinearLayout.addDistrict(district: District): AreaView {
+    private fun LinearLayout.addDistrict(district: District): DistrictAreaView {
         var checkbox: Checkbox? = null
+        var showIndicatorTextView: TextView? = null
 
         val body = horizontalLayout {
             width = matchParent
@@ -256,17 +262,38 @@ class AddZoneView(private val zonesPresenter: ZonesPresenter) : ViewContent() {
             alignItems = Alignment.Center
             paddingStart = 40.px
 
+
             checkbox = checkbox {
                 margin = 8.px
                 onChange = { zonesPresenter.onDistrictViewClicked(district) }
             }
+
+            showIndicatorTextView = textView {
+                width = 40.px
+                textAlign = TextView.TextAlign.Center
+                text = "[+]"
+                textColor = DopaColors.text
+                element.onmouseover = {
+                    textColor = DopaColors.greenLight
+                    element.style.cursor = "pointer"
+                    asDynamic()
+                }
+                element.onmouseleave = {
+                    textColor = DopaColors.text
+                    element.style.cursor = ""
+                    asDynamic()
+                }
+            }
+
             textView {
                 text = district.nameAr
 
             }
 
         }
-        return AreaView(body, checkbox)
+        return DistrictAreaView(body, checkbox).apply {
+            this.showIndicatorTextView = showIndicatorTextView
+        }
     }
 
 
@@ -306,7 +333,29 @@ private fun LinearLayout.loadingIndicator(): ImageView {
     }
 }
 
-class AreaView(
+open class AreaView(
         val body: LinearLayout,
         val checkbox: Checkbox?
 )
+
+class DistrictAreaView(
+        body: LinearLayout,
+        checkbox: Checkbox?
+) : AreaView(body, checkbox) {
+    var neighbourhoodsLayout: LinearLayout? = null
+    var showIndicatorTextView: TextView? = null
+        set(value) {
+            field = value
+            field?.onClick = this::onIndicatorClicked
+        }
+
+    private fun onIndicatorClicked(e: Event) {
+        if (neighbourhoodsLayout?.isVisible == false) {
+            neighbourhoodsLayout?.isVisible = true
+            showIndicatorTextView?.text = "[-]"
+        } else {
+            neighbourhoodsLayout?.isVisible = false
+            showIndicatorTextView?.text = "[+]"
+        }
+    }
+}
