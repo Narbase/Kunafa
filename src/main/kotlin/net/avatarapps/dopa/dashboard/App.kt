@@ -20,6 +20,7 @@ fun main(args: Array<String>) {
 
 class App {
 
+    val version = "0.9.4"
     fun setup() {
         val appPresenter = AppPresenter()
 
