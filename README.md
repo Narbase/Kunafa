@@ -56,7 +56,7 @@ The following installation instructions are for linux/macOS.
 2. Clone this repo
 
         git clone https://github.com/Kabbura/Kunafa.git
-        cd kunafa
+        cd Kunafa
  3. Run gradle
         
         ./gradlew -t run
