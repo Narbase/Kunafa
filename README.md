@@ -42,7 +42,7 @@ Developers only need to use Kotlin for developement. The framework the view from
 ---
 ## Getting started
 ### Prerequisite 
-Before running Kunafa, make sure you have `npm` installed. To check if it installed, run 
+Before running Kunafa, make sure you have `npm` installed. To check if it is installed, run 
 
     npm -v
       
