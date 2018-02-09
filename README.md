@@ -1,5 +1,5 @@
 # Kunafa
-Easy to use, high level framework in Kotlin for front-end web-development. 
+An easy to use, high level framework in Kotlin for front-end web-development. 
 Allows for creating web apps without using HTML, CSS, or JavaScript.
 
 ## Philosophy
@@ -23,7 +23,7 @@ Developers only need to use Kotlin for developement. The framework the view from
          width = matchParent
          height = matchParent
          background = Color.rgb(240, 240, 240)
-         Button {
+         button {
           text = "Click me"
         }
        }
