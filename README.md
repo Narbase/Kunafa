@@ -18,15 +18,16 @@ An easy to use, high level framework in Kotlin for web development. You do not n
 Developers only need to use Kotlin for developement. The framework the view from the presenter and data.
 
 - You write the view (similar to Android xml layouts) in Kotlin DSL. e. g.
-
-        verticalLayout {
-         width = matchParent
-         height = matchParent
-         background = Color.rgb(240, 240, 240)
-         button {
-          text = "Click me"
-        }
-       }
+```kotlin
+verticalLayout {
+  width = matchParent
+  height = matchParent
+  background = Color.rgb(240, 240, 240)
+  button {
+    text = "Click me"
+  }
+}
+```
 
 - The presenter and model (similar to Android activity or iOS ViewController) should extend a base class and implement certain life cycle functions.
 - The framework views contains easy to understand and familiar components and layouts managers. i. e. Button, TextView, TextInput, HorizontalLayout, VerticalLayout and so on.
