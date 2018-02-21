@@ -6,8 +6,7 @@
 
     <groupId>com.narbase</groupId>
     <artifactId>kunafa</artifactId>
-    <packaging>pom</packaging>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
 
     <name>Kunafa</name>
     <description> Easy to use, high level framework in Kotlin for front-end web-development </description>
@@ -65,13 +64,15 @@
 
 
     <build>
-
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
+                <configuration>
+                    <sourceMap>true</sourceMap>
+                </configuration>
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -86,6 +87,14 @@
                         <goals>
                             <goal>test-js</goal>
                         </goals>
+                        <configuration>
+                            <moduleKind>umd</moduleKind>
+                            <sourceMap>true</sourceMap>
+                            <sourceMapEmbedSources>always</sourceMapEmbedSources>
+                            <sourceMapPrefix>./</sourceMapPrefix>
+                            <outputFile>${project.build.outputDirectory}/${project.artifactId}.js</outputFile>
+                        </configuration>
+
                     </execution>
                 </executions>
             </plugin>
@@ -94,21 +103,15 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>unpack</id>
+                        <id>unpack-dependencies</id>
                         <phase>compile</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>unpack-dependencies</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.jetbrains.kotlin</groupId>
-                                    <artifactId>kotlin-stdlib-js</artifactId>
-                                    <version>${kotlin.version}</version>
-                                    <outputDirectory>${project.build.directory}/js/lib</outputDirectory>
-                                    <includes>*.js</includes>
-                                </artifactItem>
-                            </artifactItems>
+                            <includeScope>runtime</includeScope>
+                            <includes>*.js</includes>
+                            <outputDirectory>${project.build.outputDirectory}/lib</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -164,6 +167,30 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <forceCreation>true</forceCreation>
+                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                    <includes>
+                        <include>**/*.js</include>
+                        <include>**/*.js.map</include>
+                        <include>**/*.kjsm</include>
+                        <include>**/*.kotlin_classes</include>
+                        <include>**/*.kotlin_string_table</include>
+                        <include>**/*.kotlin_file_table</include>
+                    </includes>
+                    <archive>
+                        <forced />
+                        <manifestEntries>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Kotlin-JS-Module-Name>${project.artifactId}</Kotlin-JS-Module-Name>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
 
         </plugins>
 
@@ -173,6 +200,10 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 
 </project>
