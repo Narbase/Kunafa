@@ -5,7 +5,6 @@
       <configuration version="3" platform="JavaScript " useProjectSettings="false">
         <compilerSettings />
         <compilerArguments>
-          <option name="sourceMap" value="true" />
           <option name="sourceMapPrefix" value="" />
           <option name="sourceMapEmbedSources" value="inlining" />
           <option name="languageVersion" value="1.2" />
