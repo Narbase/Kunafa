@@ -100,18 +100,57 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <forceCreation>true</forceCreation>
+                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                    <includes>
+                        <include>**/*.js</include>
+                        <include>**/*.js.map</include>
+                        <include>**/*.kjsm</include>
+                        <include>**/*.kotlin_classes</include>
+                        <include>**/*.kotlin_string_table</include>
+                        <include>**/*.kotlin_file_table</include>
+                    </includes>
+                    <archive>
+                        <forced />
+                        <manifestEntries>
+                            <Implementation-Vendor>Narbase Technologies</Implementation-Vendor>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>unpack-dependencies</id>
-                        <phase>compile</phase>
                         <goals>
                             <goal>unpack-dependencies</goal>
                         </goals>
+                        <phase>test-compile</phase>
                         <configuration>
-                            <includeScope>runtime</includeScope>
+                            <includeScope>test</includeScope>
+                            <includeTypes>jar</includeTypes>
+                            <outputDirectory>${project.basedir}/target/test-js</outputDirectory>
                             <includes>*.js</includes>
-                            <outputDirectory>${project.build.outputDirectory}/lib</outputDirectory>
+                            <excludes>*.meta.js</excludes>
                         </configuration>
                     </execution>
                 </executions>
@@ -143,19 +182,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9.1</version>
                 <executions>
@@ -166,30 +192,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <forceCreation>true</forceCreation>
-                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
-                    <includes>
-                        <include>**/*.js</include>
-                        <include>**/*.js.map</include>
-                        <include>**/*.kjsm</include>
-                        <include>**/*.kotlin_classes</include>
-                        <include>**/*.kotlin_string_table</include>
-                        <include>**/*.kotlin_file_table</include>
-                    </includes>
-                    <archive>
-                        <forced />
-                        <manifestEntries>
-                            <Implementation-Version>${project.version}</Implementation-Version>
-                            <Kotlin-JS-Module-Name>${project.artifactId}</Kotlin-JS-Module-Name>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
             </plugin>
 
         </plugins>
