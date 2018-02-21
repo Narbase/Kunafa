@@ -6,7 +6,8 @@
 
     <groupId>com.narbase</groupId>
     <artifactId>kunafa</artifactId>
-    <version>0.1.0</version>
+    <packaging>pom</packaging>
+    <version>0.1.1</version>
 
     <name>Kunafa</name>
     <description> Easy to use, high level framework in Kotlin for front-end web-development </description>
@@ -18,6 +19,13 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+
+    <url>https://github.com/Kotlin/kotlinx.html</url>
+    <scm>
+        <url>https://github.com/Kabbura/Kunafa</url>
+        <connection>scm:git:git@github.com:Kabbura/Kunafa.git</connection>
+    </scm>
 
     <developers>
         <developer>
@@ -36,16 +44,10 @@
         </developer>
     </developers>
 
-    <url>https://github.com/Kotlin/kotlinx.html</url>
     <properties>
         <kotlin.version>1.2.10</kotlin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <scm>
-        <url>https://github.com/Kabbura/Kunafa</url>
-        <connection>scm:git:git@github.com:Kabbura/Kunafa.git</connection>
-    </scm>
-
 
     <dependencies>
         <dependency>
