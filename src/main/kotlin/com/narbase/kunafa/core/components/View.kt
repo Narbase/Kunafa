@@ -2,12 +2,15 @@ package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Alignment
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.*
+import com.narbase.kunafa.core.dimensions.CalculatedDimension
+import com.narbase.kunafa.core.dimensions.Dimension
+import com.narbase.kunafa.core.dimensions.DynamicDimension
+import com.narbase.kunafa.core.dimensions.IndependentDimension
 import com.narbase.kunafa.core.dimensions.dependent.wrapContent
 import com.narbase.kunafa.core.dimensions.independent.Point
 import com.narbase.kunafa.core.dimensions.independent.px
 import com.narbase.kunafa.core.drawable.Color
-import com.narbase.kunafa.core.presenter.Presenter
+import com.narbase.kunafa.core.presenter.ViewController
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -34,7 +37,7 @@ open class View(var parent: Container? = null) {
 
     open val element: HTMLElement = document.createElement("div") as HTMLDivElement
 
-    var presenter: Presenter? = null
+    var viewController: ViewController? = null
 
     private fun updateElementDimensions() {
         updateElementWidth()
@@ -196,7 +199,7 @@ open class View(var parent: Container? = null) {
         configureElement()
         this.addToParent()
         this.setup()
-        this.presenter?.onViewCreated(this)
+        this.viewController?.onViewCreated(this)
         return this
     }
 

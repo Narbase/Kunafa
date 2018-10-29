@@ -10,6 +10,6 @@ import com.narbase.kunafa.core.components.View
  * Created by islam
  * On: 10/26/17.
  */
-abstract class Presenter {
+abstract class ViewController {
     abstract fun onViewCreated(view: View)
 }
