@@ -72,7 +72,7 @@ open class View(var parent: Container? = null) {
 
                 }
                 false -> {
-                    if (element.style.display != "none"){
+                    if (element.style.display != "none") {
                         savedDisplayState = element.style.display
                         element.style.display = "none"
                     }
@@ -183,10 +183,16 @@ open class View(var parent: Container? = null) {
     }
 
     var isScrollableHorizontally by Delegates.observable(false) { _, _, isScrollable ->
-        element.style.overflowX = if (isScrollable) "scroll" else "visible"
+        element.style.overflowX = if (isScrollable) "auto" else "visible"
+        if (isScrollable && element.style.minWidth.isBlank()) {
+            element.style.minWidth = "0"
+        }
     }
     var isScrollableVertically by Delegates.observable(false) { _, _, isScrollable ->
-        element.style.overflowY = if (isScrollable) "scroll" else "visible"
+        element.style.overflowY = if (isScrollable) "auto" else "visible"
+        if (isScrollable && element.style.minHeight.isBlank()) {
+            element.style.minHeight = "0"
+        }
     }
 
     open fun configureElement() {
