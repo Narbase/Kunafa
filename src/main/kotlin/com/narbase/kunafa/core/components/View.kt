@@ -132,8 +132,8 @@ open class View(var parent: Container? = null) {
     open val wrappedContentHeight: IndependentDimension
         get() = throw WrapContentNotSupportedException("WrapContent not supported in View")
 
-    var background: Color by observable(Color()) { _, _, _ ->
-        element.style.backgroundColor = "rgba(${background.red},${background.green},${background.blue},${background.alpha})"
+    var backgroundColor: Color by observable(Color()) { _, _, _ ->
+        element.style.backgroundColor = backgroundColor.toCss()
     }
 
     fun setMargin(margin: IndependentDimension) {

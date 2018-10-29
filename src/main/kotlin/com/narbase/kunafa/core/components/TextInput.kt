@@ -1,14 +1,10 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.CalculatedDimension
-import com.narbase.kunafa.core.dimensions.Dimension
-import com.narbase.kunafa.core.dimensions.DynamicDimension
 import com.narbase.kunafa.core.dimensions.IndependentDimension
 import com.narbase.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.HTMLSpanElement
 import org.w3c.dom.events.Event
 import kotlin.browser.document
 
@@ -61,7 +57,7 @@ class TextInput (parent: Container? = null) : View(parent) {
     var textColor: Color = Color()
         set(value) {
             field = value
-            element.style.color = "rgba(${value.red},${value.green},${value.blue},${value.alpha})"
+            element.style.color = value.toCss()
         }
 
     var onChange: ((Event) -> Unit)? = null

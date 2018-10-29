@@ -6,7 +6,6 @@ import com.narbase.kunafa.core.dimensions.independent.px
 import com.narbase.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLSpanElement
 import kotlin.browser.document
-import kotlin.browser.window
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -66,6 +65,6 @@ open class TextView(parent: Container? = null) : View(parent) {
     var textColor: Color = Color()
     set(value) {
         field = value
-        element.style.color = "rgba(${value.red},${value.green},${value.blue},${value.alpha})"
+        element.style.color = value.toCss()
     }
 }
