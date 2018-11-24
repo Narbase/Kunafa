@@ -21,18 +21,18 @@ fun page(setupAndAddChildren: Container.() -> Unit = {}) {
     Page.visit(null, setupAndAddChildren)
 }
 
-fun detachedView(block: DetachedView.() -> Unit): DetachedView = DetachedView().visit(null, block)
-fun Container.verticalLayout(block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(null, block)
-fun Container.horizontalLayout(block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(null, block)
-fun Container.anchorLayout(block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(null, block)
-fun Container.viewContainer(block: ViewContainer.() -> Unit): ViewContainer = ViewContainer(this).visit(null, block)
+fun detachedView(rules: (RuleSet.() -> Unit)? = null, block: DetachedView.() -> Unit): DetachedView = DetachedView().visit(rules, block)
+fun Container.verticalLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(rules, block)
+fun Container.horizontalLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(rules, block)
+fun Container.anchorLayout(rules: (RuleSet.() -> Unit)? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(rules, block)
+fun Container.viewContainer(rules: (RuleSet.() -> Unit)? = null, block: ViewContainer.() -> Unit): ViewContainer = ViewContainer(this).visit(rules, block)
 
 fun Container.view(rules: (RuleSet.() -> Unit)? = null, block: View.() -> Unit): View = View(this).visit(rules, block)
-fun Container.textView(block: TextView.() -> Unit): TextView = TextView(this).visit(null, block)
-fun Container.textInput(block: TextInput.() -> Unit): TextInput = TextInput(this).visit(null, block)
-fun Container.button(block: ButtonView.() -> Unit): ButtonView = ButtonView(this).visit(null, block)
-fun Container.imageView(block: ImageView.() -> Unit): ImageView = ImageView(this).visit(null, block)
-fun Container.checkbox(block: Checkbox.() -> Unit): Checkbox = Checkbox(this).visit(null, block)
+fun Container.textView(rules: (RuleSet.() -> Unit)? = null, block: TextView.() -> Unit): TextView = TextView(this).visit(rules, block)
+fun Container.textInput(rules: (RuleSet.() -> Unit)? = null, block: TextInput.() -> Unit): TextInput = TextInput(this).visit(rules, block)
+fun Container.button(rules: (RuleSet.() -> Unit)? = null, block: ButtonView.() -> Unit): ButtonView = ButtonView(this).visit(rules, block)
+fun Container.imageView(rules: (RuleSet.() -> Unit)? = null, block: ImageView.() -> Unit): ImageView = ImageView(this).visit(rules, block)
+fun Container.checkbox(rules: (RuleSet.() -> Unit)? = null, block: Checkbox.() -> Unit): Checkbox = Checkbox(this).visit(rules, block)
 
 
 // PROPERTIES:
