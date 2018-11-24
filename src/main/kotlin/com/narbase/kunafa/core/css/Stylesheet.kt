@@ -8,6 +8,8 @@ class RuleSet(val selector: Selector) {
 
     val rules: MutableSet<Rule<*>> = mutableSetOf()
 
+    var subRuleSets: MutableSet<RuleSet>? = null
+
     fun <T> getProperty(name: String): T? {
         val list = rules.filterIsInstance<Rule<T>>()
         return list.find { it.name == name }?.value
@@ -16,7 +18,6 @@ class RuleSet(val selector: Selector) {
     fun <T> setProperty(name: String, value: T) {
         rules.add(Rule(name, value))
     }
-
     override fun toString(): String {
         return buildString {
             append(selector.toString())
@@ -28,5 +29,12 @@ class RuleSet(val selector: Selector) {
             }
             append('}')
         }
+    }
+
+    fun addPseudo(name: String, rules: RuleSet.() -> Unit): RuleSet {
+        if (subRuleSets == null) subRuleSets = mutableSetOf()
+        val set = RuleSet(PseduSelector(selector, name)).apply(rules)
+        subRuleSets?.add(set)
+        return set
     }
 }

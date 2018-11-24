@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.narbase.kunafa.core.css
 
 /**
@@ -22,5 +24,11 @@ class IdSelector(val name: String) : Selector() {
 
     override fun toString(): String {
         return if (name.startsWith('#')) name else "#$name"
+    }
+}
+
+class PseduSelector(val selector: Selector, val name: String) : Selector() {
+    override fun toString(): String {
+        return "$selector$name"
     }
 }

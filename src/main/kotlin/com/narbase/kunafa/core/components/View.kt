@@ -209,23 +209,26 @@ open class View(var parent: Container? = null) {
 
     fun <V : View> V.visit(rules: (RuleSet.() -> Unit)?, setup: V.() -> Unit): V {
         configureElement()
-        rules?.let {
-            val className = ClassNameGenerator.getClassName()
-            val selector = ClassSelector(className)
-            val ruleSet = RuleSet(selector).apply { rules() }
-            val sheetElement = document.createElement("style") as HTMLStyleElement
-            document.head?.appendChild(sheetElement)
-            console.log(ruleSet.toString())
-            val sheet = sheetElement.sheet as? CSSStyleSheet
-            sheet?.insertRule(ruleSet.toString(), sheet.cssRules.length)
-            console.log(sheet)
-            console.log(document.head)
-            this.element.addClass(className)
-        }
+        this.setupStyleSheet(rules)
         this.addToParent()
         this.setup()
         this.viewController?.onViewCreated(this)
         return this
+    }
+
+    private fun <V : View> V.setupStyleSheet(rules: (RuleSet.() -> Unit)?) {
+        if (rules == null) return
+        val className = ClassNameGenerator.getClassName()
+        val selector = ClassSelector(className)
+        val ruleSet = RuleSet(selector).apply { rules() }
+        val sheetElement = document.createElement("style") as HTMLStyleElement
+        document.head?.appendChild(sheetElement)
+        val sheet = sheetElement.sheet as? CSSStyleSheet
+        sheet?.insertRule(ruleSet.toString(), sheet.cssRules.length)
+        ruleSet.subRuleSets?.forEach {
+            sheet?.insertRule(it.toString(), sheet.cssRules.length)
+        }
+        this.element.addClass(className)
     }
 
 

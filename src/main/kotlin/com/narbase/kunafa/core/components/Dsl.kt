@@ -17,7 +17,7 @@ import com.narbase.kunafa.core.dimensions.IndependentDimension
  * On: 9/30/17.
  */
 
-fun page(setupAndAddChildren: Container.() -> Unit = {}){
+fun page(setupAndAddChildren: Container.() -> Unit = {}) {
     Page.prepare()
     Page.visit(null, setupAndAddChildren)
 }
@@ -49,3 +49,4 @@ var View.padding: IndependentDimension
 // CSS
 
 fun stylesheet(): Stylesheet = Stylesheet()
+fun RuleSet.hover(rules: RuleSet.() -> Unit) = this.addPseudo(":hover", rules)
