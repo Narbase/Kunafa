@@ -1,11 +1,10 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.dimensions.LinearDimension
-import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.drawable.Color
-import org.w3c.dom.HTMLSpanElement
-import kotlin.browser.document
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -16,16 +15,11 @@ import kotlin.browser.document
  * On: 10/9/17.
  */
 open class TextView(parent: Container? = null) : View(parent) {
-    val span by lazy {
-        val s = document.createElement("span") as HTMLSpanElement
-        element.append(s)
-        return@lazy s
-    }
 
     var text = ""
         set(value) {
             field = value
-            span.innerHTML = value
+            element.innerHTML = value
         }
 
     var textAlign: TextAlign? = null
@@ -44,15 +38,6 @@ open class TextView(parent: Container? = null) : View(parent) {
             }
         }
 
-
-    override val wrappedContentHeight: LinearDimension
-        get() {
-            return span.offsetHeight.px
-        }
-
-    override val wrappedContentWidth: LinearDimension
-        get() = span.offsetWidth.px
-
     enum class TextAlign(val cssName: String) {
         Left("left"),
         Right("right"),
@@ -63,8 +48,8 @@ open class TextView(parent: Container? = null) : View(parent) {
     }
 
     var textColor: Color = Color()
-    set(value) {
-        field = value
-        element.style.color = value.toCss()
-    }
+        set(value) {
+            field = value
+            element.style.color = value.toCss()
+        }
 }

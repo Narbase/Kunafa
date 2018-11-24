@@ -4,6 +4,9 @@ package com.narbase.kunafa.core.css
 
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
+import org.w3c.dom.HTMLStyleElement
+import org.w3c.dom.css.CSSStyleSheet
+import kotlin.browser.document
 
 // Color Properties
 var RuleSet.color by RuleDelegate<Color?>("color")
@@ -311,3 +314,16 @@ fun RuleSet.valid(rules: RuleSet.() -> Unit) = this.addPseudo(":valid", rules)
 fun RuleSet.visited(rules: RuleSet.() -> Unit) = this.addPseudo(":visited", rules)
 
 fun RuleSet.media(name: String, rules: RuleSet.() -> Unit) = this.addAtRule("media($name)", rules)
+
+fun classRuleSet(classNamePrefix: String? = null, rules: RuleSet.() -> Unit): RuleSet {
+    val className = ClassNameGenerator.getClassName(classNamePrefix)
+    val selector = ClassSelector(className)
+    val ruleSet = RuleSet(selector).apply { rules() }
+    val sheetElement = document.createElement("style") as HTMLStyleElement
+    document.head?.appendChild(sheetElement)
+    val sheet = sheetElement.sheet as? CSSStyleSheet
+    ruleSet.toRulesList().forEach {
+        sheet?.insertRule(it.toString(), sheet.cssRules.length)
+    }
+    return ruleSet
+}
