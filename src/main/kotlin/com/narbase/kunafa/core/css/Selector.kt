@@ -27,7 +27,7 @@ class IdSelector(val name: String) : Selector() {
     }
 }
 
-class PseduSelector(val selector: Selector, val name: String) : Selector() {
+class PseudoSelector(val selector: Selector, val name: String) : Selector() {
     override fun toString(): String {
         return "$selector$name"
     }

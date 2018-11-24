@@ -33,7 +33,7 @@ class RuleSet(val selector: Selector) {
 
     fun addPseudo(name: String, rules: RuleSet.() -> Unit): RuleSet {
         if (subRuleSets == null) subRuleSets = mutableSetOf()
-        val set = RuleSet(PseduSelector(selector, name)).apply(rules)
+        val set = RuleSet(PseudoSelector(selector, name)).apply(rules)
         subRuleSets?.add(set)
         return set
     }
