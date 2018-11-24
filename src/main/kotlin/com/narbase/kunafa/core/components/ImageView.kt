@@ -1,7 +1,6 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.DynamicDimension
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import org.w3c.dom.HTMLImageElement
@@ -34,7 +33,7 @@ class ImageView(parent: Container? = null) : View(parent) {
     override fun updateContentWidth() {
         super.updateContentWidth()
         if (width is DynamicDimension) {
-            (width as? DynamicDimension)?.configure(img, Dimension.Type.width)
+//            (width as? DynamicDimension)?.configure(img, Dimension.Type.width)
         } else (width as? LinearDimension)?.let {
             img.style.width = it.toString()
             img.style.minWidth = it.toString()
@@ -44,7 +43,7 @@ class ImageView(parent: Container? = null) : View(parent) {
     override fun updateContentHeight() {
         super.updateContentHeight()
         if (height is DynamicDimension) {
-            (height as? DynamicDimension)?.configure(img, Dimension.Type.height)
+//            (height as? DynamicDimension)?.configure(img, Dimension.Type.height)
         } else (height as? LinearDimension)?.let {
             img.style.height = it.toString()
             img.style.minHeight = it.toString()

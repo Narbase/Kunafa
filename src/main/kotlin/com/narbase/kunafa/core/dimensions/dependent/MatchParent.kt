@@ -1,11 +1,14 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.dimensions.dependent
 
 import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.components.layout.Alignment
 import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.components.layout.LinearLayout
+import com.narbase.kunafa.core.css.RuleSet
+import com.narbase.kunafa.core.css.alignSelf
 import com.narbase.kunafa.core.dimensions.DynamicDimension
-import org.w3c.dom.HTMLElement
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -17,35 +20,62 @@ import org.w3c.dom.HTMLElement
  */
 
 class MatchParent internal constructor(val view: View) : DynamicDimension() {
-    override fun configure(element: HTMLElement, type: Type) {
+    /*
+    matchParent most of the time is dimension : 100%. However, when the element is inside a vertical layout (flex
+    with column direction) or horizontal layout (flex with row dimension), and matchParent is on the perpendicular
+    dimension to the flex, the 100% does not work in WebKit.
+    To solve this, alignSelf : flex-stretch is used instead.
+    This function however is not only used to configure the direct elements of views, but also the internal elements
+    (img in ImageView, span in TextView..etc). In these cases, match parent should always be dimension : 100%.
+    Therefore, we check if the element is direct element of the view or internal element.
+     */
+    override fun configureHeight(ruleSet: RuleSet) {
         val parent = view.parent
-        when (type) {
-        /*
-        matchParent most of the time is dimension : 100%. However, when the element is inside a vertical layout (flex
-        with column direction) or horizontal layout (flex with row dimension), and matchParent is on the perpendicular
-        dimension to the flex, the 100% does not work in WebKit.
-        To solve this, alignSelf : flex-stretch is used instead.
-        This function however is not only used to configure the direct elements of views, but also the internal elements
-        (img in ImageView, span in TextView..etc). In these cases, match parent should always be dimension : 100%.
-        Therefore, we check if the element is direct element of the view or internal element.
-         */
-            Type.height -> {
-                if (parent.isHorizontalLayout() && view.element == element) {
-                    element.style.alignSelf = Alignment.Stretch.cssName
-                } else {
-                    element.style.height = "100%"
-                }
+        if (parent.isHorizontalLayout()/* && view.element == element*/) {
+            ruleSet.apply {
+                alignSelf = Alignment.Stretch.cssName
             }
-            Type.width -> {
-                if (parent.isVerticalLayout() && view.element == element) {
-                    element.style.alignSelf = Alignment.Stretch.cssName
-
-                } else {
-                    element.style.width = "100%"
-                }
-            }
+//            element.style.alignSelf = Alignment.Stretch.cssName
+        } else {
+            ruleSet.setProperty("height", "100%")
+//            element.style.height = "100%"
         }
     }
+
+    override fun configureWidth(ruleSet: RuleSet) {
+        val parent = view.parent
+        if (parent.isVerticalLayout() /*&& view.element == element*/) {
+            ruleSet.apply {
+                alignSelf = Alignment.Stretch.cssName
+            }
+//            element.style.alignSelf = Alignment.Stretch.cssName
+        } else {
+            ruleSet.setProperty("width", "100%")
+//            element.style.width = "100%"
+        }
+
+    }
+
+//    override fun configure(element: HTMLElement, type: Type) {
+//        val parent = view.parent
+//        when (type) {
+//            Type.height -> {
+//                if (parent.isHorizontalLayout() && view.element == element) {
+//                    element.style.alignSelf = Alignment.Stretch.cssName
+//                } else {
+//                    element.style.height = "100%"
+//                }
+//            }
+//            Type.width -> {
+//                if (parent.isVerticalLayout() && view.element == element) {
+//                    element.style.alignSelf = Alignment.Stretch.cssName
+//
+//                } else {
+//                    element.style.width = "100%"
+//                }
+//            }
+//        }
+//    }
 
     private fun Container?.isVerticalLayout() =
             this is LinearLayout && orientation == LinearLayout.Orientation.Vertical

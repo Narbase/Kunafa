@@ -5,8 +5,11 @@ import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.css.ClassNameGenerator
 import com.narbase.kunafa.core.css.ClassSelector
 import com.narbase.kunafa.core.css.RuleSet
-import com.narbase.kunafa.core.dimensions.*
+import com.narbase.kunafa.core.dimensions.Dimension
+import com.narbase.kunafa.core.dimensions.DynamicDimension
+import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.dimensions.dependent.wrapContent
+import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.drawable.Color
 import com.narbase.kunafa.core.presenter.ViewController
 import org.w3c.dom.HTMLDivElement
@@ -47,7 +50,7 @@ open class View(var parent: Container? = null) {
 
     open fun updateElementWidth() {
         if (width is DynamicDimension) {
-            (width as? DynamicDimension)?.configure(element, Dimension.Type.width)
+//            (width as? DynamicDimension)?.configure(element, Dimension.Type.width)
         } else (width as? LinearDimension)?.let {
             if (element.style.width == it.toString()) return
             element.style.width = it.toString()
@@ -85,7 +88,7 @@ open class View(var parent: Container? = null) {
 
     open fun updateElementHeight() {
         if (height is DynamicDimension) {
-            (height as? DynamicDimension)?.configure(element, Dimension.Type.height)
+//            (height as? DynamicDimension)?.configure(element, Dimension.Type.height)
         } else (height as? LinearDimension)?.let {
             if (element.style.height == it.toString()) return
             element.style.height = it.toString()
@@ -105,15 +108,6 @@ open class View(var parent: Container? = null) {
             element.onclick = value
         }
 
-    open var maxWidth: CalculatedDimension? = null
-        set(value) {
-            field = value
-            value?.let {
-                element.style.maxWidth = "${it.pixels}px"
-            }
-            //TODO: Create and call updateContentMaxWidth()
-
-        }
 
     open var width: Dimension = wrapContent
         set(value) {

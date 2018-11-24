@@ -1,7 +1,6 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.DynamicDimension
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import org.w3c.dom.HTMLButtonElement
@@ -34,7 +33,7 @@ class ButtonView(parent: Container? = null) : View(parent) {
     override fun updateContentWidth() {
         super.updateContentWidth()
         if (width is DynamicDimension) {
-            (width as? DynamicDimension)?.configure(button, Dimension.Type.width)
+//            (width as? DynamicDimension)?.configure(button, Dimension.Type.width)
         } else (width as? LinearDimension)?.let {
             button.style.width = it.toString()
             button.style.minWidth = it.toString()
@@ -44,7 +43,7 @@ class ButtonView(parent: Container? = null) : View(parent) {
     override fun updateContentHeight() {
         super.updateContentHeight()
         if (height is DynamicDimension) {
-            (height as? DynamicDimension)?.configure(button, Dimension.Type.height)
+//            (height as? DynamicDimension)?.configure(button, Dimension.Type.height)
         } else (height as? LinearDimension)?.let {
             button.style.height = it.toString()
             button.style.minHeight = it.toString()

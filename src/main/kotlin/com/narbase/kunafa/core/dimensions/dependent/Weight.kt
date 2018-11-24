@@ -3,8 +3,8 @@
 package com.narbase.kunafa.core.dimensions.dependent
 
 import com.narbase.kunafa.core.components.View
+import com.narbase.kunafa.core.css.RuleSet
 import com.narbase.kunafa.core.dimensions.DynamicDimension
-import org.w3c.dom.HTMLElement
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -15,17 +15,24 @@ import org.w3c.dom.HTMLElement
  * On: 10/19/17.
  */
 class Weight internal constructor(private val value: Int) : DynamicDimension() {
-    override fun configure(element: HTMLElement, type: Type) {
-        when (type) {
-            Type.height -> {
-                element.style.height = "auto"
-                element.style.flex = "$value 0 0px"
-            }
-            Type.width -> {
-                element.style.width = "auto"
-                element.style.flex = "$value 0 0px"
-            }
-        }
+
+    override fun configureHeight(ruleSet: RuleSet) {
+
+        ruleSet.setProperty("height", "auto")
+        ruleSet.setProperty("flex", "$value 0 0px")
+//        element.style.height = "auto"
+//        element.style.flex = "$value 0 0px"
+    }
+
+
+    override fun configureWidth(ruleSet: RuleSet) {
+
+        ruleSet.setProperty("width", "auto")
+        ruleSet.setProperty("flex", "$value 0 0px")
+
+//        element.style.width = "auto"
+//        element.style.flex = "$value 0 0px"
+
     }
 }
 

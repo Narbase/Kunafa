@@ -1,8 +1,8 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
 package com.narbase.kunafa.core.dimensions
 
-import org.w3c.dom.HTMLElement
+import com.narbase.kunafa.core.css.RuleSet
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -20,13 +20,9 @@ abstract class Dimension {
     }
 }
 
-abstract class CalculatedDimension : Dimension() {
-    abstract var pixels: Int
-}
-
-
 abstract class DynamicDimension : Dimension() {
-    abstract fun configure(element: HTMLElement, type: Dimension.Type)
+    abstract fun configureHeight(ruleSet: RuleSet)
+    abstract fun configureWidth(ruleSet: RuleSet)
 }
 
 
