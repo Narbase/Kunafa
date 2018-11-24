@@ -1,8 +1,5 @@
 package com.narbase.kunafa.core.css
 
-
-class Stylesheet
-
 @Suppress("MemberVisibilityCanBePrivate")
 class RuleSet(val selector: Selector, val atRule: String? = null) {
 
@@ -46,9 +43,7 @@ class RuleSet(val selector: Selector, val atRule: String? = null) {
             }
             append(selector.toString())
             append("{")
-            rules.forEachIndexed { index, rule ->
-                if (index != 0)
-                    append(',')
+            rules.forEach { rule ->
                 append(rule.toString())
             }
             append('}')

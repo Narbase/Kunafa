@@ -5,7 +5,6 @@ package com.narbase.kunafa.core.components
 import com.narbase.kunafa.core.components.Page.visit
 import com.narbase.kunafa.core.components.layout.*
 import com.narbase.kunafa.core.css.RuleSet
-import com.narbase.kunafa.core.css.Stylesheet
 import com.narbase.kunafa.core.dimensions.IndependentDimension
 
 /**
@@ -44,8 +43,3 @@ var View.margin: IndependentDimension
 var View.padding: IndependentDimension
     get() = throw Exception("Use View.padding properites")
     set(value) = this.setPadding(value)
-
-
-// CSS
-
-fun stylesheet(): Stylesheet = Stylesheet()
