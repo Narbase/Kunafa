@@ -1,6 +1,6 @@
 package com.narbase.kunafa.core.components.layout
 
-import com.narbase.kunafa.core.dimensions.IndependentDimension
+import com.narbase.kunafa.core.dimensions.LinearDimension
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -12,9 +12,9 @@ import com.narbase.kunafa.core.dimensions.IndependentDimension
  */
 class ScrollView(parent: Container?) : Container(parent) {
 
-    override val wrappedContentWidth: IndependentDimension
+    override val wrappedContentWidth: LinearDimension
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-    override val wrappedContentHeight: IndependentDimension
+    override val wrappedContentHeight: LinearDimension
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
     init {

@@ -1,8 +1,6 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.IndependentDimension
-import com.narbase.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event

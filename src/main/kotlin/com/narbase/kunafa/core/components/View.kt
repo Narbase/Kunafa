@@ -48,7 +48,7 @@ open class View(var parent: Container? = null) {
     open fun updateElementWidth() {
         if (width is DynamicDimension) {
             (width as? DynamicDimension)?.configure(element, Dimension.Type.width)
-        } else (width as? IndependentDimension)?.let {
+        } else (width as? LinearDimension)?.let {
             if (element.style.width == it.toString()) return
             element.style.width = it.toString()
             element.style.minWidth = it.toString()
@@ -86,7 +86,7 @@ open class View(var parent: Container? = null) {
     open fun updateElementHeight() {
         if (height is DynamicDimension) {
             (height as? DynamicDimension)?.configure(element, Dimension.Type.height)
-        } else (height as? IndependentDimension)?.let {
+        } else (height as? LinearDimension)?.let {
             if (element.style.height == it.toString()) return
             element.style.height = it.toString()
             element.style.minHeight = it.toString()
@@ -127,59 +127,59 @@ open class View(var parent: Container? = null) {
             updateElementDimensions()
         }
 
-    open val wrappedContentWidth: IndependentDimension
+    open val wrappedContentWidth: LinearDimension
         get() = throw WrapContentNotSupportedException("WrapContent not supported in View")
 
-    open val wrappedContentHeight: IndependentDimension
+    open val wrappedContentHeight: LinearDimension
         get() = throw WrapContentNotSupportedException("WrapContent not supported in View")
 
     var backgroundColor: Color by observable(Color()) { _, _, _ ->
         element.style.backgroundColor = backgroundColor.toCss()
     }
 
-    fun setMargin(margin: IndependentDimension) {
+    fun setMargin(margin: LinearDimension) {
         marginTop = margin
         marginStart = margin
         marginEnd = margin
         marginBottom = margin
     }
 
-    var marginTop: IndependentDimension by observable(0.px) { _, _, newValue ->
+    var marginTop: LinearDimension by observable(0.px) { _, _, newValue ->
         //        element.style.marginTop = newValue.toString()
     }
 
-    var marginStart: IndependentDimension by observable(0.px) { _, _, newValue ->
+    var marginStart: LinearDimension by observable(0.px) { _, _, newValue ->
         //        element.style.marginLeft = newValue.toString()
     }
 
-    var marginEnd: IndependentDimension by observable(0.px) { _, _, newValue ->
+    var marginEnd: LinearDimension by observable(0.px) { _, _, newValue ->
         //        element.style.marginRight = newValue.toString()
     }
 
-    var marginBottom: IndependentDimension by observable(0.px) { _, _, newValue ->
+    var marginBottom: LinearDimension by observable(0.px) { _, _, newValue ->
         //        element.style.marginBottom = newValue.toString()
     }
 
-    fun setPadding(padding: IndependentDimension) {
+    fun setPadding(padding: LinearDimension) {
         paddingTop = padding
         paddingStart = padding
         paddingEnd = padding
         paddingBottom = padding
     }
 
-    var paddingTop: IndependentDimension by observable(0.px) { _, _, newValue ->
+    var paddingTop: LinearDimension by observable(0.px) { _, _, newValue ->
         //        element.style.paddingTop = newValue.toString()
     }
 
-    var paddingStart: IndependentDimension by observable(0.px) { _, _, newValue ->
+    var paddingStart: LinearDimension by observable(0.px) { _, _, newValue ->
         //        element.style.paddingLeft = newValue.toString()
     }
 
-    var paddingEnd: IndependentDimension by observable(0.px) { _, _, newValue ->
+    var paddingEnd: LinearDimension by observable(0.px) { _, _, newValue ->
         //        element.style.paddingRight = newValue.toString()
     }
 
-    var paddingBottom: IndependentDimension by observable(0.px) { _, _, newValue ->
+    var paddingBottom: LinearDimension by observable(0.px) { _, _, newValue ->
         //        element.style.paddingBottom = newValue.toString()
     }
 

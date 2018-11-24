@@ -3,7 +3,7 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.IndependentDimension
+import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -48,7 +48,7 @@ class TextInput (parent: Container? = null) : View(parent) {
             }
         }
 
-    var textSize: IndependentDimension? = null
+    var textSize: LinearDimension? = null
         set(value) {
             field = value
             value?.let {

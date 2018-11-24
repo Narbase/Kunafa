@@ -1,7 +1,7 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.IndependentDimension
+import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLSpanElement
@@ -36,7 +36,7 @@ open class TextView(parent: Container? = null) : View(parent) {
             }
         }
 
-    var textSize: IndependentDimension? = null
+    var textSize: LinearDimension? = null
         set(value) {
             field = value
             value?.let {
@@ -45,12 +45,12 @@ open class TextView(parent: Container? = null) : View(parent) {
         }
 
 
-    override val wrappedContentHeight: IndependentDimension
+    override val wrappedContentHeight: LinearDimension
         get() {
             return span.offsetHeight.px
         }
 
-    override val wrappedContentWidth: IndependentDimension
+    override val wrappedContentWidth: LinearDimension
         get() = span.offsetWidth.px
 
     enum class TextAlign(val cssName: String) {

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.dimensions
 
 import org.w3c.dom.HTMLElement
@@ -28,7 +30,7 @@ abstract class DynamicDimension : Dimension() {
 }
 
 
-class IndependentDimension(
+class LinearDimension(
         var value: Float,
         var unit: Unit
 ) : Dimension() {
@@ -56,16 +58,16 @@ class IndependentDimension(
 
 }
 
-val Number.px: IndependentDimension get() = dimen(this, IndependentDimension.Unit.PX)
-val Number.em: IndependentDimension get() = dimen(this, IndependentDimension.Unit.EM)
-val Number.percent: IndependentDimension get() = dimen(this, IndependentDimension.Unit.PERCENT)
-val Number.ex: IndependentDimension get() = dimen(this, IndependentDimension.Unit.EX)
-val Number.inch: IndependentDimension get() = dimen(this, IndependentDimension.Unit.INCH)
-val Number.cm: IndependentDimension get() = dimen(this, IndependentDimension.Unit.CM)
-val Number.mm: IndependentDimension get() = dimen(this, IndependentDimension.Unit.MM)
-val Number.pt: IndependentDimension get() = dimen(this, IndependentDimension.Unit.PT)
-val Number.pc: IndependentDimension get() = dimen(this, IndependentDimension.Unit.PC)
+val Number.px: LinearDimension get() = dimen(this, LinearDimension.Unit.PX)
+val Number.em: LinearDimension get() = dimen(this, LinearDimension.Unit.EM)
+val Number.percent: LinearDimension get() = dimen(this, LinearDimension.Unit.PERCENT)
+val Number.ex: LinearDimension get() = dimen(this, LinearDimension.Unit.EX)
+val Number.inch: LinearDimension get() = dimen(this, LinearDimension.Unit.INCH)
+val Number.cm: LinearDimension get() = dimen(this, LinearDimension.Unit.CM)
+val Number.mm: LinearDimension get() = dimen(this, LinearDimension.Unit.MM)
+val Number.pt: LinearDimension get() = dimen(this, LinearDimension.Unit.PT)
+val Number.pc: LinearDimension get() = dimen(this, LinearDimension.Unit.PC)
 
 @Suppress("NOTHING_TO_INLINE")
-private inline fun dimen(value: Number, unit: IndependentDimension.Unit) = IndependentDimension(value.toFloat(), unit)
+private inline fun dimen(value: Number, unit: LinearDimension.Unit) = LinearDimension(value.toFloat(), unit)
 

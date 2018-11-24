@@ -3,7 +3,7 @@ package com.narbase.kunafa.core.components
 import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.DynamicDimension
-import com.narbase.kunafa.core.dimensions.IndependentDimension
+import com.narbase.kunafa.core.dimensions.LinearDimension
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.events.Event
 import kotlin.browser.document
@@ -35,7 +35,7 @@ class ButtonView(parent: Container? = null) : View(parent) {
         super.updateContentWidth()
         if (width is DynamicDimension) {
             (width as? DynamicDimension)?.configure(button, Dimension.Type.width)
-        } else (width as? IndependentDimension)?.let {
+        } else (width as? LinearDimension)?.let {
             button.style.width = it.toString()
             button.style.minWidth = it.toString()
         }
@@ -45,7 +45,7 @@ class ButtonView(parent: Container? = null) : View(parent) {
         super.updateContentHeight()
         if (height is DynamicDimension) {
             (height as? DynamicDimension)?.configure(button, Dimension.Type.height)
-        } else (height as? IndependentDimension)?.let {
+        } else (height as? LinearDimension)?.let {
             button.style.height = it.toString()
             button.style.minHeight = it.toString()
         }
