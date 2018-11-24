@@ -310,3 +310,5 @@ fun RuleSet.target(rules: RuleSet.() -> Unit) = this.addPseudo(":target", rules)
 fun RuleSet.unvisited(rules: RuleSet.() -> Unit) = this.addPseudo(":link", rules)
 fun RuleSet.valid(rules: RuleSet.() -> Unit) = this.addPseudo(":valid", rules)
 fun RuleSet.visited(rules: RuleSet.() -> Unit) = this.addPseudo(":visited", rules)
+
+fun RuleSet.media(name: String, rules: RuleSet.() -> Unit) = this.addAtRule("media($name)", rules)

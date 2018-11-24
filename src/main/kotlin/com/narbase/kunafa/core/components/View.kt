@@ -224,8 +224,8 @@ open class View(var parent: Container? = null) {
         val sheetElement = document.createElement("style") as HTMLStyleElement
         document.head?.appendChild(sheetElement)
         val sheet = sheetElement.sheet as? CSSStyleSheet
-        sheet?.insertRule(ruleSet.toString(), sheet.cssRules.length)
-        ruleSet.subRuleSets?.forEach {
+        ruleSet.toRulesList().forEach {
+            console.log(it.toString())
             sheet?.insertRule(it.toString(), sheet.cssRules.length)
         }
         this.element.addClass(className)
