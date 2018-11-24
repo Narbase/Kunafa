@@ -49,4 +49,3 @@ var View.padding: IndependentDimension
 // CSS
 
 fun stylesheet(): Stylesheet = Stylesheet()
-fun RuleSet.hover(rules: RuleSet.() -> Unit) = this.addPseudo(":hover", rules)

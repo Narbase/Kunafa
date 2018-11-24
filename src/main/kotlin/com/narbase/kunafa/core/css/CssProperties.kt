@@ -6,7 +6,7 @@ import com.narbase.kunafa.core.drawable.Color
 
 // Color Properties
 var RuleSet.color by RuleDelegate<Color?>("color")
-var RuleSet.opacity by RuleDelegate<Float?>("opacity")
+var RuleSet.opacity by RuleDelegate<Double?>("opacity")
 /*
 
 // Background and Border Properties
@@ -279,3 +279,34 @@ var RuleSet.marqueeStyle by RuleDelegate("marquee-style")
 var RuleSet.zoom by RuleDelegate("zoom")
 var RuleSet.src by RuleDelegate("src") // @font-face
 */
+
+fun RuleSet.active(rules: RuleSet.() -> Unit) = this.addPseudo(":active", rules)
+fun RuleSet.after(rules: RuleSet.() -> Unit) = this.addPseudo(":after", rules)
+fun RuleSet.before(rules: RuleSet.() -> Unit) = this.addPseudo(":before", rules)
+fun RuleSet.checked(rules: RuleSet.() -> Unit) = this.addPseudo(":checked", rules)
+fun RuleSet.disabled(rules: RuleSet.() -> Unit) = this.addPseudo(":disabled", rules)
+fun RuleSet.empty(rules: RuleSet.() -> Unit) = this.addPseudo(":empty", rules)
+fun RuleSet.enabled(rules: RuleSet.() -> Unit) = this.addPseudo(":enabled", rules)
+fun RuleSet.firstChild(rules: RuleSet.() -> Unit) = this.addPseudo(":first-child", rules)
+fun RuleSet.firstLetter(rules: RuleSet.() -> Unit) = this.addPseudo(":first-letter", rules)
+fun RuleSet.firstLine(rules: RuleSet.() -> Unit) = this.addPseudo(":first-line", rules)
+fun RuleSet.firstOfType(rules: RuleSet.() -> Unit) = this.addPseudo(":first-of-type", rules)
+fun RuleSet.focus(rules: RuleSet.() -> Unit) = this.addPseudo(":focus", rules)
+fun RuleSet.hover(rules: RuleSet.() -> Unit) = this.addPseudo(":hover", rules)
+fun RuleSet.inRange(rules: RuleSet.() -> Unit) = this.addPseudo(":in-range", rules)
+fun RuleSet.invalid(rules: RuleSet.() -> Unit) = this.addPseudo(":invalid", rules)
+fun RuleSet.lastChild(rules: RuleSet.() -> Unit) = this.addPseudo(":last-child", rules)
+fun RuleSet.lastOfType(rules: RuleSet.() -> Unit) = this.addPseudo(":last-of-type", rules)
+fun RuleSet.onlyChild(rules: RuleSet.() -> Unit) = this.addPseudo(":only-child", rules)
+fun RuleSet.onlyOfType(rules: RuleSet.() -> Unit) = this.addPseudo(":only-of-type", rules)
+fun RuleSet.optional(rules: RuleSet.() -> Unit) = this.addPseudo(":optional", rules)
+fun RuleSet.outOfRange(rules: RuleSet.() -> Unit) = this.addPseudo(":out-of-range", rules)
+fun RuleSet.readOnly(rules: RuleSet.() -> Unit) = this.addPseudo(":read-only", rules)
+fun RuleSet.readWrite(rules: RuleSet.() -> Unit) = this.addPseudo(":read-write", rules)
+fun RuleSet.required(rules: RuleSet.() -> Unit) = this.addPseudo(":required", rules)
+fun RuleSet.root(rules: RuleSet.() -> Unit) = this.addPseudo(":root", rules)
+fun RuleSet.selection(rules: RuleSet.() -> Unit) = this.addPseudo(":selection", rules)
+fun RuleSet.target(rules: RuleSet.() -> Unit) = this.addPseudo(":target", rules)
+fun RuleSet.unvisited(rules: RuleSet.() -> Unit) = this.addPseudo(":link", rules)
+fun RuleSet.valid(rules: RuleSet.() -> Unit) = this.addPseudo(":valid", rules)
+fun RuleSet.visited(rules: RuleSet.() -> Unit) = this.addPseudo(":visited", rules)
