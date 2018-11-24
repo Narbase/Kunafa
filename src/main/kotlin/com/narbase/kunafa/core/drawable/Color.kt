@@ -39,6 +39,8 @@ class Color() {
         val transparent = Color(0, 0, 0, 0.0)
     }
 
+    override fun toString() = toCss()
+
     fun toCss(): String {
         val localColorString = colorString
         return if (localColorString == null) {

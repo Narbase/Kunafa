@@ -2,6 +2,9 @@ package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Alignment
 import com.narbase.kunafa.core.components.layout.Container
+import com.narbase.kunafa.core.css.ClassNameGenerator
+import com.narbase.kunafa.core.css.ClassSelector
+import com.narbase.kunafa.core.css.RuleSet
 import com.narbase.kunafa.core.dimensions.CalculatedDimension
 import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.DynamicDimension
@@ -13,8 +16,11 @@ import com.narbase.kunafa.core.drawable.Color
 import com.narbase.kunafa.core.presenter.ViewController
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLStyleElement
+import org.w3c.dom.css.CSSStyleSheet
 import org.w3c.dom.events.Event
 import kotlin.browser.document
+import kotlin.dom.addClass
 import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
 
@@ -56,7 +62,7 @@ open class View(var parent: Container? = null) {
         updateContentWidth()
     }
 
-    open internal fun updateContentWidth() {
+    internal open fun updateContentWidth() {
 
     }
 
@@ -201,8 +207,21 @@ open class View(var parent: Container? = null) {
         setPadding(0.px)
     }
 
-    fun <V : View> V.visit(setup: V.() -> Unit): V {
+    fun <V : View> V.visit(rules: (RuleSet.() -> Unit)?, setup: V.() -> Unit): V {
         configureElement()
+        rules?.let {
+            val className = ClassNameGenerator.getClassName()
+            val selector = ClassSelector(className)
+            val ruleSet = RuleSet(selector).apply { rules() }
+            val sheetElement = document.createElement("style") as HTMLStyleElement
+            document.head?.appendChild(sheetElement)
+            console.log(ruleSet.toString())
+            val sheet = sheetElement.sheet as? CSSStyleSheet
+            sheet?.insertRule(ruleSet.toString(), sheet.cssRules.length)
+            console.log(sheet)
+            console.log(document.head)
+            this.element.addClass(className)
+        }
         this.addToParent()
         this.setup()
         this.viewController?.onViewCreated(this)
