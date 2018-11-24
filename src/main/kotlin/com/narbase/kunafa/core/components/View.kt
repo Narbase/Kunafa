@@ -5,13 +5,8 @@ import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.css.ClassNameGenerator
 import com.narbase.kunafa.core.css.ClassSelector
 import com.narbase.kunafa.core.css.RuleSet
-import com.narbase.kunafa.core.dimensions.CalculatedDimension
-import com.narbase.kunafa.core.dimensions.Dimension
-import com.narbase.kunafa.core.dimensions.DynamicDimension
-import com.narbase.kunafa.core.dimensions.IndependentDimension
+import com.narbase.kunafa.core.dimensions.*
 import com.narbase.kunafa.core.dimensions.dependent.wrapContent
-import com.narbase.kunafa.core.dimensions.independent.Point
-import com.narbase.kunafa.core.dimensions.independent.px
 import com.narbase.kunafa.core.drawable.Color
 import com.narbase.kunafa.core.presenter.ViewController
 import org.w3c.dom.HTMLDivElement
@@ -53,10 +48,10 @@ open class View(var parent: Container? = null) {
     open fun updateElementWidth() {
         if (width is DynamicDimension) {
             (width as? DynamicDimension)?.configure(element, Dimension.Type.width)
-        } else (width as? CalculatedDimension)?.let {
-            if (element.style.width == "${it.pixels}px") return
-            element.style.width = "${it.pixels}px"
-            element.style.minWidth = "${it.pixels}px"
+        } else (width as? IndependentDimension)?.let {
+            if (element.style.width == it.toString()) return
+            element.style.width = it.toString()
+            element.style.minWidth = it.toString()
             onResizedListeners.forEach { it.second() }
         }
         updateContentWidth()
@@ -91,10 +86,10 @@ open class View(var parent: Container? = null) {
     open fun updateElementHeight() {
         if (height is DynamicDimension) {
             (height as? DynamicDimension)?.configure(element, Dimension.Type.height)
-        } else (height as? CalculatedDimension)?.let {
-            if (element.style.height == "${it.pixels}px") return
-            element.style.height = "${it.pixels}px"
-            element.style.minHeight = "${it.pixels}px"
+        } else (height as? IndependentDimension)?.let {
+            if (element.style.height == it.toString()) return
+            element.style.height = it.toString()
+            element.style.minHeight = it.toString()
             onResizedListeners.forEach { it.second() }
         }
         updateContentHeight()
@@ -149,20 +144,20 @@ open class View(var parent: Container? = null) {
         marginBottom = margin
     }
 
-    var marginTop: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
-        element.style.marginTop = "${newValue.pixels}px"
+    var marginTop: IndependentDimension by observable(0.px) { _, _, newValue ->
+        //        element.style.marginTop = newValue.toString()
     }
 
-    var marginStart: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
-        element.style.marginLeft = "${newValue.pixels}px"
+    var marginStart: IndependentDimension by observable(0.px) { _, _, newValue ->
+        //        element.style.marginLeft = newValue.toString()
     }
 
-    var marginEnd: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
-        element.style.marginRight = "${newValue.pixels}px"
+    var marginEnd: IndependentDimension by observable(0.px) { _, _, newValue ->
+        //        element.style.marginRight = newValue.toString()
     }
 
-    var marginBottom: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
-        element.style.marginBottom = "${newValue.pixels}px"
+    var marginBottom: IndependentDimension by observable(0.px) { _, _, newValue ->
+        //        element.style.marginBottom = newValue.toString()
     }
 
     fun setPadding(padding: IndependentDimension) {
@@ -172,20 +167,20 @@ open class View(var parent: Container? = null) {
         paddingBottom = padding
     }
 
-    var paddingTop: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
-        element.style.paddingTop = "${newValue.pixels}px"
+    var paddingTop: IndependentDimension by observable(0.px) { _, _, newValue ->
+        //        element.style.paddingTop = newValue.toString()
     }
 
-    var paddingStart: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
-        element.style.paddingLeft = "${newValue.pixels}px"
+    var paddingStart: IndependentDimension by observable(0.px) { _, _, newValue ->
+        //        element.style.paddingLeft = newValue.toString()
     }
 
-    var paddingEnd: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
-        element.style.paddingRight = "${newValue.pixels}px"
+    var paddingEnd: IndependentDimension by observable(0.px) { _, _, newValue ->
+        //        element.style.paddingRight = newValue.toString()
     }
 
-    var paddingBottom: IndependentDimension by observable(Point() as IndependentDimension) { _, _, newValue ->
-        element.style.paddingBottom = "${newValue.pixels}px"
+    var paddingBottom: IndependentDimension by observable(0.px) { _, _, newValue ->
+        //        element.style.paddingBottom = newValue.toString()
     }
 
     var isScrollableHorizontally by Delegates.observable(false) { _, _, isScrollable ->

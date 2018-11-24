@@ -1,8 +1,7 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.IndependentDimension
-import com.narbase.kunafa.core.dimensions.independent.px
+import com.narbase.kunafa.core.dimensions.px
 import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.dom.clear

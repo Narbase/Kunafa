@@ -2,7 +2,7 @@ package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.dimensions.IndependentDimension
-import com.narbase.kunafa.core.dimensions.independent.px
+import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLSpanElement
 import kotlin.browser.document
@@ -40,7 +40,7 @@ open class TextView(parent: Container? = null) : View(parent) {
         set(value) {
             field = value
             value?.let {
-                element.style.fontSize = "${it.pixels}px"
+                element.style.fontSize = it.toString()
             }
         }
 

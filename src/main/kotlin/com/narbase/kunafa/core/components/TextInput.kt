@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
@@ -50,7 +52,7 @@ class TextInput (parent: Container? = null) : View(parent) {
         set(value) {
             field = value
             value?.let {
-                element.style.fontSize = "${it.pixels}px"
+                element.style.fontSize = it.toString()
             }
         }
 
@@ -61,9 +63,9 @@ class TextInput (parent: Container? = null) : View(parent) {
         }
 
     var onChange: ((Event) -> Unit)? = null
-    set(value) {
-        field = value
-        (element as HTMLInputElement).onchange = value
-    }
+        set(value) {
+            field = value
+            (element as HTMLInputElement).onchange = value
+        }
 
 }

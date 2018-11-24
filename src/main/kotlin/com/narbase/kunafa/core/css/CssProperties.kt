@@ -2,6 +2,7 @@
 
 package com.narbase.kunafa.core.css
 
+import com.narbase.kunafa.core.dimensions.IndependentDimension
 import com.narbase.kunafa.core.drawable.Color
 
 // Color Properties
@@ -54,18 +55,18 @@ var RuleSet.boxDecorationBreak by RuleDelegate<String?>("box-decoration-break")
 var RuleSet.boxShadow by RuleDelegate<String?>("box-shadow")
 
 // Basic Box Properties
-var RuleSet.bottom by RuleDelegate<String?>("bottom")
+var RuleSet.bottom by RuleDelegate<IndependentDimension?>("bottom")
 var RuleSet.clear by RuleDelegate<String?>("clear")
 var RuleSet.clip by RuleDelegate<String?>("clip")
 var RuleSet.display by RuleDelegate<String?>("display")
 var RuleSet.float by RuleDelegate<String?>("float")
 var RuleSet.height by RuleDelegate<String?>("height")
-var RuleSet.left by RuleDelegate<String?>("left")
+var RuleSet.left by RuleDelegate<IndependentDimension?>("left")
 var RuleSet.margin by RuleDelegate<String?>("margin")
-var RuleSet.marginBottom by RuleDelegate<String?>("margin-bottom")
-var RuleSet.marginLeft by RuleDelegate<String?>("margin-left")
-var RuleSet.marginRight by RuleDelegate<String?>("margin-right")
-var RuleSet.marginTop by RuleDelegate<String?>("margin-top")
+var RuleSet.marginBottom by RuleDelegate<IndependentDimension?>("margin-bottom")
+var RuleSet.marginLeft by RuleDelegate<IndependentDimension?>("margin-left")
+var RuleSet.marginRight by RuleDelegate<IndependentDimension?>("margin-right")
+var RuleSet.marginTop by RuleDelegate<IndependentDimension?>("margin-top")
 var RuleSet.maxHeight by RuleDelegate<String?>("max-height")
 var RuleSet.maxWidth by RuleDelegate<String?>("max-width")
 var RuleSet.minHeight by RuleDelegate<String?>("min-height")
@@ -74,13 +75,13 @@ var RuleSet.overflow by RuleDelegate<String?>("overflow")
 var RuleSet.overflowX by RuleDelegate<String?>("overflow-x")
 var RuleSet.overflowY by RuleDelegate<String?>("overflow-y")
 var RuleSet.padding by RuleDelegate<String?>("padding")
-var RuleSet.paddingBottom by RuleDelegate<String?>("padding-bottom")
-var RuleSet.paddingLeft by RuleDelegate<String?>("padding-left")
-var RuleSet.paddingRight by RuleDelegate<String?>("padding-right")
-var RuleSet.paddingTop by RuleDelegate<String?>("padding-top")
+var RuleSet.paddingBottom by RuleDelegate<IndependentDimension?>("padding-bottom")
+var RuleSet.paddingLeft by RuleDelegate<IndependentDimension?>("padding-left")
+var RuleSet.paddingRight by RuleDelegate<IndependentDimension?>("padding-right")
+var RuleSet.paddingTop by RuleDelegate<IndependentDimension?>("padding-top")
 var RuleSet.position by RuleDelegate<String?>("position")
-var RuleSet.right by RuleDelegate<String?>("right")
-var RuleSet.top by RuleDelegate<String?>("top")
+var RuleSet.right by RuleDelegate<IndependentDimension?>("right")
+var RuleSet.top by RuleDelegate<IndependentDimension?>("top")
 var RuleSet.visibility by RuleDelegate<String?>("visibility")
 var RuleSet.width by RuleDelegate<String?>("width")
 var RuleSet.verticalAlign by RuleDelegate<String?>("vertical-align")

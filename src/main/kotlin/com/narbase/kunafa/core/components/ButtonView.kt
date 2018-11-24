@@ -1,13 +1,10 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.CalculatedDimension
 import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.DynamicDimension
+import com.narbase.kunafa.core.dimensions.IndependentDimension
 import org.w3c.dom.HTMLButtonElement
-import org.w3c.dom.HTMLDivElement
-import org.w3c.dom.HTMLElement
-import org.w3c.dom.HTMLSpanElement
 import org.w3c.dom.events.Event
 import kotlin.browser.document
 
@@ -38,9 +35,9 @@ class ButtonView(parent: Container? = null) : View(parent) {
         super.updateContentWidth()
         if (width is DynamicDimension) {
             (width as? DynamicDimension)?.configure(button, Dimension.Type.width)
-        } else (width as? CalculatedDimension)?.let {
-            button.style.width = "${it.pixels}px"
-            button.style.minWidth = "${it.pixels}px"
+        } else (width as? IndependentDimension)?.let {
+            button.style.width = it.toString()
+            button.style.minWidth = it.toString()
         }
     }
 
@@ -48,9 +45,9 @@ class ButtonView(parent: Container? = null) : View(parent) {
         super.updateContentHeight()
         if (height is DynamicDimension) {
             (height as? DynamicDimension)?.configure(button, Dimension.Type.height)
-        } else (height as? CalculatedDimension)?.let {
-            button.style.height = "${it.pixels}px"
-            button.style.minHeight = "${it.pixels}px"
+        } else (height as? IndependentDimension)?.let {
+            button.style.height = it.toString()
+            button.style.minHeight = it.toString()
         }
     }
 

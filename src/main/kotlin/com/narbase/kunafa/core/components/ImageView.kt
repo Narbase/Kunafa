@@ -1,10 +1,9 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.CalculatedDimension
 import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.DynamicDimension
-import org.w3c.dom.HTMLButtonElement
+import com.narbase.kunafa.core.dimensions.IndependentDimension
 import org.w3c.dom.HTMLImageElement
 import org.w3c.dom.events.Event
 import kotlin.browser.document
@@ -36,9 +35,9 @@ class ImageView(parent: Container? = null) : View(parent) {
         super.updateContentWidth()
         if (width is DynamicDimension) {
             (width as? DynamicDimension)?.configure(img, Dimension.Type.width)
-        } else (width as? CalculatedDimension)?.let {
-            img.style.width = "${it.pixels}px"
-            img.style.minWidth = "${it.pixels}px"
+        } else (width as? IndependentDimension)?.let {
+            img.style.width = it.toString()
+            img.style.minWidth = it.toString()
         }
     }
 
@@ -46,9 +45,9 @@ class ImageView(parent: Container? = null) : View(parent) {
         super.updateContentHeight()
         if (height is DynamicDimension) {
             (height as? DynamicDimension)?.configure(img, Dimension.Type.height)
-        } else (height as? CalculatedDimension)?.let {
-            img.style.height = "${it.pixels}px"
-            img.style.minHeight = "${it.pixels}px"
+        } else (height as? IndependentDimension)?.let {
+            img.style.height = it.toString()
+            img.style.minHeight = it.toString()
         }
     }
 
