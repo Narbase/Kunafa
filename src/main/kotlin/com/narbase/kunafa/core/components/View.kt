@@ -5,10 +5,7 @@ import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.css.ClassNameGenerator
 import com.narbase.kunafa.core.css.ClassSelector
 import com.narbase.kunafa.core.css.RuleSet
-import com.narbase.kunafa.core.dimensions.Dimension
-import com.narbase.kunafa.core.dimensions.DynamicDimension
 import com.narbase.kunafa.core.dimensions.LinearDimension
-import com.narbase.kunafa.core.dimensions.dependent.wrapContent
 import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.drawable.Color
 import com.narbase.kunafa.core.presenter.ViewController
@@ -43,26 +40,6 @@ open class View(var parent: Container? = null) {
 
     var viewController: ViewController? = null
 
-    private fun updateElementDimensions() {
-        updateElementWidth()
-        updateElementHeight()
-    }
-
-    open fun updateElementWidth() {
-        if (width is DynamicDimension) {
-//            (width as? DynamicDimension)?.configure(element, Dimension.Type.width)
-        } else (width as? LinearDimension)?.let {
-            if (element.style.width == it.toString()) return
-            element.style.width = it.toString()
-            element.style.minWidth = it.toString()
-            onResizedListeners.forEach { it.second() }
-        }
-        updateContentWidth()
-    }
-
-    internal open fun updateContentWidth() {
-
-    }
 
     private var savedDisplayState: String? = "null"
 
@@ -86,39 +63,12 @@ open class View(var parent: Container? = null) {
 
         }
 
-    open fun updateElementHeight() {
-        if (height is DynamicDimension) {
-//            (height as? DynamicDimension)?.configure(element, Dimension.Type.height)
-        } else (height as? LinearDimension)?.let {
-            if (element.style.height == it.toString()) return
-            element.style.height = it.toString()
-            element.style.minHeight = it.toString()
-            onResizedListeners.forEach { it.second() }
-        }
-        updateContentHeight()
-    }
 
-    open internal fun updateContentHeight() {
-
-    }
 
     open var onClick: ((Event) -> Unit)? = null
         set(value) {
             field = value
             element.onclick = value
-        }
-
-
-    open var width: Dimension = wrapContent
-        set(value) {
-            field = value
-            updateElementDimensions()
-        }
-
-    open var height: Dimension = wrapContent
-        set(value) {
-            field = value
-            updateElementDimensions()
         }
 
     open val wrappedContentWidth: LinearDimension
@@ -129,36 +79,6 @@ open class View(var parent: Container? = null) {
 
     var backgroundColor: Color by observable(Color()) { _, _, _ ->
         element.style.backgroundColor = backgroundColor.toCss()
-    }
-
-    fun setMargin(margin: LinearDimension) {
-        marginTop = margin
-        marginStart = margin
-        marginEnd = margin
-        marginBottom = margin
-    }
-
-    var marginTop: LinearDimension by observable(0.px) { _, _, newValue ->
-        //        element.style.marginTop = newValue.toString()
-    }
-
-    var marginStart: LinearDimension by observable(0.px) { _, _, newValue ->
-        //        element.style.marginLeft = newValue.toString()
-    }
-
-    var marginEnd: LinearDimension by observable(0.px) { _, _, newValue ->
-        //        element.style.marginRight = newValue.toString()
-    }
-
-    var marginBottom: LinearDimension by observable(0.px) { _, _, newValue ->
-        //        element.style.marginBottom = newValue.toString()
-    }
-
-    fun setPadding(padding: LinearDimension) {
-        paddingTop = padding
-        paddingStart = padding
-        paddingEnd = padding
-        paddingBottom = padding
     }
 
     var paddingTop: LinearDimension by observable(0.px) { _, _, newValue ->
@@ -192,8 +112,8 @@ open class View(var parent: Container? = null) {
 
     open fun configureElement() {
         element.style.boxSizing = "border-box"
-        setMargin(0.px)
-        setPadding(0.px)
+//        setMargin(0.px)
+//        setPadding(0.px)
     }
 
     fun <V : View> V.visit(rules: (RuleSet.() -> Unit)?, setup: V.() -> Unit): V {
@@ -262,7 +182,5 @@ open class View(var parent: Container? = null) {
 
 
 class ParentNotFoundException : Exception()
-
-class DimensionNotAvailableOnViewException : Exception()
 
 class WrapContentNotSupportedException(message: String) : Exception(message)

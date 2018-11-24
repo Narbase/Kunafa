@@ -5,7 +5,6 @@ package com.narbase.kunafa.core.components
 import com.narbase.kunafa.core.components.Page.visit
 import com.narbase.kunafa.core.components.layout.*
 import com.narbase.kunafa.core.css.RuleSet
-import com.narbase.kunafa.core.dimensions.LinearDimension
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -36,10 +35,10 @@ fun Container.checkbox(rules: (RuleSet.() -> Unit)? = null, block: Checkbox.() -
 
 
 // PROPERTIES:
-var View.margin: LinearDimension
-    get() = throw Exception("Use View.margin properites")
-    set(value) = this.setMargin(value)
-
-var View.padding: LinearDimension
-    get() = throw Exception("Use View.padding properites")
-    set(value) = this.setPadding(value)
+//var View.margin: LinearDimension
+//    get() = throw Exception("Use View.margin properties")
+//    set(value) = this.setMargin(value)
+//
+//var View.padding: LinearDimension
+//    get() = throw Exception("Use View.padding properties")
+//    set(value) = this.setPadding(value)
