@@ -112,7 +112,7 @@ var RuleSet.lineBreak by RuleDelegate<String?>("line-break")
 var RuleSet.lineHeight by RuleDelegate<String?>("line-height")
 var RuleSet.overflowWrap by RuleDelegate<String?>("overflow-wrap")
 var RuleSet.tabSize by RuleDelegate<String?>("tab-size")
-var RuleSet.textAlign by RuleDelegate<String?>("text-align")
+var RuleSet.textAlign by RuleDelegate<TextAlign?>("text-align")
 var RuleSet.textAlignLast by RuleDelegate<String?>("text-align-last")
 var RuleSet.textIndent by RuleDelegate<String?>("text-indent")
 var RuleSet.textJustify by RuleDelegate<String?>("text-justify")
@@ -345,6 +345,19 @@ inline class JustifyContent(
         val SpaceBetween = JustifyContent("space-between")
         val SpaceAround = JustifyContent("space-around")
         val SpaceEvenly = JustifyContent("space-evenly")
+    }
+}
+
+inline class TextAlign(val name: String) {
+    override fun toString() = name
+
+    companion object {
+        val Left = TextAlign("left")
+        val Right = TextAlign("right")
+        val Center = TextAlign("center")
+        val Justify = TextAlign("justify")
+        val Initial = TextAlign("initial")
+        val Inherit = TextAlign("inherit")
     }
 }
 
