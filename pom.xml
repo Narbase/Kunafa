@@ -6,7 +6,7 @@
 
     <groupId>com.narbase</groupId>
     <artifactId>kunafa</artifactId>
-    <version>0.1.5.0.29-alpha</version>
+    <version>0.1.5.0.30-alpha</version>
 
     <name>Kunafa</name>
     <description>Easy to use, high level framework in Kotlin for front-end web-development</description>
@@ -44,7 +44,7 @@
     </developers>
 
     <properties>
-        <kotlin.version>1.2.10</kotlin.version>
+        <kotlin.version>1.3.10</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -68,6 +68,11 @@
         <plugins>
             <plugin>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <configuration>
+                    <args>
+                        <arg>-XXLanguage:+InlineClasses</arg>
+                    </args>
+                </configuration>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <version>${kotlin.version}</version>
 

@@ -5,12 +5,13 @@
       <configuration version="3" platform="JavaScript " useProjectSettings="false">
         <productionOutputPath>$MODULE_DIR$/target/js/kunafa.js</productionOutputPath>
         <testOutputPath>$MODULE_DIR$/target/test-js/kunafa-tests.js</testOutputPath>
-        <compilerSettings />
+        <compilerSettings>
+          <option name="additionalArguments" value="-XXLanguage:+InlineClasses" />
+        </compilerSettings>
         <compilerArguments>
-          <option name="sourceMapPrefix" value="" />
           <option name="sourceMapEmbedSources" value="inlining" />
-          <option name="languageVersion" value="1.2" />
-          <option name="apiVersion" value="1.2" />
+          <option name="languageVersion" value="1.3" />
+          <option name="apiVersion" value="1.3" />
           <option name="pluginOptions">
             <array />
           </option>
@@ -31,9 +32,10 @@
     <orderEntry type="jdk" jdkName="Kotlin SDK" jdkType="KotlinSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaScript" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-js:1.2.10" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-test-js:1.2.10" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-test-annotations-common:1.2.10" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.10" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-js:1.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-test-js:1.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-test-common:1.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-test-annotations-common:1.3.10" level="project" />
   </component>
 </module>

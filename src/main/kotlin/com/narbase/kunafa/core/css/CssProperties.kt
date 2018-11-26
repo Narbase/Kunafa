@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
 package com.narbase.kunafa.core.css
 
@@ -91,9 +91,9 @@ var RuleSet.verticalAlign by RuleDelegate<String?>("vertical-align")
 var RuleSet.zIndex by RuleDelegate<Int?>("z-index")
 
 // Flexible Box Layout
-var RuleSet.alignContent by RuleDelegate<String?>("align-content")
-var RuleSet.alignItems by RuleDelegate<String?>("align-items")
-var RuleSet.alignSelf by RuleDelegate<String?>("align-self")
+var RuleSet.alignContent by RuleDelegate<Alignment?>("align-content")
+var RuleSet.alignItems by RuleDelegate<Alignment?>("align-items")
+var RuleSet.alignSelf by RuleDelegate<Alignment?>("align-self")
 var RuleSet.flex by RuleDelegate<String?>("flex")
 var RuleSet.flexBasis by RuleDelegate<String?>("flex-basis")
 var RuleSet.flexDirection by RuleDelegate<String?>("flex-direction")
@@ -101,7 +101,7 @@ var RuleSet.flexFlow by RuleDelegate<String?>("flex-flow")
 var RuleSet.flexGrow by RuleDelegate<String?>("flex-grow")
 var RuleSet.flexShrink by RuleDelegate<String?>("flex-shrink")
 var RuleSet.flexWrap by RuleDelegate<String?>("flex-wrap")
-var RuleSet.justifyContent by RuleDelegate<String?>("justify-content")
+var RuleSet.justifyContent by RuleDelegate<JustifyContent?>("justify-content")
 var RuleSet.order by RuleDelegate<String?>("order")
 
 // Text Properties
@@ -317,6 +317,37 @@ fun RuleSet.valid(rules: RuleSet.() -> Unit) = this.addPseudo(":valid", rules)
 fun RuleSet.visited(rules: RuleSet.() -> Unit) = this.addPseudo(":visited", rules)
 
 fun RuleSet.media(name: String, rules: RuleSet.() -> Unit) = this.addAtRule("media($name)", rules)
+
+
+inline class Alignment(
+        val name: String
+) {
+    override fun toString() = name
+
+    companion object {
+        val Start = Alignment("flex-start")
+        val End = Alignment("flex-end")
+        val Center = Alignment("center")
+        val Baseline = Alignment("baseline")
+        val Stretch = Alignment("stretch")
+    }
+}
+
+inline class JustifyContent(
+        val name: String
+) {
+    override fun toString() = name
+
+    companion object {
+        val Start = JustifyContent("flex-start")
+        val End = JustifyContent("flex-end")
+        val Center = JustifyContent("center")
+        val SpaceBetween = JustifyContent("space-between")
+        val SpaceAround = JustifyContent("space-around")
+        val SpaceEvenly = JustifyContent("space-evenly")
+    }
+}
+
 
 fun classRuleSet(classNamePrefix: String? = null, rules: RuleSet.() -> Unit): RuleSet {
     val className = ClassNameGenerator.getClassName(classNamePrefix)

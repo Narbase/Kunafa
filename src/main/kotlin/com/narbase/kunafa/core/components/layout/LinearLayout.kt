@@ -3,7 +3,9 @@
 package com.narbase.kunafa.core.components.layout
 
 import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Horizontal
-import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Vertical
+import com.narbase.kunafa.core.css.Alignment
+import com.narbase.kunafa.core.css.alignItems
+import com.narbase.kunafa.core.css.classRuleSet
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -22,45 +24,30 @@ class LinearLayout(
         super.configureElement()
         element.style.display = "inline-flex"
         element.style.flexDirection = if (orientation == Horizontal) "row" else "column"
-        alignItems = Alignment.Start
     }
 
 
-    var justifyContent: JustifyContent = JustifyContent.Start
-    set(value) {
-        field = value
-        element.style.justifyContent = value.cssName
-    }
-
-    var alignItems: Alignment = Alignment.Start
-        set(value) {
-            field = value
-            element.style.alignItems = value.cssName
-        }
+//    var justifyContent: JustifyContent = JustifyContent.Start
+//    set(value) {
+//        field = value
+//        element.style.justifyContent = value.name
+//    }
+//
+//    var alignItems: Alignment = Alignment.Start
+//        set(value) {
+//            field = value
+//            element.style.alignItems = value.name
+//        }
 
     enum class Orientation {
         Horizontal,
         Vertical
     }
-}
 
-enum class Alignment(
-        val cssName: String
-) {
-    Start("flex-start"),
-    End("flex-end"),
-    Center("center"),
-    Baseline("baseline"),
-    Stretch("stretch")
-}
-
-enum class JustifyContent(
-        val cssName: String) {
-    Start("flex-start"),
-    End("flex-end"),
-    Center("center"),
-    SpaceBetween("space-between"),
-    SpaceAround("space-around"),
-    SpaceEvenly("space-evenly")
+    companion object {
+        val linearLayoutClass = classRuleSet {
+            alignItems = Alignment.Start
+        }
+    }
 }
 

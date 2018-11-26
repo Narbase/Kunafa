@@ -3,9 +3,9 @@
 package com.narbase.kunafa.core.dimensions.dependent
 
 import com.narbase.kunafa.core.components.View
-import com.narbase.kunafa.core.components.layout.Alignment
 import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.components.layout.LinearLayout
+import com.narbase.kunafa.core.css.Alignment
 import com.narbase.kunafa.core.css.RuleSet
 import com.narbase.kunafa.core.css.alignSelf
 import com.narbase.kunafa.core.dimensions.DynamicDimension
@@ -33,7 +33,7 @@ class MatchParent internal constructor(val view: View) : DynamicDimension() {
         val parent = view.parent
         if (parent.isHorizontalLayout()/* && view.element == element*/) {
             ruleSet.apply {
-                alignSelf = Alignment.Stretch.cssName
+                alignSelf = Alignment.Stretch
             }
         } else {
             ruleSet.setProperty("height", "100%")
@@ -44,7 +44,7 @@ class MatchParent internal constructor(val view: View) : DynamicDimension() {
         val parent = view.parent
         if (parent.isVerticalLayout() /*&& view.element == element*/) {
             ruleSet.apply {
-                alignSelf = Alignment.Stretch.cssName
+                alignSelf = Alignment.Stretch
             }
         } else {
             ruleSet.setProperty("width", "100%")

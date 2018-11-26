@@ -2,7 +2,6 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Alignment
 import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.presenter.ViewController
@@ -101,11 +100,6 @@ open class View(var parent: Container? = null) {
         val validParent = parent ?: throw ParentNotFoundException()
         validParent.addChild(this)
     }
-
-    var alignSelf: Alignment = Alignment.Start
-        set(value) {
-            element.style.alignSelf = value.cssName
-        }
 
     companion object {
         val baseClass = classRuleSet {
