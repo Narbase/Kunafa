@@ -1,6 +1,11 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components.layout
 
 import com.narbase.kunafa.core.components.View
+import com.narbase.kunafa.core.css.classRuleSet
+import com.narbase.kunafa.core.css.isScrollableHorizontally
+import com.narbase.kunafa.core.css.isScrollableVertically
 
 
 /**
@@ -16,8 +21,7 @@ open class Container(parent: Container?) : View(parent) {
 
     override fun configureElement() {
         super.configureElement()
-        isScrollableVertically = false
-        isScrollableHorizontally = false
+        this.addRuleSet(containerClass)
     }
 
     open fun addChild(child: View) {
@@ -44,4 +48,10 @@ open class Container(parent: Container?) : View(parent) {
         }
     }
 
+    companion object {
+        val containerClass = classRuleSet {
+            isScrollableVertically = false
+            isScrollableHorizontally = false
+        }
+    }
 }

@@ -35,10 +35,8 @@ class MatchParent internal constructor(val view: View) : DynamicDimension() {
             ruleSet.apply {
                 alignSelf = Alignment.Stretch.cssName
             }
-//            element.style.alignSelf = Alignment.Stretch.cssName
         } else {
             ruleSet.setProperty("height", "100%")
-//            element.style.height = "100%"
         }
     }
 
@@ -48,34 +46,11 @@ class MatchParent internal constructor(val view: View) : DynamicDimension() {
             ruleSet.apply {
                 alignSelf = Alignment.Stretch.cssName
             }
-//            element.style.alignSelf = Alignment.Stretch.cssName
         } else {
             ruleSet.setProperty("width", "100%")
-//            element.style.width = "100%"
         }
 
     }
-
-//    override fun configure(element: HTMLElement, type: Type) {
-//        val parent = view.parent
-//        when (type) {
-//            Type.height -> {
-//                if (parent.isHorizontalLayout() && view.element == element) {
-//                    element.style.alignSelf = Alignment.Stretch.cssName
-//                } else {
-//                    element.style.height = "100%"
-//                }
-//            }
-//            Type.width -> {
-//                if (parent.isVerticalLayout() && view.element == element) {
-//                    element.style.alignSelf = Alignment.Stretch.cssName
-//
-//                } else {
-//                    element.style.width = "100%"
-//                }
-//            }
-//        }
-//    }
 
     private fun Container?.isVerticalLayout() =
             this is LinearLayout && orientation == LinearLayout.Orientation.Vertical

@@ -282,6 +282,9 @@ var RuleSet.marqueeStyle by RuleDelegate<String?>("marquee-style")
 var RuleSet.zoom by RuleDelegate<String?>("zoom")
 var RuleSet.src by RuleDelegate<String?>("src") // @font-face
 
+var RuleSet.isScrollableVertically by ScrollableRuleDelegate(isVertically = true)
+var RuleSet.isScrollableHorizontally by ScrollableRuleDelegate(isVertically = false)
+
 fun RuleSet.active(rules: RuleSet.() -> Unit) = this.addPseudo(":active", rules)
 fun RuleSet.after(rules: RuleSet.() -> Unit) = this.addPseudo(":after", rules)
 fun RuleSet.before(rules: RuleSet.() -> Unit) = this.addPseudo(":before", rules)

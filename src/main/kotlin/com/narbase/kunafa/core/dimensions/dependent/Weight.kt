@@ -20,8 +20,6 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
 
         ruleSet.setProperty("height", "auto")
         ruleSet.setProperty("flex", "$value 0 0px")
-//        element.style.height = "auto"
-//        element.style.flex = "$value 0 0px"
     }
 
 
@@ -29,10 +27,6 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
 
         ruleSet.setProperty("width", "auto")
         ruleSet.setProperty("flex", "$value 0 0px")
-
-//        element.style.width = "auto"
-//        element.style.flex = "$value 0 0px"
-
     }
 }
 

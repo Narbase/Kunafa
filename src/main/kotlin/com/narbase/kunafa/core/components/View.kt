@@ -1,17 +1,17 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Alignment
 import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.css.ClassSelector
-import com.narbase.kunafa.core.css.RuleSet
-import com.narbase.kunafa.core.css.classRuleSet
+import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.presenter.ViewController
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
 import kotlin.browser.document
 import kotlin.dom.addClass
-import kotlin.properties.Delegates
+import kotlin.dom.removeClass
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -60,23 +60,8 @@ open class View(var parent: Container? = null) {
             element.onclick = value
         }
 
-    var isScrollableHorizontally by Delegates.observable(false) { _, _, isScrollable ->
-        element.style.overflowX = if (isScrollable) "auto" else "visible"
-        if (isScrollable && element.style.minWidth.isBlank()) {
-            element.style.minWidth = "0"
-        }
-    }
-    var isScrollableVertically by Delegates.observable(false) { _, _, isScrollable ->
-        element.style.overflowY = if (isScrollable) "auto" else "visible"
-        if (isScrollable && element.style.minHeight.isBlank()) {
-            element.style.minHeight = "0"
-        }
-    }
-
     open fun configureElement() {
-        element.style.boxSizing = "border-box"
-//        setMargin(0.px)
-//        setPadding(0.px)
+        addRuleSet(baseClass)
     }
 
     fun <V : View> V.visit(rules: (RuleSet.() -> Unit)?, setup: V.() -> Unit): V {
@@ -88,17 +73,27 @@ open class View(var parent: Container? = null) {
         return this
     }
 
-    private fun <V : View> V.setupStyleSheet(rules: (RuleSet.() -> Unit)?) {
+    private fun setupStyleSheet(rules: (RuleSet.() -> Unit)?) {
         if (rules == null) return
         val ruleSet = classRuleSet(null, rules)
         addRuleSet(ruleSet)
     }
+
+    fun style(rules: RuleSet.() -> Unit) = addRuleSet(classRuleSet(null, rules))
 
     fun addRuleSet(ruleSet: RuleSet) {
         val selector = ruleSet.selector
         if (selector is ClassSelector) {
             val className = selector.name
             this.element.addClass(className)
+        }
+    }
+
+    fun removeRuleSet(ruleSet: RuleSet) {
+        val selector = ruleSet.selector
+        if (selector is ClassSelector) {
+            val className = selector.name
+            this.element.removeClass(className)
         }
     }
 
@@ -111,6 +106,15 @@ open class View(var parent: Container? = null) {
         set(value) {
             element.style.alignSelf = value.cssName
         }
+
+    companion object {
+        val baseClass = classRuleSet {
+            boxSizing = "border-box"
+            margin = "0px"
+            padding = "0px"
+        }
+    }
+
 
 }
 
