@@ -13,12 +13,7 @@ import com.narbase.kunafa.core.css.RuleSet
  * On: 9/30/17.
  */
 
-abstract class Dimension {
-    enum class Type {
-        width,
-        height,
-    }
-}
+abstract class Dimension
 
 abstract class DynamicDimension : Dimension() {
     abstract fun configureHeight(ruleSet: RuleSet)
@@ -47,6 +42,8 @@ class LinearDimension(
         CM("cm"),
         MM("mm"),
         PT("pt"),
+        VH("vh"),
+        VW("vw"),
         PC("pc");
 
         override fun toString() = value

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components.layout
 
 import com.narbase.kunafa.core.ViewContent.ViewContent
@@ -16,7 +18,7 @@ open class ViewContainer(
 ) : Container(parent) {
 
     override fun addChild(child: View) {
-        if (children.size > 1)
+        if (children.size > 0)
             throw MoreThanOneChildInViewContainerException()
         super.addChild(child)
     }

@@ -26,19 +26,6 @@ class LinearLayout(
         element.style.flexDirection = if (orientation == Horizontal) "row" else "column"
     }
 
-
-//    var justifyContent: JustifyContent = JustifyContent.Start
-//    set(value) {
-//        field = value
-//        element.style.justifyContent = value.name
-//    }
-//
-//    var alignItems: Alignment = Alignment.Start
-//        set(value) {
-//            field = value
-//            element.style.alignItems = value.name
-//        }
-
     enum class Orientation {
         Horizontal,
         Vertical
