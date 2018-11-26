@@ -40,13 +40,6 @@ class TextInput (parent: Container? = null) : View(parent) {
             (element as HTMLInputElement).type = value
         }
 
-    var textAlign: TextView.TextAlign? = null
-        set(value) {
-            field = value
-            value?.let {
-                element.style.textAlign = it.cssName
-            }
-        }
 
     var textSize: LinearDimension? = null
         set(value) {
