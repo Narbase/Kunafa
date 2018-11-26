@@ -4,7 +4,7 @@ package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.css.*
-import com.narbase.kunafa.core.presenter.ViewController
+import com.narbase.kunafa.core.viewcontroller.ViewController
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -64,6 +64,7 @@ open class View(var parent: Container? = null) {
     }
 
     fun <V : View> V.visit(rules: (RuleSet.() -> Unit)?, setup: V.() -> Unit): V {
+        this.viewController?.viewWillBeCreated(this)
         configureElement()
         this.setupStyleSheet(rules)
         this.addToParent()
@@ -71,6 +72,7 @@ open class View(var parent: Container? = null) {
         this.viewController?.onViewCreated(this)
         return this
     }
+
 
     private fun setupStyleSheet(rules: (RuleSet.() -> Unit)?) {
         if (rules == null) return

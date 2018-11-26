@@ -33,6 +33,18 @@ fun Container.button(rules: (RuleSet.() -> Unit)? = null, block: ButtonView.() -
 fun Container.imageView(rules: (RuleSet.() -> Unit)? = null, block: ImageView.() -> Unit): ImageView = ImageView(this).visit(rules, block)
 fun Container.checkbox(rules: (RuleSet.() -> Unit)? = null, block: Checkbox.() -> Unit): Checkbox = Checkbox(this).visit(rules, block)
 
+fun Container.table(block: Table.() -> Unit): Table = Table(this).visit(null, block)
+fun Table.tableHeader(block: TableHeader.() -> Unit): TableHeader = TableHeader(this).visit(null, block)
+fun Table.tableBody(block: TableBody.() -> Unit): TableBody = TableBody(this).visit(null, block)
+fun Table.tableFooter(block: TableFooter.() -> Unit): TableFooter = TableFooter(this).visit(null, block)
+
+fun Table.row(block: TableRow.() -> Unit): TableRow = TableRow(this).visit(null, block)
+fun TableHeader.row(block: TableRow.() -> Unit): TableRow = TableRow(this).visit(null, block)
+fun TableFooter.row(block: TableRow.() -> Unit): TableRow = TableRow(this).visit(null, block)
+fun TableBody.row(block: TableRow.() -> Unit): TableRow = TableRow(this).visit(null, block)
+fun TableRow.cell(block: TableCell.() -> Unit): TableCell = TableCell(this).visit(null, block)
+fun TableRow.headerCell(block: TableHeaderCell.() -> Unit): TableHeaderCell = TableHeaderCell(this).visit(null, block)
+
 
 // PROPERTIES:
 //var View.margin: LinearDimension

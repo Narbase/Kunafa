@@ -35,16 +35,26 @@ open class Container(parent: Container?) : View(parent) {
     }
 
     open fun removeChild(child: View) {
+        child.viewController?.viewWillBeRemoved(child)
         children.remove(child)
         element.removeChild(child.element)
         child.parent = null
+        child.viewController?.onViewRemoved(child)
     }
 
-    open fun clearAllChildren(){
+    open fun clearAllChildren() {
+        children.forEach { child ->
+            child.viewController?.viewWillBeRemoved(child)
+            children.remove(child)
+        }
         while (element.firstChild != null) {
             element.firstChild?.let {
                 element.removeChild(it)
             }
+        }
+        children.forEach { child ->
+            child.viewController?.onViewRemoved(child)
+            children.remove(child)
         }
     }
 
