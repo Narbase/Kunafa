@@ -6,6 +6,7 @@ import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Horizo
 import com.narbase.kunafa.core.css.Alignment
 import com.narbase.kunafa.core.css.alignItems
 import com.narbase.kunafa.core.css.classRuleSet
+import com.narbase.kunafa.core.css.display
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -22,8 +23,8 @@ class LinearLayout(
 
     override fun configureElement() {
         super.configureElement()
-        element.style.display = "inline-flex"
         element.style.flexDirection = if (orientation == Horizontal) "row" else "column"
+        addRuleSet(linearLayoutClass)
     }
 
     enum class Orientation {
@@ -34,6 +35,7 @@ class LinearLayout(
     companion object {
         val linearLayoutClass = classRuleSet {
             alignItems = Alignment.Start
+            display = "inline-flex"
         }
     }
 }
