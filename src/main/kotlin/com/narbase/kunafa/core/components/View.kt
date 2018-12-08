@@ -108,6 +108,7 @@ open class View(var parent: Container? = null) {
             boxSizing = "border-box"
             margin = "0px"
             padding = "0px"
+            flexShrink = "0"
         }
     }
 
