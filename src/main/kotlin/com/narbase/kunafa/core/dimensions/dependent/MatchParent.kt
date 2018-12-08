@@ -31,23 +31,23 @@ class MatchParent internal constructor(val view: View) : DynamicDimension() {
      */
     override fun configureHeight(ruleSet: RuleSet) {
         val parent = view.parent
+        ruleSet.setProperty("height", "100%")
         if (parent.isHorizontalLayout()/* && view.element == element*/) {
             ruleSet.apply {
                 alignSelf = Alignment.Stretch
             }
         } else {
-            ruleSet.setProperty("height", "100%")
         }
     }
 
     override fun configureWidth(ruleSet: RuleSet) {
         val parent = view.parent
+        ruleSet.setProperty("width", "100%")
         if (parent.isVerticalLayout() /*&& view.element == element*/) {
             ruleSet.apply {
                 alignSelf = Alignment.Stretch
             }
         } else {
-            ruleSet.setProperty("width", "100%")
         }
 
     }
