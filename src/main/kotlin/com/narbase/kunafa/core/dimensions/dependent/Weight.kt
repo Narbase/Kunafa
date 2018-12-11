@@ -4,7 +4,10 @@ package com.narbase.kunafa.core.dimensions.dependent
 
 import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.css.RuleSet
+import com.narbase.kunafa.core.css.minHeight
+import com.narbase.kunafa.core.css.minWidth
 import com.narbase.kunafa.core.dimensions.DynamicDimension
+import com.narbase.kunafa.core.dimensions.px
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -20,6 +23,7 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
 
         ruleSet.setProperty("height", "auto")
         ruleSet.setProperty("flex", "$value 0 0px")
+        ruleSet.minHeight = 0.px
     }
 
 
@@ -27,6 +31,7 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
 
         ruleSet.setProperty("width", "auto")
         ruleSet.setProperty("flex", "$value 0 0px")
+        ruleSet.minWidth = 0.px
     }
 }
 
