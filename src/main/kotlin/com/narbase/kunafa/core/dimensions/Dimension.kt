@@ -60,6 +60,8 @@ val Number.cm: LinearDimension get() = dimen(this, LinearDimension.Unit.CM)
 val Number.mm: LinearDimension get() = dimen(this, LinearDimension.Unit.MM)
 val Number.pt: LinearDimension get() = dimen(this, LinearDimension.Unit.PT)
 val Number.pc: LinearDimension get() = dimen(this, LinearDimension.Unit.PC)
+val Number.vh: LinearDimension get() = dimen(this, LinearDimension.Unit.VH)
+val Number.vw: LinearDimension get() = dimen(this, LinearDimension.Unit.VW)
 
 @Suppress("NOTHING_TO_INLINE")
 private inline fun dimen(value: Number, unit: LinearDimension.Unit) = LinearDimension(value.toFloat(), unit)
