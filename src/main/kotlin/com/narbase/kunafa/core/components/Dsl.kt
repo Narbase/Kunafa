@@ -21,6 +21,7 @@ fun page(setupAndAddChildren: Container.() -> Unit = {}) {
 }
 
 fun detachedView(rules: (RuleSet.() -> Unit)? = null, block: DetachedView.() -> Unit): DetachedView = DetachedView().visit(rules, block)
+fun Container.linearLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, null).visit(rules, block)
 fun Container.verticalLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(rules, block)
 fun Container.horizontalLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(rules, block)
 fun Container.anchorLayout(rules: (RuleSet.() -> Unit)? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(rules, block)

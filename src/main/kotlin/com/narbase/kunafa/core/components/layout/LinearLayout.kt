@@ -3,10 +3,7 @@
 package com.narbase.kunafa.core.components.layout
 
 import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Horizontal
-import com.narbase.kunafa.core.css.Alignment
-import com.narbase.kunafa.core.css.alignItems
-import com.narbase.kunafa.core.css.classRuleSet
-import com.narbase.kunafa.core.css.display
+import com.narbase.kunafa.core.css.*
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -18,14 +15,26 @@ import com.narbase.kunafa.core.css.display
  */
 class LinearLayout(
         parent: Container,
-        val orientation: Orientation = Horizontal
+        private val initialOrientation: Orientation? = Horizontal
 ) : Container(parent) {
 
     override fun configureElement() {
         super.configureElement()
-        element.style.flexDirection = if (orientation == Horizontal) "row" else "column"
+        this.orientation = initialOrientation
         addRuleSet(linearLayoutClass)
     }
+
+    var orientation: Orientation? = null
+        set(value) {
+            field = value
+            if (orientation == Horizontal) {
+                addRuleSet(horizontalLayoutClass)
+                removeRuleSet(verticalLayoutClass)
+            } else {
+                addRuleSet(verticalLayoutClass)
+                removeRuleSet(horizontalLayoutClass)
+            }
+        }
 
     enum class Orientation {
         Horizontal,
@@ -36,6 +45,12 @@ class LinearLayout(
         val linearLayoutClass = classRuleSet {
             alignItems = Alignment.Start
             display = "inline-flex"
+        }
+        val verticalLayoutClass = classRuleSet {
+            flexDirection = "column"
+        }
+        val horizontalLayoutClass = classRuleSet {
+            flexDirection = "row"
         }
     }
 }
