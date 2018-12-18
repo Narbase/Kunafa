@@ -285,6 +285,8 @@ var RuleSet.src by RuleDelegate<String?>("src") // @font-face
 var RuleSet.isScrollableVertically by ScrollableRuleDelegate(isVertically = true)
 var RuleSet.isScrollableHorizontally by ScrollableRuleDelegate(isVertically = false)
 
+var RuleSet.orientation by OrientationRuleDelegate()
+
 fun RuleSet.active(rules: RuleSet.() -> Unit) = this.addPseudo(":active", rules)
 fun RuleSet.after(rules: RuleSet.() -> Unit) = this.addPseudo(":after", rules)
 fun RuleSet.before(rules: RuleSet.() -> Unit) = this.addPseudo(":before", rules)
