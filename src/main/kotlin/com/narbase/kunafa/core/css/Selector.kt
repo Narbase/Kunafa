@@ -20,6 +20,13 @@ class ClassSelector(val name: String) : Selector() {
     }
 }
 
+class CompoundSelector(val names: List<Selector>) : Selector() {
+
+    override fun toString(): String {
+        return names.joinToString(" ")
+    }
+}
+
 class IdSelector(val name: String) : Selector() {
 
     override fun toString(): String {

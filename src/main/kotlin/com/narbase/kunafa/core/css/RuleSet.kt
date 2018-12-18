@@ -59,8 +59,8 @@ class RuleSet(val selector: Selector, val atRule: String? = null) {
     }
 
     fun addPseudo(name: String, rules: RuleSet.() -> Unit): RuleSet {
-        if (subRuleSets == null) subRuleSets = mutableSetOf()
         val set = RuleSet(PseudoSelector(selector, name)).apply(rules)
+        if (subRuleSets == null) subRuleSets = mutableSetOf()
         subRuleSets?.add(set)
         return set
     }
@@ -69,6 +69,13 @@ class RuleSet(val selector: Selector, val atRule: String? = null) {
         if (atRuleSets == null) atRuleSets = mutableSetOf()
         val set = RuleSet(selector, atRule = "@$name").apply(rules)
         atRuleSets?.add(set)
+        return set
+    }
+
+    fun addCompoundClassRule(parentRuleSet: RuleSet, rules: RuleSet.() -> Unit): RuleSet {
+        val set = RuleSet(CompoundSelector(listOf(parentRuleSet.selector, selector))).apply(rules)
+        if (subRuleSets == null) subRuleSets = mutableSetOf()
+        subRuleSets?.add(set)
         return set
     }
 }

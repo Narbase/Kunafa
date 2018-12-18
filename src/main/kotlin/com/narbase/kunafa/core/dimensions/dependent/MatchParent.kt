@@ -2,8 +2,6 @@
 
 package com.narbase.kunafa.core.dimensions.dependent
 
-import com.narbase.kunafa.core.components.View
-import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.components.layout.LinearLayout
 import com.narbase.kunafa.core.css.Alignment
 import com.narbase.kunafa.core.css.RuleSet
@@ -19,7 +17,7 @@ import com.narbase.kunafa.core.dimensions.DynamicDimension
  * On: 10/6/17.
  */
 
-class MatchParent internal constructor(val view: View) : DynamicDimension() {
+class MatchParent internal constructor() : DynamicDimension() {
     /*
     matchParent most of the time is dimension : 100%. However, when the element is inside a vertical layout (flex
     with column direction) or horizontal layout (flex with row dimension), and matchParent is on the perpendicular
@@ -30,39 +28,23 @@ class MatchParent internal constructor(val view: View) : DynamicDimension() {
     Therefore, we check if the element is direct element of the view or internal element.
      */
     override fun configureHeight(ruleSet: RuleSet) {
-        val parent = view.parent
         ruleSet.setProperty("height", "100%")
-        if (parent.isHorizontalLayout()/* && view.element == element*/) {
-            ruleSet.apply {
-                alignSelf = Alignment.Stretch
-            }
-        } else {
+        ruleSet.addCompoundClassRule(parentRuleSet = LinearLayout.horizontalLayoutClass) {
+            alignSelf = Alignment.Stretch
         }
     }
 
     override fun configureWidth(ruleSet: RuleSet) {
-        val parent = view.parent
         ruleSet.setProperty("width", "100%")
-        if (parent.isVerticalLayout() /*&& view.element == element*/) {
-            ruleSet.apply {
-                alignSelf = Alignment.Stretch
-            }
-        } else {
+        ruleSet.addCompoundClassRule(parentRuleSet = LinearLayout.verticalLayoutClass) {
+            alignSelf = Alignment.Stretch
         }
-
     }
-
-    private fun Container?.isVerticalLayout() =
-            this is LinearLayout && orientation == LinearLayout.Orientation.Vertical
-
-    private fun Container?.isHorizontalLayout() =
-            this is LinearLayout && orientation == LinearLayout.Orientation.Horizontal
-
 }
 
-val View.matchParent: MatchParent
+val RuleSet.matchParent: MatchParent
     get() {
-        return MatchParent(this)
+        return MatchParent()
     }
 
 

@@ -2,7 +2,6 @@
 
 package com.narbase.kunafa.core.dimensions.dependent
 
-import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.css.RuleSet
 import com.narbase.kunafa.core.css.minHeight
 import com.narbase.kunafa.core.css.minWidth
@@ -35,6 +34,6 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
     }
 }
 
-infix fun View.weightOf(value: Int): Weight {
+infix fun RuleSet.weightOf(value: Int): Weight {
     return Weight(value)
 }
