@@ -3,7 +3,6 @@
 package com.narbase.kunafa.core.components.layout
 
 import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Horizontal
-import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Vertical
 import com.narbase.kunafa.core.css.*
 
 /**
@@ -40,10 +39,10 @@ class LinearLayout(
             display = "inline-flex"
         }
         val verticalLayoutClass = classRuleSet {
-            orientation = Vertical
+            flexDirection = "column"
         }
         val horizontalLayoutClass = classRuleSet {
-            orientation = Horizontal
+            flexDirection = "row"
         }
     }
 }
