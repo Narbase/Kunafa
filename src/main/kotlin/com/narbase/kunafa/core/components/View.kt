@@ -40,15 +40,10 @@ open class View(var parent: Container? = null) {
             field = value
             when (value) {
                 true -> {
-                    if (element.style.display == "none")
-                        element.style.display = savedDisplayState ?: "block"
-
+                    removeRuleSet(invisibleClass)
                 }
                 false -> {
-                    if (element.style.display != "none") {
-                        savedDisplayState = element.style.display
-                        element.style.display = "none"
-                    }
+                    addRuleSet(invisibleClass)
                 }
             }
         }
@@ -109,6 +104,9 @@ open class View(var parent: Container? = null) {
             margin = "0px"
             padding = "0px"
             flexShrink = "0"
+        }
+        val invisibleClass = classRuleSet {
+            display = "none !important"
         }
     }
 
