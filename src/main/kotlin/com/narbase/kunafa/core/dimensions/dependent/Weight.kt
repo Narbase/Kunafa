@@ -21,7 +21,8 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
     override fun configureHeight(ruleSet: RuleSet) {
 
         ruleSet.setProperty("height", "auto")
-        ruleSet.setProperty("flex", "$value 0 0px")
+        ruleSet.setProperty("flex-grow", "$value")
+        ruleSet.setProperty("flex-basis", "${value}px")
         ruleSet.minHeight = 0.px
     }
 
@@ -29,7 +30,8 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
     override fun configureWidth(ruleSet: RuleSet) {
 
         ruleSet.setProperty("width", "auto")
-        ruleSet.setProperty("flex", "$value 0 0px")
+        ruleSet.setProperty("flex-grow", "$value")
+        ruleSet.setProperty("flex-basis", "${value}px")
         ruleSet.minWidth = 0.px
     }
 }
