@@ -110,6 +110,9 @@ open class View(var parent: Container? = null) {
         }
     }
 
+    open val path: String?
+        get() = parent?.path
+
 
 }
 
