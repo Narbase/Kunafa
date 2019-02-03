@@ -39,3 +39,9 @@ class PseudoSelector(val selector: Selector, val name: String) : Selector() {
         return "$selector$name"
     }
 }
+
+class StringSelector(val selector: String) : Selector() {
+    override fun toString(): String {
+        return selector
+    }
+}

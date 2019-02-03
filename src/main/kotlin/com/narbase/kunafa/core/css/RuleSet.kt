@@ -72,6 +72,14 @@ class RuleSet(val selector: Selector, val atRule: String? = null) {
         return set
     }
 
+    fun addCompoundRuleSet(parentSelector: Selector, rules: RuleSet.() -> Unit): RuleSet {
+        val set = RuleSet(CompoundSelector(listOf(parentSelector, selector))).apply(rules)
+        if (subRuleSets == null) subRuleSets = mutableSetOf()
+        subRuleSets?.add(set)
+        return set
+    }
+
+
     fun addCompoundClassRule(parentRuleSet: RuleSet, rules: RuleSet.() -> Unit): RuleSet {
         val set = RuleSet(CompoundSelector(listOf(parentRuleSet.selector, selector))).apply(rules)
         if (subRuleSets == null) subRuleSets = mutableSetOf()

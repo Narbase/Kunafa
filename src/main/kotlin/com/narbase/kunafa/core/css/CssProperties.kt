@@ -318,6 +318,9 @@ fun RuleSet.visited(rules: RuleSet.() -> Unit) = this.addPseudo(":visited", rule
 
 fun RuleSet.media(name: String, rules: RuleSet.() -> Unit) = this.addAtRule("media $name", rules)
 
+// With selector
+//fun RuleSet.hover(affectedSelector: Selector, rules: RuleSet.() -> Unit) = this.addPseudo(":hover", rules)
+
 
 inline class Alignment(
         val name: String
@@ -366,11 +369,22 @@ fun classRuleSet(classNamePrefix: String? = null, rules: RuleSet.() -> Unit): Ru
     val className = ClassNameGenerator.getClassName(classNamePrefix)
     val selector = ClassSelector(className)
     val ruleSet = RuleSet(selector).apply { rules() }
+    addRuleSetToDocument(ruleSet)
+    return ruleSet
+}
+
+fun stringRuleSet(selector: String, rules: RuleSet.() -> Unit): RuleSet {
+    val stringSelector = StringSelector(selector)
+    val ruleSet = RuleSet(stringSelector).apply { rules() }
+    addRuleSetToDocument(ruleSet)
+    return ruleSet
+}
+
+private fun addRuleSetToDocument(ruleSet: RuleSet) {
     val sheetElement = document.createElement("style") as HTMLStyleElement
     document.head?.appendChild(sheetElement)
     val sheet = sheetElement.sheet as? CSSStyleSheet
     ruleSet.toRulesList().forEach {
         sheet?.insertRule(it.toString(), sheet.cssRules.length)
     }
-    return ruleSet
 }
