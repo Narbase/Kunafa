@@ -13,8 +13,8 @@ import com.narbase.kunafa.core.components.View
  * On: 9/30/17.
  */
 class AnchorLayout(
-        parent: Container
-) : Container(parent) {
+        parent: View
+) : View(parent) {
 
     override fun configureElement() {
         super.configureElement()

@@ -1,6 +1,6 @@
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Container
+
 import org.w3c.dom.HTMLButtonElement
 import kotlin.browser.document
 
@@ -13,7 +13,7 @@ import kotlin.browser.document
  * On: 10/15/17.
  */
 @Suppress("unused")
-class ButtonView(parent: Container? = null) : View(parent) {
+class ButtonView(parent: View? = null) : View(parent) {
     override val element: HTMLButtonElement = document.createElement("button") as HTMLButtonElement
     var text: String?
         get() = element.textContent

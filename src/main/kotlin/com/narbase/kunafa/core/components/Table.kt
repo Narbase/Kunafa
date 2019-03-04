@@ -2,7 +2,7 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Container
+
 import org.w3c.dom.*
 import kotlin.browser.document
 
@@ -15,15 +15,15 @@ import kotlin.browser.document
  * Created by islam
  * On: 10/31/17.
  */
-class Table(parent: Container? = null) : Container(parent) {
+class Table(parent: View? = null) : View(parent) {
     override val element: HTMLTableElement = (document.createElement("table") as HTMLTableElement)
 }
 
-class TableRow(parent: Container? = null) : Container(parent) {
+class TableRow(parent: View? = null) : View(parent) {
     override val element: HTMLTableRowElement = (document.createElement("tr") as HTMLTableRowElement)
 }
 
-class TableCell(parent: Container? = null) : Container(parent) {
+class TableCell(parent: View? = null) : View(parent) {
 
     override val element: HTMLTableCellElement = (document.createElement("td") as HTMLTableCellElement)
     var text = ""
@@ -33,7 +33,7 @@ class TableCell(parent: Container? = null) : Container(parent) {
         }
 }
 
-class TableHeaderCell(parent: Container? = null) : Container(parent) {
+class TableHeaderCell(parent: View? = null) : View(parent) {
     override val element: HTMLElement = (document.createElement("th") as HTMLTableCellElement)
 
     var text = ""
@@ -43,14 +43,14 @@ class TableHeaderCell(parent: Container? = null) : Container(parent) {
         }
 }
 
-class TableHeader(parent: Container? = null) : Container(parent) {
+class TableHeader(parent: View? = null) : View(parent) {
     override val element: HTMLElement = (document.createElement("thead") as HTMLTableSectionElement)
 }
 
-class TableFooter(parent: Container? = null) : Container(parent) {
+class TableFooter(parent: View? = null) : View(parent) {
     override val element: HTMLElement = (document.createElement("tfoot") as HTMLTableSectionElement)
 }
 
-class TableBody(parent: Container? = null) : Container(parent) {
+class TableBody(parent: View? = null) : View(parent) {
     override val element: HTMLElement = (document.createElement("tbody") as HTMLTableSectionElement)
 }

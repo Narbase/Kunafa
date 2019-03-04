@@ -10,11 +10,11 @@ import com.narbase.kunafa.core.components.View
  * Created by islam
  * On: 10/26/17.
  */
-class DetachedView : Container(null) {
+class DetachedView : View(null) {
 
     override fun addChild(child: View) {
         if (children.size > 0)
-            throw MoreThanOneChildInViewContainerException()
+            throw MoreThanOneChildInViewViewException()
         child.parent = this
         children.add(child)
     }

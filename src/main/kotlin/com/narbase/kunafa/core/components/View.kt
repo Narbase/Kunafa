@@ -2,7 +2,6 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.viewcontroller.ViewController
 import org.w3c.dom.HTMLDivElement
@@ -20,7 +19,7 @@ import kotlin.dom.removeClass
  * Created by islam
  * On: 9/30/17.
  */
-open class View(var parent: Container? = null) {
+open class View(var parent: View? = null) {
     var id: String? = null
         set(value) {
             field = value
@@ -118,6 +117,41 @@ open class View(var parent: Container? = null) {
         get() = parent?.path
 
 
+    val children: ArrayList<View> = arrayListOf()
+
+    open fun addChild(child: View) {
+        addToElement(child)
+        child.parent = this
+        children.add(child)
+    }
+
+    private fun addToElement(child: View) {
+        element.append(child.element)
+    }
+
+    open fun removeChild(child: View) {
+        child.viewController?.viewWillBeRemoved(child)
+        children.remove(child)
+        element.removeChild(child.element)
+        child.parent = null
+        child.viewController?.onViewRemoved(child)
+    }
+
+    open fun clearAllChildren() {
+        children.forEach { child ->
+            child.viewController?.viewWillBeRemoved(child)
+            children.remove(child)
+        }
+        while (element.firstChild != null) {
+            element.firstChild?.let {
+                element.removeChild(it)
+            }
+        }
+        children.forEach { child ->
+            child.viewController?.onViewRemoved(child)
+            children.remove(child)
+        }
+    }
 }
 
 class ParentNotFoundException : Exception()

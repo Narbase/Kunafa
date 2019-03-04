@@ -2,7 +2,6 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.css.ClassSelector
 import com.narbase.kunafa.core.css.RuleSet
 import kotlin.browser.document
@@ -17,7 +16,7 @@ import kotlin.dom.clear
  * Created by islam
  * On: 9/30/17.
  */
-object Page : Container(null) {
+object Page : View(null) {
 
     override fun addChild(child: View) {
         document.body?.append(child.element)

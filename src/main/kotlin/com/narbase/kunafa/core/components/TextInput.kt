@@ -2,7 +2,7 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Container
+
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
 import org.w3c.dom.HTMLInputElement
@@ -17,7 +17,7 @@ import kotlin.browser.document
  * Created by islam
  * On: 10/31/17.
  */
-class TextInput (parent: Container? = null) : View(parent) {
+class TextInput(parent: View? = null) : View(parent) {
 
     override val element: HTMLInputElement = document.createElement("input") as HTMLInputElement
 

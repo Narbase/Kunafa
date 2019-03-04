@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components
 
 
@@ -14,11 +16,10 @@ import kotlin.browser.document
  * Created by islam
  * On: 10/31/17.
  */
-@Suppress("unused")
-class Checkbox(parent: View? = null) : View(parent) {
+class Radio(parent: View? = null) : View(parent) {
 
     override val element: HTMLInputElement = (document.createElement("input") as HTMLInputElement).apply {
-        this.type = "checkbox"
+        this.type = "radio"
     }
 
     var isChecked: Boolean
@@ -35,3 +36,4 @@ class Checkbox(parent: View? = null) : View(parent) {
         }
 
 }
+

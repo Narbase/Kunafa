@@ -2,7 +2,7 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Container
+
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -12,7 +12,7 @@ import com.narbase.kunafa.core.components.layout.Container
  * Created by islam
  * On: 10/9/17.
  */
-open class TextView(parent: Container? = null) : View(parent) {
+open class TextView(parent: View? = null) : View(parent) {
 
     var text = ""
         set(value) {

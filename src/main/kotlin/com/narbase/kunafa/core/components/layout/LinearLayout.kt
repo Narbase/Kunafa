@@ -2,6 +2,7 @@
 
 package com.narbase.kunafa.core.components.layout
 
+import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Horizontal
 import com.narbase.kunafa.core.css.*
 
@@ -14,9 +15,9 @@ import com.narbase.kunafa.core.css.*
  * On: 9/30/17.
  */
 open class LinearLayout(
-        parent: Container,
+        parent: View,
         private val initialOrientation: Orientation? = Horizontal
-) : Container(parent) {
+) : View(parent) {
 
     override fun configureElement() {
         super.configureElement()

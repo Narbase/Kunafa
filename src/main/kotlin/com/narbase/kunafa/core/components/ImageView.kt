@@ -1,6 +1,5 @@
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Container
 import org.w3c.dom.HTMLImageElement
 import kotlin.browser.document
 
@@ -12,6 +11,6 @@ import kotlin.browser.document
  * Created by islam
  * On: 10/15/17.
  */
-class ImageView(parent: Container? = null) : View(parent) {
+class ImageView(parent: View? = null) : View(parent) {
     override val element: HTMLImageElement = document.createElement("img") as HTMLImageElement
 }
