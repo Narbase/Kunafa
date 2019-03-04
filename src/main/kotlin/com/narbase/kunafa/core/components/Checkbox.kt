@@ -1,7 +1,6 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
-import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.browser.document
@@ -15,23 +14,24 @@ import kotlin.browser.document
  * Created by islam
  * On: 10/31/17.
  */
+@Suppress("unused")
 class Checkbox(parent: Container? = null) : View(parent) {
 
-    override val element: HTMLElement = (document.createElement("input") as HTMLInputElement).apply {
+    override val element: HTMLInputElement = (document.createElement("input") as HTMLInputElement).apply {
         this.type = "checkbox"
     }
 
     var isChecked: Boolean
-        get() = (element as HTMLInputElement).checked
+        get() = element.checked
         set(value) {
-            (element as HTMLInputElement).checked = value
+            element.checked = value
 
         }
 
     var onChange: ((Event) -> Unit)? = null
         set(value) {
             field = value
-            (element as HTMLInputElement).onchange = value
+            element.onchange = value
         }
 
 }

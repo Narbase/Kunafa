@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
@@ -13,14 +15,6 @@ import kotlin.dom.clear
  * On: 9/30/17.
  */
 object Page : Container(null) {
-
-//    override fun updateElementWidth() {
-//        document.body?.style?.width = "${window.innerWidth}px"
-//    }
-
-//    override fun updateElementHeight() {
-//        document.body?.style?.height = "${window.innerHeight}px"
-//    }
 
     override fun addChild(child: View) {
         document.body?.append(child.element)
@@ -42,8 +36,6 @@ object Page : Container(null) {
     fun prepare() {
         id = "page"
 
-
-
         document.body?.style?.margin = "0"
         document.body?.style?.padding = "0"
         document.body?.style?.overflowY = "hidden"
@@ -52,20 +44,6 @@ object Page : Container(null) {
         document.body?.style?.height = "100vh"
 
         document.body?.clear()
-
-//        width = window.innerWidth.px
-//        height = window.innerHeight.px
-//
-//        addOnResizedListener(this) {
-//            width = window.innerWidth.px
-//            height = window.innerHeight.px
-//        }
-
-//        window.onresize = {
-//            onResizedListeners.forEach { it.second() }
-//        }
-
-
     }
 
     override fun addToParent() {

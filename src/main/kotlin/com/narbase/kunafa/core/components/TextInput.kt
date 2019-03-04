@@ -5,7 +5,6 @@ package com.narbase.kunafa.core.components
 import com.narbase.kunafa.core.components.layout.Container
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
-import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.browser.document
@@ -20,24 +19,24 @@ import kotlin.browser.document
  */
 class TextInput (parent: Container? = null) : View(parent) {
 
-    override val element: HTMLElement = document.createElement("input") as HTMLInputElement
+    override val element: HTMLInputElement = document.createElement("input") as HTMLInputElement
 
     var text
-        get()= (element as HTMLInputElement).value
+        get() = element.value
         set(value) {
-            (element as HTMLInputElement).value = value
+            element.value = value
         }
 
     var placeholder = ""
         set(value) {
             field = value
-            (element as HTMLInputElement).placeholder = value
+            element.placeholder = value
         }
 
     var type = ""
         set(value) {
             field = value
-            (element as HTMLInputElement).type = value
+            element.type = value
         }
 
 
@@ -58,7 +57,7 @@ class TextInput (parent: Container? = null) : View(parent) {
     var onChange: ((Event) -> Unit)? = null
         set(value) {
             field = value
-            (element as HTMLInputElement).onchange = value
+            element.onchange = value
         }
 
 }

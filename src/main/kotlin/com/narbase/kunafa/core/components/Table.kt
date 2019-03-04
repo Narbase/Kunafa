@@ -16,16 +16,16 @@ import kotlin.browser.document
  * On: 10/31/17.
  */
 class Table(parent: Container? = null) : Container(parent) {
-    override val element: HTMLElement = (document.createElement("table") as HTMLTableElement)
+    override val element: HTMLTableElement = (document.createElement("table") as HTMLTableElement)
 }
 
 class TableRow(parent: Container? = null) : Container(parent) {
-    override val element: HTMLElement = (document.createElement("tr") as HTMLTableRowElement)
+    override val element: HTMLTableRowElement = (document.createElement("tr") as HTMLTableRowElement)
 }
 
 class TableCell(parent: Container? = null) : Container(parent) {
 
-    override val element: HTMLElement = (document.createElement("td") as HTMLTableCellElement)
+    override val element: HTMLTableCellElement = (document.createElement("td") as HTMLTableCellElement)
     var text = ""
         set(value) {
             field = value
