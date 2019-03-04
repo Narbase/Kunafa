@@ -14,7 +14,7 @@ class DetachedView : View(null) {
 
     override fun addChild(child: View) {
         if (children.size > 0)
-            throw MoreThanOneChildInViewViewException()
+            throw MoreThanOneChildInViewContainerException()
         child.parent = this
         children.add(child)
     }

@@ -13,13 +13,13 @@ import com.narbase.kunafa.core.components.View
  * Created by islam
  * On: 10/29/17.
  */
-open class ViewView(
+open class ViewContainer(
         parent: View?
 ) : View(parent) {
 
     override fun addChild(child: View) {
         if (children.size > 0)
-            throw MoreThanOneChildInViewViewException()
+            throw MoreThanOneChildInViewContainerException()
         super.addChild(child)
     }
 
@@ -48,6 +48,6 @@ open class ViewView(
 //        }
 }
 
-class MoreThanOneChildInViewViewException : Exception() {
+class MoreThanOneChildInViewContainerException : Exception() {
 
 }

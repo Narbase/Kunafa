@@ -28,7 +28,7 @@ fun View.horizontalScrollView(rules: (RuleSet.() -> Unit)? = null, block: Scroll
 fun View.verticalScrollView(rules: (RuleSet.() -> Unit)? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Vertical).visit(rules, block)
 
 fun View.anchorLayout(rules: (RuleSet.() -> Unit)? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(rules, block)
-fun View.viewView(rules: (RuleSet.() -> Unit)? = null, block: ViewView.() -> Unit): ViewView = ViewView(this).visit(rules, block)
+fun View.viewContainer(rules: (RuleSet.() -> Unit)? = null, block: ViewContainer.() -> Unit): ViewContainer = ViewContainer(this).visit(rules, block)
 
 fun View.view(rules: (RuleSet.() -> Unit)? = null, block: View.() -> Unit): View = View(this).visit(rules, block)
 fun View.textView(rules: (RuleSet.() -> Unit)? = null, block: TextView.() -> Unit): TextView = TextView(this).visit(rules, block)
