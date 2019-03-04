@@ -24,7 +24,7 @@ class Weight internal constructor(private val value: Int, val basis: LinearDimen
         ruleSet.setProperty("height", "auto")
         ruleSet.setProperty("flex-grow", "$value")
         if (basis == null) {
-            ruleSet.setProperty("flex-basis", "auto")
+            ruleSet.setProperty("flex-basis", "${value}px")
         } else {
             ruleSet.setProperty("flex-basis", "${basis}px")
         }
@@ -38,7 +38,7 @@ class Weight internal constructor(private val value: Int, val basis: LinearDimen
         ruleSet.setProperty("width", "auto")
         ruleSet.setProperty("flex-grow", "$value")
         if (basis == null) {
-            ruleSet.setProperty("flex-basis", "auto")
+            ruleSet.setProperty("flex-basis", "${value}px")
         } else {
             ruleSet.setProperty("flex-basis", "${basis}px")
         }

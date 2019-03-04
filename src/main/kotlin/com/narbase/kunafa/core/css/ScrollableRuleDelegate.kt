@@ -18,12 +18,12 @@ class ScrollableRuleDelegate(
 
     operator fun setValue(ruleSet: RuleSet, property: KProperty<*>, value: Boolean) {
         if (isVertically) {
-            ruleSet.setProperty("overflow-y", if (value) "auto" else "visible")
+            ruleSet.setProperty("overflow-y", if (value) "auto" else "hidden")
             if (value && ruleSet.getProperty<Any?>("min-height") == null) {
                 ruleSet.setProperty("min-height", "0")
             }
         } else {
-            ruleSet.setProperty("overflow-x", if (value) "auto" else "visible")
+            ruleSet.setProperty("overflow-x", if (value) "auto" else "hidden")
             if (value && ruleSet.getProperty<Any?>("min-width") == null) {
                 ruleSet.setProperty("min-width", "0")
             }
