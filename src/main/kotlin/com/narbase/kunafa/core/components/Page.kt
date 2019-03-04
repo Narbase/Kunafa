@@ -3,7 +3,10 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.Container
+import com.narbase.kunafa.core.css.ClassSelector
+import com.narbase.kunafa.core.css.RuleSet
 import kotlin.browser.document
+import kotlin.dom.addClass
 import kotlin.dom.clear
 
 /**
@@ -44,6 +47,14 @@ object Page : Container(null) {
         document.body?.style?.height = "100vh"
 
         document.body?.clear()
+    }
+
+    override fun addRuleSet(ruleSet: RuleSet) {
+        val selector = ruleSet.selector
+        if (selector is ClassSelector) {
+            val className = selector.name
+            document.body?.addClass(className)
+        }
     }
 
     override fun addToParent() {

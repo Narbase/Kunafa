@@ -81,7 +81,7 @@ open class View(var parent: Container? = null) {
         return ruleSet
     }
 
-    fun addRuleSet(ruleSet: RuleSet) {
+    open fun addRuleSet(ruleSet: RuleSet) {
         val selector = ruleSet.selector
         if (selector is ClassSelector) {
             val className = selector.name
