@@ -1,5 +1,9 @@
 package com.narbase.kunafa.core.components.layout
 
+import com.narbase.kunafa.core.css.classRuleSet
+import com.narbase.kunafa.core.css.isScrollableHorizontally
+import com.narbase.kunafa.core.css.isScrollableVertically
+
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
  * ______________________________
@@ -8,10 +12,29 @@ package com.narbase.kunafa.core.components.layout
  * Created by islam
  * On: 10/1/17.
  */
-class ScrollView(parent: Container?) : Container(parent) {
+class ScrollView(
+        parent: Container,
+        private val initialOrientation: Orientation?
+) : LinearLayout(parent, initialOrientation) {
 
-    init {
-        element.style.overflowX =  "scroll"
-        element.style.overflowY =  "scroll"
+    override fun configureElement() {
+        super.configureElement()
+        if (initialOrientation == Orientation.Horizontal) {
+            addRuleSet(horizontalScrollLayoutClass)
+        } else {
+            addRuleSet(verticalScrollLayoutClass)
+        }
+    }
+
+    companion object {
+        val verticalScrollLayoutClass = classRuleSet {
+            isScrollableVertically = true
+            isScrollableHorizontally = false
+        }
+        val horizontalScrollLayoutClass = classRuleSet {
+            isScrollableHorizontally = true
+            isScrollableVertically = false
+        }
     }
 }
+

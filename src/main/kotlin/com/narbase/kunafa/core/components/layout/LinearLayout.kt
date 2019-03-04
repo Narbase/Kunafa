@@ -13,7 +13,7 @@ import com.narbase.kunafa.core.css.*
  * Created by islam
  * On: 9/30/17.
  */
-class LinearLayout(
+open class LinearLayout(
         parent: Container,
         private val initialOrientation: Orientation? = Horizontal
 ) : Container(parent) {

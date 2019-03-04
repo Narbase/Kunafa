@@ -6,6 +6,7 @@ import com.narbase.kunafa.core.css.RuleSet
 import com.narbase.kunafa.core.css.minHeight
 import com.narbase.kunafa.core.css.minWidth
 import com.narbase.kunafa.core.dimensions.DynamicDimension
+import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.dimensions.px
 
 /**
@@ -16,13 +17,18 @@ import com.narbase.kunafa.core.dimensions.px
  * Created by islam
  * On: 10/19/17.
  */
-class Weight internal constructor(private val value: Int) : DynamicDimension() {
+class Weight internal constructor(private val value: Int, val basis: LinearDimension?) : DynamicDimension() {
 
     override fun configureHeight(ruleSet: RuleSet) {
 
         ruleSet.setProperty("height", "auto")
         ruleSet.setProperty("flex-grow", "$value")
-        ruleSet.setProperty("flex-basis", "${value}px")
+        if (basis == null) {
+            ruleSet.setProperty("flex-basis", "auto")
+        } else {
+            ruleSet.setProperty("flex-basis", "${basis}px")
+        }
+
         ruleSet.minHeight = 0.px
     }
 
@@ -31,11 +37,15 @@ class Weight internal constructor(private val value: Int) : DynamicDimension() {
 
         ruleSet.setProperty("width", "auto")
         ruleSet.setProperty("flex-grow", "$value")
-        ruleSet.setProperty("flex-basis", "${value}px")
+        if (basis == null) {
+            ruleSet.setProperty("flex-basis", "auto")
+        } else {
+            ruleSet.setProperty("flex-basis", "${basis}px")
+        }
         ruleSet.minWidth = 0.px
     }
 }
 
-infix fun RuleSet.weightOf(value: Int): Weight {
-    return Weight(value)
+fun RuleSet.weightOf(value: Int, basis: LinearDimension? = null): Weight {
+    return Weight(value, basis)
 }

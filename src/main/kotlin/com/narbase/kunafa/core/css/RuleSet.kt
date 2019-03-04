@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.css
 
 @Suppress("MemberVisibilityCanBePrivate")

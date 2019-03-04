@@ -75,7 +75,11 @@ open class View(var parent: Container? = null) {
         addRuleSet(ruleSet)
     }
 
-    fun style(rules: RuleSet.() -> Unit) = addRuleSet(classRuleSet(null, rules))
+    fun style(rules: RuleSet.() -> Unit): RuleSet {
+        val ruleSet = classRuleSet(null, rules)
+        addRuleSet(ruleSet)
+        return ruleSet
+    }
 
     fun addRuleSet(ruleSet: RuleSet) {
         val selector = ruleSet.selector

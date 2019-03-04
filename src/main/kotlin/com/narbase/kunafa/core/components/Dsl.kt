@@ -24,6 +24,9 @@ fun detachedView(rules: (RuleSet.() -> Unit)? = null, block: DetachedView.() -> 
 fun Container.linearLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, null).visit(rules, block)
 fun Container.verticalLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(rules, block)
 fun Container.horizontalLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(rules, block)
+fun Container.horizontalScrollView(rules: (RuleSet.() -> Unit)? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Horizontal).visit(rules, block)
+fun Container.verticalScrollView(rules: (RuleSet.() -> Unit)? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Vertical).visit(rules, block)
+
 fun Container.anchorLayout(rules: (RuleSet.() -> Unit)? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(rules, block)
 fun Container.viewContainer(rules: (RuleSet.() -> Unit)? = null, block: ViewContainer.() -> Unit): ViewContainer = ViewContainer(this).visit(rules, block)
 
