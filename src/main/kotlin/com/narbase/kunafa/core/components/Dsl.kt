@@ -53,3 +53,6 @@ fun View.form(rules: (RuleSet.() -> Unit)? = null, block: Form.() -> Unit): Form
 fun View.fieldSet(rules: (RuleSet.() -> Unit)? = null, block: FieldSet.() -> Unit): FieldSet = FieldSet(this).visit(rules, block)
 fun View.legend(rules: (RuleSet.() -> Unit)? = null, block: Legend.() -> Unit): Legend = Legend(this).visit(rules, block)
 fun View.radio(rules: (RuleSet.() -> Unit)? = null, block: Radio.() -> Unit): Radio = Radio(this).visit(rules, block)
+
+fun View.ul(block: (UList.() -> Unit)? = null): UList = UList(this).visit(null, block ?: {})
+fun View.li(block: (ListItem.() -> Unit)? = null): ListItem = ListItem(this).visit(null, block ?: {})
