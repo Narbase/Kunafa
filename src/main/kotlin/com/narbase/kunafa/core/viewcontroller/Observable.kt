@@ -11,20 +11,46 @@ package com.narbase.kunafa.core.viewcontroller
  * On: ${date}.
  */
 
-class Observable<T>(initialValue: T) {
+class Observable<T>(initialValue: T) : LifecycleObserver {
 
     var value: T = initialValue
         set(value) {
             field = value
-            observers?.forEach { it(value) }
+            observers.filter {
+                it.key.lastLifecycleEvent == LifecycleEvent.ViewCreated
+            }.forEach {
+                it.value.forEach { it(value) }
+            }
         }
-    private var observers: MutableList<(T) -> Unit>? = null
 
-    fun observe(observer: (T) -> Unit) {
-        if (observers == null) {
-            observers = mutableListOf(observer)
+    private var observers: MutableMap<LifecycleOwner, MutableList<(T) -> Unit>> = mutableMapOf()
+
+    fun observe(lifecycleOwner: LifecycleOwner, observer: (T) -> Unit) {
+        val previousList = observers[lifecycleOwner]
+        if (previousList == null) {
+            val list = mutableListOf(observer)
+            observers[lifecycleOwner] = list
         } else {
-            observers?.add(observer) ?: throw ConcurrentModificationException()
+            previousList.add(observer)
+        }
+        lifecycleOwner.bind(this)
+    }
+
+    override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
+
+    }
+
+    override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
+        observers[lifecycleOwner]?.forEach {
+            it(value)
         }
     }
+
+    override fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner) {
+    }
+
+    override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
+        observers.remove(lifecycleOwner)
+    }
+
 }

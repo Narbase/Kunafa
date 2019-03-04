@@ -3,7 +3,9 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.css.*
-import com.narbase.kunafa.core.viewcontroller.ViewController
+import com.narbase.kunafa.core.viewcontroller.LifecycleEvent
+import com.narbase.kunafa.core.viewcontroller.LifecycleObserver
+import com.narbase.kunafa.core.viewcontroller.LifecycleOwner
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -19,7 +21,7 @@ import kotlin.dom.removeClass
  * Created by islam
  * On: 9/30/17.
  */
-open class View(var parent: View? = null) {
+open class View(var parent: View? = null) : LifecycleOwner {
     var id: String? = null
         set(value) {
             field = value
@@ -30,9 +32,32 @@ open class View(var parent: View? = null) {
 
     open val element: HTMLElement = document.createElement("div") as HTMLDivElement
 
-    var viewController: ViewController? = null
+    private val lifecycleObserversList = mutableListOf<LifecycleObserver>()
+    override var lastLifecycleEvent: LifecycleEvent? = null
 
-    private var savedDisplayState: String? = "null"
+    private fun postViewWillBeCreated() {
+        lastLifecycleEvent = LifecycleEvent.ViewWillBeCreated
+        lifecycleObserversList.forEach { it.viewWillBeCreated(this) }
+    }
+
+    private fun postOnViewCreated() {
+        lastLifecycleEvent = LifecycleEvent.ViewCreated
+        lifecycleObserversList.forEach { it.onViewCreated(this) }
+    }
+
+    private fun postViewWillBeRemoved() {
+        lastLifecycleEvent = LifecycleEvent.ViewWillBeRemoved
+        lifecycleObserversList.forEach { it.viewWillBeRemoved(this) }
+    }
+
+    private fun postOnViewRemoved() {
+        lastLifecycleEvent = LifecycleEvent.ViewRemoved
+        lifecycleObserversList.forEach { it.onViewRemoved(this) }
+    }
+
+    override fun bind(lifecycleObserver: LifecycleObserver) {
+        lifecycleObserversList.add(lifecycleObserver)
+    }
 
     var isVisible: Boolean = true
         set(value) {
@@ -58,12 +83,12 @@ open class View(var parent: View? = null) {
     }
 
     fun <V : View> V.visit(rules: (RuleSet.() -> Unit)?, setup: V.() -> Unit): V {
-        this.viewController?.viewWillBeCreated(this)
+        postViewWillBeCreated()
         configureElement()
         this.setupStyleSheet(rules)
         this.addToParent()
         this.setup()
-        this.viewController?.onViewCreated(this)
+        postOnViewCreated()
         return this
     }
 
@@ -130,16 +155,16 @@ open class View(var parent: View? = null) {
     }
 
     open fun removeChild(child: View) {
-        child.viewController?.viewWillBeRemoved(child)
+        child.postViewWillBeRemoved()
         children.remove(child)
         element.removeChild(child.element)
         child.parent = null
-        child.viewController?.onViewRemoved(child)
+        child.postOnViewRemoved()
     }
 
     open fun clearAllChildren() {
         children.forEach { child ->
-            child.viewController?.viewWillBeRemoved(child)
+            child.postViewWillBeRemoved()
             children.remove(child)
         }
         while (element.firstChild != null) {
@@ -148,10 +173,12 @@ open class View(var parent: View? = null) {
             }
         }
         children.forEach { child ->
-            child.viewController?.onViewRemoved(child)
+            child.postOnViewRemoved()
             children.remove(child)
         }
     }
 }
 
 class ParentNotFoundException : Exception()
+
+

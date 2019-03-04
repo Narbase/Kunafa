@@ -2,8 +2,6 @@
 
 package com.narbase.kunafa.core.viewcontroller
 
-import com.narbase.kunafa.core.components.View
-
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
  * ______________________________
@@ -12,21 +10,21 @@ import com.narbase.kunafa.core.components.View
  * Created by islam
  * On: 10/26/17.
  */
-abstract class ViewController {
+abstract class ViewController : LifecycleObserver {
 
-    open fun viewWillBeCreated(view: View) {
-
-    }
-
-    open fun onViewCreated(view: View) {
+    override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
 
     }
 
-    open fun viewWillBeRemoved(view: View) {
+    override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
 
     }
 
-    open fun onViewRemoved(view: View) {
+    override fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner) {
+
+    }
+
+    override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
 
     }
 
