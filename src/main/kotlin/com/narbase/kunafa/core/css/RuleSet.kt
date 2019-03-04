@@ -16,6 +16,10 @@ class RuleSet(val selector: Selector, val atRule: String? = null) {
         return list.find { it.name == name }?.value
     }
 
+    operator fun set(key: String, value: String) {
+        rules.add(Rule(key, value))
+    }
+
     fun <T> setProperty(name: String, value: T) {
         rules.add(Rule(name, value))
     }
