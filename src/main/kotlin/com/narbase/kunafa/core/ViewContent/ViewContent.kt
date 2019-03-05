@@ -14,12 +14,12 @@ import com.narbase.kunafa.core.viewcontroller.LifecycleOwner
  * Created by islam
  * On: 12/12/17.
  */
-abstract class ViewContent : LifecycleOwner {
+abstract class ViewContent : LifecycleOwner, LifecycleObserver {
 
     abstract fun DetachedView.contentDefinition()
 
-
     val detachedView by lazy {
+        this@ViewContent.bind(this@ViewContent)
         detachedView {
             contentDefinition()
         }
@@ -52,5 +52,20 @@ abstract class ViewContent : LifecycleOwner {
         lifecycleObserversList.add(lifecycleObserver)
     }
 
+    override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
+
+    }
+
+    override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
+
+    }
+
+    override fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner) {
+
+    }
+
+    override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
+
+    }
 
 }
