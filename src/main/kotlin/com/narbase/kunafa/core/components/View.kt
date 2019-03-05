@@ -60,6 +60,9 @@ open class View(var parent: View? = null) : LifecycleOwner {
     }
 
     override fun bind(lifecycleObserver: LifecycleObserver) {
+        if (lifecycleObserversList.contains(lifecycleObserver)) {
+            return
+        }
         lifecycleObserversList.add(lifecycleObserver)
     }
 
