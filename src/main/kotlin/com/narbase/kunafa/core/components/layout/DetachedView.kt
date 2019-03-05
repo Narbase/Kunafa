@@ -12,19 +12,7 @@ import com.narbase.kunafa.core.components.View
  */
 class DetachedView : View(null) {
 
-    override fun addChild(child: View) {
-        if (children.size > 0)
-            throw MoreThanOneChildInViewContainerException()
-        child.parent = this
-        children.add(child)
-    }
-
     override fun addToParent() {
     }
 
-    val content: View?
-        get() {
-            return if (children.size > 0) children[0]
-            else null
-        }
 }

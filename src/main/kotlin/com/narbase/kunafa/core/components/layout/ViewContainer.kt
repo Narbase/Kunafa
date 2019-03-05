@@ -17,12 +17,28 @@ open class ViewContainer(
         parent: View?
 ) : View(parent) {
 
-    override fun addChild(child: View) {
-        if (children.size > 0)
-            throw MoreThanOneChildInViewContainerException()
-        super.addChild(child)
-    }
+//    override fun addChild(child: View) {
+//        if (children.size > 0)
+//            throw MoreThanOneChildInViewContainerException()
+//        super.addChild(child)
+//    }
 
+    var viewContent: ViewContent? = null
+        set(value) {
+            viewContent?.postViewWillBeRemoved()
+            clearAllChildren()
+            viewContent?.postOnViewRemoved()
+
+            field = value
+            value?.postViewWillBeCreated()
+            value?.detachedView?.children?.forEach {
+                this.addChild(it)
+            }
+            value?.postOnViewCreated()
+        }
+
+
+    /*
     var content: ViewContent? = null
         set(value) {
             value?.content?.content?.let {
@@ -34,6 +50,8 @@ open class ViewContainer(
                 this.addChild(it)
             }
         }
+
+     */
 
 //    var content: DetachedView? = null
 //        set(value) {

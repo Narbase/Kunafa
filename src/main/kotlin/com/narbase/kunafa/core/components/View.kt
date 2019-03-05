@@ -38,19 +38,23 @@ open class View(var parent: View? = null) : LifecycleOwner {
     private fun postViewWillBeCreated() {
         lastLifecycleEvent = LifecycleEvent.ViewWillBeCreated
         lifecycleObserversList.forEach { it.viewWillBeCreated(this) }
+        children.forEach { it.postViewWillBeCreated() }
     }
 
     private fun postOnViewCreated() {
         lastLifecycleEvent = LifecycleEvent.ViewCreated
         lifecycleObserversList.forEach { it.onViewCreated(this) }
+        children.forEach { it.postOnViewCreated() }
     }
 
     private fun postViewWillBeRemoved() {
+        children.forEach { it.postViewWillBeRemoved() }
         lastLifecycleEvent = LifecycleEvent.ViewWillBeRemoved
         lifecycleObserversList.forEach { it.viewWillBeRemoved(this) }
     }
 
     private fun postOnViewRemoved() {
+        children.forEach { it.postOnViewRemoved() }
         lastLifecycleEvent = LifecycleEvent.ViewRemoved
         lifecycleObserversList.forEach { it.onViewRemoved(this) }
     }
@@ -145,13 +149,9 @@ open class View(var parent: View? = null) : LifecycleOwner {
     val children: ArrayList<View> = arrayListOf()
 
     open fun addChild(child: View) {
-        addToElement(child)
+        element.append(child.element)
         child.parent = this
         children.add(child)
-    }
-
-    private fun addToElement(child: View) {
-        element.append(child.element)
     }
 
     open fun removeChild(child: View) {
@@ -165,7 +165,6 @@ open class View(var parent: View? = null) : LifecycleOwner {
     open fun clearAllChildren() {
         children.forEach { child ->
             child.postViewWillBeRemoved()
-            children.remove(child)
         }
         while (element.firstChild != null) {
             element.firstChild?.let {

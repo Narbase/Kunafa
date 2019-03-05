@@ -2,6 +2,9 @@ package com.narbase.kunafa.core.ViewContent
 
 import com.narbase.kunafa.core.components.detachedView
 import com.narbase.kunafa.core.components.layout.DetachedView
+import com.narbase.kunafa.core.viewcontroller.LifecycleEvent
+import com.narbase.kunafa.core.viewcontroller.LifecycleObserver
+import com.narbase.kunafa.core.viewcontroller.LifecycleOwner
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -11,14 +14,43 @@ import com.narbase.kunafa.core.components.layout.DetachedView
  * Created by islam
  * On: 12/12/17.
  */
-abstract class ViewContent {
+abstract class ViewContent : LifecycleOwner {
+
     abstract fun DetachedView.contentDefinition()
 
-    val content: DetachedView
-    get() {
-        return detachedView {
+
+    val detachedView by lazy {
+        detachedView {
             contentDefinition()
         }
     }
+
+    private val lifecycleObserversList = mutableListOf<LifecycleObserver>()
+    override var lastLifecycleEvent: LifecycleEvent? = null
+
+    fun postViewWillBeCreated() {
+        lastLifecycleEvent = LifecycleEvent.ViewWillBeCreated
+        lifecycleObserversList.forEach { it.viewWillBeCreated(this) }
+    }
+
+    fun postOnViewCreated() {
+        lastLifecycleEvent = LifecycleEvent.ViewCreated
+        lifecycleObserversList.forEach { it.onViewCreated(this) }
+    }
+
+    fun postViewWillBeRemoved() {
+        lastLifecycleEvent = LifecycleEvent.ViewWillBeRemoved
+        lifecycleObserversList.forEach { it.viewWillBeRemoved(this) }
+    }
+
+    fun postOnViewRemoved() {
+        lastLifecycleEvent = LifecycleEvent.ViewRemoved
+        lifecycleObserversList.forEach { it.onViewRemoved(this) }
+    }
+
+    override fun bind(lifecycleObserver: LifecycleObserver) {
+        lifecycleObserversList.add(lifecycleObserver)
+    }
+
 
 }
