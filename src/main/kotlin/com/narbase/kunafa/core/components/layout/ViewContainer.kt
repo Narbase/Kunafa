@@ -30,12 +30,10 @@ open class ViewContainer(
             viewContent?.postOnViewRemoved()
 
             field = value
-            console.log("ViewContainer calling postViewWillBeCreated")
             value?.postViewWillBeCreated()
             value?.detachedView?.children?.forEach {
                 this.addChild(it)
             }
-            console.log("ViewContainer calling postOnViewCreated")
             value?.postOnViewCreated()
         }
 

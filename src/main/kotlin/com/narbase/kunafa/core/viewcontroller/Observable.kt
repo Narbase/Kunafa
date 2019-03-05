@@ -11,7 +11,7 @@ package com.narbase.kunafa.core.viewcontroller
  * On: ${date}.
  */
 
-class Observable<T>(val name: String) : LifecycleObserver {
+class Observable<T> : LifecycleObserver {
 
     var value: T? = null
         set(value) {
@@ -23,7 +23,7 @@ class Observable<T>(val name: String) : LifecycleObserver {
             }
         }
 
-    var observers: MutableMap<LifecycleOwner, MutableList<(T?) -> Unit>> = mutableMapOf()
+    private var observers: MutableMap<LifecycleOwner, MutableList<(T?) -> Unit>> = mutableMapOf()
 
     fun observe(lifecycleOwner: LifecycleOwner, observer: (T?) -> Unit) {
         val previousList = observers[lifecycleOwner]
@@ -31,7 +31,9 @@ class Observable<T>(val name: String) : LifecycleObserver {
             val list = mutableListOf(observer)
             observers[lifecycleOwner] = list
         } else {
-            previousList.add(observer)
+            if (previousList.contains(observer).not()) {
+                previousList.add(observer)
+            }
         }
         lifecycleOwner.bind(this)
         if (lifecycleOwner.lastLifecycleEvent == LifecycleEvent.ViewCreated) {
@@ -40,21 +42,16 @@ class Observable<T>(val name: String) : LifecycleObserver {
     }
 
     override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
-        console.log("$name viewWillBeCreated")
-
     }
 
     override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
-        console.log("$name onViewCreated: has ${observers[lifecycleOwner]?.size} observers")
-        observers[lifecycleOwner]?.forEach {
-            it(value)
-        }
     }
 
     override fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner) {
     }
 
     override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
+        observers.remove(lifecycleOwner)
     }
 
 }

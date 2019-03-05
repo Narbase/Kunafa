@@ -29,25 +29,21 @@ abstract class ViewContent : LifecycleOwner, LifecycleObserver {
     override var lastLifecycleEvent: LifecycleEvent? = null
 
     fun postViewWillBeCreated() {
-        console.log("content postViewWillBeCreated")
         lastLifecycleEvent = LifecycleEvent.ViewWillBeCreated
         lifecycleObserversList.forEach { it.viewWillBeCreated(this) }
     }
 
     fun postOnViewCreated() {
-        console.log("content postOnViewCreated")
         lastLifecycleEvent = LifecycleEvent.ViewCreated
         lifecycleObserversList.forEach { it.onViewCreated(this) }
     }
 
     fun postViewWillBeRemoved() {
-        console.log("content postViewWillBeRemoved")
         lastLifecycleEvent = LifecycleEvent.ViewWillBeRemoved
         lifecycleObserversList.forEach { it.viewWillBeRemoved(this) }
     }
 
     fun postOnViewRemoved() {
-        console.log("content postOnViewRemoved")
         lastLifecycleEvent = LifecycleEvent.ViewRemoved
         lifecycleObserversList.forEach { it.onViewRemoved(this) }
     }
