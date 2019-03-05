@@ -21,7 +21,7 @@ import kotlin.dom.removeClass
  * Created by islam
  * On: 9/30/17.
  */
-open class View(var parent: View? = null) : LifecycleOwner {
+open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
     var id: String? = null
         set(value) {
             field = value
@@ -90,6 +90,7 @@ open class View(var parent: View? = null) : LifecycleOwner {
     }
 
     fun <V : View> V.visit(rules: (RuleSet.() -> Unit)?, setup: V.() -> Unit): V {
+        bind(this)
         postViewWillBeCreated()
         configureElement()
         this.setupStyleSheet(rules)
@@ -179,6 +180,24 @@ open class View(var parent: View? = null) : LifecycleOwner {
             children.remove(child)
         }
     }
+
+
+    override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
+
+    }
+
+    override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
+
+    }
+
+    override fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner) {
+
+    }
+
+    override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
+
+    }
+
 }
 
 class ParentNotFoundException : Exception()
