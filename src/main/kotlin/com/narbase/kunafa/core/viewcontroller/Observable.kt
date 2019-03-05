@@ -34,6 +34,9 @@ class Observable<T>(initialValue: T) : LifecycleObserver {
             previousList.add(observer)
         }
         lifecycleOwner.bind(this)
+        if (lifecycleOwner.lastLifecycleEvent == LifecycleEvent.ViewCreated) {
+            observers[lifecycleOwner]?.forEach { it(value) }
+        }
     }
 
     override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
