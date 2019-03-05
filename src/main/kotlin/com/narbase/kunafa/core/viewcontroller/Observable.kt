@@ -11,9 +11,9 @@ package com.narbase.kunafa.core.viewcontroller
  * On: ${date}.
  */
 
-class Observable<T>(initialValue: T) : LifecycleObserver {
+class Observable<T>(val name: String) : LifecycleObserver {
 
-    var value: T = initialValue
+    var value: T? = null
         set(value) {
             field = value
             observers.filter {
@@ -23,9 +23,9 @@ class Observable<T>(initialValue: T) : LifecycleObserver {
             }
         }
 
-    var observers: MutableMap<LifecycleOwner, MutableList<(T) -> Unit>> = mutableMapOf()
+    var observers: MutableMap<LifecycleOwner, MutableList<(T?) -> Unit>> = mutableMapOf()
 
-    fun observe(lifecycleOwner: LifecycleOwner, observer: (T) -> Unit) {
+    fun observe(lifecycleOwner: LifecycleOwner, observer: (T?) -> Unit) {
         val previousList = observers[lifecycleOwner]
         if (previousList == null) {
             val list = mutableListOf(observer)
@@ -40,10 +40,12 @@ class Observable<T>(initialValue: T) : LifecycleObserver {
     }
 
     override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
+        console.log("$name viewWillBeCreated")
 
     }
 
     override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
+        console.log("$name onViewCreated: has ${observers[lifecycleOwner]?.size} observers")
         observers[lifecycleOwner]?.forEach {
             it(value)
         }
@@ -53,7 +55,6 @@ class Observable<T>(initialValue: T) : LifecycleObserver {
     }
 
     override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
-        observers.remove(lifecycleOwner)
     }
 
 }
