@@ -23,7 +23,7 @@ class Observable<T>(initialValue: T) : LifecycleObserver {
             }
         }
 
-    private var observers: MutableMap<LifecycleOwner, MutableList<(T) -> Unit>> = mutableMapOf()
+    var observers: MutableMap<LifecycleOwner, MutableList<(T) -> Unit>> = mutableMapOf()
 
     fun observe(lifecycleOwner: LifecycleOwner, observer: (T) -> Unit) {
         val previousList = observers[lifecycleOwner]
