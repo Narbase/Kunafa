@@ -10,9 +10,9 @@ package com.narbase.kunafa.core.viewcontroller
  */
 interface LifecycleObserver {
 
-    fun viewWillBeCreated(lifecycleOwner: LifecycleOwner)
+    fun viewWillMount(lifecycleOwner: LifecycleOwner)
 
-    fun onViewCreated(lifecycleOwner: LifecycleOwner)
+    fun onViewMounted(lifecycleOwner: LifecycleOwner)
 
     fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner)
 

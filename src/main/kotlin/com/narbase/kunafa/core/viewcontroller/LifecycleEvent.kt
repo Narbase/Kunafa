@@ -1,8 +1,8 @@
 package com.narbase.kunafa.core.viewcontroller
 
 enum class LifecycleEvent {
-    ViewWillBeCreated,
-    ViewCreated,
+    ViewWillMount,
+    ViewMounted,
     ViewWillBeRemoved,
     ViewRemoved
 }

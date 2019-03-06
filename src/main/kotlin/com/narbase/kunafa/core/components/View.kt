@@ -35,16 +35,14 @@ open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
     private val lifecycleObserversList = mutableListOf<LifecycleObserver>()
     override var lastLifecycleEvent: LifecycleEvent? = null
 
-    private fun postViewWillBeCreated() {
-        lastLifecycleEvent = LifecycleEvent.ViewWillBeCreated
-        lifecycleObserversList.forEach { it.viewWillBeCreated(this) }
-        children.forEach { it.postViewWillBeCreated() }
+    internal fun postViewWillMount() {
+        lastLifecycleEvent = LifecycleEvent.ViewWillMount
+        lifecycleObserversList.forEach { it.viewWillMount(this) }
     }
 
-    private fun postOnViewCreated() {
-        lastLifecycleEvent = LifecycleEvent.ViewCreated
-        lifecycleObserversList.forEach { it.onViewCreated(this) }
-        children.forEach { it.postOnViewCreated() }
+    internal fun postOnViewMounted() {
+        lastLifecycleEvent = LifecycleEvent.ViewMounted
+        lifecycleObserversList.forEach { it.onViewMounted(this) }
     }
 
     private fun postViewWillBeRemoved() {
@@ -89,23 +87,12 @@ open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
         addRuleSet(baseClass)
     }
 
-    fun <V : View> V.visit(rules: (RuleSet.() -> Unit)?, setup: V.() -> Unit): V {
-        bind(this)
-        postViewWillBeCreated()
-        configureElement()
-        this.setupStyleSheet(rules)
-        this.addToParent()
-        this.setup()
-        postOnViewCreated()
-        return this
-    }
 
-
-    private fun setupStyleSheet(rules: (RuleSet.() -> Unit)?) {
-        if (rules == null) return
-        val ruleSet = classRuleSet(null, rules)
-        addRuleSet(ruleSet)
-    }
+//    private fun setupStyleSheet(rules: (RuleSet.() -> Unit)?) {
+//        if (rules == null) return
+//        val ruleSet = classRuleSet(null, rules)
+//        addRuleSet(ruleSet)
+//    }
 
     fun style(rules: RuleSet.() -> Unit): RuleSet {
         val ruleSet = classRuleSet(null, rules)
@@ -129,10 +116,6 @@ open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
         }
     }
 
-    internal open fun addToParent() {
-        val validParent = parent ?: throw ParentNotFoundException()
-        validParent.addChild(this)
-    }
 
     companion object {
         val baseClass = classRuleSet {
@@ -152,7 +135,17 @@ open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
 
     val children: ArrayList<View> = arrayListOf()
 
-    open fun addChild(child: View) {
+    fun addChild(child: View) {
+        child.postViewWillMount()
+        mountChild(child)
+        child.postOnViewMounted()
+    }
+
+    internal open fun addToParent() {
+        parent?.mountChild(this)
+    }
+
+    protected open fun mountChild(child: View) {
         element.append(child.element)
         child.parent = this
         children.add(child)
@@ -182,11 +175,11 @@ open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
     }
 
 
-    override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
+    override fun viewWillMount(lifecycleOwner: LifecycleOwner) {
 
     }
 
-    override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
+    override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
 
     }
 
@@ -199,7 +192,3 @@ open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
     }
 
 }
-
-class ParentNotFoundException : Exception()
-
-

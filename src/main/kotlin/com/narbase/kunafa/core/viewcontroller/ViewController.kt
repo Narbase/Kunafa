@@ -12,11 +12,11 @@ package com.narbase.kunafa.core.viewcontroller
  */
 abstract class ViewController : LifecycleObserver {
 
-    override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
+    override fun viewWillMount(lifecycleOwner: LifecycleOwner) {
 
     }
 
-    override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
+    override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
 
     }
 

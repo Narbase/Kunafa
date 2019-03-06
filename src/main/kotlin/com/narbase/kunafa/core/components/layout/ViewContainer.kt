@@ -32,7 +32,7 @@ open class ViewContainer(
             field = value
             value?.postViewWillBeCreated()
             value?.detachedView?.children?.forEach {
-                this.addChild(it)
+                this.mountChild(it)
             }
             value?.postOnViewCreated()
         }

@@ -2,9 +2,8 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.Page.visit
 import com.narbase.kunafa.core.components.layout.*
-import com.narbase.kunafa.core.css.RuleSet
+import com.narbase.kunafa.core.viewcontroller.LifecycleObserver
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -15,44 +14,49 @@ import com.narbase.kunafa.core.css.RuleSet
  * On: 9/30/17.
  */
 
-fun page(setupAndAddChildren: View.() -> Unit = {}) {
+fun page(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit = {}) {
     Page.prepare()
-    Page.visit(null, setupAndAddChildren)
+    Page.visit(lifecycleObserver, block)
 }
 
-fun detachedView(rules: (RuleSet.() -> Unit)? = null, block: DetachedView.() -> Unit): DetachedView = DetachedView().visit(rules, block)
-fun View.linearLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, null).visit(rules, block)
-fun View.verticalLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(rules, block)
-fun View.horizontalLayout(rules: (RuleSet.() -> Unit)? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(rules, block)
-fun View.horizontalScrollView(rules: (RuleSet.() -> Unit)? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Horizontal).visit(rules, block)
-fun View.verticalScrollView(rules: (RuleSet.() -> Unit)? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Vertical).visit(rules, block)
+fun detachedView(lifecycleObserver: LifecycleObserver? = null, block: DetachedView.() -> Unit): DetachedView = DetachedView().visit(lifecycleObserver, block)
+fun View?.linearLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, null).visit(lifecycleObserver, block)
+fun View?.verticalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
+fun View?.horizontalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
+fun View?.horizontalScrollView(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
+fun View?.verticalScrollView(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
 
-fun View.anchorLayout(rules: (RuleSet.() -> Unit)? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(rules, block)
-fun View.viewContainer(rules: (RuleSet.() -> Unit)? = null, block: ViewContainer.() -> Unit): ViewContainer = ViewContainer(this).visit(rules, block)
+fun View?.anchorLayout(lifecycleObserver: LifecycleObserver? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(lifecycleObserver, block)
+fun View?.viewContainer(lifecycleObserver: LifecycleObserver? = null, block: ViewContainer.() -> Unit): ViewContainer = ViewContainer(this).visit(lifecycleObserver, block)
 
-fun View.view(rules: (RuleSet.() -> Unit)? = null, block: View.() -> Unit): View = View(this).visit(rules, block)
-fun View.textView(rules: (RuleSet.() -> Unit)? = null, block: TextView.() -> Unit): TextView = TextView(this).visit(rules, block)
-fun View.textInput(rules: (RuleSet.() -> Unit)? = null, block: TextInput.() -> Unit): TextInput = TextInput(this).visit(rules, block)
-fun View.button(rules: (RuleSet.() -> Unit)? = null, block: ButtonView.() -> Unit): ButtonView = ButtonView(this).visit(rules, block)
-fun View.imageView(rules: (RuleSet.() -> Unit)? = null, block: ImageView.() -> Unit): ImageView = ImageView(this).visit(rules, block)
-fun View.checkbox(rules: (RuleSet.() -> Unit)? = null, block: Checkbox.() -> Unit): Checkbox = Checkbox(this).visit(rules, block)
+fun View?.view(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit): View = View(this).visit(lifecycleObserver, block)
+fun View?.textView(lifecycleObserver: LifecycleObserver? = null, block: TextView.() -> Unit): TextView = TextView(this).visit(lifecycleObserver, block)
+fun View?.textInput(lifecycleObserver: LifecycleObserver? = null, block: TextInput.() -> Unit): TextInput = TextInput(this).visit(lifecycleObserver, block)
+fun View?.button(lifecycleObserver: LifecycleObserver? = null, block: ButtonView.() -> Unit): ButtonView = ButtonView(this).visit(lifecycleObserver, block)
+fun View?.imageView(lifecycleObserver: LifecycleObserver? = null, block: ImageView.() -> Unit): ImageView = ImageView(this).visit(lifecycleObserver, block)
+fun View?.checkbox(lifecycleObserver: LifecycleObserver? = null, block: Checkbox.() -> Unit): Checkbox = Checkbox(this).visit(lifecycleObserver, block)
 
-fun View.table(block: Table.() -> Unit): Table = Table(this).visit(null, block)
-fun Table.tableHeader(block: TableHeader.() -> Unit): TableHeader = TableHeader(this).visit(null, block)
-fun Table.tableBody(block: TableBody.() -> Unit): TableBody = TableBody(this).visit(null, block)
-fun Table.tableFooter(block: TableFooter.() -> Unit): TableFooter = TableFooter(this).visit(null, block)
+fun View?.table(lifecycleObserver: LifecycleObserver? = null, block: Table.() -> Unit): Table = Table(this).visit(lifecycleObserver, block)
+fun Table?.tableHeader(lifecycleObserver: LifecycleObserver? = null, block: TableHeader.() -> Unit): TableHeader = TableHeader(this).visit(lifecycleObserver, block)
+fun Table?.tableBody(lifecycleObserver: LifecycleObserver? = null, block: TableBody.() -> Unit): TableBody = TableBody(this).visit(lifecycleObserver, block)
+fun Table?.tableFooter(lifecycleObserver: LifecycleObserver? = null, block: TableFooter.() -> Unit): TableFooter = TableFooter(this).visit(lifecycleObserver, block)
 
-fun Table.row(block: TableRow.() -> Unit): TableRow = TableRow(this).visit(null, block)
-fun TableHeader.row(block: TableRow.() -> Unit): TableRow = TableRow(this).visit(null, block)
-fun TableFooter.row(block: TableRow.() -> Unit): TableRow = TableRow(this).visit(null, block)
-fun TableBody.row(block: TableRow.() -> Unit): TableRow = TableRow(this).visit(null, block)
-fun TableRow.cell(block: TableCell.() -> Unit): TableCell = TableCell(this).visit(null, block)
-fun TableRow.headerCell(block: TableHeaderCell.() -> Unit): TableHeaderCell = TableHeaderCell(this).visit(null, block)
+fun Table?.row(lifecycleObserver: LifecycleObserver? = null, block: TableRow.() -> Unit): TableRow = TableRow(this).visit(lifecycleObserver, block)
+fun TableHeader?.row(lifecycleObserver: LifecycleObserver? = null, block: TableRow.() -> Unit): TableRow = TableRow(this).visit(lifecycleObserver, block)
+fun TableFooter?.row(lifecycleObserver: LifecycleObserver? = null, block: TableRow.() -> Unit): TableRow = TableRow(this).visit(lifecycleObserver, block)
+fun TableBody?.row(lifecycleObserver: LifecycleObserver? = null, block: TableRow.() -> Unit): TableRow = TableRow(this).visit(lifecycleObserver, block)
+fun TableRow?.cell(lifecycleObserver: LifecycleObserver? = null, block: TableCell.() -> Unit): TableCell = TableCell(this).visit(lifecycleObserver, block)
+fun TableRow?.headerCell(lifecycleObserver: LifecycleObserver? = null, block: TableHeaderCell.() -> Unit): TableHeaderCell = TableHeaderCell(this).visit(lifecycleObserver, block)
 
-fun View.form(rules: (RuleSet.() -> Unit)? = null, block: Form.() -> Unit): Form = Form(this).visit(rules, block)
-fun View.fieldSet(rules: (RuleSet.() -> Unit)? = null, block: FieldSet.() -> Unit): FieldSet = FieldSet(this).visit(rules, block)
-fun View.legend(rules: (RuleSet.() -> Unit)? = null, block: Legend.() -> Unit): Legend = Legend(this).visit(rules, block)
-fun View.radio(rules: (RuleSet.() -> Unit)? = null, block: Radio.() -> Unit): Radio = Radio(this).visit(rules, block)
+fun View?.form(lifecycleObserver: LifecycleObserver? = null, block: Form.() -> Unit): Form = Form(this).visit(lifecycleObserver, block)
+fun View?.fieldSet(lifecycleObserver: LifecycleObserver? = null, block: FieldSet.() -> Unit): FieldSet = FieldSet(this).visit(lifecycleObserver, block)
+fun View?.legend(lifecycleObserver: LifecycleObserver? = null, block: Legend.() -> Unit): Legend = Legend(this).visit(lifecycleObserver, block)
+fun View?.radio(lifecycleObserver: LifecycleObserver? = null, block: Radio.() -> Unit): Radio = Radio(this).visit(lifecycleObserver, block)
 
-fun View.ul(block: (UList.() -> Unit)? = null): UList = UList(this).visit(null, block ?: {})
-fun View.li(block: (ListItem.() -> Unit)? = null): ListItem = ListItem(this).visit(null, block ?: {})
+fun View?.ul(lifecycleObserver: LifecycleObserver? = null, block: (UList.() -> Unit)? = null): UList =
+        UList(this).visit(lifecycleObserver, block ?: {})
+
+fun View?.li(lifecycleObserver: LifecycleObserver? = null, block: (ListItem.() -> Unit)? = null): ListItem =
+        ListItem(this).visit(lifecycleObserver, block ?: {})
+
+val detached = null

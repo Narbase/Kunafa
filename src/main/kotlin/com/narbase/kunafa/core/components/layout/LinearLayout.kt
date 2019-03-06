@@ -15,7 +15,7 @@ import com.narbase.kunafa.core.css.*
  * On: 9/30/17.
  */
 open class LinearLayout(
-        parent: View,
+        parent: View?,
         private val initialOrientation: Orientation? = Horizontal
 ) : View(parent) {
 

@@ -18,7 +18,8 @@ import kotlin.dom.clear
  */
 object Page : View(null) {
 
-    override fun addChild(child: View) {
+    override fun mountChild(child: View) {
+        child.parent = this
         document.body?.append(child.element)
         children.add(child)
     }

@@ -29,13 +29,13 @@ abstract class ViewContent : LifecycleOwner, LifecycleObserver {
     override var lastLifecycleEvent: LifecycleEvent? = null
 
     fun postViewWillBeCreated() {
-        lastLifecycleEvent = LifecycleEvent.ViewWillBeCreated
-        lifecycleObserversList.forEach { it.viewWillBeCreated(this) }
+        lastLifecycleEvent = LifecycleEvent.ViewWillMount
+        lifecycleObserversList.forEach { it.viewWillMount(this) }
     }
 
     fun postOnViewCreated() {
-        lastLifecycleEvent = LifecycleEvent.ViewCreated
-        lifecycleObserversList.forEach { it.onViewCreated(this) }
+        lastLifecycleEvent = LifecycleEvent.ViewMounted
+        lifecycleObserversList.forEach { it.onViewMounted(this) }
     }
 
     fun postViewWillBeRemoved() {
@@ -55,11 +55,11 @@ abstract class ViewContent : LifecycleOwner, LifecycleObserver {
         lifecycleObserversList.add(lifecycleObserver)
     }
 
-    override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
+    override fun viewWillMount(lifecycleOwner: LifecycleOwner) {
 
     }
 
-    override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
+    override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
 
     }
 

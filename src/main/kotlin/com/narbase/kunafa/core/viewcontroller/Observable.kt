@@ -11,13 +11,13 @@ package com.narbase.kunafa.core.viewcontroller
  * On: ${date}.
  */
 
-class Observable<T> : LifecycleObserver {
+class Observable<T>(val name: String) : LifecycleObserver {
 
     var value: T? = null
         set(value) {
             field = value
             observers.filter {
-                it.key.lastLifecycleEvent == LifecycleEvent.ViewCreated
+                it.key.lastLifecycleEvent == LifecycleEvent.ViewMounted
             }.forEach {
                 it.value.forEach { it(value) }
             }
@@ -36,22 +36,25 @@ class Observable<T> : LifecycleObserver {
             }
         }
         lifecycleOwner.bind(this)
-        if (lifecycleOwner.lastLifecycleEvent == LifecycleEvent.ViewCreated) {
+        if (lifecycleOwner.lastLifecycleEvent == LifecycleEvent.ViewMounted) {
             observers[lifecycleOwner]?.forEach { it(value) }
         }
     }
 
-    override fun viewWillBeCreated(lifecycleOwner: LifecycleOwner) {
+    override fun viewWillMount(lifecycleOwner: LifecycleOwner) {
     }
 
-    override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
+    override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
+        observers[lifecycleOwner]?.forEach {
+            it(value)
+        }
     }
 
     override fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner) {
     }
 
     override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
-        observers.remove(lifecycleOwner)
+//        observers.remove(lifecycleOwner)
     }
 
 }

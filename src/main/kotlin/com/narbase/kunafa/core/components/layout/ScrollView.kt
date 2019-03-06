@@ -14,7 +14,7 @@ import com.narbase.kunafa.core.css.isScrollableVertically
  * On: 10/1/17.
  */
 class ScrollView(
-        parent: View,
+        parent: View?,
         private val initialOrientation: Orientation?
 ) : LinearLayout(parent, initialOrientation) {
 

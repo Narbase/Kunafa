@@ -13,7 +13,7 @@ import com.narbase.kunafa.core.components.View
  * On: 9/30/17.
  */
 class AnchorLayout(
-        parent: View
+        parent: View?
 ) : View(parent) {
 
     override fun configureElement() {
@@ -22,9 +22,9 @@ class AnchorLayout(
         element.style.position = "relative"
     }
 
-    override fun addChild(child: View) {
+    override fun mountChild(child: View) {
         child.element.style.position = "absolute"
-        super.addChild(child)
+        super.mountChild(child)
     }
 
 
