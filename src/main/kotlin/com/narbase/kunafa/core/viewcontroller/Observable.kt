@@ -11,7 +11,7 @@ package com.narbase.kunafa.core.viewcontroller
  * On: ${date}.
  */
 
-class Observable<T>(val name: String) : LifecycleObserver {
+class Observable<T> : LifecycleObserver {
 
     var value: T? = null
         set(value) {
