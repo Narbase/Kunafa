@@ -11,50 +11,24 @@ package com.narbase.kunafa.core.viewcontroller
  * On: ${date}.
  */
 
-class Observable<T> : LifecycleObserver {
+class Observable<T> {
 
     var value: T? = null
         set(value) {
             field = value
-            observers.filter {
-                it.key.lastLifecycleEvent == LifecycleEvent.ViewMounted
-            }.forEach {
-                it.value.forEach { it(value) }
-            }
+            observers?.forEach { it(value) }
         }
+    private var observers: MutableList<(T?) -> Unit>? = null
 
-    private var observers: MutableMap<LifecycleOwner, MutableList<(T?) -> Unit>> = mutableMapOf()
-
-    fun observe(lifecycleOwner: LifecycleOwner, observer: (T?) -> Unit) {
-        val previousList = observers[lifecycleOwner]
-        if (previousList == null) {
-            val list = mutableListOf(observer)
-            observers[lifecycleOwner] = list
+    fun observe(observer: (T?) -> Unit) {
+        if (observers?.contains(observer) == true) {
+            return
+        }
+        if (observers == null) {
+            observers = mutableListOf(observer)
         } else {
-            if (previousList.contains(observer).not()) {
-                previousList.add(observer)
-            }
+            observers?.add(observer) ?: throw ConcurrentModificationException()
         }
-        lifecycleOwner.bind(this)
-        if (lifecycleOwner.lastLifecycleEvent == LifecycleEvent.ViewMounted) {
-            observers[lifecycleOwner]?.forEach { it(value) }
-        }
+        observer(value)
     }
-
-    override fun viewWillMount(lifecycleOwner: LifecycleOwner) {
-    }
-
-    override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
-        observers[lifecycleOwner]?.forEach {
-            it(value)
-        }
-    }
-
-    override fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner) {
-    }
-
-    override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
-//        observers.remove(lifecycleOwner)
-    }
-
 }
