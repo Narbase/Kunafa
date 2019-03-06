@@ -36,26 +36,22 @@ open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
     override var lastLifecycleEvent: LifecycleEvent? = null
 
     internal fun postViewWillMount() {
-        id?.let { console.log("$id: ViewWillMount") }
         lastLifecycleEvent = LifecycleEvent.ViewWillMount
         lifecycleObserversList.forEach { it.viewWillMount(this) }
     }
 
     internal fun postOnViewMounted() {
-        id?.let { console.log("$id: ViewMounted") }
         lastLifecycleEvent = LifecycleEvent.ViewMounted
         lifecycleObserversList.forEach { it.onViewMounted(this) }
     }
 
     private fun postViewWillBeRemoved() {
-        id?.let { console.log("$id: ViewWillBeRemoved") }
         children.forEach { it.postViewWillBeRemoved() }
         lastLifecycleEvent = LifecycleEvent.ViewWillBeRemoved
         lifecycleObserversList.forEach { it.viewWillBeRemoved(this) }
     }
 
     private fun postOnViewRemoved() {
-        id?.let { console.log("$id: ViewRemoved") }
         children.forEach { it.postOnViewRemoved() }
         lastLifecycleEvent = LifecycleEvent.ViewRemoved
         lifecycleObserversList.forEach { it.onViewRemoved(this) }
