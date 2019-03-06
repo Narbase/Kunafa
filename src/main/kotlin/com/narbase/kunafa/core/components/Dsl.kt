@@ -2,7 +2,9 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.*
+import com.narbase.kunafa.core.components.layout.AnchorLayout
+import com.narbase.kunafa.core.components.layout.LinearLayout
+import com.narbase.kunafa.core.components.layout.ScrollView
 import com.narbase.kunafa.core.viewcontroller.LifecycleObserver
 
 /**
@@ -19,7 +21,7 @@ fun page(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit = 
     Page.visit(lifecycleObserver, block)
 }
 
-fun detachedView(lifecycleObserver: LifecycleObserver? = null, block: DetachedView.() -> Unit): DetachedView = DetachedView().visit(lifecycleObserver, block)
+//fun detachedView(lifecycleObserver: LifecycleObserver? = null, block: DetachedView.() -> Unit): DetachedView = DetachedView().visit(lifecycleObserver, block)
 fun View?.linearLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, null).visit(lifecycleObserver, block)
 fun View?.verticalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
 fun View?.horizontalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
@@ -27,7 +29,6 @@ fun View?.horizontalScrollView(lifecycleObserver: LifecycleObserver? = null, blo
 fun View?.verticalScrollView(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
 
 fun View?.anchorLayout(lifecycleObserver: LifecycleObserver? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(lifecycleObserver, block)
-fun View?.viewContainer(lifecycleObserver: LifecycleObserver? = null, block: ViewContainer.() -> Unit): ViewContainer = ViewContainer(this).visit(lifecycleObserver, block)
 
 fun View?.view(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit): View = View(this).visit(lifecycleObserver, block)
 fun View?.textView(lifecycleObserver: LifecycleObserver? = null, block: TextView.() -> Unit): TextView = TextView(this).visit(lifecycleObserver, block)
