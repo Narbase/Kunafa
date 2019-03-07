@@ -3,9 +3,9 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.css.*
-import com.narbase.kunafa.core.viewcontroller.LifecycleEvent
-import com.narbase.kunafa.core.viewcontroller.LifecycleObserver
-import com.narbase.kunafa.core.viewcontroller.LifecycleOwner
+import com.narbase.kunafa.core.lifecycle.LifecycleEvent
+import com.narbase.kunafa.core.lifecycle.LifecycleObserver
+import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -21,7 +21,7 @@ import kotlin.dom.removeClass
  * Created by islam
  * On: 9/30/17.
  */
-open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
+open class View(var parent: View? = null) : LifecycleOwner {
     var id: String? = null
         set(value) {
             field = value
@@ -48,13 +48,11 @@ open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
     private fun postViewWillBeRemoved() {
         children.forEach { it.postViewWillBeRemoved() }
         lastLifecycleEvent = LifecycleEvent.ViewWillBeRemoved
-        lifecycleObserversList.forEach { it.viewWillBeRemoved(this) }
     }
 
     private fun postOnViewRemoved() {
         children.forEach { it.postOnViewRemoved() }
         lastLifecycleEvent = LifecycleEvent.ViewRemoved
-        lifecycleObserversList.forEach { it.onViewRemoved(this) }
     }
 
     override fun bind(lifecycleObserver: LifecycleObserver) {
@@ -173,22 +171,4 @@ open class View(var parent: View? = null) : LifecycleOwner, LifecycleObserver {
             children.remove(child)
         }
     }
-
-
-    override fun viewWillMount(lifecycleOwner: LifecycleOwner) {
-
-    }
-
-    override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
-
-    }
-
-    override fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner) {
-
-    }
-
-    override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
-
-    }
-
 }

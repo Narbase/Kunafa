@@ -5,7 +5,7 @@ package com.narbase.kunafa.core.components
 import com.narbase.kunafa.core.components.layout.AnchorLayout
 import com.narbase.kunafa.core.components.layout.LinearLayout
 import com.narbase.kunafa.core.components.layout.ScrollView
-import com.narbase.kunafa.core.viewcontroller.LifecycleObserver
+import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -60,4 +60,4 @@ fun View?.ul(lifecycleObserver: LifecycleObserver? = null, block: (UList.() -> U
 fun View?.li(lifecycleObserver: LifecycleObserver? = null, block: (ListItem.() -> Unit)? = null): ListItem =
         ListItem(this).visit(lifecycleObserver, block ?: {})
 
-val detached = null
+val detached: View? = null

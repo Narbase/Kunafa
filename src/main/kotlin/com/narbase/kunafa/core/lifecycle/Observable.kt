@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.narbase.kunafa.core.viewcontroller
+package com.narbase.kunafa.core.lifecycle
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL

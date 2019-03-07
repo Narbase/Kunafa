@@ -1,4 +1,4 @@
-package com.narbase.kunafa.core.viewcontroller
+package com.narbase.kunafa.core.lifecycle
 
 enum class LifecycleEvent {
     ViewWillMount,
