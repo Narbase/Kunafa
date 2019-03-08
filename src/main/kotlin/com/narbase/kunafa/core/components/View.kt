@@ -162,9 +162,14 @@ open class View(var parent: View? = null) : LifecycleOwner {
     }
 
     open fun removeChild(child: View) {
+        if (children.contains(child).not()) {
+            return
+        }
         child.postViewWillBeRemoved()
         children.remove(child)
-        element.removeChild(child.element)
+        if (element.contains(child.element)) {
+            element.removeChild(child.element)
+        }
         child.parent = null
         child.postOnViewRemoved()
     }
