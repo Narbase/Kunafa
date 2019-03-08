@@ -139,12 +139,24 @@ open class View(var parent: View? = null) : LifecycleOwner {
         child.postOnViewMounted()
     }
 
+    fun addChildAfter(child: View, referenceNode: View) {
+        child.postViewWillMount()
+        mountChildAfter(child, referenceNode)
+        child.postOnViewMounted()
+    }
+
     internal open fun addToParent() {
         parent?.mountChild(this)
     }
 
     protected open fun mountChild(child: View) {
         element.append(child.element)
+        child.parent = this
+        children.add(child)
+    }
+
+    protected open fun mountChildAfter(child: View, referenceNode: View) {
+        element.insertBefore(child.element, referenceNode.element.nextSibling)
         child.parent = this
         children.add(child)
     }
@@ -171,4 +183,9 @@ open class View(var parent: View? = null) : LifecycleOwner {
             children.remove(child)
         }
     }
+
+
+    fun <V : Component> mount(component: V): V = component.apply { addToParent(this@View) }
+
+    fun <V : Component> unMount(component: V): V = component.apply { removeFromParent(this@View) }
 }

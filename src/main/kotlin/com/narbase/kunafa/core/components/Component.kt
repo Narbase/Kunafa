@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
@@ -35,6 +37,8 @@ abstract class Component : LifecycleObserver {
         parent?.addChild(view)
     }
 
-}
+    fun removeFromParent(parent: View?) {
+        parent?.removeChild(view)
+    }
 
-fun <V : Component> View?.mount(component: V): V = component.apply { addToParent(this@mount) }
+}

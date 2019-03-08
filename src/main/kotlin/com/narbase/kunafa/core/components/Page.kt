@@ -63,4 +63,6 @@ object Page : View(null) {
          */
     }
 
+    override val path: String?
+        get() = "/"
 }

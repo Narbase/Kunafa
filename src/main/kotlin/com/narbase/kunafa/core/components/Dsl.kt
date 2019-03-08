@@ -21,7 +21,6 @@ fun page(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit = 
     Page.visit(lifecycleObserver, block)
 }
 
-//fun detachedView(lifecycleObserver: LifecycleObserver? = null, block: DetachedView.() -> Unit): DetachedView = DetachedView().visit(lifecycleObserver, block)
 fun View?.linearLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, null).visit(lifecycleObserver, block)
 fun View?.verticalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
 fun View?.horizontalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
