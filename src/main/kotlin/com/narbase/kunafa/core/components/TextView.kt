@@ -3,7 +3,6 @@
 package com.narbase.kunafa.core.components
 
 
-
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
  * ______________________________
@@ -14,9 +13,9 @@ package com.narbase.kunafa.core.components
  */
 open class TextView(parent: View? = null) : View(parent) {
 
-    var text = ""
+    var text
+        get() = element.innerHTML
         set(value) {
-            field = value
             element.innerHTML = value
         }
 }
