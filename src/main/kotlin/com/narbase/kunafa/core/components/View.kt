@@ -187,5 +187,7 @@ open class View(var parent: View? = null) : LifecycleOwner {
 
     fun <V : Component> mount(component: V): V = component.apply { addToParent(this@View) }
 
+    fun <V : Component> mountAfter(component: V, referenceView: View): V = component.apply { addToParentAfter(this@View, referenceView) }
+
     fun <V : Component> unMount(component: V): V = component.apply { removeFromParent(this@View) }
 }

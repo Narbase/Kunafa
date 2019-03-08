@@ -37,6 +37,10 @@ abstract class Component : LifecycleObserver {
         parent?.addChild(view)
     }
 
+    fun addToParentAfter(parent: View?, referenceView: View) {
+        parent?.addChildAfter(view, referenceView)
+    }
+
     fun removeFromParent(parent: View?) {
         parent?.removeChild(view)
     }
