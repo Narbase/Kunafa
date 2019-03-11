@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.drawable
 
 /**
@@ -8,25 +10,43 @@ package com.narbase.kunafa.core.drawable
  * Created by islam
  * On: 9/30/17.
  */
-class Color {
-    var red: Int = 255
-    var green: Int = 255
-    var blue: Int = 255
-    var alpha: Double = 1.0
+class Color() {
+
+    private var red: Int = 255
+    private var green: Int = 255
+    private var blue: Int = 255
+    private var alpha: Double = 1.0
+
+    private var colorString: String? = null
+
+    constructor(color: String) : this() {
+        colorString = color
+    }
+
+    constructor(r: Int, g: Int, b: Int, a: Double = 1.0) : this() {
+        red = r
+        green = g
+        blue = b
+        alpha = a
+    }
 
     companion object {
-        fun rgb(r: Int, g: Int, b: Int, a: Double = 1.0): Color{
-            return Color().apply {
-                red = r
-                green = g
-                blue = b
-                alpha = a
-            }
+
+        val red = Color(255, 0, 0)
+        val blue = Color(0, 0, 255)
+        val white = Color(255, 255, 255)
+        val black = Color(0, 0, 0)
+        val transparent = Color(0, 0, 0, 0.0)
+    }
+
+    override fun toString() = toCss()
+
+    fun toCss(): String {
+        val localColorString = colorString
+        return if (localColorString == null) {
+            "rgba($red,$green,$blue,$alpha)"
+        } else {
+            if (localColorString.startsWith("#")) localColorString else "#$localColorString"
         }
-        val red = Color.rgb(255,0,0)
-        val blue = Color.rgb(0,0,255)
-        val white = Color.rgb(255,255,255)
-        val black = Color.rgb(0,0,0)
-        val transparent = Color.rgb(0,0,0,0.0)
     }
 }

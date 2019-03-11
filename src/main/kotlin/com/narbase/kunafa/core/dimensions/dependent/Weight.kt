@@ -1,8 +1,13 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.dimensions.dependent
 
-import com.narbase.kunafa.core.components.View
+import com.narbase.kunafa.core.css.RuleSet
+import com.narbase.kunafa.core.css.minHeight
+import com.narbase.kunafa.core.css.minWidth
 import com.narbase.kunafa.core.dimensions.DynamicDimension
-import org.w3c.dom.HTMLElement
+import com.narbase.kunafa.core.dimensions.LinearDimension
+import com.narbase.kunafa.core.dimensions.px
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -12,21 +17,35 @@ import org.w3c.dom.HTMLElement
  * Created by islam
  * On: 10/19/17.
  */
-class Weight internal constructor(private val value: Int) : DynamicDimension() {
-    override fun configure(element: HTMLElement, type: Type) {
-        when (type) {
-            Type.height -> {
-                element.style.height = "auto"
-                element.style.flex = "$value 0 0px"
-            }
-            Type.width -> {
-                element.style.width = "auto"
-                element.style.flex = "$value 0 0px"
-            }
+class Weight internal constructor(private val value: Int, val basis: LinearDimension?) : DynamicDimension() {
+
+    override fun configureHeight(ruleSet: RuleSet) {
+
+        ruleSet.setProperty("height", "auto")
+        ruleSet.setProperty("flex-grow", "$value")
+        if (basis == null) {
+            ruleSet.setProperty("flex-basis", "${value}px")
+        } else {
+            ruleSet.setProperty("flex-basis", "${basis}px")
         }
+
+        ruleSet.minHeight = 0.px
+    }
+
+
+    override fun configureWidth(ruleSet: RuleSet) {
+
+        ruleSet.setProperty("width", "auto")
+        ruleSet.setProperty("flex-grow", "$value")
+        if (basis == null) {
+            ruleSet.setProperty("flex-basis", "${value}px")
+        } else {
+            ruleSet.setProperty("flex-basis", "${basis}px")
+        }
+        ruleSet.minWidth = 0.px
     }
 }
 
-infix fun View.weightOf(value: Int): Weight {
-    return Weight(value)
+fun RuleSet.weightOf(value: Int, basis: LinearDimension? = null): Weight {
+    return Weight(value, basis)
 }

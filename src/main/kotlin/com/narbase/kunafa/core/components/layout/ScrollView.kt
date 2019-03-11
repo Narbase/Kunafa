@@ -1,6 +1,9 @@
 package com.narbase.kunafa.core.components.layout
 
-import com.narbase.kunafa.core.dimensions.IndependentDimension
+import com.narbase.kunafa.core.components.View
+import com.narbase.kunafa.core.css.classRuleSet
+import com.narbase.kunafa.core.css.isScrollableHorizontally
+import com.narbase.kunafa.core.css.isScrollableVertically
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -10,15 +13,29 @@ import com.narbase.kunafa.core.dimensions.IndependentDimension
  * Created by islam
  * On: 10/1/17.
  */
-class ScrollView(parent: Container?) : Container(parent) {
+class ScrollView(
+        parent: View?,
+        private val initialOrientation: Orientation?
+) : LinearLayout(parent, initialOrientation) {
 
-    override val wrappedContentWidth: IndependentDimension
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-    override val wrappedContentHeight: IndependentDimension
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    override fun configureElement() {
+        super.configureElement()
+        if (initialOrientation == Orientation.Horizontal) {
+            addRuleSet(horizontalScrollLayoutClass)
+        } else {
+            addRuleSet(verticalScrollLayoutClass)
+        }
+    }
 
-    init {
-        element.style.overflowX =  "scroll"
-        element.style.overflowY =  "scroll"
+    companion object {
+        val verticalScrollLayoutClass = classRuleSet {
+            isScrollableVertically = true
+            isScrollableHorizontally = false
+        }
+        val horizontalScrollLayoutClass = classRuleSet {
+            isScrollableHorizontally = true
+            isScrollableVertically = false
+        }
     }
 }
+

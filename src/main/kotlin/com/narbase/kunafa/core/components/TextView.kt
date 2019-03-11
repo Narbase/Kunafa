@@ -1,12 +1,7 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.IndependentDimension
-import com.narbase.kunafa.core.dimensions.independent.px
-import com.narbase.kunafa.core.drawable.Color
-import org.w3c.dom.HTMLSpanElement
-import kotlin.browser.document
-import kotlin.browser.window
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -16,56 +11,11 @@ import kotlin.browser.window
  * Created by islam
  * On: 10/9/17.
  */
-open class TextView(parent: Container? = null) : View(parent) {
-    val span by lazy {
-        val s = document.createElement("span") as HTMLSpanElement
-        element.append(s)
-        return@lazy s
-    }
+open class TextView(parent: View? = null) : View(parent) {
 
-    var text = ""
+    var text
+        get() = element.innerHTML
         set(value) {
-            field = value
-            span.innerHTML = value
+            element.innerHTML = value
         }
-
-    var textAlign: TextAlign? = null
-        set(value) {
-            field = value
-            value?.let {
-                element.style.textAlign = it.cssName
-            }
-        }
-
-    var textSize: IndependentDimension? = null
-        set(value) {
-            field = value
-            value?.let {
-                element.style.fontSize = "${it.pixels}px"
-            }
-        }
-
-
-    override val wrappedContentHeight: IndependentDimension
-        get() {
-            return span.offsetHeight.px
-        }
-
-    override val wrappedContentWidth: IndependentDimension
-        get() = span.offsetWidth.px
-
-    enum class TextAlign(val cssName: String) {
-        Left("left"),
-        Right("right"),
-        Center("center"),
-        Justify("justify"),
-        Initial("initial"),
-        Inherit("inherit")
-    }
-
-    var textColor: Color = Color()
-    set(value) {
-        field = value
-        element.style.color = "rgba(${value.red},${value.green},${value.blue},${value.alpha})"
-    }
 }

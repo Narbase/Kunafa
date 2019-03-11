@@ -2,8 +2,9 @@
 
 package com.narbase.kunafa.core.components.layout
 
+import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Horizontal
-import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Vertical
+import com.narbase.kunafa.core.css.*
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -13,54 +14,37 @@ import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Vertic
  * Created by islam
  * On: 9/30/17.
  */
-class LinearLayout(
-        parent: Container,
-        val orientation: Orientation = Horizontal
-) : Container(parent) {
+open class LinearLayout(
+        parent: View?,
+        private val initialOrientation: Orientation? = Horizontal
+) : View(parent) {
 
     override fun configureElement() {
         super.configureElement()
-        element.style.display = "inline-flex"
-        element.style.flexDirection = if (orientation == Horizontal) "row" else "column"
-        alignItems = Alignment.Start
-    }
-
-
-    var justifyContent: JustifyContent = JustifyContent.Start
-    set(value) {
-        field = value
-        element.style.justifyContent = value.cssName
-    }
-
-    var alignItems: Alignment = Alignment.Start
-        set(value) {
-            field = value
-            element.style.alignItems = value.cssName
+        if (initialOrientation == Horizontal) {
+            addRuleSet(horizontalLayoutClass)
+        } else {
+            addRuleSet(verticalLayoutClass)
         }
+        addRuleSet(linearLayoutClass)
+    }
 
     enum class Orientation {
         Horizontal,
         Vertical
     }
-}
 
-enum class Alignment(
-        val cssName: String
-) {
-    Start("flex-start"),
-    End("flex-end"),
-    Center("center"),
-    Baseline("baseline"),
-    Stretch("stretch")
-}
-
-enum class JustifyContent(
-        val cssName: String) {
-    Start("flex-start"),
-    End("flex-end"),
-    Center("center"),
-    SpaceBetween("space-between"),
-    SpaceAround("space-around"),
-    SpaceEvenly("space-evenly")
+    companion object {
+        val linearLayoutClass = classRuleSet {
+            alignItems = Alignment.Start
+            display = "inline-flex"
+        }
+        val verticalLayoutClass = classRuleSet {
+            flexDirection = "column"
+        }
+        val horizontalLayoutClass = classRuleSet {
+            flexDirection = "row"
+        }
+    }
 }
 

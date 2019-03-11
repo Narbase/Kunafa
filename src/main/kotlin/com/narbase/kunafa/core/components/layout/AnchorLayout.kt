@@ -2,8 +2,6 @@
 
 package com.narbase.kunafa.core.components.layout
 
-import com.narbase.kunafa.core.components.View
-
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
  * ______________________________
@@ -12,21 +10,21 @@ import com.narbase.kunafa.core.components.View
  * Created by islam
  * On: 9/30/17.
  */
-class AnchorLayout(
-        parent: Container
-) : Container(parent) {
-
-    override fun configureElement() {
-        super.configureElement()
-        element.style.display = "inline-block"
-        element.style.position = "relative"
-    }
-
-    override fun addChild(child: View) {
-        child.element.style.position = "absolute"
-        super.addChild(child)
-    }
-
-
-}
+//class AnchorLayout(
+//        parent: View?
+//) : View(parent) {
+//
+//    override fun configureElement() {
+//        super.configureElement()
+//        element.style.display = "inline-block"
+//        element.style.position = "relative"
+//    }
+//
+//    override fun mountChild(child: View) {
+//        child.element.style.position = "absolute"
+//        super.mountChild(child)
+//    }
+//
+//
+//}
 

@@ -1,10 +1,9 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.dimensions.dependent
 
-import com.narbase.kunafa.core.components.View
-import com.narbase.kunafa.core.dimensions.Dimension
+import com.narbase.kunafa.core.css.RuleSet
 import com.narbase.kunafa.core.dimensions.DynamicDimension
-import org.w3c.dom.HTMLElement
-import org.w3c.xhr.XMLHttpRequest
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -15,20 +14,18 @@ import org.w3c.xhr.XMLHttpRequest
  * On: 10/1/17.
  */
 
-internal class WrapContent: DynamicDimension(){
-    override fun configure(element: HTMLElement, type: Dimension.Type) {
-        when (type) {
-            Type.height -> {
-                element.style.height = "auto"
-            }
-            Type.width -> {
-                element.style.width = "auto"
-            }
-        }
+internal class WrapContent : DynamicDimension() {
+
+    override fun configureHeight(ruleSet: RuleSet) {
+        ruleSet.setProperty("height", "auto")
+    }
+
+    override fun configureWidth(ruleSet: RuleSet) {
+        ruleSet.setProperty("width", "auto")
     }
 }
 
-val View.wrapContent: DynamicDimension
+val RuleSet.wrapContent: DynamicDimension
     get() {
         return WrapContent()
     }

@@ -1,10 +1,11 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.Container
-import com.narbase.kunafa.core.dimensions.IndependentDimension
-import com.narbase.kunafa.core.dimensions.independent.px
+import com.narbase.kunafa.core.css.ClassSelector
+import com.narbase.kunafa.core.css.RuleSet
 import kotlin.browser.document
-import kotlin.browser.window
+import kotlin.dom.addClass
 import kotlin.dom.clear
 
 /**
@@ -15,17 +16,10 @@ import kotlin.dom.clear
  * Created by islam
  * On: 9/30/17.
  */
-object Page : Container(null) {
+object Page : View(null) {
 
-    override fun updateElementWidth() {
-        document.body?.style?.width = "${window.innerWidth}px"
-    }
-
-    override fun updateElementHeight() {
-        document.body?.style?.height = "${window.innerHeight}px"
-    }
-
-    override fun addChild(child: View) {
+    override fun mountChild(child: View) {
+        child.parent = this
         document.body?.append(child.element)
         children.add(child)
     }
@@ -44,25 +38,23 @@ object Page : Container(null) {
 
     fun prepare() {
         id = "page"
+
         document.body?.style?.margin = "0"
         document.body?.style?.padding = "0"
         document.body?.style?.overflowY = "hidden"
         document.body?.style?.overflowX = "hidden"
+        document.body?.style?.width = "100vw"
+        document.body?.style?.height = "100vh"
+
         document.body?.clear()
+    }
 
-        width = window.innerWidth.px
-        height = window.innerHeight.px
-
-        addOnResizedListener(this) {
-            width = window.innerWidth.px
-            height = window.innerHeight.px
+    override fun addRuleSet(ruleSet: RuleSet) {
+        val selector = ruleSet.selector
+        if (selector is ClassSelector) {
+            val className = selector.name
+            document.body?.addClass(className)
         }
-
-        window.onresize = {
-            onResizedListeners.forEach { it.second() }
-        }
-
-
     }
 
     override fun addToParent() {
@@ -71,4 +63,6 @@ object Page : Container(null) {
          */
     }
 
+    override val path: String?
+        get() = "/"
 }
