@@ -31,18 +31,30 @@ class Route(
         get() = "/${segments.joinToString("/")}"
 
     fun update() {
+        val oldPath = setupRouterToCurrentRoute()
         val windowSegments = getSegments(window.location.pathname)
         if (doesMatch(windowSegments)) {
-            Router.parentRoute = this
             parentView?.mountAfter(component, referenceView)
             updatePathParams(windowSegments)
             children.forEach {
                 it.update()
             }
-            Router.parentRoute = parentRoute
         } else {
             parentView?.unMount(component)
         }
+        restoreRouterConfig(oldPath)
+    }
+
+    private fun restoreRouterConfig(oldPath: String) {
+        Router.parentRoute = parentRoute
+        Router.currentPath = oldPath
+    }
+
+    private fun setupRouterToCurrentRoute(): String {
+        val oldPath = Router.currentPath
+        Router.currentPath = meta.url
+        Router.parentRoute = this
+        return oldPath
     }
 
     private fun updatePathParams(windowSegments: List<RouteSegment>) {
@@ -84,24 +96,25 @@ class Route(
                 isAbsolute: Boolean = false,
                 block: (meta: RouteMeta) -> Component
         ): Route {
-            val oldPath = Router.currentPath
             val routePath = getPath(Router.currentPath, path, isAbsolute)
 
-            Router.currentPath = routePath
             val routeSegments = getSegments(routePath)
 
             val reference = parentView.view { isVisible = false }
             val meta = RouteMeta(routePath, Observable())
             val component = block(meta)
             val route = Route(meta, routeSegments, component, Router.parentRoute, parentView, reference, isExact)
+            addToParent(route)
+            route.update()
+            return route
+        }
+
+        private fun addToParent(route: Route) {
             if (Router.parentRoute == null) {
                 Router.add(route)
             } else {
                 Router.parentRoute?.add(route)
             }
-            route.update()
-            Router.currentPath = oldPath
-            return route
         }
 
         fun getPath(currentPath: String, path: String, isAbsolute: Boolean): String {
