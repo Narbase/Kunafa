@@ -29,9 +29,9 @@ class Radio(parent: View? = null) : View(parent) {
 
         }
 
-    var onChange: ((Event) -> Unit)? = null
+    var onChange: ((Event) -> Unit)?
+        get() = element.onchange
         set(value) {
-            field = value
             element.onchange = value
         }
 

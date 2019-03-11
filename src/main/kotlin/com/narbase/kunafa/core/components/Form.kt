@@ -29,9 +29,9 @@ class FieldSet(parent: View? = null) : View(parent) {
 class Legend(parent: View? = null) : View(parent) {
 
     override val element: HTMLLegendElement = (document.createElement("legend") as HTMLLegendElement)
-    var text = ""
+    var text
+        get() = element.innerHTML
         set(value) {
-            field = value
             element.innerHTML = value
         }
 }

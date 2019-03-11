@@ -27,15 +27,15 @@ class TextInput(parent: View? = null) : View(parent) {
             element.value = value
         }
 
-    var placeholder = ""
+    var placeholder
+        get() = element.placeholder
         set(value) {
-            field = value
             element.placeholder = value
         }
 
-    var type = ""
+    var type
+        get() = element.type
         set(value) {
-            field = value
             element.type = value
         }
 
@@ -54,9 +54,9 @@ class TextInput(parent: View? = null) : View(parent) {
             element.style.color = value.toCss()
         }
 
-    var onChange: ((Event) -> Unit)? = null
+    var onChange: ((Event) -> Unit)?
+        get() = element.onchange
         set(value) {
-            field = value
             element.onchange = value
         }
 

@@ -22,9 +22,9 @@ import kotlin.dom.removeClass
  * On: 9/30/17.
  */
 open class View(var parent: View? = null) : LifecycleOwner {
-    var id: String? = null
+    var id: String?
+        get() = element.id
         set(value) {
-            field = value
             value?.let {
                 element.id = it
             }
@@ -75,9 +75,9 @@ open class View(var parent: View? = null) : LifecycleOwner {
             }
         }
 
-    open var onClick: ((Event) -> Unit)? = null
+    open var onClick: ((Event) -> Unit)?
+        get() = element.onclick
         set(value) {
-            field = value
             element.onclick = value
         }
 

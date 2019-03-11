@@ -26,9 +26,9 @@ class TableRow(parent: View? = null) : View(parent) {
 class TableCell(parent: View? = null) : View(parent) {
 
     override val element: HTMLTableCellElement = (document.createElement("td") as HTMLTableCellElement)
-    var text = ""
+    var text
+        get() = element.innerHTML
         set(value) {
-            field = value
             element.innerHTML = value
         }
 }
@@ -36,9 +36,9 @@ class TableCell(parent: View? = null) : View(parent) {
 class TableHeaderCell(parent: View? = null) : View(parent) {
     override val element: HTMLElement = (document.createElement("th") as HTMLTableCellElement)
 
-    var text = ""
+    var text
+        get() = element.innerHTML
         set(value) {
-            field = value
             element.innerHTML = value
         }
 }
