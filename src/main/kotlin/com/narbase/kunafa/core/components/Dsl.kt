@@ -2,7 +2,6 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.components.layout.AnchorLayout
 import com.narbase.kunafa.core.components.layout.LinearLayout
 import com.narbase.kunafa.core.components.layout.ScrollView
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
@@ -27,13 +26,13 @@ fun View?.horizontalLayout(lifecycleObserver: LifecycleObserver? = null, block: 
 fun View?.horizontalScrollLayout(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
 fun View?.verticalScrollLayout(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
 
-fun View?.anchorLayout(lifecycleObserver: LifecycleObserver? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(lifecycleObserver, block)
+//fun View?.anchorLayout(lifecycleObserver: LifecycleObserver? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(lifecycleObserver, block)
 
 fun View?.view(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit): View = View(this).visit(lifecycleObserver, block)
 fun View?.a(lifecycleObserver: LifecycleObserver? = null, block: Anchor.() -> Unit): Anchor = Anchor(this).visit(lifecycleObserver, block)
 fun View?.textView(lifecycleObserver: LifecycleObserver? = null, block: TextView.() -> Unit): TextView = TextView(this).visit(lifecycleObserver, block)
 fun View?.textInput(lifecycleObserver: LifecycleObserver? = null, block: TextInput.() -> Unit): TextInput = TextInput(this).visit(lifecycleObserver, block)
-fun View?.button(lifecycleObserver: LifecycleObserver? = null, block: ButtonView.() -> Unit): ButtonView = ButtonView(this).visit(lifecycleObserver, block)
+fun View?.button(lifecycleObserver: LifecycleObserver? = null, block: Button.() -> Unit): Button = Button(this).visit(lifecycleObserver, block)
 fun View?.imageView(lifecycleObserver: LifecycleObserver? = null, block: ImageView.() -> Unit): ImageView = ImageView(this).visit(lifecycleObserver, block)
 fun View?.checkbox(lifecycleObserver: LifecycleObserver? = null, block: Checkbox.() -> Unit): Checkbox = Checkbox(this).visit(lifecycleObserver, block)
 

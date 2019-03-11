@@ -13,7 +13,7 @@ import kotlin.browser.document
  * On: 10/15/17.
  */
 @Suppress("unused")
-class ButtonView(parent: View? = null) : View(parent) {
+class Button(parent: View? = null) : View(parent) {
     override val element: HTMLButtonElement = document.createElement("button") as HTMLButtonElement
     var text: String?
         get() = element.textContent
