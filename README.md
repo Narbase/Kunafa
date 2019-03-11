@@ -21,17 +21,20 @@ Developers only need to use Kotlin for developement. The framework the view from
 
 - You write the view (similar to Android xml layouts) in Kotlin DSL. e. g.
 ```kotlin
-        verticalLayout {
-         width = matchParent
-         height = matchParent
-         background = Color.rgb(240, 240, 240)
-         Button {
-          text = "Click me"
-        }
-       }
+            verticalLayout {
+                style {
+                    width = matchParent
+                    height = matchParent
+                    backgroundColor = Color(240, 240, 240)
+                }
+                button {
+                    text = "Click me"
+                }
+            }
+
   ```
 
-- The presenter and model (similar to Android activity or iOS ViewController) should extend a base class and implement certain life cycle functions.
+- The view component (similar to Android activity or iOS ViewController) should extend a base class and implement certain life cycle functions.
 - The framework views contains easy to understand and familiar components and layouts managers. i. e. Button, TextView, TextInput, HorizontalLayout, VerticalLayout and so on.
 - The framework makes laying out objects easy, e. g.  match parent, wrap content.
 - There should be a way to wrap any html, css, and js into a framework component to use it inside the framework.
@@ -49,7 +52,7 @@ Developers only need to use Kotlin for developement. The framework the view from
 
 To add Kunafa to your project, first you need to add it to your build.gradle file as a dependecy. 
 ```groovy
-compile 'com.narbase:kunafa:0.1.4'
+compile 'com.narbase:kunafa:0.2.0-beta'
 ````
 Then you need to add Kunafa js file to your index.html. Add the following line to `index.html` right after `kotlin.js` 
 ```html
