@@ -52,7 +52,7 @@ class Route(
 
     private fun setupRouterToCurrentRoute(): String {
         val oldPath = Router.currentPath
-        Router.currentPath = meta.url
+        Router.currentPath = meta.path
         Router.parentRoute = this
         return oldPath
     }
@@ -167,7 +167,7 @@ class ParameterSegment(text: String) : RouteSegment(text) {
     override fun toString() = ":$text"
 }
 
-class RouteMeta(val url: String, val params: Observable<Map<String, String>>)
+class RouteMeta(val path: String, val params: Observable<Map<String, String>>)
 
 fun View?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
     val completePath = Route.getPath(Router.currentPath, path, isAbsolute = true)
