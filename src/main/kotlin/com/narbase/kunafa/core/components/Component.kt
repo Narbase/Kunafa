@@ -3,7 +3,6 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
-import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -20,18 +19,6 @@ abstract class Component : LifecycleObserver {
     }
 
     protected abstract fun View?.getView(): View
-
-    override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
-    }
-
-    override fun onViewRemoved(lifecycleOwner: LifecycleOwner) {
-    }
-
-    override fun viewWillBeRemoved(lifecycleOwner: LifecycleOwner) {
-    }
-
-    override fun viewWillMount(lifecycleOwner: LifecycleOwner) {
-    }
 
     fun addToParent(parent: View?) {
         parent?.addChild(view)

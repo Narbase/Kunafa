@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.narbase.kunafa.core.components
 
 import org.w3c.dom.HTMLAnchorElement
