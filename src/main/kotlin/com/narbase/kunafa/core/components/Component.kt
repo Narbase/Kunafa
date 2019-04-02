@@ -27,11 +27,11 @@ abstract class Component : LifecycleObserver {
     protected abstract fun View?.getView(): View
 
     fun addToParent(parent: View?) {
-        parent?.addChild(initializedView)
+        parent?.mount(initializedView)
     }
 
     fun addToParentAfter(parent: View?, referenceView: View) {
-        parent?.addChildAfter(initializedView, referenceView)
+        parent?.mountAfter(initializedView, referenceView)
     }
 
     fun removeFromParent(parent: View?) {

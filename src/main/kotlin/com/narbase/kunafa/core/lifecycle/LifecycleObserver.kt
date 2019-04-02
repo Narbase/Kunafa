@@ -10,6 +10,10 @@ package com.narbase.kunafa.core.lifecycle
  */
 interface LifecycleObserver {
 
+    fun onViewCreated(lifecycleOwner: LifecycleOwner) {
+
+    }
+
     fun viewWillMount(lifecycleOwner: LifecycleOwner) {
 
     }

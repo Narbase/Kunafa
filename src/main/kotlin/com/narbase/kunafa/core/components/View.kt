@@ -33,6 +33,10 @@ open class View(var parent: View? = null) : LifecycleOwner {
 
     private val lifecycleObserversList = mutableListOf<LifecycleObserver>()
 
+    internal fun postOnViewCreated() {
+        lifecycleObserversList.forEach { it.onViewCreated(this) }
+    }
+
     internal fun postViewWillMount() {
         lifecycleObserversList.forEach { it.viewWillMount(this) }
     }
@@ -129,34 +133,26 @@ open class View(var parent: View? = null) : LifecycleOwner {
 
     val children: ArrayList<View> = arrayListOf()
 
-    fun addChild(child: View) {
-        child.postViewWillMount()
-        mountChild(child)
-        child.postOnViewMounted()
-    }
-
-    fun addChildAfter(child: View, referenceNode: View) {
-        child.postViewWillMount()
-        mountChildAfter(child, referenceNode)
-        child.postOnViewMounted()
-    }
 
     internal open fun addToParent() {
-        parent?.mountChild(this)
+        parent?.mount(this)
     }
 
-    protected open fun mountChild(child: View) {
+    open fun mount(child: View) {
+        child.postViewWillMount()
         element.append(child.element)
         child.parent = this
         children.add(child)
+        child.postOnViewMounted()
     }
 
-    protected open fun mountChildAfter(child: View, referenceNode: View) {
+    open fun mountAfter(child: View, referenceNode: View) {
+        child.postViewWillMount()
         element.insertBefore(child.element, referenceNode.element.nextSibling)
         child.parent = this
         children.add(child)
+        child.postOnViewMounted()
     }
-
     open fun removeChild(child: View) {
         if (children.contains(child).not()) {
             return
