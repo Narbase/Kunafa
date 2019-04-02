@@ -10,3 +10,10 @@ fun <V : View> V.visit(lifecycleObserver: LifecycleObserver?, setup: V.() -> Uni
     this.addToParent()
     return this
 }
+
+fun Component.createView(setup: View?.() -> View): View {
+    val view = detached.setup()
+    view.bind(this)
+    view.postOnViewCreated()
+    return view
+}
