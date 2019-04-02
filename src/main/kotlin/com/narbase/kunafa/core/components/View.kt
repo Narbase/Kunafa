@@ -42,11 +42,13 @@ open class View(var parent: View? = null) : LifecycleOwner {
     }
 
     private fun postViewWillBeRemoved() {
+        lifecycleObserversList.forEach { it.viewWillBeRemoved(this) }
         children.forEach { it.postViewWillBeRemoved() }
     }
 
     private fun postOnViewRemoved() {
         children.forEach { it.postOnViewRemoved() }
+        lifecycleObserversList.forEach { it.onViewRemoved(this) }
     }
 
     override fun bind(lifecycleObserver: LifecycleObserver) {
