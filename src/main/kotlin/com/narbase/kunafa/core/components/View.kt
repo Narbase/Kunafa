@@ -3,7 +3,6 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.css.*
-import com.narbase.kunafa.core.lifecycle.LifecycleEvent
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import org.w3c.dom.HTMLDivElement
@@ -33,26 +32,21 @@ open class View(var parent: View? = null) : LifecycleOwner {
     open val element: HTMLElement = document.createElement("div") as HTMLDivElement
 
     private val lifecycleObserversList = mutableListOf<LifecycleObserver>()
-    override var lastLifecycleEvent: LifecycleEvent? = null
 
     internal fun postViewWillMount() {
-        lastLifecycleEvent = LifecycleEvent.ViewWillMount
         lifecycleObserversList.forEach { it.viewWillMount(this) }
     }
 
     internal fun postOnViewMounted() {
-        lastLifecycleEvent = LifecycleEvent.ViewMounted
         lifecycleObserversList.forEach { it.onViewMounted(this) }
     }
 
     private fun postViewWillBeRemoved() {
         children.forEach { it.postViewWillBeRemoved() }
-        lastLifecycleEvent = LifecycleEvent.ViewWillBeRemoved
     }
 
     private fun postOnViewRemoved() {
         children.forEach { it.postOnViewRemoved() }
-        lastLifecycleEvent = LifecycleEvent.ViewRemoved
     }
 
     override fun bind(lifecycleObserver: LifecycleObserver) {
