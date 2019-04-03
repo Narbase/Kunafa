@@ -31,4 +31,8 @@ class Observable<T> {
         }
         observer(value)
     }
+
+    fun clearObservers() {
+        observers?.clear()
+    }
 }

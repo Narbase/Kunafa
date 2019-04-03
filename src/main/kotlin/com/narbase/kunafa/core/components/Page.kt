@@ -18,10 +18,20 @@ import kotlin.dom.clear
  */
 object Page : View(null) {
 
-    override fun mountChild(child: View) {
+    override fun mount(child: View) {
+        child.postViewWillMount()
         child.parent = this
         document.body?.append(child.element)
         children.add(child)
+        child.postOnViewMounted()
+    }
+
+    override fun mountAfter(child: View, referenceNode: View) {
+        child.postViewWillMount()
+        document.body?.insertBefore(child.element, referenceNode.element.nextSibling)
+        child.parent = this
+        children.add(child)
+        child.postOnViewMounted()
     }
 
     override fun removeChild(child: View) {

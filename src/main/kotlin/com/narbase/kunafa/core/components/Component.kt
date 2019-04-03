@@ -17,21 +17,19 @@ abstract class Component : LifecycleObserver {
     private var view: View? = null
     private val initializedView: View
         get() {
-            val notNullView = view ?: detached.getView().apply { bind(this@Component) }
-            if (view == null) {
-                view = notNullView
-            }
+            val notNullView = view ?: createView { getView() }
+            view = notNullView
             return notNullView
         }
 
     protected abstract fun View?.getView(): View
 
     fun addToParent(parent: View?) {
-        parent?.addChild(initializedView)
+        parent?.mount(initializedView)
     }
 
     fun addToParentAfter(parent: View?, referenceView: View) {
-        parent?.addChildAfter(initializedView, referenceView)
+        parent?.mountAfter(initializedView, referenceView)
     }
 
     fun removeFromParent(parent: View?) {

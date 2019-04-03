@@ -4,10 +4,16 @@ import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 
 fun <V : View> V.visit(lifecycleObserver: LifecycleObserver?, setup: V.() -> Unit): V {
     lifecycleObserver?.let { bind(it) }
-    postViewWillMount()
     configureElement()
     this.setup()
+    postOnViewCreated()
     this.addToParent()
-    postOnViewMounted()
     return this
+}
+
+fun Component.createView(setup: View?.() -> View): View {
+    val view = detached.setup()
+    view.bind(this)
+    view.postOnViewCreated()
+    return view
 }
