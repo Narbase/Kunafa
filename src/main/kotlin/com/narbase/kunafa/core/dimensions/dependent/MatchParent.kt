@@ -3,9 +3,7 @@
 package com.narbase.kunafa.core.dimensions.dependent
 
 import com.narbase.kunafa.core.components.layout.LinearLayout
-import com.narbase.kunafa.core.css.Alignment
-import com.narbase.kunafa.core.css.RuleSet
-import com.narbase.kunafa.core.css.alignSelf
+import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.DynamicDimension
 
 /**
@@ -23,14 +21,14 @@ class MatchParent internal constructor() : DynamicDimension() {
     with column direction) or horizontal layout (flex with row dimension), and matchParent is on the perpendicular
     dimension to the flex, the 100% does not work in WebKit.
     To solve this, alignSelf : flex-stretch is used instead.
-    This function however is not only used to configure the direct elements of views, but also the internal elements
-    (img in ImageView, span in TextView..etc). In these cases, match parent should always be dimension : 100%.
-    Therefore, we check if the element is direct element of the view or internal element.
+    In these cases, dimension should not be specified as 100%
+    https://stackoverflow.com/questions/33636796/chrome-safari-not-filling-100-height-of-flex-parent
      */
     override fun configureHeight(ruleSet: RuleSet) {
         ruleSet.setProperty("height", "100%")
         ruleSet.addCompoundClassRule(parentRuleSet = LinearLayout.horizontalLayoutClass) {
             alignSelf = Alignment.Stretch
+            height = wrapContent
         }
     }
 
@@ -38,6 +36,7 @@ class MatchParent internal constructor() : DynamicDimension() {
         ruleSet.setProperty("width", "100%")
         ruleSet.addCompoundClassRule(parentRuleSet = LinearLayout.verticalLayoutClass) {
             alignSelf = Alignment.Stretch
+            width = wrapContent
         }
     }
 }
