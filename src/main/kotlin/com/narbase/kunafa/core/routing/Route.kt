@@ -15,49 +15,46 @@ import kotlin.browser.window
  * On: 2019/03/09.
  */
 
-class Route(
+abstract class Route constructor(
         val meta: RouteMeta,
         val segments: List<RouteSegment>,
-        val component: Component,
         val parentRoute: Route?,
-        val parentView: View?,
-        val referenceView: View,
         val isExact: Boolean
 ) {
 
-    private val children = mutableListOf<Route>()
+    protected val children = mutableListOf<Route>()
 
     val path
         get() = "/${segments.joinToString("/")}"
 
-    fun update() {
+    open fun update() {
         val oldPath = setupRouterToCurrentRoute()
         val windowSegments = getSegments(window.location.pathname)
         if (doesMatch(windowSegments)) {
-            parentView?.mountAfter(component, referenceView)
-            updatePathParams(windowSegments)
-            children.forEach {
-                it.update()
-            }
+            onMatch(windowSegments)
         } else {
-            parentView?.unMount(component)
+            onUnMatch()
         }
         restoreRouterConfig(oldPath)
     }
 
-    private fun restoreRouterConfig(oldPath: String) {
+    abstract fun onMatch(windowSegments: List<RouteSegment>)
+
+    abstract fun onUnMatch()
+
+    protected fun restoreRouterConfig(oldPath: String) {
         Router.parentRoute = parentRoute
         Router.currentPath = oldPath
     }
 
-    private fun setupRouterToCurrentRoute(): String {
+    protected fun setupRouterToCurrentRoute(): String {
         val oldPath = Router.currentPath
         Router.currentPath = meta.path
         Router.parentRoute = this
         return oldPath
     }
 
-    private fun updatePathParams(windowSegments: List<RouteSegment>) {
+    protected fun updatePathParams(windowSegments: List<RouteSegment>) {
         val params = mutableMapOf<String, String>()
         segments
                 .forEachIndexed { index, segment ->
@@ -76,7 +73,7 @@ class Route(
         children.add(route)
     }
 
-    private fun doesMatch(windowSegments: List<RouteSegment>): Boolean {
+    fun doesMatch(windowSegments: List<RouteSegment>): Boolean {
         when {
             isExact -> if (segments.size != windowSegments.size) return false
             else -> if (segments.size > windowSegments.size) return false
@@ -89,7 +86,7 @@ class Route(
     }
 
     companion object {
-        fun createRoute(
+        fun createComponentRoute(
                 parentView: View,
                 path: String,
                 isExact: Boolean = false,
@@ -103,13 +100,13 @@ class Route(
             val reference = parentView.view { isVisible = false }
             val meta = RouteMeta(routePath, Observable())
             val component = block(meta)
-            val route = Route(meta, routeSegments, component, Router.parentRoute, parentView, reference, isExact)
+            val route = ComponentRoute(meta, routeSegments, component, Router.parentRoute, parentView, reference, isExact)
             addToParent(route)
             route.update()
             return route
         }
 
-        private fun addToParent(route: Route) {
+        protected fun addToParent(route: Route) {
             if (Router.parentRoute == null) {
                 Router.add(route)
             } else {
@@ -155,7 +152,7 @@ fun View.routeComponent(
         isExact: Boolean = false,
         isAbsolute: Boolean = false,
         block: (meta: RouteMeta) -> Component
-): Route = Route.createRoute(this, path, isExact, isAbsolute, block)
+): Route = Route.createComponentRoute(this, path, isExact, isAbsolute, block)
 
 open class RouteSegment(val text: String) {
     open fun matches(route: RouteSegment?) = text == route?.text

@@ -26,15 +26,16 @@ class MatchParent internal constructor() : DynamicDimension() {
      */
     override fun configureHeight(ruleSet: RuleSet) {
         ruleSet.setProperty("height", "100%")
-        ruleSet.addCompoundClassRule(parentRuleSet = LinearLayout.horizontalLayoutClass) {
+        stringRuleSet("${LinearLayout.horizontalLayoutClass.selector} > ${ruleSet.selector}") {
             alignSelf = Alignment.Stretch
             height = wrapContent
+
         }
     }
 
     override fun configureWidth(ruleSet: RuleSet) {
         ruleSet.setProperty("width", "100%")
-        ruleSet.addCompoundClassRule(parentRuleSet = LinearLayout.verticalLayoutClass) {
+        stringRuleSet("${LinearLayout.verticalLayoutClass.selector} > ${ruleSet.selector}") {
             alignSelf = Alignment.Stretch
             width = wrapContent
         }
