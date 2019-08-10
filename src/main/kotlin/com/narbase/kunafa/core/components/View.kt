@@ -7,7 +7,7 @@ import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
-import org.w3c.dom.events.Event
+import org.w3c.dom.events.MouseEvent
 import kotlin.browser.document
 import kotlin.dom.addClass
 import kotlin.dom.removeClass
@@ -75,7 +75,7 @@ open class View(var parent: View? = null) : LifecycleOwner {
             }
         }
 
-    open var onClick: ((Event) -> Unit)?
+    open var onClick: ((MouseEvent) -> dynamic)?
         get() = element.onclick
         set(value) {
             element.onclick = value
@@ -94,6 +94,16 @@ open class View(var parent: View? = null) : LifecycleOwner {
 
     fun style(rules: RuleSet.() -> Unit): RuleSet {
         val ruleSet = classRuleSet(null, rules)
+        addRuleSet(ruleSet)
+        return ruleSet
+    }
+
+    fun style(name: String, rules: RuleSet.() -> Unit): RuleSet {
+        val ruleSet = namedStyles.getOrElse(name) {
+            val newRuleSet = classRuleSet(name, rules)
+            namedStyles[name] = newRuleSet
+            newRuleSet
+        }
         addRuleSet(ruleSet)
         return ruleSet
     }
