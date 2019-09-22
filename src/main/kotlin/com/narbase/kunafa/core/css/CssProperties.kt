@@ -410,6 +410,14 @@ fun classRuleSet(classNamePrefix: String? = null, rules: RuleSet.() -> Unit): Ru
     return ruleSet
 }
 
+fun classRuleSet(classNamePrefix: String? = null, ruleSet: RuleSet): RuleSet {
+    val className = ClassNameGenerator.getClassName(classNamePrefix)
+    val selector = ClassSelector(className)
+    ruleSet.selector = selector
+    addRuleSetToDocument(ruleSet)
+    return ruleSet
+}
+
 fun stringRuleSet(selector: String, rules: RuleSet.() -> Unit): RuleSet {
     val stringSelector = StringSelector(selector)
     val ruleSet = RuleSet(stringSelector).apply { rules() }

@@ -5,4 +5,11 @@ class Rule<T>(
         val value: T
 ) {
     override fun toString() = "$name:$value;"
+    override fun hashCode(): Int {
+        return toString().hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Rule<*> && name == other.name && value == value
+    }
 }

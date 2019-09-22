@@ -92,8 +92,23 @@ open class View(var parent: View? = null) : LifecycleOwner {
 //        addRuleSet(ruleSet)
 //    }
 
-    fun style(rules: RuleSet.() -> Unit): RuleSet {
+    private fun simpleStyle(rules: RuleSet.() -> Unit): RuleSet {
         val ruleSet = classRuleSet(null, rules)
+        addRuleSet(ruleSet)
+        return ruleSet
+    }
+
+    fun style(shouldHash: Boolean = true, rules: RuleSet.() -> Unit): RuleSet {
+        if (shouldHash.not()) {
+            return simpleStyle(rules)
+        }
+        val testRuleSet = RuleSet(StringSelector("")).apply { rules() }
+        val hashCode = testRuleSet.hashCode().toString()
+        val ruleSet = namedStyles.getOrElse(hashCode) {
+            val newRuleSet = classRuleSet(null, testRuleSet)
+            namedStyles[hashCode] = newRuleSet
+            newRuleSet
+        }
         addRuleSet(ruleSet)
         return ruleSet
     }

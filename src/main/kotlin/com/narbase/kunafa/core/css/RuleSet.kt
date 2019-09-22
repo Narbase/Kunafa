@@ -3,13 +3,30 @@
 package com.narbase.kunafa.core.css
 
 @Suppress("MemberVisibilityCanBePrivate")
-class RuleSet(val selector: Selector, val atRule: String? = null) {
+class RuleSet(var selector: Selector, val atRule: String? = null) {
 
     val rules: MutableSet<Rule<*>> = mutableSetOf()
 
     var subRuleSets: MutableSet<RuleSet>? = null
 
     var atRuleSets: MutableSet<RuleSet>? = null
+
+    override fun hashCode(): Int {
+        return rules.sumBy { it.hashCode() } +
+                (subRuleSets?.sumBy { it.hashCode() } ?: 0) +
+                (atRuleSets?.sumBy { it.hashCode() } ?: 0) +
+                (atRule?.hashCode() ?: 0)
+    }
+
+
+    override fun equals(other: Any?): Boolean {
+        return other is RuleSet &&
+                selector == other.selector &&
+                rules == other.rules &&
+                subRuleSets == other.subRuleSets &&
+                atRuleSets == other.atRuleSets &&
+                atRule == other.atRule
+    }
 
     fun <T> getProperty(name: String): T? {
         val list = rules.filterIsInstance<Rule<T>>()
