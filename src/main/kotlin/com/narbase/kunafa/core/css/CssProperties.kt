@@ -4,6 +4,7 @@ package com.narbase.kunafa.core.css
 
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
+import org.w3c.dom.Element
 import org.w3c.dom.HTMLStyleElement
 import org.w3c.dom.css.CSSStyleSheet
 import kotlin.browser.document
@@ -423,18 +424,31 @@ fun keyframes(userIndent: String, keyframesRules: Keyframes.() -> Unit): Keyfram
 }
 
 private fun addRuleSetToDocument(ruleSet: RuleSet) {
-    // TODO: instead of creating new element for every ruleset, create one style element and cashe it.
-    val sheetElement = document.createElement("style") as HTMLStyleElement
-    document.head?.appendChild(sheetElement)
+    val sheetElement = getOrCreateKunafaSheet()
     val sheet = sheetElement.sheet as? CSSStyleSheet
     ruleSet.toRulesList().forEach {
         sheet?.insertRule(it.toString(), sheet.cssRules.length)
     }
 }
 
+private var kunafaStyleElement: Element? = null
+private fun getOrCreateKunafaSheet(): HTMLStyleElement {
+    val existingElement = kunafaStyleElement ?: document.getElementById("kunafa-styles")
+    val element = existingElement ?: createNewStyleElement()
+    return element as HTMLStyleElement
+}
+
+private fun createNewStyleElement(): Element {
+    val element = document.createElement("style").apply {
+        id = "kunafa-styles"
+        document.head?.appendChild(this)
+    }
+    kunafaStyleElement = element
+    return element
+}
+
 private fun addKeyframesToDocument(keyframes: Keyframes) {
-    val sheetElement = document.createElement("style") as HTMLStyleElement
-    document.head?.appendChild(sheetElement)
+    val sheetElement = getOrCreateKunafaSheet()
     val sheet = sheetElement.sheet as? CSSStyleSheet
     sheet?.insertRule(keyframes.toString(), sheet.cssRules.length)
 }
