@@ -318,6 +318,11 @@ fun RuleSet.visited(rules: RuleSet.() -> Unit) = this.addPseudo(":visited", rule
 
 fun RuleSet.media(name: String, rules: RuleSet.() -> Unit) = this.addAtRule("media $name", rules)
 
+fun Keyframes.from(rules: RuleSet.() -> Unit) = this.addKeyframeRule("from", rules)
+fun Keyframes.to(rules: RuleSet.() -> Unit) = this.addKeyframeRule("to", rules)
+fun Keyframes.percent(percent: Number, rules: RuleSet.() -> Unit) = this.addKeyframeRule("$percent%", rules)
+fun Keyframes.custom(value: String, rules: RuleSet.() -> Unit) = this.addKeyframeRule(value, rules)
+
 val Selector.active get() = PseudoSelector(this, ":active")
 val Selector.after get() = PseudoSelector(this, ":after")
 val Selector.before get() = PseudoSelector(this, ":before")
@@ -411,11 +416,25 @@ fun stringRuleSet(selector: String, rules: RuleSet.() -> Unit): RuleSet {
     return ruleSet
 }
 
+fun keyframes(userIndent: String, keyframesRules: Keyframes.() -> Unit): Keyframes {
+    val keyframes = Keyframes(userIndent).apply { keyframesRules() }
+    addKeyframesToDocument(keyframes)
+    return keyframes
+}
+
 private fun addRuleSetToDocument(ruleSet: RuleSet) {
+    // TODO: instead of creating new element for every ruleset, create one style element and cashe it.
     val sheetElement = document.createElement("style") as HTMLStyleElement
     document.head?.appendChild(sheetElement)
     val sheet = sheetElement.sheet as? CSSStyleSheet
     ruleSet.toRulesList().forEach {
         sheet?.insertRule(it.toString(), sheet.cssRules.length)
     }
+}
+
+private fun addKeyframesToDocument(keyframes: Keyframes) {
+    val sheetElement = document.createElement("style") as HTMLStyleElement
+    document.head?.appendChild(sheetElement)
+    val sheet = sheetElement.sheet as? CSSStyleSheet
+    sheet?.insertRule(keyframes.toString(), sheet.cssRules.length)
 }
