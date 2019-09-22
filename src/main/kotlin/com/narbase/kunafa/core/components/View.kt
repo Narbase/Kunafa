@@ -102,10 +102,10 @@ open class View(var parent: View? = null) : LifecycleOwner {
         if (shouldHash.not()) {
             return simpleStyle(rules)
         }
-        val testRuleSet = RuleSet(StringSelector("")).apply { rules() }
+        val testRuleSet = RuleSet(EmptySelector()).apply { rules() }
         val hashCode = testRuleSet.hashCode().toString()
         val ruleSet = namedStyles.getOrElse(hashCode) {
-            val newRuleSet = classRuleSet(null, testRuleSet)
+            val newRuleSet = classRuleSet(null, rules)
             namedStyles[hashCode] = newRuleSet
             newRuleSet
         }

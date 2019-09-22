@@ -26,6 +26,7 @@ class MatchParent internal constructor() : DynamicDimension() {
      */
     override fun configureHeight(ruleSet: RuleSet) {
         ruleSet.setProperty("height", "100%")
+        if (ruleSet.selector is EmptySelector) return
         stringRuleSet("${LinearLayout.horizontalLayoutClass.selector} > ${ruleSet.selector}") {
             alignSelf = Alignment.Stretch
             height = wrapContent
@@ -35,6 +36,7 @@ class MatchParent internal constructor() : DynamicDimension() {
 
     override fun configureWidth(ruleSet: RuleSet) {
         ruleSet.setProperty("width", "100%")
+        if (ruleSet.selector is EmptySelector) return
         stringRuleSet("${LinearLayout.verticalLayoutClass.selector} > ${ruleSet.selector}") {
             alignSelf = Alignment.Stretch
             width = wrapContent

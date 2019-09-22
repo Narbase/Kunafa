@@ -45,3 +45,5 @@ class StringSelector(val selector: String) : Selector() {
         return selector
     }
 }
+
+class EmptySelector : Selector()
