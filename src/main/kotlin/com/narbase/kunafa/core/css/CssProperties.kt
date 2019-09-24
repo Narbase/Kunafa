@@ -4,6 +4,7 @@ package com.narbase.kunafa.core.css
 
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
+import org.w3c.dom.Element
 import org.w3c.dom.HTMLStyleElement
 import org.w3c.dom.css.CSSStyleSheet
 import kotlin.browser.document
@@ -318,6 +319,11 @@ fun RuleSet.visited(rules: RuleSet.() -> Unit) = this.addPseudo(":visited", rule
 
 fun RuleSet.media(name: String, rules: RuleSet.() -> Unit) = this.addAtRule("media $name", rules)
 
+fun Keyframes.from(rules: RuleSet.() -> Unit) = this.addKeyframeRule("from", rules)
+fun Keyframes.to(rules: RuleSet.() -> Unit) = this.addKeyframeRule("to", rules)
+fun Keyframes.percent(percent: Number, rules: RuleSet.() -> Unit) = this.addKeyframeRule("$percent%", rules)
+fun Keyframes.custom(value: String, rules: RuleSet.() -> Unit) = this.addKeyframeRule(value, rules)
+
 val Selector.active get() = PseudoSelector(this, ":active")
 val Selector.after get() = PseudoSelector(this, ":after")
 val Selector.before get() = PseudoSelector(this, ":before")
@@ -404,6 +410,14 @@ fun classRuleSet(classNamePrefix: String? = null, rules: RuleSet.() -> Unit): Ru
     return ruleSet
 }
 
+fun classRuleSet(classNamePrefix: String? = null, ruleSet: RuleSet): RuleSet {
+    val className = ClassNameGenerator.getClassName(classNamePrefix)
+    val selector = ClassSelector(className)
+    ruleSet.selector = selector
+    addRuleSetToDocument(ruleSet)
+    return ruleSet
+}
+
 fun stringRuleSet(selector: String, rules: RuleSet.() -> Unit): RuleSet {
     val stringSelector = StringSelector(selector)
     val ruleSet = RuleSet(stringSelector).apply { rules() }
@@ -411,11 +425,38 @@ fun stringRuleSet(selector: String, rules: RuleSet.() -> Unit): RuleSet {
     return ruleSet
 }
 
+fun keyframes(userIndent: String, keyframesRules: Keyframes.() -> Unit): Keyframes {
+    val keyframes = Keyframes(userIndent).apply { keyframesRules() }
+    addKeyframesToDocument(keyframes)
+    return keyframes
+}
+
 private fun addRuleSetToDocument(ruleSet: RuleSet) {
-    val sheetElement = document.createElement("style") as HTMLStyleElement
-    document.head?.appendChild(sheetElement)
+    val sheetElement = getOrCreateKunafaSheet()
     val sheet = sheetElement.sheet as? CSSStyleSheet
     ruleSet.toRulesList().forEach {
         sheet?.insertRule(it.toString(), sheet.cssRules.length)
     }
+}
+
+private var kunafaStyleElement: Element? = null
+private fun getOrCreateKunafaSheet(): HTMLStyleElement {
+    val existingElement = kunafaStyleElement ?: document.getElementById("kunafa-styles")
+    val element = existingElement ?: createNewStyleElement()
+    return element as HTMLStyleElement
+}
+
+private fun createNewStyleElement(): Element {
+    val element = document.createElement("style").apply {
+        id = "kunafa-styles"
+        document.head?.appendChild(this)
+    }
+    kunafaStyleElement = element
+    return element
+}
+
+private fun addKeyframesToDocument(keyframes: Keyframes) {
+    val sheetElement = getOrCreateKunafaSheet()
+    val sheet = sheetElement.sheet as? CSSStyleSheet
+    sheet?.insertRule(keyframes.toString(), sheet.cssRules.length)
 }
