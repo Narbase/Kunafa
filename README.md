@@ -52,7 +52,7 @@ Developers only need to use Kotlin for developement. The framework the view from
 
 To add Kunafa to your project, first you need to add it to your build.gradle file as a dependecy. 
 ```groovy
-compile 'com.narbase:kunafa:0.2.0-beta'
+compile 'com.narbase:kunafa:0.2.1'
 ````
 Then you need to add Kunafa js file to your index.html. Add the following line to `index.html` right after `kotlin.js` 
 ```html
