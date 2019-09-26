@@ -10,6 +10,7 @@
         </compilerSettings>
         <compilerArguments>
           <option name="sourceMapEmbedSources" value="inlining" />
+          <option name="moduleKind" value="umd" />
           <option name="languageVersion" value="1.3" />
           <option name="apiVersion" value="1.3" />
           <option name="pluginOptions">
