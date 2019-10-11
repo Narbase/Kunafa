@@ -46,4 +46,8 @@ class StringSelector(val selector: String) : Selector() {
     }
 }
 
-class EmptySelector : Selector()
+class EmptySelector : Selector() {
+    override fun toString(): String {
+        return ""
+    }
+}

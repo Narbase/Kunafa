@@ -6,7 +6,7 @@ class Rule<T>(
 ) {
     override fun toString() = "$name:$value;"
     override fun hashCode(): Int {
-        return toString().hashCode()
+        return name.hashCode() * value.toString().hashCode()
     }
 
     override fun equals(other: Any?): Boolean {
