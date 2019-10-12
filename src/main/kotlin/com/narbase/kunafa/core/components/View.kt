@@ -39,10 +39,12 @@ open class View(var parent: View? = null) : LifecycleOwner {
 
     internal fun postViewWillMount() {
         lifecycleObserversList.forEach { it.viewWillMount(this) }
+        children.forEach { it.postViewWillMount() }
     }
 
     internal fun postOnViewMounted() {
         lifecycleObserversList.forEach { it.onViewMounted(this) }
+        children.forEach { it.postOnViewMounted() }
     }
 
     private fun postViewWillBeRemoved() {
