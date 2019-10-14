@@ -13,9 +13,8 @@ class RuleSet(var selector: Selector, val atRule: String? = null) {
 
     override fun hashCode(): Int {
         return rules.sumBy { it.hashCode() } +
-                (subRuleSets?.sumBy { it.hashCode() } ?: 0) +
-                (atRuleSets?.sumBy { it.hashCode() } ?: 0) +
-                (atRule?.hashCode() ?: 0)
+                ((subRuleSets?.sumBy { it.hashCode() * it.selector.toString().hashCode() }) ?: 0) +
+                (atRuleSets?.sumBy { it.hashCode() * it.selector.toString().hashCode() } ?: 0)
     }
 
 
