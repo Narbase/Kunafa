@@ -3,6 +3,7 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.css.*
+import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import org.w3c.dom.HTMLDivElement
@@ -150,8 +151,8 @@ open class View(var parent: View? = null) : LifecycleOwner {
     companion object {
         val baseClass = classRuleSet {
             boxSizing = "border-box"
-            margin = "0px"
-            padding = "0px"
+            margin = 0.px
+            padding = 0.px
             flexShrink = "0"
         }
         val invisibleClass = classRuleSet {
