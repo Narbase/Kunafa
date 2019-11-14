@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
 package com.narbase.kunafa.core.components
 
@@ -14,11 +14,11 @@ import com.narbase.kunafa.core.lifecycle.LifecycleObserver
  */
 abstract class Component : LifecycleObserver {
 
-    private var view: View? = null
+    protected var rootView: View? = null
     private val initializedView: View
         get() {
-            val notNullView = view ?: createView { getView() }
-            view = notNullView
+            val notNullView = rootView ?: createView { getView() }
+            rootView = notNullView
             return notNullView
         }
 
@@ -33,7 +33,7 @@ abstract class Component : LifecycleObserver {
     }
 
     fun removeFromParent(parent: View?) {
-        val validView = view ?: return
+        val validView = rootView ?: return
         parent?.removeChild(validView)
     }
 
