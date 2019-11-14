@@ -66,3 +66,8 @@ val Number.vw: LinearDimension get() = dimen(this, LinearDimension.Unit.VW)
 @Suppress("NOTHING_TO_INLINE")
 private inline fun dimen(value: Number, unit: LinearDimension.Unit) = LinearDimension(value.toFloat(), unit)
 
+class StringDimension(val dimension: String) : Dimension() {
+    override fun toString() = dimension
+}
+
+fun st(dimension: String) = StringDimension(dimension)

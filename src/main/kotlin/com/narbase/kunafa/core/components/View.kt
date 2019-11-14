@@ -3,6 +3,7 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.css.*
+import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import org.w3c.dom.HTMLDivElement
@@ -29,6 +30,8 @@ open class View(var parent: View? = null) : LifecycleOwner {
             }
         }
 
+    override var isViewMounted: Boolean = false
+
     open val element: HTMLElement = document.createElement("div") as HTMLDivElement
 
     private val lifecycleObserversList = mutableListOf<LifecycleObserver>()
@@ -43,6 +46,8 @@ open class View(var parent: View? = null) : LifecycleOwner {
     }
 
     internal fun postOnViewMounted() {
+        if (parent?.isViewMounted != true) return
+        isViewMounted = true
         lifecycleObserversList.forEach { it.onViewMounted(this) }
         children.forEach { it.postOnViewMounted() }
     }
@@ -53,6 +58,7 @@ open class View(var parent: View? = null) : LifecycleOwner {
     }
 
     private fun postOnViewRemoved() {
+        isViewMounted = false
         children.forEach { it.postOnViewRemoved() }
         lifecycleObserversList.forEach { it.onViewRemoved(this) }
     }
@@ -145,8 +151,8 @@ open class View(var parent: View? = null) : LifecycleOwner {
     companion object {
         val baseClass = classRuleSet {
             boxSizing = "border-box"
-            margin = "0px"
-            padding = "0px"
+            margin = 0.px
+            padding = 0.px
             flexShrink = "0"
         }
         val invisibleClass = classRuleSet {

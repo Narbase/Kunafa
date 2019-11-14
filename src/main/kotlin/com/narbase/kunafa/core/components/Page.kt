@@ -18,6 +18,8 @@ import kotlin.dom.clear
  */
 object Page : View(null) {
 
+    override var isViewMounted: Boolean = true
+
     override fun mount(child: View) {
         child.postViewWillMount()
         child.parent = this

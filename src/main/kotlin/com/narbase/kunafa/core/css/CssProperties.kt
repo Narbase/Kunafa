@@ -2,6 +2,7 @@
 
 package com.narbase.kunafa.core.css
 
+import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
 import org.w3c.dom.Element
@@ -42,7 +43,7 @@ var RuleSet.borderLeft by RuleDelegate<String?>("border-left")
 var RuleSet.borderLeftColor by RuleDelegate<Color?>("border-left-color")
 var RuleSet.borderLeftStyle by RuleDelegate<String?>("border-left-style")
 var RuleSet.borderLeftWidth by RuleDelegate<String?>("border-left-width")
-var RuleSet.borderRadius by RuleDelegate<String?>("border-radius")
+var RuleSet.borderRadius by RuleDelegate<Dimension?>("border-radius")
 var RuleSet.borderRight by RuleDelegate<String?>("border-right")
 var RuleSet.borderRightColor by RuleDelegate<Color?>("border-right-color")
 var RuleSet.borderRightStyle by RuleDelegate<String?>("border-right-style")
@@ -66,7 +67,7 @@ var RuleSet.display by RuleDelegate<String?>("display")
 var RuleSet.float by RuleDelegate<String?>("float")
 var RuleSet.height by DynamicDimensionRuleDelegate("height")
 var RuleSet.left by RuleDelegate<LinearDimension?>("left")
-var RuleSet.margin by RuleDelegate<String?>("margin")
+var RuleSet.margin by RuleDelegate<Dimension?>("margin")
 var RuleSet.marginBottom by RuleDelegate<LinearDimension?>("margin-bottom")
 var RuleSet.marginLeft by RuleDelegate<LinearDimension?>("margin-left")
 var RuleSet.marginRight by RuleDelegate<LinearDimension?>("margin-right")
@@ -78,7 +79,7 @@ var RuleSet.minWidth by DynamicDimensionRuleDelegate("min-width")
 var RuleSet.overflow by RuleDelegate<String?>("overflow")
 var RuleSet.overflowX by RuleDelegate<String?>("overflow-x")
 var RuleSet.overflowY by RuleDelegate<String?>("overflow-y")
-var RuleSet.padding by RuleDelegate<String?>("padding")
+var RuleSet.padding by RuleDelegate<Dimension?>("padding")
 var RuleSet.paddingBottom by RuleDelegate<LinearDimension?>("padding-bottom")
 var RuleSet.paddingLeft by RuleDelegate<LinearDimension?>("padding-left")
 var RuleSet.paddingRight by RuleDelegate<LinearDimension?>("padding-right")
