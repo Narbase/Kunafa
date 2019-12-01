@@ -14,25 +14,25 @@ import com.narbase.kunafa.core.lifecycle.LifecycleObserver
  */
 abstract class Component : LifecycleObserver {
 
-    protected var rootView: BaseElement? = null
-    private val initializedView: BaseElement
+    protected var rootView: View? = null
+    private val initializedView: View
         get() {
             val notNullView = rootView ?: createBaseElement { getView() }
             rootView = notNullView
             return notNullView
         }
 
-    protected abstract fun BaseElement?.getView(): BaseElement
+    protected abstract fun View?.getView(): View
 
-    fun addToParent(parent: BaseElement?) {
+    fun addToParent(parent: View?) {
         parent?.mount(initializedView)
     }
 
-    fun addToParentAfter(parent: BaseElement?, referenceView: BaseElement) {
+    fun addToParentAfter(parent: View?, referenceView: View) {
         parent?.mountAfter(initializedView, referenceView)
     }
 
-    fun removeFromParent(parent: BaseElement?) {
+    fun removeFromParent(parent: View?) {
         val validView = rootView ?: return
         parent?.removeChild(validView)
     }

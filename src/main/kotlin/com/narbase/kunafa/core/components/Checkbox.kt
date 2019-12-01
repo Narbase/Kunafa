@@ -15,7 +15,7 @@ import kotlin.browser.document
  * On: 10/31/17.
  */
 @Suppress("unused")
-class Checkbox(parent: BaseElement? = null) : View(parent) {
+class Checkbox(parent: View? = null) : HtmlView(parent) {
 
     override val element: HTMLInputElement = (document.createElement("input") as HTMLInputElement).apply {
         this.type = "checkbox"

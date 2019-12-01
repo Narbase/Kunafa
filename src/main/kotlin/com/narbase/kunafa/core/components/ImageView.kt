@@ -11,6 +11,6 @@ import kotlin.browser.document
  * Created by islam
  * On: 10/15/17.
  */
-class ImageView(parent: BaseElement? = null) : View(parent) {
+class ImageView(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLImageElement = document.createElement("img") as HTMLImageElement
 }

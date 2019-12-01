@@ -2,7 +2,7 @@ package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 
-fun <V : BaseElement> V.visit(lifecycleObserver: LifecycleObserver?, setup: V.() -> Unit): V {
+fun <V : View> V.visit(lifecycleObserver: LifecycleObserver?, setup: V.() -> Unit): V {
     lifecycleObserver?.let { bind(it) }
     this.addToParent()
     configureElement()
@@ -11,7 +11,7 @@ fun <V : BaseElement> V.visit(lifecycleObserver: LifecycleObserver?, setup: V.()
     return this
 }
 
-fun Component.createBaseElement(setup: BaseElement?.() -> BaseElement): BaseElement {
+fun Component.createBaseElement(setup: View?.() -> View): View {
     val view = detached.setup()
     view.bind(this)
     view.postOnViewCreated()

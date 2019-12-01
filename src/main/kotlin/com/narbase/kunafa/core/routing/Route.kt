@@ -87,7 +87,7 @@ abstract class Route constructor(
 
     companion object {
         fun createComponentRoute(
-                parentView: BaseElement,
+                parentView: View,
                 path: String,
                 isExact: Boolean = false,
                 isAbsolute: Boolean = false,
@@ -122,8 +122,8 @@ abstract class Route constructor(
             }
         }
 
-        fun getComponent(meta: RouteMeta, block: BaseElement?.(meta: RouteMeta) -> BaseElement): Component = object : Component() {
-            override fun BaseElement?.getView() = block(meta)
+        fun getComponent(meta: RouteMeta, block: View?.(meta: RouteMeta) -> View): Component = object : Component() {
+            override fun View?.getView() = block(meta)
         }
 
         fun getSegments(currentPath: String): List<RouteSegment> {
@@ -140,14 +140,14 @@ abstract class Route constructor(
     }
 }
 
-fun BaseElement.route(
+fun View.route(
         path: String,
         isExact: Boolean = false,
         isAbsolute: Boolean = false,
-        block: BaseElement?.(meta: RouteMeta) -> BaseElement
+        block: View?.(meta: RouteMeta) -> View
 ) = routeComponent(path, isExact, isAbsolute) { meta -> Route.getComponent(meta, block) }
 
-fun BaseElement.routeComponent(
+fun View.routeComponent(
         path: String,
         isExact: Boolean = false,
         isAbsolute: Boolean = false,
@@ -166,7 +166,7 @@ class ParameterSegment(text: String) : RouteSegment(text) {
 
 class RouteMeta(val path: String, val params: Observable<Map<String, String>>)
 
-fun View?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
+fun HtmlView?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
     val completePath = Route.getPath(Router.currentPath, path, isAbsolute = true)
     href = completePath
     onClick = {

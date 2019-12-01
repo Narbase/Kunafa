@@ -13,7 +13,7 @@ import kotlin.browser.document
  * Created by islam
  * On: 2019/03/08.
  */
-class Anchor(parent: BaseElement? = null) : View(parent) {
+class Anchor(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLAnchorElement = (document.createElement("a") as HTMLAnchorElement)
     var text
         get() = element.innerHTML

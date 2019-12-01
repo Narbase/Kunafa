@@ -16,11 +16,11 @@ import kotlin.dom.clear
  * Created by islam
  * On: 9/30/17.
  */
-object Page : View(null) {
+object Page : HtmlView(null) {
 
     override var isViewMounted: Boolean = true
 
-    override fun mount(child: BaseElement) {
+    override fun mount(child: View) {
         child.postViewWillMount()
         child.parent = this
         document.body?.append(child.element)
@@ -28,7 +28,7 @@ object Page : View(null) {
         child.postOnViewMounted()
     }
 
-    override fun mountAfter(child: BaseElement, referenceNode: BaseElement) {
+    override fun mountAfter(child: View, referenceNode: View) {
         child.postViewWillMount()
         document.body?.insertBefore(child.element, referenceNode.element.nextSibling)
         child.parent = this
@@ -36,7 +36,7 @@ object Page : View(null) {
         child.postOnViewMounted()
     }
 
-    override fun removeChild(child: BaseElement) {
+    override fun removeChild(child: View) {
         children.remove(child)
         document.body?.removeChild(child.element)
         child.parent = null

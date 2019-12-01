@@ -1,6 +1,5 @@
 package com.narbase.kunafa.core.components.layout
 
-import com.narbase.kunafa.core.components.BaseElement
 import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.css.classRuleSet
 import com.narbase.kunafa.core.css.isScrollableHorizontally
@@ -15,7 +14,7 @@ import com.narbase.kunafa.core.css.isScrollableVertically
  * On: 10/1/17.
  */
 class ScrollView(
-        parent: BaseElement?,
+        parent: View?,
         private val initialOrientation: Orientation?
 ) : LinearLayout(parent, initialOrientation) {
 

@@ -15,29 +15,29 @@ import com.narbase.kunafa.core.lifecycle.LifecycleObserver
  * On: 9/30/17.
  */
 
-fun page(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit = {}) {
+fun page(lifecycleObserver: LifecycleObserver? = null, block: HtmlView.() -> Unit = {}) {
     Page.prepare()
     Page.visit(lifecycleObserver, block)
 }
 
-fun BaseElement?.linearLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, null).visit(lifecycleObserver, block)
-fun BaseElement?.verticalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
-fun BaseElement?.horizontalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
-fun BaseElement?.horizontalScrollLayout(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
-fun BaseElement?.verticalScrollLayout(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
+fun View?.linearLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, null).visit(lifecycleObserver, block)
+fun View?.verticalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
+fun View?.horizontalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout = LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
+fun View?.horizontalScrollLayout(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
+fun View?.verticalScrollLayout(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView = ScrollView(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
 
 //fun View?.anchorLayout(lifecycleObserver: LifecycleObserver? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(lifecycleObserver, block)
 
-fun View?.view(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit): View = View(this).visit(lifecycleObserver, block)
-fun BaseElement?.baseElement(lifecycleObserver: LifecycleObserver? = null, block: BaseElement.() -> Unit): BaseElement = BaseElement(this).visit(lifecycleObserver, block)
-fun BaseElement?.a(lifecycleObserver: LifecycleObserver? = null, block: Anchor.() -> Unit): Anchor = Anchor(this).visit(lifecycleObserver, block)
-fun BaseElement?.textView(lifecycleObserver: LifecycleObserver? = null, block: TextView.() -> Unit): TextView = TextView(this).visit(lifecycleObserver, block)
-fun BaseElement?.textInput(lifecycleObserver: LifecycleObserver? = null, block: TextInput.() -> Unit): TextInput = TextInput(this).visit(lifecycleObserver, block)
-fun BaseElement?.button(lifecycleObserver: LifecycleObserver? = null, block: Button.() -> Unit): Button = Button(this).visit(lifecycleObserver, block)
-fun BaseElement?.imageView(lifecycleObserver: LifecycleObserver? = null, block: ImageView.() -> Unit): ImageView = ImageView(this).visit(lifecycleObserver, block)
-fun BaseElement?.checkbox(lifecycleObserver: LifecycleObserver? = null, block: Checkbox.() -> Unit): Checkbox = Checkbox(this).visit(lifecycleObserver, block)
+fun HtmlView?.view(lifecycleObserver: LifecycleObserver? = null, block: HtmlView.() -> Unit): HtmlView = HtmlView(this).visit(lifecycleObserver, block)
+fun View?.baseElement(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit): View = View(this).visit(lifecycleObserver, block)
+fun View?.a(lifecycleObserver: LifecycleObserver? = null, block: Anchor.() -> Unit): Anchor = Anchor(this).visit(lifecycleObserver, block)
+fun View?.textView(lifecycleObserver: LifecycleObserver? = null, block: TextView.() -> Unit): TextView = TextView(this).visit(lifecycleObserver, block)
+fun View?.textInput(lifecycleObserver: LifecycleObserver? = null, block: TextInput.() -> Unit): TextInput = TextInput(this).visit(lifecycleObserver, block)
+fun View?.button(lifecycleObserver: LifecycleObserver? = null, block: Button.() -> Unit): Button = Button(this).visit(lifecycleObserver, block)
+fun View?.imageView(lifecycleObserver: LifecycleObserver? = null, block: ImageView.() -> Unit): ImageView = ImageView(this).visit(lifecycleObserver, block)
+fun View?.checkbox(lifecycleObserver: LifecycleObserver? = null, block: Checkbox.() -> Unit): Checkbox = Checkbox(this).visit(lifecycleObserver, block)
 
-fun BaseElement?.table(lifecycleObserver: LifecycleObserver? = null, block: Table.() -> Unit): Table = Table(this).visit(lifecycleObserver, block)
+fun View?.table(lifecycleObserver: LifecycleObserver? = null, block: Table.() -> Unit): Table = Table(this).visit(lifecycleObserver, block)
 fun Table?.tableHeader(lifecycleObserver: LifecycleObserver? = null, block: TableHeader.() -> Unit): TableHeader = TableHeader(this).visit(lifecycleObserver, block)
 fun Table?.tableBody(lifecycleObserver: LifecycleObserver? = null, block: TableBody.() -> Unit): TableBody = TableBody(this).visit(lifecycleObserver, block)
 fun Table?.tableFooter(lifecycleObserver: LifecycleObserver? = null, block: TableFooter.() -> Unit): TableFooter = TableFooter(this).visit(lifecycleObserver, block)
@@ -49,15 +49,15 @@ fun TableBody?.row(lifecycleObserver: LifecycleObserver? = null, block: TableRow
 fun TableRow?.cell(lifecycleObserver: LifecycleObserver? = null, block: TableCell.() -> Unit): TableCell = TableCell(this).visit(lifecycleObserver, block)
 fun TableRow?.headerCell(lifecycleObserver: LifecycleObserver? = null, block: TableHeaderCell.() -> Unit): TableHeaderCell = TableHeaderCell(this).visit(lifecycleObserver, block)
 
-fun BaseElement?.form(lifecycleObserver: LifecycleObserver? = null, block: Form.() -> Unit): Form = Form(this).visit(lifecycleObserver, block)
-fun BaseElement?.fieldSet(lifecycleObserver: LifecycleObserver? = null, block: FieldSet.() -> Unit): FieldSet = FieldSet(this).visit(lifecycleObserver, block)
-fun BaseElement?.legend(lifecycleObserver: LifecycleObserver? = null, block: Legend.() -> Unit): Legend = Legend(this).visit(lifecycleObserver, block)
-fun BaseElement?.radio(lifecycleObserver: LifecycleObserver? = null, block: Radio.() -> Unit): Radio = Radio(this).visit(lifecycleObserver, block)
+fun View?.form(lifecycleObserver: LifecycleObserver? = null, block: Form.() -> Unit): Form = Form(this).visit(lifecycleObserver, block)
+fun View?.fieldSet(lifecycleObserver: LifecycleObserver? = null, block: FieldSet.() -> Unit): FieldSet = FieldSet(this).visit(lifecycleObserver, block)
+fun View?.legend(lifecycleObserver: LifecycleObserver? = null, block: Legend.() -> Unit): Legend = Legend(this).visit(lifecycleObserver, block)
+fun View?.radio(lifecycleObserver: LifecycleObserver? = null, block: Radio.() -> Unit): Radio = Radio(this).visit(lifecycleObserver, block)
 
-fun BaseElement?.ul(lifecycleObserver: LifecycleObserver? = null, block: (UList.() -> Unit)? = null): UList =
+fun View?.ul(lifecycleObserver: LifecycleObserver? = null, block: (UList.() -> Unit)? = null): UList =
         UList(this).visit(lifecycleObserver, block ?: {})
 
-fun BaseElement?.li(lifecycleObserver: LifecycleObserver? = null, block: (ListItem.() -> Unit)? = null): ListItem =
+fun View?.li(lifecycleObserver: LifecycleObserver? = null, block: (ListItem.() -> Unit)? = null): ListItem =
         ListItem(this).visit(lifecycleObserver, block ?: {})
 
-val detached: View? = null
+val detached: HtmlView? = null

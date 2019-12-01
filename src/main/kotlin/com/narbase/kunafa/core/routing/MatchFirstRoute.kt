@@ -2,7 +2,7 @@
 
 package com.narbase.kunafa.core.routing
 
-import com.narbase.kunafa.core.components.View
+import com.narbase.kunafa.core.components.HtmlView
 import com.narbase.kunafa.core.lifecycle.Observable
 
 /**
@@ -35,7 +35,7 @@ class MatchFirstRoute(
         children.forEach { it.onUnMatch() }
     }
 
-    private fun executeBody(parentView: View, block: View.() -> Unit) {
+    private fun executeBody(parentView: HtmlView, block: HtmlView.() -> Unit) {
         val oldPath = setupRouterToCurrentRoute()
         parentView.block()
         restoreRouterConfig(oldPath)
@@ -43,8 +43,8 @@ class MatchFirstRoute(
 
     companion object {
         fun createRoute(
-                parentView: View,
-                block: View.() -> Unit
+                parentView: HtmlView,
+                block: HtmlView.() -> Unit
         ): Route {
             val routePath = getPath(Router.currentPath, "/", false)
 
@@ -61,8 +61,8 @@ class MatchFirstRoute(
 }
 
 
-fun View.matchFirst(
-        block: View.() -> Unit
+fun HtmlView.matchFirst(
+        block: HtmlView.() -> Unit
 ) {
     MatchFirstRoute.createRoute(this, block)
 }
