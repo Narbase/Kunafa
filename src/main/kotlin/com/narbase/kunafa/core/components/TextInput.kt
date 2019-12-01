@@ -17,7 +17,7 @@ import kotlin.browser.document
  * Created by islam
  * On: 10/31/17.
  */
-class TextInput(parent: View? = null) : View(parent) {
+class TextInput(parent: BaseElement? = null) : View(parent) {
 
     override val element: HTMLInputElement = document.createElement("input") as HTMLInputElement
 

@@ -87,7 +87,7 @@ abstract class Route constructor(
 
     companion object {
         fun createComponentRoute(
-                parentView: View,
+                parentView: BaseElement,
                 path: String,
                 isExact: Boolean = false,
                 isAbsolute: Boolean = false,
@@ -97,7 +97,7 @@ abstract class Route constructor(
 
             val routeSegments = getSegments(routePath)
 
-            val reference = parentView.view { isVisible = false }
+            val reference = parentView.baseElement { isVisible = false }
             val meta = RouteMeta(routePath, Observable())
             val component = block(meta)
             val route = ComponentRoute(meta, routeSegments, component, Router.parentRoute, parentView, reference, isExact)
@@ -122,8 +122,8 @@ abstract class Route constructor(
             }
         }
 
-        fun getComponent(meta: RouteMeta, block: View?.(meta: RouteMeta) -> View): Component = object : Component() {
-            override fun View?.getView() = block(meta)
+        fun getComponent(meta: RouteMeta, block: BaseElement?.(meta: RouteMeta) -> BaseElement): Component = object : Component() {
+            override fun BaseElement?.getView() = block(meta)
         }
 
         fun getSegments(currentPath: String): List<RouteSegment> {
@@ -140,14 +140,14 @@ abstract class Route constructor(
     }
 }
 
-fun View.route(
+fun BaseElement.route(
         path: String,
         isExact: Boolean = false,
         isAbsolute: Boolean = false,
-        block: View?.(meta: RouteMeta) -> View
+        block: BaseElement?.(meta: RouteMeta) -> BaseElement
 ) = routeComponent(path, isExact, isAbsolute) { meta -> Route.getComponent(meta, block) }
 
-fun View.routeComponent(
+fun BaseElement.routeComponent(
         path: String,
         isExact: Boolean = false,
         isAbsolute: Boolean = false,

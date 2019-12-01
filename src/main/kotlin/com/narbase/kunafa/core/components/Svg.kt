@@ -23,18 +23,11 @@ import kotlin.dom.removeClass
  * Created by islam
  * On: 9/30/17.
  */
-open class View(parent: BaseElement? = null) : BaseElement(parent) {
+open class Svg(parent: BaseElement? = null) : BaseElement(parent) {
 
+    override var isViewMounted: Boolean = false
 
-    override val element: HTMLElement = document.createElement("div") as HTMLDivElement
-
-
-    open var onClick: ((MouseEvent) -> dynamic)?
-        get() = element.onclick
-        set(value) {
-            element.onclick = value
-        }
-
+    override val element: SVGElement = document.createElement("svg") as SVGElement
 
 
 }

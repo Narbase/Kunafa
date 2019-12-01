@@ -2,6 +2,7 @@
 
 package com.narbase.kunafa.core.routing
 
+import com.narbase.kunafa.core.components.BaseElement
 import com.narbase.kunafa.core.components.Component
 import com.narbase.kunafa.core.components.View
 
@@ -18,8 +19,8 @@ class ComponentRoute(
         segments: List<RouteSegment>,
         val component: Component,
         parentRoute: Route?,
-        val parentView: View?,
-        private val referenceView: View,
+        val parentView: BaseElement?,
+        private val referenceView: BaseElement,
         isExact: Boolean
 ) : Route(meta, segments, parentRoute, isExact) {
     override fun onMatch(windowSegments: List<RouteSegment>) {

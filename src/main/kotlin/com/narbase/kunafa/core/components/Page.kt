@@ -20,7 +20,7 @@ object Page : View(null) {
 
     override var isViewMounted: Boolean = true
 
-    override fun mount(child: View) {
+    override fun mount(child: BaseElement) {
         child.postViewWillMount()
         child.parent = this
         document.body?.append(child.element)
@@ -28,7 +28,7 @@ object Page : View(null) {
         child.postOnViewMounted()
     }
 
-    override fun mountAfter(child: View, referenceNode: View) {
+    override fun mountAfter(child: BaseElement, referenceNode: BaseElement) {
         child.postViewWillMount()
         document.body?.insertBefore(child.element, referenceNode.element.nextSibling)
         child.parent = this
@@ -36,7 +36,7 @@ object Page : View(null) {
         child.postOnViewMounted()
     }
 
-    override fun removeChild(child: View) {
+    override fun removeChild(child: BaseElement) {
         children.remove(child)
         document.body?.removeChild(child.element)
         child.parent = null

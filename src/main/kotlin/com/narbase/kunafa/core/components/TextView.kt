@@ -11,7 +11,7 @@ package com.narbase.kunafa.core.components
  * Created by islam
  * On: 10/9/17.
  */
-open class TextView(parent: View? = null) : View(parent) {
+open class TextView(parent: BaseElement? = null) : View(parent) {
 
     var text
         get() = element.innerHTML

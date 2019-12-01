@@ -16,10 +16,10 @@ import kotlin.browser.document
  * On: ${date}.
  */
 
-open class UList(parent: View? = null) : View(parent) {
+open class UList(parent: BaseElement? = null) : View(parent) {
     override val element: HTMLUListElement = document.createElement("ul") as HTMLUListElement
 }
 
-open class ListItem(parent: View? = null) : View(parent) {
+open class ListItem(parent: BaseElement? = null) : View(parent) {
     override val element: HTMLLIElement = document.createElement("li") as HTMLLIElement
 }
