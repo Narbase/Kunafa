@@ -97,7 +97,7 @@ abstract class Route constructor(
 
             val routeSegments = getSegments(routePath)
 
-            val reference = parentView.view { isVisible = false }
+            val reference = parentView.baseElement { isVisible = false }
             val meta = RouteMeta(routePath, Observable())
             val component = block(meta)
             val route = ComponentRoute(meta, routeSegments, component, Router.parentRoute, parentView, reference, isExact)
@@ -166,7 +166,7 @@ class ParameterSegment(text: String) : RouteSegment(text) {
 
 class RouteMeta(val path: String, val params: Observable<Map<String, String>>)
 
-fun View?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
+fun HtmlView?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
     val completePath = Route.getPath(Router.currentPath, path, isAbsolute = true)
     href = completePath
     onClick = {

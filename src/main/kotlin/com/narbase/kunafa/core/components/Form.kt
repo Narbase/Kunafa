@@ -17,16 +17,16 @@ import kotlin.browser.document
  * On: ${date}.
  */
 
-class Form(parent: View? = null) : View(parent) {
+class Form(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLFormElement = (document.createElement("form") as HTMLFormElement)
 }
 
 
-class FieldSet(parent: View? = null) : View(parent) {
+class FieldSet(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLFieldSetElement = (document.createElement("fieldset") as HTMLFieldSetElement)
 }
 
-class Legend(parent: View? = null) : View(parent) {
+class Legend(parent: View? = null) : HtmlView(parent) {
 
     override val element: HTMLLegendElement = (document.createElement("legend") as HTMLLegendElement)
     var text

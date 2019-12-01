@@ -15,15 +15,15 @@ import kotlin.browser.document
  * Created by islam
  * On: 10/31/17.
  */
-class Table(parent: View? = null) : View(parent) {
+class Table(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLTableElement = (document.createElement("table") as HTMLTableElement)
 }
 
-class TableRow(parent: View? = null) : View(parent) {
+class TableRow(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLTableRowElement = (document.createElement("tr") as HTMLTableRowElement)
 }
 
-class TableCell(parent: View? = null) : View(parent) {
+class TableCell(parent: View? = null) : HtmlView(parent) {
 
     override val element: HTMLTableCellElement = (document.createElement("td") as HTMLTableCellElement)
     var text
@@ -33,7 +33,7 @@ class TableCell(parent: View? = null) : View(parent) {
         }
 }
 
-class TableHeaderCell(parent: View? = null) : View(parent) {
+class TableHeaderCell(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLElement = (document.createElement("th") as HTMLTableCellElement)
 
     var text
@@ -43,14 +43,14 @@ class TableHeaderCell(parent: View? = null) : View(parent) {
         }
 }
 
-class TableHeader(parent: View? = null) : View(parent) {
+class TableHeader(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLElement = (document.createElement("thead") as HTMLTableSectionElement)
 }
 
-class TableFooter(parent: View? = null) : View(parent) {
+class TableFooter(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLElement = (document.createElement("tfoot") as HTMLTableSectionElement)
 }
 
-class TableBody(parent: View? = null) : View(parent) {
+class TableBody(parent: View? = null) : HtmlView(parent) {
     override val element: HTMLElement = (document.createElement("tbody") as HTMLTableSectionElement)
 }

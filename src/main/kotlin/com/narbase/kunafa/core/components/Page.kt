@@ -16,7 +16,7 @@ import kotlin.dom.clear
  * Created by islam
  * On: 9/30/17.
  */
-object Page : View(null) {
+object Page : HtmlView(null) {
 
     override var isViewMounted: Boolean = true
 

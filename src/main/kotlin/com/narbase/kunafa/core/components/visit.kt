@@ -11,7 +11,7 @@ fun <V : View> V.visit(lifecycleObserver: LifecycleObserver?, setup: V.() -> Uni
     return this
 }
 
-fun Component.createView(setup: View?.() -> View): View {
+fun Component.createBaseElement(setup: View?.() -> View): View {
     val view = detached.setup()
     view.bind(this)
     view.postOnViewCreated()

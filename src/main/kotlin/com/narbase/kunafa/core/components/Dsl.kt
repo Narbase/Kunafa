@@ -15,7 +15,7 @@ import com.narbase.kunafa.core.lifecycle.LifecycleObserver
  * On: 9/30/17.
  */
 
-fun page(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit = {}) {
+fun page(lifecycleObserver: LifecycleObserver? = null, block: HtmlView.() -> Unit = {}) {
     Page.prepare()
     Page.visit(lifecycleObserver, block)
 }
@@ -28,7 +28,8 @@ fun View?.verticalScrollLayout(lifecycleObserver: LifecycleObserver? = null, blo
 
 //fun View?.anchorLayout(lifecycleObserver: LifecycleObserver? = null, block: AnchorLayout.() -> Unit): AnchorLayout = AnchorLayout(this).visit(lifecycleObserver, block)
 
-fun View?.view(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit): View = View(this).visit(lifecycleObserver, block)
+fun HtmlView?.view(lifecycleObserver: LifecycleObserver? = null, block: HtmlView.() -> Unit): HtmlView = HtmlView(this).visit(lifecycleObserver, block)
+fun View?.baseElement(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit): View = View(this).visit(lifecycleObserver, block)
 fun View?.a(lifecycleObserver: LifecycleObserver? = null, block: Anchor.() -> Unit): Anchor = Anchor(this).visit(lifecycleObserver, block)
 fun View?.textView(lifecycleObserver: LifecycleObserver? = null, block: TextView.() -> Unit): TextView = TextView(this).visit(lifecycleObserver, block)
 fun View?.textInput(lifecycleObserver: LifecycleObserver? = null, block: TextInput.() -> Unit): TextInput = TextInput(this).visit(lifecycleObserver, block)
@@ -59,4 +60,4 @@ fun View?.ul(lifecycleObserver: LifecycleObserver? = null, block: (UList.() -> U
 fun View?.li(lifecycleObserver: LifecycleObserver? = null, block: (ListItem.() -> Unit)? = null): ListItem =
         ListItem(this).visit(lifecycleObserver, block ?: {})
 
-val detached: View? = null
+val detached: HtmlView? = null
