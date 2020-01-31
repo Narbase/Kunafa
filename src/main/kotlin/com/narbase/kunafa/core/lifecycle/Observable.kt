@@ -11,16 +11,16 @@ package com.narbase.kunafa.core.lifecycle
  * On: ${date}.
  */
 
-class Observable<T> {
+open class Observable<T> {
 
-    var value: T? = null
+    open var value: T? = null
         set(value) {
             field = value
             observers?.forEach { it(value) }
         }
     private var observers: MutableList<(T?) -> Unit>? = null
 
-    fun observe(observer: (T?) -> Unit) {
+    open fun observe(observer: (T?) -> Unit) {
         if (observers?.contains(observer) == true) {
             return
         }
@@ -32,7 +32,7 @@ class Observable<T> {
         observer(value)
     }
 
-    fun clearObservers() {
+    open fun clearObservers() {
         observers?.clear()
     }
 }

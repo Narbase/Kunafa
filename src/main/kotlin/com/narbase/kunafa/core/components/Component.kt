@@ -14,7 +14,7 @@ import com.narbase.kunafa.core.lifecycle.LifecycleObserver
  */
 abstract class Component : LifecycleObserver {
 
-    protected var rootView: View? = null
+    var rootView: View? = null
     private val initializedView: View
         get() {
             val notNullView = rootView ?: createView { getView() }
