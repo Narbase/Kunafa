@@ -2,7 +2,7 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " useProjectSettings="false">
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false">
         <productionOutputPath>$MODULE_DIR$/target/js/kunafa.js</productionOutputPath>
         <testOutputPath>$MODULE_DIR$/target/test-js/kunafa-tests.js</testOutputPath>
         <compilerSettings>
