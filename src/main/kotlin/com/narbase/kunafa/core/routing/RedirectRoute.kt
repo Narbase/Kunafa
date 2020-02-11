@@ -1,4 +1,4 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
+@file:Suppress("MemberVisibilityCanBePrivate", "unused")
 
 package com.narbase.kunafa.core.routing
 
@@ -18,10 +18,15 @@ class RedirectRoute(
         meta: RouteMeta,
         segments: List<RouteSegment>,
         parentRoute: Route?,
-        isExact: Boolean
+        isExact: Boolean,
+        val isAbsoluteDestination: Boolean
 ) : Route(meta, segments, parentRoute, isExact) {
     override fun onMatch(windowSegments: List<RouteSegment>) {
-        Router.navigateTo(redirectPath)
+        if (isAbsoluteDestination) {
+            Router.navigateTo(redirectPath)
+        } else {
+            Router.navigateTo("$path/${redirectPath.trim('/')}")
+        }
     }
 
     override fun onUnMatch() {
@@ -33,13 +38,14 @@ class RedirectRoute(
                 redirectPath: String,
                 path: String,
                 isExact: Boolean,
-                isAbsolute: Boolean
+                isAbsolute: Boolean,
+                isAbsoluteDestination: Boolean
         ): Route {
             val routePath = getPath(Router.currentPath, path, isAbsolute)
 
             val routeSegments = getSegments(routePath)
             val meta = RouteMeta(routePath, Observable())
-            val route = RedirectRoute(redirectPath, meta, routeSegments, Router.parentRoute, isExact)
+            val route = RedirectRoute(redirectPath, meta, routeSegments, Router.parentRoute, isExact, isAbsoluteDestination)
             addToParent(route)
             route.update()
             return route
@@ -51,9 +57,10 @@ class RedirectRoute(
 
 fun View.redirect(
         to: String,
+        isAbsoluteDestination: Boolean = false,
         from: String = "/",
         isExact: Boolean = true,
         isAbsolute: Boolean = false
 ) {
-    RedirectRoute.createRoute(to, from, isExact, isAbsolute)
+    RedirectRoute.createRoute(to, from, isExact, isAbsolute, isAbsoluteDestination)
 }
