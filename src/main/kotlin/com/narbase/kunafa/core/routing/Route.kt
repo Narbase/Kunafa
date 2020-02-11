@@ -1,12 +1,10 @@
 @file:Suppress("MemberVisibilityCanBePrivate", "unused")
-@file:UseExperimental(ExperimentalContracts::class)
 
 package com.narbase.kunafa.core.routing
 
 import com.narbase.kunafa.core.components.*
 import com.narbase.kunafa.core.lifecycle.Observable
 import kotlin.browser.window
-import kotlin.contracts.ExperimentalContracts
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
