@@ -55,6 +55,7 @@ fun View?.view(lifecycleObserver: LifecycleObserver? = null, block: View.() -> U
     return View(this).visit(lifecycleObserver, block)
 }
 
+@ExperimentalContracts
 fun View?.a(lifecycleObserver: LifecycleObserver? = null, block: Anchor.() -> Unit): Anchor {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     return Anchor(this).visit(lifecycleObserver, block)

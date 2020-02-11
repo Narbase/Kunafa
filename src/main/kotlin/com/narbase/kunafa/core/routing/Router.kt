@@ -22,6 +22,7 @@ object Router {
     var parentRoute: Route? = null
     private val matchedRoutes = mutableSetOf<Route>()
     private var isUpdating = false
+    private const val MAX_REDIRECT_LIMIT = 100
 
     fun onRouteMatch(route: Route) {
         matchedRoutes.add(route)
@@ -37,6 +38,7 @@ object Router {
     private fun update() {
         isUpdating = true
         var shouldRetry: Boolean
+        var redirectCounter = 0
         do {
             try {
                 rootRoutes.forEach { route ->
@@ -44,7 +46,13 @@ object Router {
                 }
                 shouldRetry = false
             } catch (e: RedirectException) {
-                shouldRetry = true
+                redirectCounter++
+                if (redirectCounter < MAX_REDIRECT_LIMIT) {
+                    shouldRetry = true
+                } else {
+                    shouldRetry = false
+                    console.log("Maximum redirect limit 100 is reached. Please check if you are redirecting correctly.")
+                }
             }
         } while (shouldRetry)
         isUpdating = false
