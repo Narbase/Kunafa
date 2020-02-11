@@ -20,19 +20,14 @@ object Router {
 
     var currentPath = "/"
     var parentRoute: Route? = null
-    private val onRouteWillChangeListeners = mutableMapOf<Route, () -> Boolean>()
+    private val matchedRoutes = mutableSetOf<Route>()
 
     fun onRouteMatch(route: Route) {
-        val callback = route.meta.onRouteWillChange
-        if (callback != null) {
-            onRouteWillChangeListeners[route] = callback
-        } else {
-            onRouteWillChangeListeners.remove(route)
-        }
+        matchedRoutes.add(route)
     }
 
     fun onRouteUnMatch(route: Route) {
-        onRouteWillChangeListeners.remove(route)
+        matchedRoutes.remove(route)
     }
 
     private val rootRoutes = mutableListOf<Route>()
@@ -49,7 +44,7 @@ object Router {
 
 
     fun navigateTo(path: String) {
-        val shouldPrevent = onRouteWillChangeListeners.values.firstOrNull { !it() } != null
+        val shouldPrevent = matchedRoutes.firstOrNull { it.meta.onRouteWillChange?.invoke() == false } != null
         if (shouldPrevent) return
         window.history.pushState(null, "", "/${path.trimStart('/')}")
         Router.update()
