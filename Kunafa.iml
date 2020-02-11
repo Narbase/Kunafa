@@ -6,7 +6,7 @@
         <productionOutputPath>$MODULE_DIR$/target/js/kunafa.js</productionOutputPath>
         <testOutputPath>$MODULE_DIR$/target/test-js/kunafa-tests.js</testOutputPath>
         <compilerSettings>
-          <option name="additionalArguments" value="-XXLanguage:+InlineClasses" />
+          <option name="additionalArguments" value="-Xuse-experimental=kotlin.Experimental -XXLanguage:+InlineClasses" />
         </compilerSettings>
         <compilerArguments>
           <option name="sourceMapEmbedSources" value="inlining" />

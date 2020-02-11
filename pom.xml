@@ -98,6 +98,7 @@
                 <configuration>
                     <args>
                         <arg>-XXLanguage:+InlineClasses</arg>
+                        <arg>-Xuse-experimental=kotlin.Experimental</arg>
                     </args>
                     <moduleKind>umd</moduleKind>
                 </configuration>
