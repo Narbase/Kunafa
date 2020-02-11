@@ -14,19 +14,48 @@ import kotlin.browser.window
 object Router {
     init {
         window.onpopstate = {
-            Router.update()
+            update()
         }
     }
 
     var currentPath = "/"
     var parentRoute: Route? = null
+    private val matchedRoutes = mutableSetOf<Route>()
+    private var isUpdating = false
+    private const val MAX_REDIRECT_LIMIT = 100
+
+    fun onRouteMatch(route: Route) {
+        matchedRoutes.add(route)
+    }
+
+    fun onRouteUnMatch(route: Route) {
+        matchedRoutes.remove(route)
+    }
 
     private val rootRoutes = mutableListOf<Route>()
 
+    @Suppress("LiftReturnOrAssignment")
     private fun update() {
-        rootRoutes.forEach { route ->
-            route.update()
-        }
+        isUpdating = true
+        var shouldRetry: Boolean
+        var redirectCounter = 0
+        do {
+            try {
+                rootRoutes.forEach { route ->
+                    route.update()
+                }
+                shouldRetry = false
+            } catch (e: RedirectException) {
+                redirectCounter++
+                if (redirectCounter < MAX_REDIRECT_LIMIT) {
+                    shouldRetry = true
+                } else {
+                    shouldRetry = false
+                    console.log("Maximum redirect limit 100 is reached. Please check if you are redirecting correctly.")
+                }
+            }
+        } while (shouldRetry)
+        isUpdating = false
     }
 
     fun add(route: Route) {
@@ -35,8 +64,11 @@ object Router {
 
 
     fun navigateTo(path: String) {
+        val shouldPrevent = matchedRoutes.firstOrNull { it.meta.onRouteWillChange?.invoke() == false } != null
+        if (shouldPrevent) return
         window.history.pushState(null, "", "/${path.trimStart('/')}")
-        Router.update()
+        if (isUpdating) throw RedirectException()
+        else update()
     }
 
 }

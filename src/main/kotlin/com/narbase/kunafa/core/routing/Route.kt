@@ -31,8 +31,10 @@ abstract class Route constructor(
         val oldPath = setupRouterToCurrentRoute()
         val windowSegments = getSegments(window.location.pathname)
         if (doesMatch(windowSegments)) {
+            Router.onRouteMatch(this)
             onMatch(windowSegments)
         } else {
+            Router.onRouteUnMatch(this)
             onUnMatch()
         }
         restoreRouterConfig(oldPath)
@@ -163,8 +165,6 @@ class ParameterSegment(text: String) : RouteSegment(text) {
     override fun matches(route: RouteSegment?) = route != null
     override fun toString() = ":$text"
 }
-
-class RouteMeta(val path: String, val params: Observable<Map<String, String>>)
 
 fun View?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
     val completePath = Route.getPath(Router.currentPath, path, isAbsolute = true)
