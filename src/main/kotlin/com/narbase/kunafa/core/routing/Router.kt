@@ -14,13 +14,14 @@ import kotlin.browser.window
 object Router {
     init {
         window.onpopstate = {
-            Router.update()
+            update()
         }
     }
 
     var currentPath = "/"
     var parentRoute: Route? = null
     private val matchedRoutes = mutableSetOf<Route>()
+    private var isUpdating = false
 
     fun onRouteMatch(route: Route) {
         matchedRoutes.add(route)
@@ -32,10 +33,21 @@ object Router {
 
     private val rootRoutes = mutableListOf<Route>()
 
+    @Suppress("LiftReturnOrAssignment")
     private fun update() {
-        rootRoutes.forEach { route ->
-            route.update()
-        }
+        isUpdating = true
+        var shouldRetry: Boolean
+        do {
+            try {
+                rootRoutes.forEach { route ->
+                    route.update()
+                }
+                shouldRetry = false
+            } catch (e: RedirectException) {
+                shouldRetry = true
+            }
+        } while (shouldRetry)
+        isUpdating = false
     }
 
     fun add(route: Route) {
@@ -47,7 +59,8 @@ object Router {
         val shouldPrevent = matchedRoutes.firstOrNull { it.meta.onRouteWillChange?.invoke() == false } != null
         if (shouldPrevent) return
         window.history.pushState(null, "", "/${path.trimStart('/')}")
-        Router.update()
+        if (isUpdating) throw RedirectException()
+        else update()
     }
 
 }
