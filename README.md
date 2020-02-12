@@ -1,8 +1,17 @@
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 [![Maven Central](https://img.shields.io/maven-central/v/com.narbase/kunafa.svg)](https://mvnrepository.com/artifact/com.narbase/kunafa)
-# Kunafa
-Easy to use, high level framework in Kotlin for front-end web-development. 
-Allows for creating web apps without using HTML, CSS, or JavaScript.
+
+<div align="center">
+  <img alt="Kunafa logo" src="https://github.com/Kabbura/Kunafa/raw/master/logo.svg" height="120" />
+</div>
+
+<div align="center">
+  <h1>Kunafa</h1>
+  <p>Easy to use, high level framework in Kotlin for front-end web-development</p>
+  <br>
+</div>
+
+Create web apps without using HTML, CSS, or JavaScript.
 
 ## Philosophy
 Web apps framework without using HTML, CSS, or JavaScript.
