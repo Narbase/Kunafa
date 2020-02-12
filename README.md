@@ -2,7 +2,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.narbase/kunafa.svg)](https://mvnrepository.com/artifact/com.narbase/kunafa)
 
 <div align="center">
-  <img alt="Kunafa logo" src="https://github.com/Kabbura/Kunafa/raw/master/logo.svg" height="120" />
+  <img alt="Kunafa logo" src="https://github.com/Kabbura/Kunafa/raw/master/logo.png" height="120" />
 </div>
 
 <div align="center">
