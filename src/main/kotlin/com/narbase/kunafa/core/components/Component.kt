@@ -37,4 +37,8 @@ abstract class Component : LifecycleObserver {
         parent?.removeChild(validView)
     }
 
+    fun invalidateView() {
+        rootView?.parent?.unMount(this)
+        rootView = null
+    }
 }

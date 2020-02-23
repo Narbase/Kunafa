@@ -11,6 +11,7 @@ import kotlin.browser.window
  * On: 2019/03/09.
  */
 
+@Suppress("unused")
 object Router {
     init {
         window.onpopstate = {
@@ -22,6 +23,7 @@ object Router {
     var parentRoute: Route? = null
     private val matchedRoutes = mutableSetOf<Route>()
     private var isUpdating = false
+    private val rootRoutes = mutableListOf<Route>()
     private const val MAX_REDIRECT_LIMIT = 100
 
     fun onRouteMatch(route: Route) {
@@ -32,7 +34,9 @@ object Router {
         matchedRoutes.remove(route)
     }
 
-    private val rootRoutes = mutableListOf<Route>()
+    fun invalidateCache() {
+        rootRoutes.clear()
+    }
 
     @Suppress("LiftReturnOrAssignment")
     private fun update() {
