@@ -50,6 +50,9 @@ object Router {
                 }
                 shouldRetry = false
             } catch (e: RedirectException) {
+                currentPath = "/"
+                parentRoute = null
+                matchedRoutes.clear()
                 redirectCounter++
                 if (redirectCounter < MAX_REDIRECT_LIMIT) {
                     shouldRetry = true
