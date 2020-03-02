@@ -22,6 +22,9 @@ abstract class Component : LifecycleObserver {
             return notNullView
         }
 
+    val isInitialized
+        get() = rootView != null
+
     protected abstract fun View?.getView(): View
 
     fun addToParent(parent: View?) {

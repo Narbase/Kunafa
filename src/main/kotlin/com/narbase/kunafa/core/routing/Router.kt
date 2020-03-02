@@ -21,10 +21,10 @@ object Router {
 
     var currentPath = "/"
     var parentRoute: Route? = null
+    var isUpdating = false
     private val matchedRoutes = mutableSetOf<Route>()
-    private var isUpdating = false
     private val rootRoutes = mutableListOf<Route>()
-    private const val MAX_REDIRECT_LIMIT = 100
+    const val MAX_REDIRECT_LIMIT = 100
 
     fun onRouteMatch(route: Route) {
         matchedRoutes.add(route)
@@ -40,29 +40,9 @@ object Router {
 
     @Suppress("LiftReturnOrAssignment")
     private fun update() {
-        isUpdating = true
-        var shouldRetry: Boolean
-        var redirectCounter = 0
-        do {
-            try {
-                rootRoutes.forEach { route ->
-                    route.update()
-                }
-                shouldRetry = false
-            } catch (e: RedirectException) {
-                currentPath = "/"
-                parentRoute = null
-                matchedRoutes.clear()
-                redirectCounter++
-                if (redirectCounter < MAX_REDIRECT_LIMIT) {
-                    shouldRetry = true
-                } else {
-                    shouldRetry = false
-                    console.log("Maximum redirect limit 100 is reached. Please check if you are redirecting correctly.")
-                }
-            }
-        } while (shouldRetry)
-        isUpdating = false
+        rootRoutes.forEach { route ->
+            route.update()
+        }
     }
 
     fun add(route: Route) {

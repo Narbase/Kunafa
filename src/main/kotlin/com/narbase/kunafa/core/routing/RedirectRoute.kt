@@ -25,7 +25,8 @@ class RedirectRoute(
         if (isAbsoluteDestination) {
             Router.navigateTo(redirectPath)
         } else {
-            Router.navigateTo("$path/${redirectPath.trim('/')}")
+            val windowPath = "/${windowSegments.joinToString("/")}"
+            Router.navigateTo("$windowPath/${redirectPath.trim('/')}")
         }
     }
 

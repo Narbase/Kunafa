@@ -21,7 +21,6 @@ class MatchFirstRoute(
 ) : Route(meta, segments, parentRoute, isExact) {
 
     override fun onMatch(windowSegments: List<RouteSegment>) {
-        updatePathParams(windowSegments)
         children.forEach { it.onUnMatch() }
         for (child in children) {
             if (child.doesMatch(windowSegments)) {

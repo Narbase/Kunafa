@@ -6,7 +6,7 @@
 
     <groupId>com.narbase</groupId>
     <artifactId>kunafa</artifactId>
-    <version>0.2.16</version>
+    <version>0.2.17-dev.11</version>
 
     <name>Kunafa</name>
     <description>Easy to use, high level framework in Kotlin for front-end web-development</description>
@@ -100,6 +100,8 @@
                         <arg>-XXLanguage:+InlineClasses</arg>
                     </args>
                     <moduleKind>umd</moduleKind>
+                    <sourceMap>true</sourceMap>
+                    <sourceMapEmbedSources>always</sourceMapEmbedSources>
                 </configuration>
             </plugin>
             <plugin>

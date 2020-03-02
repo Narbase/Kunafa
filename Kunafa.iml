@@ -9,7 +9,8 @@
           <option name="additionalArguments" value="-XXLanguage:+InlineClasses" />
         </compilerSettings>
         <compilerArguments>
-          <option name="sourceMapEmbedSources" value="inlining" />
+          <option name="sourceMap" value="true" />
+          <option name="sourceMapEmbedSources" value="always" />
           <option name="moduleKind" value="umd" />
           <option name="languageVersion" value="1.3" />
           <option name="apiVersion" value="1.3" />
