@@ -2,8 +2,10 @@
 
 package com.narbase.kunafa.core.routing
 
-import com.narbase.kunafa.core.components.*
-import com.narbase.kunafa.core.lifecycle.Observable
+import com.narbase.kunafa.core.components.Anchor
+import com.narbase.kunafa.core.components.Component
+import com.narbase.kunafa.core.components.View
+import com.narbase.kunafa.core.components.a
 import kotlin.browser.window
 
 /**
@@ -26,18 +28,46 @@ abstract class Route constructor(
 
     val path
         get() = "/${segments.joinToString("/")}"
+    val isRootRoute
+        get() = parentRoute == null
 
-    open fun update() {
-        val oldPath = setupRouterToCurrentRoute()
+    fun update() {
+        var shouldRetry: Boolean
+        var redirectCounter = 0
+        do {
+            val oldPath = setupRouterToCurrentRoute()
+            if (isRootRoute.not()) {
+                // check if matching without try/catch block. Let a parent rootRoute catch it
+                checkIfMatching()
+                shouldRetry = false
+            } else try {
+                checkIfMatching()
+                shouldRetry = false
+            } catch (e: RedirectException) {
+                redirectCounter++
+                if (redirectCounter < Router.MAX_REDIRECT_LIMIT) {
+                    shouldRetry = true
+                } else {
+                    shouldRetry = false
+                    console.log("Maximum redirect limit 100 is reached. Please check if you are redirecting correctly.")
+                }
+            }
+
+            restoreRouterConfig(oldPath)
+        } while (shouldRetry)
+
+    }
+
+    private fun checkIfMatching() {
         val windowSegments = getSegments(window.location.pathname)
         if (doesMatch(windowSegments)) {
             Router.onRouteMatch(this)
+            updatePathParams(windowSegments)
             onMatch(windowSegments)
         } else {
             Router.onRouteUnMatch(this)
             onUnMatch()
         }
-        restoreRouterConfig(oldPath)
     }
 
     abstract fun onMatch(windowSegments: List<RouteSegment>)
@@ -47,16 +77,18 @@ abstract class Route constructor(
     protected fun restoreRouterConfig(oldPath: String) {
         Router.parentRoute = parentRoute
         Router.currentPath = oldPath
+        Router.isUpdating = false
     }
 
     protected fun setupRouterToCurrentRoute(): String {
         val oldPath = Router.currentPath
+        Router.isUpdating = true
         Router.currentPath = meta.path
         Router.parentRoute = this
         return oldPath
     }
 
-    protected fun updatePathParams(windowSegments: List<RouteSegment>) {
+    private fun updatePathParams(windowSegments: List<RouteSegment>) {
         val params = mutableMapOf<String, String>()
         segments
                 .forEachIndexed { index, segment ->
@@ -88,25 +120,6 @@ abstract class Route constructor(
     }
 
     companion object {
-        fun createComponentRoute(
-                parentView: View,
-                path: String,
-                isExact: Boolean = false,
-                isAbsolute: Boolean = false,
-                block: (meta: RouteMeta) -> Component
-        ): Route {
-            val routePath = getPath(Router.currentPath, path, isAbsolute)
-
-            val routeSegments = getSegments(routePath)
-
-            val reference = parentView.view { isVisible = false }
-            val meta = RouteMeta(routePath, Observable())
-            val component = block(meta)
-            val route = ComponentRoute(meta, routeSegments, component, Router.parentRoute, parentView, reference, isExact)
-            addToParent(route)
-            route.update()
-            return route
-        }
 
         protected fun addToParent(route: Route) {
             if (Router.parentRoute == null) {
@@ -154,7 +167,7 @@ fun View.routeComponent(
         isExact: Boolean = false,
         isAbsolute: Boolean = false,
         block: (meta: RouteMeta) -> Component
-): Route = Route.createComponentRoute(this, path, isExact, isAbsolute, block)
+): ComponentRoute = ComponentRoute.createComponentRoute(this, path, isExact, isAbsolute, block)
 
 open class RouteSegment(val text: String) {
     open fun matches(route: RouteSegment?) = text == route?.text
