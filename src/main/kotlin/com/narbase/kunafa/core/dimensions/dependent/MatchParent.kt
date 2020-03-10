@@ -6,13 +6,8 @@ import com.narbase.kunafa.core.components.layout.LinearLayout
 import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.DynamicDimension
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2013] - [2018] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 10/6/17.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 
 class MatchParent internal constructor() : DynamicDimension() {

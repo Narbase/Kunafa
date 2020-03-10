@@ -8,13 +8,8 @@ import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.components.a
 import kotlin.browser.window
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2017] -[2019] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 2019/03/09.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 
 abstract class Route constructor(

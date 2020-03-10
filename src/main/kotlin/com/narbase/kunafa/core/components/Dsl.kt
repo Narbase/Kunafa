@@ -6,13 +6,8 @@ import com.narbase.kunafa.core.components.layout.LinearLayout
 import com.narbase.kunafa.core.components.layout.ScrollView
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2013] - [2018] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 9/30/17.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 
 fun page(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit = {}) {

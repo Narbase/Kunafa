@@ -8,13 +8,8 @@ import org.w3c.dom.events.Event
 import kotlin.browser.document
 
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2013] - [2018] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 10/31/17.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 class Radio(parent: View? = null) : View(parent) {
 

@@ -8,13 +8,8 @@ import org.w3c.dom.HTMLFormElement
 import org.w3c.dom.HTMLLegendElement
 import kotlin.browser.document
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2017] -[2018] Narbase Technologies
- * All Rights Reserved.
- * Created by ${user}
- * On: ${date}.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 
 class Form(parent: View? = null) : View(parent) {

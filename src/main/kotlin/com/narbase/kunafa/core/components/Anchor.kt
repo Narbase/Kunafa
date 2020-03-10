@@ -5,13 +5,8 @@ package com.narbase.kunafa.core.components
 import org.w3c.dom.HTMLAnchorElement
 import kotlin.browser.document
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2017] -[2019] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 2019/03/08.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 class Anchor(parent: View? = null) : View(parent) {
     override val element: HTMLAnchorElement = (document.createElement("a") as HTMLAnchorElement)

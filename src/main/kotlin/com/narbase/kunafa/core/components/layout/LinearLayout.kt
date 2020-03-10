@@ -6,13 +6,8 @@ import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.components.layout.LinearLayout.Orientation.Horizontal
 import com.narbase.kunafa.core.css.*
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2013] - [2018] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 9/30/17.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 open class LinearLayout(
         parent: View?,

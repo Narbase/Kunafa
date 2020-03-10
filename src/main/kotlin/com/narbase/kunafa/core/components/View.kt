@@ -13,13 +13,8 @@ import kotlin.browser.document
 import kotlin.dom.addClass
 import kotlin.dom.removeClass
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2013] - [2018] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 9/30/17.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 open class View(var parent: View? = null) : LifecycleOwner {
     var id: String?
