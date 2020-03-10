@@ -5,13 +5,8 @@ import com.narbase.kunafa.core.css.classRuleSet
 import com.narbase.kunafa.core.css.isScrollableHorizontally
 import com.narbase.kunafa.core.css.isScrollableVertically
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2013] - [2018] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 10/1/17.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 class ScrollView(
         parent: View?,

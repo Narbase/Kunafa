@@ -7,13 +7,8 @@ import org.w3c.dom.HTMLLIElement
 import org.w3c.dom.HTMLUListElement
 import kotlin.browser.document
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2017] -[2018] Narbase Technologies
- * All Rights Reserved.
- * Created by ${user}
- * On: ${date}.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 
 open class UList(parent: View? = null) : View(parent) {

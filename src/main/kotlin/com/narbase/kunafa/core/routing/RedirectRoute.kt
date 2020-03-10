@@ -5,13 +5,8 @@ package com.narbase.kunafa.core.routing
 import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.lifecycle.Observable
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2017] -[2019] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 2020/02/11.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 class RedirectRoute(
         val redirectPath: String,
@@ -22,12 +17,13 @@ class RedirectRoute(
         val isAbsoluteDestination: Boolean
 ) : Route(meta, segments, parentRoute, isExact) {
     override fun onMatch(windowSegments: List<RouteSegment>) {
-        if (isAbsoluteDestination) {
-            Router.navigateTo(redirectPath)
+        val completeRedirectPath = if (isAbsoluteDestination) {
+            redirectPath
         } else {
             val windowPath = "/${windowSegments.joinToString("/")}"
-            Router.navigateTo("$windowPath/${redirectPath.trim('/')}")
+            "$windowPath/${redirectPath.trim('/')}"
         }
+        Router.navigateTo(completeRedirectPath, replaceCurrentState = true)
     }
 
     override fun onUnMatch() {

@@ -2,13 +2,8 @@ package com.narbase.kunafa.core.routing
 
 import kotlin.browser.window
 
-/**
- * NARBASE TECHNOLOGIES CONFIDENTIAL
- * ______________________________
- * [2017] -[2019] Narbase Technologies
- * All Rights Reserved.
- * Created by islam
- * On: 2019/03/09.
+/*
+ * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 
 @Suppress("unused")
@@ -50,10 +45,14 @@ object Router {
     }
 
 
-    fun navigateTo(path: String) {
+    fun navigateTo(path: String, replaceCurrentState: Boolean = false) {
         val shouldPrevent = matchedRoutes.firstOrNull { it.meta.onRouteWillChange?.invoke() == false } != null
         if (shouldPrevent) return
-        window.history.pushState(null, "", "/${path.trimStart('/')}")
+        if (replaceCurrentState) {
+            window.history.replaceState(null, "", "/${path.trimStart('/')}")
+        } else {
+            window.history.pushState(null, "", "/${path.trimStart('/')}")
+        }
         if (isUpdating) throw RedirectException()
         else update()
     }
