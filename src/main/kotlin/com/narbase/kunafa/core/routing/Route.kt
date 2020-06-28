@@ -27,6 +27,9 @@ abstract class Route constructor(
         get() = parentRoute == null
 
     fun update() {
+        if (Router.ignoreRouteUpdate) {
+            return
+        }
         var shouldRetry: Boolean
         var redirectCounter = 0
         do {
