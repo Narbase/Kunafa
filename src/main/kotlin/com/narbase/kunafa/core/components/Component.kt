@@ -11,14 +11,18 @@ abstract class Component : LifecycleObserver {
 
     var rootView: View? = null
     private val initializedView: View
-        get() {
-            val notNullView = rootView ?: createView { getView() }
-            rootView = notNullView
-            return notNullView
-        }
+        get() = rootView ?: createView { getView() }
 
     val isInitialized
         get() = rootView != null
+
+    fun createView(setup: View?.() -> View): View {
+        val view = detached.setup()
+        view.bind(this)
+        rootView = view
+        view.postOnViewCreated()
+        return view
+    }
 
     protected abstract fun View?.getView(): View
 
