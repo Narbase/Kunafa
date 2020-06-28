@@ -4,6 +4,8 @@ package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.css.ClassSelector
 import com.narbase.kunafa.core.css.RuleSet
+import org.w3c.dom.HTMLBodyElement
+import org.w3c.dom.HTMLElement
 import kotlin.browser.document
 import kotlin.dom.addClass
 import kotlin.dom.clear
@@ -15,27 +17,8 @@ object Page : View(null) {
 
     override var isViewMounted: Boolean = true
 
-    override fun mount(child: View) {
-        child.postViewWillMount()
-        child.parent = this
-        document.body?.append(child.element)
-        children.add(child)
-        child.postOnViewMounted()
-    }
-
-    override fun mountAfter(child: View, referenceNode: View) {
-        child.postViewWillMount()
-        document.body?.insertBefore(child.element, referenceNode.element.nextSibling)
-        child.parent = this
-        children.add(child)
-        child.postOnViewMounted()
-    }
-
-    override fun removeChild(child: View) {
-        children.remove(child)
-        document.body?.removeChild(child.element)
-        child.parent = null
-    }
+    override val element: HTMLElement
+        get() = document.body ?: document.createElement("body") as HTMLBodyElement
 
     var title: String
         get() = document.title
@@ -48,10 +31,6 @@ object Page : View(null) {
 
         document.body?.style?.margin = "0"
         document.body?.style?.padding = "0"
-        document.body?.style?.overflowY = "hidden"
-        document.body?.style?.overflowX = "hidden"
-        document.body?.style?.width = "100vw"
-        document.body?.style?.height = "100vh"
 
         document.body?.clear()
     }

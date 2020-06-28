@@ -1,6 +1,6 @@
 package com.narbase.kunafa.core.lifecycle
 
 interface LifecycleOwner {
-    var isViewMounted: Boolean
+    val isViewMounted: Boolean
     fun bind(lifecycleObserver: LifecycleObserver)
 }
