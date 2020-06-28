@@ -16,11 +16,13 @@ class MatchFirstRoute(
 ) : Route(meta, segments, parentRoute, isExact) {
 
     override fun onMatch(windowSegments: List<RouteSegment>) {
-        children.forEach { it.onUnMatch() }
+        var matchFound = false
         for (child in children) {
-            if (child.doesMatch(windowSegments)) {
+            if (matchFound.not() && child.doesMatch(windowSegments)) {
+                matchFound = true
                 child.update()
-                break
+            } else {
+                child.onUnMatch()
             }
         }
     }
@@ -31,7 +33,9 @@ class MatchFirstRoute(
 
     private fun executeBody(parentView: View, block: View.() -> Unit) {
         val oldPath = setupRouterToCurrentRoute()
+        Router.ignoreRouteUpdate = true
         parentView.block()
+        Router.ignoreRouteUpdate = false
         restoreRouterConfig(oldPath)
     }
 

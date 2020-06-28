@@ -6,7 +6,7 @@
 
     <groupId>com.narbase</groupId>
     <artifactId>kunafa</artifactId>
-    <version>0.2.19</version>
+    <version>0.2.20</version>
 
     <name>Kunafa</name>
     <description>Easy to use, high level framework in Kotlin for front-end web-development</description>

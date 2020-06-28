@@ -16,7 +16,18 @@ object Router {
 
     var currentPath = "/"
     var parentRoute: Route? = null
+
+    /**
+     * When updating, navigateTo should thrown an exception. Otherwise, it will invoke the update function.
+     */
     var isUpdating = false
+
+    /**
+     * This is used to prevent matchFirst children from calling update(), as matchFirst will call update itself and only
+     * mount the first child.
+     */
+    var ignoreRouteUpdate = false
+
     private val matchedRoutes = mutableSetOf<Route>()
     private val rootRoutes = mutableListOf<Route>()
     const val MAX_REDIRECT_LIMIT = 100

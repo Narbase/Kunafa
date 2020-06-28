@@ -9,8 +9,8 @@ package com.narbase.kunafa.core.components
 open class TextView(parent: View? = null) : View(parent) {
 
     var text
-        get() = element.innerHTML
+        get() = element.innerText
         set(value) {
-            element.innerHTML = value
+            element.innerText = value
         }
 }

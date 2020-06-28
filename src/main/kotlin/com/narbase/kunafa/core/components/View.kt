@@ -25,7 +25,8 @@ open class View(var parent: View? = null) : LifecycleOwner {
             }
         }
 
-    override var isViewMounted: Boolean = false
+    override val isViewMounted: Boolean
+        get() = element.parentElement != null && parent?.isViewMounted == true
 
     open val element: HTMLElement = document.createElement("div") as HTMLDivElement
 
@@ -42,18 +43,16 @@ open class View(var parent: View? = null) : LifecycleOwner {
 
     internal fun postOnViewMounted() {
         if (parent?.isViewMounted != true) return
-        isViewMounted = true
         lifecycleObserversList.forEach { it.onViewMounted(this) }
         children.forEach { it.postOnViewMounted() }
     }
 
-    private fun postViewWillBeRemoved() {
+    internal fun postViewWillBeRemoved() {
         lifecycleObserversList.forEach { it.viewWillBeRemoved(this) }
         children.forEach { it.postViewWillBeRemoved() }
     }
 
-    private fun postOnViewRemoved() {
-        isViewMounted = false
+    internal fun postOnViewRemoved() {
         children.forEach { it.postOnViewRemoved() }
         lifecycleObserversList.forEach { it.onViewRemoved(this) }
     }
@@ -87,13 +86,6 @@ open class View(var parent: View? = null) : LifecycleOwner {
     open fun configureElement() {
         addRuleSet(baseClass)
     }
-
-
-//    private fun setupStyleSheet(rules: (RuleSet.() -> Unit)?) {
-//        if (rules == null) return
-//        val ruleSet = classRuleSet(null, rules)
-//        addRuleSet(ruleSet)
-//    }
 
     private fun simpleStyle(rules: RuleSet.() -> Unit): RuleSet {
         val ruleSet = classRuleSet(null, rules)
@@ -159,7 +151,7 @@ open class View(var parent: View? = null) : LifecycleOwner {
         get() = parent?.path
 
 
-    val children: ArrayList<View> = arrayListOf()
+    val children: MutableSet<View> = mutableSetOf()
 
 
     internal open fun addToParent() {
@@ -167,6 +159,7 @@ open class View(var parent: View? = null) : LifecycleOwner {
     }
 
     open fun mount(child: View) {
+        if (child.element.parentElement == element) return
         child.postViewWillMount()
         element.append(child.element)
         child.parent = this
@@ -175,6 +168,7 @@ open class View(var parent: View? = null) : LifecycleOwner {
     }
 
     open fun mountAfter(child: View, referenceNode: View) {
+        if (child.element.parentElement == element) return
         child.postViewWillMount()
         element.insertBefore(child.element, referenceNode.element.nextSibling)
         child.parent = this
