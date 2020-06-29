@@ -2,11 +2,13 @@
 
 package com.narbase.kunafa.core.css
 
+import com.narbase.kunafa.core.components.Page.useRtl
 import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLStyleElement
+import org.w3c.dom.css.CSSStyleDeclaration
 import org.w3c.dom.css.CSSStyleSheet
 import kotlin.browser.document
 
@@ -359,6 +361,143 @@ val Selector.visited get() = PseudoSelector(this, ":visited")
 // With selector
 //fun RuleSet.hover(affectedSelector: Selector, rules: RuleSet.() -> Unit) = this.addPseudo(":hover", rules)
 
+var RuleSet.end: LinearDimension?
+    get() = if (useRtl) left else right
+    set(value) {
+        if (useRtl) left = value else right = value
+    }
+
+var RuleSet.start: LinearDimension?
+    get() = if (useRtl) right else left
+    set(value) {
+        if (useRtl) right = value else left = value
+    }
+
+var CSSStyleDeclaration.end: String
+    get() = if (useRtl) left else right
+    set(value) {
+        if (useRtl) left = value else right = value
+    }
+
+var CSSStyleDeclaration.start: String
+    get() = if (useRtl) right else left
+    set(value) {
+        if (useRtl) right = value else left = value
+    }
+
+var RuleSet.marginEnd: LinearDimension?
+    get() = if (useRtl) marginLeft else marginRight
+    set(value) {
+        if (useRtl) marginLeft = value else marginRight = value
+    }
+
+var RuleSet.marginStart: LinearDimension?
+    get() = if (useRtl) marginRight else marginLeft
+    set(value) {
+        if (useRtl) marginRight = value else marginLeft = value
+    }
+
+
+var RuleSet.paddingEnd: LinearDimension?
+    get() = if (useRtl) paddingLeft else paddingRight
+    set(value) {
+        if (useRtl) paddingLeft = value else paddingRight = value
+    }
+
+var RuleSet.paddingStart: LinearDimension?
+    get() = if (useRtl) paddingRight else paddingLeft
+    set(value) {
+        if (useRtl) paddingRight = value else paddingLeft = value
+    }
+
+var RuleSet.navEnd: String?
+    get() = if (useRtl) navLeft else navRight
+    set(value) {
+        if (useRtl) navLeft = value else navRight = value
+    }
+
+var RuleSet.navStart: String?
+    get() = if (useRtl) navRight else navLeft
+    set(value) {
+        if (useRtl) navRight = value else navLeft = value
+    }
+
+
+var RuleSet.borderEnd: String?
+    get() = if (useRtl) borderLeft else borderRight
+    set(value) {
+        if (useRtl) borderLeft = value else borderRight = value
+    }
+
+var RuleSet.borderStart: String?
+    get() = if (useRtl) borderLeft else borderRight
+    set(value) {
+        if (useRtl) borderLeft = value else borderRight = value
+    }
+
+var RuleSet.borderBottomEndRadius: LinearDimension?
+    get() = if (useRtl) borderBottomLeftRadius else borderBottomRightRadius
+    set(value) {
+        if (useRtl) borderBottomLeftRadius = value else borderBottomRightRadius = value
+    }
+
+var RuleSet.borderBottomStartRadius: LinearDimension?
+    get() = if (useRtl) borderBottomRightRadius else borderBottomLeftRadius
+    set(value) {
+        if (useRtl) borderBottomRightRadius = value else borderBottomLeftRadius = value
+    }
+
+var RuleSet.borderTopEndRadius: LinearDimension?
+    get() = if (useRtl) borderTopLeftRadius else borderTopRightRadius
+    set(value) {
+        if (useRtl) borderTopLeftRadius = value else borderTopRightRadius = value
+    }
+
+var RuleSet.borderTopStartRadius: LinearDimension?
+    get() = if (useRtl) borderTopRightRadius else borderTopLeftRadius
+    set(value) {
+        if (useRtl) borderTopRightRadius = value else borderTopLeftRadius = value
+    }
+
+
+var RuleSet.borderEndColor: Color?
+    get() = if (useRtl) borderLeftColor else borderRightColor
+    set(value) {
+        if (useRtl) borderLeftColor = value else borderRightColor = value
+    }
+
+
+var RuleSet.borderStartColor: Color?
+    get() = if (useRtl) borderRightColor else borderLeftColor
+    set(value) {
+        if (useRtl) borderRightColor = value else borderLeftColor = value
+    }
+
+var RuleSet.borderEndStyle: String?
+    get() = if (useRtl) borderLeftStyle else borderRightStyle
+    set(value) {
+        if (useRtl) borderLeftStyle = value else borderRightStyle = value
+    }
+
+var RuleSet.borderStartStyle: String?
+    get() = if (useRtl) borderRightStyle else borderLeftStyle
+    set(value) {
+        if (useRtl) borderRightStyle = value else borderLeftStyle = value
+    }
+
+var RuleSet.borderEndWidth: String?
+    get() = if (useRtl) borderLeftWidth else borderRightWidth
+    set(value) {
+        if (useRtl) borderLeftWidth = value else borderRightWidth = value
+    }
+
+var RuleSet.borderStartWidth: String?
+    get() = if (useRtl) borderRightWidth else borderLeftWidth
+    set(value) {
+        if (useRtl) borderRightWidth = value else borderLeftWidth = value
+    }
+
+
 
 inline class Alignment(
         val name: String
@@ -395,6 +534,10 @@ inline class TextAlign(val name: String) {
     companion object {
         val Left = TextAlign("left")
         val Right = TextAlign("right")
+        val Start = if (useRtl) TextAlign("right")
+        else TextAlign("left")
+        val End = if (useRtl) TextAlign("left")
+        else TextAlign("right")
         val Center = TextAlign("center")
         val Justify = TextAlign("justify")
         val Initial = TextAlign("initial")
