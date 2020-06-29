@@ -2,6 +2,7 @@
 
 package com.narbase.kunafa.core.css
 
+import com.narbase.kunafa.core.components.Page.useRtl
 import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
@@ -360,142 +361,140 @@ val Selector.visited get() = PseudoSelector(this, ":visited")
 // With selector
 //fun RuleSet.hover(affectedSelector: Selector, rules: RuleSet.() -> Unit) = this.addPseudo(":hover", rules)
 
-var isRTL: Boolean = false
-
 var RuleSet.end: LinearDimension?
-    get() = if (isRTL) left else right
+    get() = if (useRtl) left else right
     set(value) {
-        if (isRTL) left = value else right = value
+        if (useRtl) left = value else right = value
     }
 
 var RuleSet.start: LinearDimension?
-    get() = if (isRTL) right else left
+    get() = if (useRtl) right else left
     set(value) {
-        if (isRTL) right = value else left = value
+        if (useRtl) right = value else left = value
     }
 
 var CSSStyleDeclaration.end: String
-    get() = if (isRTL) left else right
+    get() = if (useRtl) left else right
     set(value) {
-        if (isRTL) left = value else right = value
+        if (useRtl) left = value else right = value
     }
 
 var CSSStyleDeclaration.start: String
-    get() = if (isRTL) right else left
+    get() = if (useRtl) right else left
     set(value) {
-        if (isRTL) right = value else left = value
+        if (useRtl) right = value else left = value
     }
 
 var RuleSet.marginEnd: LinearDimension?
-    get() = if (isRTL) marginLeft else marginRight
+    get() = if (useRtl) marginLeft else marginRight
     set(value) {
-        if (isRTL) marginLeft = value else marginRight = value
+        if (useRtl) marginLeft = value else marginRight = value
     }
 
 var RuleSet.marginStart: LinearDimension?
-    get() = if (isRTL) marginRight else marginLeft
+    get() = if (useRtl) marginRight else marginLeft
     set(value) {
-        if (isRTL) marginRight = value else marginLeft = value
+        if (useRtl) marginRight = value else marginLeft = value
     }
 
 
 var RuleSet.paddingEnd: LinearDimension?
-    get() = if (isRTL) paddingLeft else paddingRight
+    get() = if (useRtl) paddingLeft else paddingRight
     set(value) {
-        if (isRTL) paddingLeft = value else paddingRight = value
+        if (useRtl) paddingLeft = value else paddingRight = value
     }
 
 var RuleSet.paddingStart: LinearDimension?
-    get() = if (isRTL) paddingRight else paddingLeft
+    get() = if (useRtl) paddingRight else paddingLeft
     set(value) {
-        if (isRTL) paddingRight = value else paddingLeft = value
+        if (useRtl) paddingRight = value else paddingLeft = value
     }
 
 var RuleSet.navEnd: String?
-    get() = if (isRTL) navLeft else navRight
+    get() = if (useRtl) navLeft else navRight
     set(value) {
-        if (isRTL) navLeft = value else navRight = value
+        if (useRtl) navLeft = value else navRight = value
     }
 
 var RuleSet.navStart: String?
-    get() = if (isRTL) navRight else navLeft
+    get() = if (useRtl) navRight else navLeft
     set(value) {
-        if (isRTL) navRight = value else navLeft = value
+        if (useRtl) navRight = value else navLeft = value
     }
 
 
 var RuleSet.borderEnd: String?
-    get() = if (isRTL) borderLeft else borderRight
+    get() = if (useRtl) borderLeft else borderRight
     set(value) {
-        if (isRTL) borderLeft = value else borderRight = value
+        if (useRtl) borderLeft = value else borderRight = value
     }
 
 var RuleSet.borderStart: String?
-    get() = if (isRTL) borderLeft else borderRight
+    get() = if (useRtl) borderLeft else borderRight
     set(value) {
-        if (isRTL) borderLeft = value else borderRight = value
+        if (useRtl) borderLeft = value else borderRight = value
     }
 
 var RuleSet.borderBottomEndRadius: LinearDimension?
-    get() = if (isRTL) borderBottomLeftRadius else borderBottomRightRadius
+    get() = if (useRtl) borderBottomLeftRadius else borderBottomRightRadius
     set(value) {
-        if (isRTL) borderBottomLeftRadius = value else borderBottomRightRadius = value
+        if (useRtl) borderBottomLeftRadius = value else borderBottomRightRadius = value
     }
 
 var RuleSet.borderBottomStartRadius: LinearDimension?
-    get() = if (isRTL) borderBottomRightRadius else borderBottomLeftRadius
+    get() = if (useRtl) borderBottomRightRadius else borderBottomLeftRadius
     set(value) {
-        if (isRTL) borderBottomRightRadius = value else borderBottomLeftRadius = value
+        if (useRtl) borderBottomRightRadius = value else borderBottomLeftRadius = value
     }
 
 var RuleSet.borderTopEndRadius: LinearDimension?
-    get() = if (isRTL) borderTopLeftRadius else borderTopRightRadius
+    get() = if (useRtl) borderTopLeftRadius else borderTopRightRadius
     set(value) {
-        if (isRTL) borderTopLeftRadius = value else borderTopRightRadius = value
+        if (useRtl) borderTopLeftRadius = value else borderTopRightRadius = value
     }
 
 var RuleSet.borderTopStartRadius: LinearDimension?
-    get() = if (isRTL) borderTopRightRadius else borderTopLeftRadius
+    get() = if (useRtl) borderTopRightRadius else borderTopLeftRadius
     set(value) {
-        if (isRTL) borderTopRightRadius = value else borderTopLeftRadius = value
+        if (useRtl) borderTopRightRadius = value else borderTopLeftRadius = value
     }
 
 
 var RuleSet.borderEndColor: Color?
-    get() = if (isRTL) borderLeftColor else borderRightColor
+    get() = if (useRtl) borderLeftColor else borderRightColor
     set(value) {
-        if (isRTL) borderLeftColor = value else borderRightColor = value
+        if (useRtl) borderLeftColor = value else borderRightColor = value
     }
 
 
 var RuleSet.borderStartColor: Color?
-    get() = if (isRTL) borderRightColor else borderLeftColor
+    get() = if (useRtl) borderRightColor else borderLeftColor
     set(value) {
-        if (isRTL) borderRightColor = value else borderLeftColor = value
+        if (useRtl) borderRightColor = value else borderLeftColor = value
     }
 
 var RuleSet.borderEndStyle: String?
-    get() = if (isRTL) borderLeftStyle else borderRightStyle
+    get() = if (useRtl) borderLeftStyle else borderRightStyle
     set(value) {
-        if (isRTL) borderLeftStyle = value else borderRightStyle = value
+        if (useRtl) borderLeftStyle = value else borderRightStyle = value
     }
 
 var RuleSet.borderStartStyle: String?
-    get() = if (isRTL) borderRightStyle else borderLeftStyle
+    get() = if (useRtl) borderRightStyle else borderLeftStyle
     set(value) {
-        if (isRTL) borderRightStyle = value else borderLeftStyle = value
+        if (useRtl) borderRightStyle = value else borderLeftStyle = value
     }
 
 var RuleSet.borderEndWidth: String?
-    get() = if (isRTL) borderLeftWidth else borderRightWidth
+    get() = if (useRtl) borderLeftWidth else borderRightWidth
     set(value) {
-        if (isRTL) borderLeftWidth = value else borderRightWidth = value
+        if (useRtl) borderLeftWidth = value else borderRightWidth = value
     }
 
 var RuleSet.borderStartWidth: String?
-    get() = if (isRTL) borderRightWidth else borderLeftWidth
+    get() = if (useRtl) borderRightWidth else borderLeftWidth
     set(value) {
-        if (isRTL) borderRightWidth = value else borderLeftWidth = value
+        if (useRtl) borderRightWidth = value else borderLeftWidth = value
     }
 
 
@@ -535,9 +534,9 @@ inline class TextAlign(val name: String) {
     companion object {
         val Left = TextAlign("left")
         val Right = TextAlign("right")
-        val Start = if (isRTL) TextAlign("right")
+        val Start = if (useRtl) TextAlign("right")
         else TextAlign("left")
-        val End = if (isRTL) TextAlign("left")
+        val End = if (useRtl) TextAlign("left")
         else TextAlign("right")
         val Center = TextAlign("center")
         val Justify = TextAlign("justify")
