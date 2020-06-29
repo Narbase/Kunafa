@@ -2,12 +2,9 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.css.ClassSelector
-import com.narbase.kunafa.core.css.RuleSet
 import org.w3c.dom.HTMLBodyElement
 import org.w3c.dom.HTMLElement
 import kotlin.browser.document
-import kotlin.dom.addClass
 import kotlin.dom.clear
 
 /*
@@ -35,14 +32,6 @@ object Page : View(null) {
         document.body?.clear()
     }
 
-    override fun addRuleSet(ruleSet: RuleSet) {
-        val selector = ruleSet.selector
-        if (selector is ClassSelector) {
-            val className = selector.name
-            document.body?.addClass(className)
-        }
-    }
-
     override fun addToParent() {
         /*
         Should be empty. Page cannot be added to parent
@@ -53,5 +42,13 @@ object Page : View(null) {
         get() = "/"
 
     var useRtl: Boolean = false
+        set(value) {
+            field = value
+            if (value) {
+                document.body?.style?.direction = "rtl"
+            } else {
+                document.body?.style?.direction = "ltr"
+            }
+        }
 
 }
