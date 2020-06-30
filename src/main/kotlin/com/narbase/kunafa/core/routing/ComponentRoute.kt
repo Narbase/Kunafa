@@ -35,6 +35,7 @@ class ComponentRoute(
     }
 
     override fun onUnMatch() {
+        super.onUnMatch()
         parentView?.unMount(component)
     }
 
