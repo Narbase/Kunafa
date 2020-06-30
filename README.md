@@ -48,7 +48,7 @@ Developers only need to use Kotlin for development.
 
   ```
 
-- The view component (similar to Android activity or iOS ViewController) should extend a base class and implement certain life cycle functions.
+- The view component (similar to Android activity or iOS ViewController) implements certain life cycle functions.
 - The framework views contains easy to understand and familiar components and layouts managers. i. e. Button, TextView, TextInput, HorizontalLayout, VerticalLayout and so on.
 - The framework makes laying out objects easy, e. g.  match parent, wrap content.
 - You can wrap any html, css, and js into a framework component to use it inside the framework.

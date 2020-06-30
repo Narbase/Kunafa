@@ -27,10 +27,6 @@ class MatchFirstRoute(
         }
     }
 
-    override fun onUnMatch() {
-        children.forEach { it.onUnMatch() }
-    }
-
     private fun executeBody(parentView: View, block: View.() -> Unit) {
         val oldPath = setupRouterToCurrentRoute()
         Router.ignoreRouteUpdate = true

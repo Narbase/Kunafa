@@ -26,10 +26,6 @@ class RedirectRoute(
         Router.navigateTo(completeRedirectPath, replaceCurrentState = true)
     }
 
-    override fun onUnMatch() {
-
-    }
-
     companion object {
         fun createRoute(
                 redirectPath: String,

@@ -63,14 +63,19 @@ abstract class Route constructor(
             updatePathParams(windowSegments)
             onMatch(windowSegments)
         } else {
-            Router.onRouteUnMatch(this)
             onUnMatch()
         }
     }
 
     abstract fun onMatch(windowSegments: List<RouteSegment>)
 
-    abstract fun onUnMatch()
+    open fun onUnMatch() {
+        children.forEach {
+            Router.onRouteUnMatch(it)
+            it.onUnMatch()
+        }
+        Router.onRouteUnMatch(this)
+    }
 
     protected fun restoreRouterConfig(oldPath: String) {
         Router.parentRoute = parentRoute
