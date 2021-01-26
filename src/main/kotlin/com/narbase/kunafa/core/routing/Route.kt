@@ -6,7 +6,7 @@ import com.narbase.kunafa.core.components.Anchor
 import com.narbase.kunafa.core.components.Component
 import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.components.a
-import kotlin.browser.window
+import kotlinx.browser.window
 
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
@@ -57,13 +57,19 @@ abstract class Route constructor(
     }
 
     private fun checkIfMatching() {
-        val windowSegments = getSegments(window.location.pathname)
-        if (doesMatch(windowSegments)) {
-            Router.onRouteMatch(this)
-            updatePathParams(windowSegments)
-            onMatch(windowSegments)
-        } else {
-            onUnMatch()
+        try {
+            val windowSegments = getSegments(window.location.pathname)
+            if (doesMatch(windowSegments)) {
+                Router.onRouteMatch(this)
+                updatePathParams(windowSegments)
+                onMatch(windowSegments)
+            } else {
+                onUnMatch()
+            }
+        } catch (e: RedirectException) {
+            throw e
+        } catch (e: Exception) {
+            console.log(e)
         }
     }
 
