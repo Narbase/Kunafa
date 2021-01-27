@@ -3,8 +3,8 @@
 package com.narbase.kunafa.core.components
 
 
+import kotlinx.browser.document
 import org.w3c.dom.*
-import kotlin.browser.document
 
 
 /*

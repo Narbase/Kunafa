@@ -6,11 +6,11 @@ import com.narbase.kunafa.core.components.Page.useRtl
 import com.narbase.kunafa.core.dimensions.Dimension
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
+import kotlinx.browser.document
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLStyleElement
 import org.w3c.dom.css.CSSStyleDeclaration
 import org.w3c.dom.css.CSSStyleSheet
-import kotlin.browser.document
 
 // Color Properties
 var RuleSet.color by RuleDelegate<Color?>("color")
@@ -430,9 +430,9 @@ var RuleSet.borderEnd: String?
     }
 
 var RuleSet.borderStart: String?
-    get() = if (useRtl) borderLeft else borderRight
+    get() = if (useRtl) borderRight else borderLeft
     set(value) {
-        if (useRtl) borderLeft = value else borderRight = value
+        if (useRtl) borderRight = value else borderLeft = value
     }
 
 var RuleSet.borderBottomEndRadius: LinearDimension?

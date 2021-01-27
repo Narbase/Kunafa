@@ -1,9 +1,9 @@
 package com.narbase.kunafa.core.components
 
 
+import kotlinx.browser.document
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
-import kotlin.browser.document
 
 
 /*

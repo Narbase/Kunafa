@@ -5,9 +5,9 @@ package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.dimensions.LinearDimension
 import com.narbase.kunafa.core.drawable.Color
+import kotlinx.browser.document
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
-import kotlin.browser.document
 
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.

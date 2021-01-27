@@ -65,7 +65,7 @@ class StringDimension(val dimension: String) : Dimension() {
     override fun toString() = dimension
 }
 
-@Deprecated("Use String.dimen", replaceWith = ReplaceWith("String.dimen"))
+@Deprecated("Use String.dimen", replaceWith = ReplaceWith("dimension.dimen()", imports = arrayOf("com.narbase.kunafa.core.dimensions.dimen")))
 fun st(dimension: String) = StringDimension(dimension)
 
 fun String.dimen() = StringDimension(this)
