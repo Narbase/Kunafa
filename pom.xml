@@ -6,7 +6,7 @@
 
     <groupId>com.narbase</groupId>
     <artifactId>kunafa</artifactId>
-    <version>0.2.24-alpha.3</version>
+    <version>0.2.24-alpha.4</version>
 
     <name>Kunafa</name>
     <description>Easy to use, high level framework in Kotlin for front-end web-development</description>
@@ -52,6 +52,7 @@
 
     <properties>
         <kotlin.version>1.4.10</kotlin.version>
+        <kotlin.js.compiler>both</kotlin.js.compiler>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -98,7 +99,6 @@
                 <configuration>
                     <args>
                         <arg>-XXLanguage:+InlineClasses</arg>
-                        <arg>-Xuse-ir=${kotlin.use.ir}</arg>
                     </args>
                     <moduleKind>umd</moduleKind>
                     <sourceMap>true</sourceMap>
