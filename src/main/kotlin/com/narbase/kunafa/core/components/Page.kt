@@ -2,10 +2,10 @@
 
 package com.narbase.kunafa.core.components
 
+import kotlinx.browser.document
+import kotlinx.dom.clear
 import org.w3c.dom.HTMLBodyElement
 import org.w3c.dom.HTMLElement
-import kotlin.browser.document
-import kotlin.dom.clear
 
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.

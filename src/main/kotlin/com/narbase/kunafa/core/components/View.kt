@@ -6,12 +6,12 @@ import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
+import kotlinx.browser.document
+import kotlinx.dom.addClass
+import kotlinx.dom.removeClass
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
-import kotlin.browser.document
-import kotlin.dom.addClass
-import kotlin.dom.removeClass
 
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
