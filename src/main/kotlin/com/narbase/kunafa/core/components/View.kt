@@ -175,6 +175,16 @@ open class View(var parent: View? = null) : LifecycleOwner {
         children.add(child)
         child.postOnViewMounted()
     }
+
+    open fun mountBefore(child: View, referenceNode: View) {
+        if (child.element.parentElement == element) return
+        child.postViewWillMount()
+        element.insertBefore(child.element, referenceNode.element)
+        child.parent = this
+        children.add(child)
+        child.postOnViewMounted()
+    }
+
     open fun removeChild(child: View) {
         if (children.contains(child).not()) {
             return
