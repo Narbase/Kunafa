@@ -32,8 +32,7 @@ repositories {
 }
 
 kotlin {
-    js {
-//    js(BOTH) {
+    js(BOTH) {
         compilations.all {
             kotlinOptions {
                 moduleKind = "umd"
@@ -137,7 +136,6 @@ signing {
 }
 
 
-
 uploadArchives {
     repositories {
         mavenDeployer {
@@ -150,3 +148,6 @@ uploadArchives {
         }
     }
 }
+
+// ./gradlew clean build publishMavenPublicationToMavenRepository
+// Then manually go to https://oss.sonatype.org, close the staging repo and release
