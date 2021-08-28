@@ -16,8 +16,8 @@ import org.w3c.dom.events.MouseEvent
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
-open class View(var parent: View? = null) : LifecycleOwner {
-    var id: String?
+open class View(var parent: View? = null) : ViewInterface, LifecycleOwner {
+    override var id: String?
         get() = element.id
         set(value) {
             value?.let {
@@ -151,7 +151,7 @@ open class View(var parent: View? = null) : LifecycleOwner {
         get() = parent?.path
 
 
-    val children: MutableSet<View> = mutableSetOf()
+    override val children: MutableSet<View> = mutableSetOf()
 
 
     internal open fun addToParent() {

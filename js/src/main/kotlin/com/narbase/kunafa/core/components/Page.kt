@@ -10,7 +10,7 @@ import org.w3c.dom.HTMLElement
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
-object Page : View(null) {
+object Page : PageInterface, View(null) {
 
     override var isViewMounted: Boolean = true
 
@@ -41,7 +41,7 @@ object Page : View(null) {
     override val path: String?
         get() = "/"
 
-    var useRtl: Boolean = false
+    override var useRtl: Boolean = false
         set(value) {
             field = value
             if (value) {
