@@ -1,0 +1,4 @@
+rootProject.name = 'kunafa'
+include 'common'
+include 'js'
+include 'ssr'

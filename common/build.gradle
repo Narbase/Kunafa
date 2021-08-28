@@ -1,0 +1,40 @@
+buildscript {
+    ext.kotlin_version = '1.4.10'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform'
+}
+
+repositories {
+    jcenter()
+}
+
+
+kotlin {
+    jvm()
+    js {
+        browser {
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation kotlin('stdlib-common')
+            }
+        }
+        all {
+            languageSettings.enableLanguageFeature("InlineClasses")
+        }
+    }
+}

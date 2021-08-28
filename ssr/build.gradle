@@ -1,0 +1,57 @@
+buildscript {
+    ext.kotlin_version = '1.4.10'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+
+group 'com.narbase'
+version '0.1.0'
+
+sourceCompatibility = 1.8
+kotlin { experimental { coroutines "enable" } }
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation(project(":common"))
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions {
+        languageVersion = "1.4"
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin/'
+    test.java.srcDirs += 'src/test/kotlin/'
+}
