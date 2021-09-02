@@ -2,6 +2,7 @@
 
 package com.narbase.kunafa.core.components
 
+import com.narbase.kunafa.core.components.Page.namedStyles
 import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
@@ -97,7 +98,7 @@ open class View(var parent: View? = null) : ViewInterface, LifecycleOwner {
         if (shouldHash.not()) {
             return simpleStyle(rules)
         }
-        val testRuleSet = RuleSet(EmptySelector()).apply { rules() }
+        val testRuleSet = RuleSet(Page, EmptySelector()).apply { rules() }
         val hashCode = testRuleSet.hashCode().toString()
         val ruleSet = namedStyles.getOrElse(hashCode) {
             val newRuleSet = classRuleSet(null, rules)

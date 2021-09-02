@@ -2,8 +2,12 @@
 
 package com.narbase.kunafa.core.css
 
+import com.narbase.kunafa.core.components.PageInterface
+
 @Suppress("MemberVisibilityCanBePrivate")
-class RuleSet(var selector: Selector, val atRule: String? = null) {
+class RuleSet(val page: PageInterface, var selector: Selector, val atRule: String? = null) {
+
+    val useRtl by page::useRtl
 
     val rules: MutableSet<Rule<*>> = mutableSetOf()
 
@@ -81,7 +85,7 @@ class RuleSet(var selector: Selector, val atRule: String? = null) {
     }
 
     fun addPseudo(name: String, rules: RuleSet.() -> Unit): RuleSet {
-        val set = RuleSet(PseudoSelector(selector, name)).apply(rules)
+        val set = RuleSet(page, PseudoSelector(selector, name)).apply(rules)
         if (subRuleSets == null) subRuleSets = mutableSetOf()
         subRuleSets?.add(set)
         return set
@@ -89,13 +93,13 @@ class RuleSet(var selector: Selector, val atRule: String? = null) {
 
     fun addAtRule(name: String, rules: RuleSet.() -> Unit): RuleSet {
         if (atRuleSets == null) atRuleSets = mutableSetOf()
-        val set = RuleSet(selector, atRule = "@$name").apply(rules)
+        val set = RuleSet(page, selector, atRule = "@$name").apply(rules)
         atRuleSets?.add(set)
         return set
     }
 
     fun addCompoundRuleSet(parentSelector: Selector, rules: RuleSet.() -> Unit): RuleSet {
-        val set = RuleSet(CompoundSelector(listOf(parentSelector, selector))).apply(rules)
+        val set = RuleSet(page, CompoundSelector(listOf(parentSelector, selector))).apply(rules)
         if (subRuleSets == null) subRuleSets = mutableSetOf()
         subRuleSets?.add(set)
         return set
@@ -103,9 +107,20 @@ class RuleSet(var selector: Selector, val atRule: String? = null) {
 
 
     fun addCompoundClassRule(parentRuleSet: RuleSet, rules: RuleSet.() -> Unit): RuleSet {
-        val set = RuleSet(CompoundSelector(listOf(parentRuleSet.selector, selector))).apply(rules)
+        val set = RuleSet(page, CompoundSelector(listOf(parentRuleSet.selector, selector))).apply(rules)
         if (subRuleSets == null) subRuleSets = mutableSetOf()
         subRuleSets?.add(set)
         return set
     }
+
+
+    /* CSS DSL  */
+
+    val TextAlign.Companion.Start
+        get() = if (useRtl) TextAlign("right")
+        else TextAlign("left")
+
+    val TextAlign.Companion.End
+        get() = if (useRtl) TextAlign("left")
+        else TextAlign("right")
 }

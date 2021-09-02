@@ -1,6 +1,6 @@
 package com.narbase.kunafa.core.ssr.components
 
-fun page(block: View.() -> Unit = {}): Page {
+fun page(block: Page.() -> Unit = {}): Page {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     val page = Page()
     page.visit(block)

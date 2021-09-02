@@ -3,6 +3,7 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.layout.LinearLayout
+import com.narbase.kunafa.core.components.layout.LinearLayoutOrientation
 import com.narbase.kunafa.core.components.layout.ScrollView
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 
@@ -23,22 +24,22 @@ fun View?.linearLayout(lifecycleObserver: LifecycleObserver? = null, block: Line
 
 fun View?.verticalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-    return LinearLayout(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
+    return LinearLayout(this, LinearLayoutOrientation.Vertical).visit(lifecycleObserver, block)
 }
 
 fun View?.horizontalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-    return LinearLayout(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
+    return LinearLayout(this, LinearLayoutOrientation.Horizontal).visit(lifecycleObserver, block)
 }
 
 fun View?.horizontalScrollLayout(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-    return ScrollView(this, LinearLayout.Orientation.Horizontal).visit(lifecycleObserver, block)
+    return ScrollView(this, LinearLayoutOrientation.Horizontal).visit(lifecycleObserver, block)
 }
 
 fun View?.verticalScrollLayout(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-    return ScrollView(this, LinearLayout.Orientation.Vertical).visit(lifecycleObserver, block)
+    return ScrollView(this, LinearLayoutOrientation.Vertical).visit(lifecycleObserver, block)
 }
 
 fun View?.view(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit): View {

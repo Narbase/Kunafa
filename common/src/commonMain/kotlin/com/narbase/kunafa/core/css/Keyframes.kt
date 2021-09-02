@@ -1,11 +1,13 @@
 package com.narbase.kunafa.core.css
 
+import com.narbase.kunafa.core.components.PageInterface
+
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 
 @Suppress("MemberVisibilityCanBePrivate")
-class Keyframes(val userIdent: String) {
+class Keyframes(val page: PageInterface, val userIdent: String) {
 
     var subRuleSets: MutableSet<RuleSet> = mutableSetOf()
 
@@ -24,7 +26,7 @@ class Keyframes(val userIdent: String) {
     }
 
     fun addKeyframeRule(name: String, rules: RuleSet.() -> Unit): RuleSet {
-        val set = RuleSet(StringSelector(name)).apply(rules)
+        val set = RuleSet(page, StringSelector(name)).apply(rules)
         subRuleSets.add(set)
         return set
     }
