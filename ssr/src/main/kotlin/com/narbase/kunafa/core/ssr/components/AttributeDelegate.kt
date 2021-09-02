@@ -6,6 +6,7 @@ import kotlin.reflect.KProperty
 @Suppress("MemberVisibilityCanBePrivate")
 class AttributeDelegate<T : Any>(private val attributeName: String? = null, private val defaultValue: T? = null) {
 
+    @Suppress("UNCHECKED_CAST")
     operator fun getValue(view: View, property: KProperty<*>): T? {
         return view.attributes.getOrDefault(attributeName ?: property.name, defaultValue) as? T
     }
@@ -15,7 +16,6 @@ class AttributeDelegate<T : Any>(private val attributeName: String? = null, priv
             view.attributes.remove(attributeName ?: property.name)
             return
         }
-        println("setValue")
         view.attributes[attributeName ?: property.name] = value
     }
 
