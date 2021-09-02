@@ -8,6 +8,9 @@ import com.narbase.kunafa.core.ssr.css.classRuleSet
 import kotlin.properties.Delegates.observable
 
 open class View(var parent: View? = null) : ViewInterface {
+
+    lateinit var page: Page
+
     private var isBuilt = false
     open val element: String = "div"
     override var id: String? by editableBeforeBuild(null)
@@ -46,6 +49,11 @@ open class View(var parent: View? = null) : ViewInterface {
             append("</$element>")
         }
         return builder.toString()
+    }
+
+    open fun configureElement(page: Page) {
+        this.page = page
+        addRuleSet(page.baseClass)
     }
 
     open fun configBegin(builder: StringBuilder) {

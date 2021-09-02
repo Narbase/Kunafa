@@ -1,8 +1,9 @@
 package com.narbase.kunafa.core.ssr.components
 
 import com.narbase.kunafa.core.components.PageInterface
-import com.narbase.kunafa.core.css.ClassNameGenerator
-import com.narbase.kunafa.core.css.RuleSet
+import com.narbase.kunafa.core.css.*
+import com.narbase.kunafa.core.dimensions.px
+import com.narbase.kunafa.core.ssr.css.classRuleSet
 
 class Page : PageInterface, View() {
 
@@ -13,7 +14,11 @@ class Page : PageInterface, View() {
     override val styleSheetBuilder = PageStyleSheetBuilder(this)
     override val classNameGenerator = ClassNameGenerator()
     val namedStyles = mutableMapOf<String, RuleSet>()
+    val keyframes = mutableListOf<Keyframes>()
 
+    fun prepare() {
+        page = this
+    }
 
     override fun build(): String {
         val childrenStringBuilder = buildString { children.forEach { append(it.build()) } }
@@ -46,18 +51,44 @@ class Page : PageInterface, View() {
         namedStyles.map {
             append(it.value.toString())
         }
+        keyframes.map {
+            append(it.toString())
+        }
         append("</style>")
     }
 
 
-    override val linearLayoutClass: RuleSet
-        get() = TODO("Not yet implemented")
+    override val linearLayoutClass = classRuleSet {
+        alignItems = Alignment.Start
+        display = "inline-flex"
+    }
+    override val verticalLayoutClass = classRuleSet {
+        flexDirection = "column"
+    }
+    override val horizontalLayoutClass = classRuleSet {
+        flexDirection = "row"
+    }
 
-    override val verticalLayoutClass: RuleSet
-        get() = TODO("Not yet implemented")
-    override val horizontalLayoutClass: RuleSet
-        get() = TODO("Not yet implemented")
 
+    val baseClass = classRuleSet {
+        boxSizing = "border-box"
+        margin = 0.px
+        padding = 0.px
+        flexShrink = "0"
+    }
+
+    val invisibleClass = classRuleSet {
+        display = "none !important"
+    }
+
+    val verticalScrollLayoutClass = classRuleSet {
+        isScrollableVertically = true
+        isScrollableHorizontally = false
+    }
+    val horizontalScrollLayoutClass = classRuleSet {
+        isScrollableHorizontally = true
+        isScrollableVertically = false
+    }
 
 //    DSL
 

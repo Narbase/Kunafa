@@ -10,12 +10,12 @@ import com.narbase.kunafa.core.css.isScrollableVertically
  */
 class ScrollView(
         parent: View?,
-        private val initialOrientation: Orientation?
+        private val initialOrientation: LinearLayoutOrientation?
 ) : LinearLayout(parent, initialOrientation) {
 
     override fun configureElement() {
         super.configureElement()
-        if (initialOrientation == Orientation.Horizontal) {
+        if (initialOrientation == LinearLayoutOrientation.Horizontal) {
             addRuleSet(horizontalScrollLayoutClass)
         } else {
             addRuleSet(verticalScrollLayoutClass)
