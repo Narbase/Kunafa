@@ -90,9 +90,4 @@ class Page : PageInterface, View() {
         isScrollableVertically = false
     }
 
-//    DSL
-
-    fun View.style(shouldHash: Boolean = true, rules: RuleSet.() -> Unit) = style(this@Page, shouldHash, rules)
-
-    fun View.style(name: String, rules: RuleSet.() -> Unit) = style(this@Page, name, rules)
 }

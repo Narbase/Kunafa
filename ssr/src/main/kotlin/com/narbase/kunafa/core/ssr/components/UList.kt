@@ -6,9 +6,11 @@ package com.narbase.kunafa.core.ssr.components
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
-class Anchor(parent: View? = null) : View(parent) {
-    override val element = "a"
 
-    var href by attributeDelegate<String>()
+open class UList(parent: View? = null) : View(parent) {
+    override val element = "ul"
+}
 
+open class ListItem(parent: View? = null) : View(parent) {
+    override val element = "li"
 }

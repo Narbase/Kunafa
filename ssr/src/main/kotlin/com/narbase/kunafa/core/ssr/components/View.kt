@@ -14,9 +14,18 @@ open class View(var parent: View? = null) : ViewInterface {
     private var isBuilt = false
     open val element: String = "div"
     override var id: String? by editableBeforeBuild(null)
-    val attributes: MutableMap<String, String> by editableBeforeBuild(mutableMapOf())
+    val attributes: MutableMap<String, Any> by editableBeforeBuild(mutableMapOf())
     private val classes: MutableList<String> by editableBeforeBuild(mutableListOf())
     override val children: MutableSet<View> = mutableSetOf()
+
+    var text: String = ""
+    var textBuilder: TextBuilder? = null
+
+    fun text(block: TextBuilder.() -> Unit) {
+        if (textBuilder == null) textBuilder = TextBuilder()
+        textBuilder?.block()
+    }
+
 
     internal open fun addToParent() {
         parent?.mount(this)
@@ -38,7 +47,15 @@ open class View(var parent: View? = null) : ViewInterface {
             }
 
             attributes.forEach { (key, value) ->
-                append(""" $key="$value" """)
+
+                when (value) {
+                    true -> {
+                        append(""" $key """)
+                    }
+                    false -> {
+                    }
+                    else -> append(""" $key="$value" """)
+                }
             }
             append(">")
 
@@ -57,18 +74,19 @@ open class View(var parent: View? = null) : ViewInterface {
     }
 
     open fun configBegin(builder: StringBuilder) {
-
+        builder.append(text)
+        textBuilder?.let { builder.append(it.build()) }
     }
 
-    private fun simpleStyle(page: Page, rules: RuleSet.() -> Unit): RuleSet {
+    private fun simpleStyle(rules: RuleSet.() -> Unit): RuleSet {
         val ruleSet = page.classRuleSet(null, rules)
         addRuleSet(ruleSet)
         return ruleSet
     }
 
-    fun style(page: Page, shouldHash: Boolean = true, rules: RuleSet.() -> Unit): RuleSet {
+    fun style(shouldHash: Boolean = true, rules: RuleSet.() -> Unit): RuleSet {
         if (shouldHash.not()) {
-            return simpleStyle(page, rules)
+            return simpleStyle(rules)
         }
         val testRuleSet = RuleSet(page, EmptySelector()).apply { rules() }
         val hashCode = testRuleSet.hashCode().toString()
@@ -81,7 +99,7 @@ open class View(var parent: View? = null) : ViewInterface {
         return ruleSet
     }
 
-    fun style(page: Page, name: String, rules: RuleSet.() -> Unit): RuleSet {
+    fun style(name: String, rules: RuleSet.() -> Unit): RuleSet {
         val ruleSet = page.namedStyles.getOrElse(name) {
             val newRuleSet = page.classRuleSet(name, rules)
             page.namedStyles[name] = newRuleSet
