@@ -10,11 +10,13 @@ import org.w3c.dom.events.Event
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
 @Suppress("unused")
-class Checkbox(parent: View? = null) : View(parent) {
+class Checkbox(
+        parent: View? = null,
+        override val element: HTMLInputElement = (document.createElement("input") as HTMLInputElement).apply {
+            this.type = "checkbox"
+        }
+) : View(parent) {
 
-    override val element: HTMLInputElement = (document.createElement("input") as HTMLInputElement).apply {
-        this.type = "checkbox"
-    }
 
     var isChecked: Boolean
         get() = element.checked

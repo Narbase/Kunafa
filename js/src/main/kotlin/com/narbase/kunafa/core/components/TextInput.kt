@@ -12,9 +12,7 @@ import org.w3c.dom.events.Event
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
-class TextInput(parent: View? = null) : View(parent) {
-
-    override val element: HTMLInputElement = document.createElement("input") as HTMLInputElement
+class TextInput(parent: View? = null, override val element: HTMLInputElement = document.createElement("input") as HTMLInputElement) : View(parent) {
 
     var text
         get() = element.value

@@ -8,8 +8,6 @@ import com.narbase.kunafa.core.components.layout.ScrollView
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 import kotlinx.browser.document
 import org.w3c.dom.HTMLButtonElement
-import org.w3c.dom.HTMLDivElement
-import org.w3c.dom.HTMLElement
 
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
@@ -46,9 +44,9 @@ fun View?.verticalScrollLayout(lifecycleObserver: LifecycleObserver? = null, blo
     return ScrollView(this, LinearLayoutOrientation.Vertical).visit(lifecycleObserver, block)
 }
 
-fun View?.view(lifecycleObserver: LifecycleObserver? = null, element: HTMLElement = document.createElement("div") as HTMLDivElement, block: View.() -> Unit): View {
+fun View?.view(lifecycleObserver: LifecycleObserver? = null, block: View.() -> Unit): View {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-    return View(this, element).visit(lifecycleObserver, block)
+    return View(this).visit(lifecycleObserver, block)
 }
 
 fun View?.a(lifecycleObserver: LifecycleObserver? = null, block: Anchor.() -> Unit): Anchor {

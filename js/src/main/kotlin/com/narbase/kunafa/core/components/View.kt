@@ -88,8 +88,16 @@ open class View(
             element.onclick = value
         }
 
+    fun skipBaseClass() {
+        shouldSkipBaseClass = true
+    }
+
+    private var shouldSkipBaseClass = false
+
     open fun configureElement() {
-        addRuleSet(baseClass)
+        if (shouldSkipBaseClass.not()) {
+            addRuleSet(baseClass)
+        }
     }
 
     private fun simpleStyle(rules: RuleSet.() -> Unit): RuleSet {

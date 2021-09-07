@@ -4,23 +4,20 @@ package com.narbase.kunafa.core.components
 
 
 import kotlinx.browser.document
-import org.w3c.dom.*
+import org.w3c.dom.HTMLTableCellElement
+import org.w3c.dom.HTMLTableElement
+import org.w3c.dom.HTMLTableRowElement
+import org.w3c.dom.HTMLTableSectionElement
 
 
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
-class Table(parent: View? = null) : View(parent) {
-    override val element: HTMLTableElement = (document.createElement("table") as HTMLTableElement)
-}
+class Table(parent: View? = null, override val element: HTMLTableElement = (document.createElement("table") as HTMLTableElement)) : View(parent)
 
-class TableRow(parent: View? = null) : View(parent) {
-    override val element: HTMLTableRowElement = (document.createElement("tr") as HTMLTableRowElement)
-}
+class TableRow(parent: View? = null, override val element: HTMLTableRowElement = (document.createElement("tr") as HTMLTableRowElement)) : View(parent)
 
-class TableCell(parent: View? = null) : View(parent) {
-
-    override val element: HTMLTableCellElement = (document.createElement("td") as HTMLTableCellElement)
+class TableCell(parent: View? = null, override val element: HTMLTableCellElement = (document.createElement("td") as HTMLTableCellElement)) : View(parent) {
     var text
         get() = element.innerHTML
         set(value) {
@@ -28,9 +25,7 @@ class TableCell(parent: View? = null) : View(parent) {
         }
 }
 
-class TableHeaderCell(parent: View? = null) : View(parent) {
-    override val element: HTMLElement = (document.createElement("th") as HTMLTableCellElement)
-
+class TableHeaderCell(parent: View? = null, override val element: HTMLTableCellElement = (document.createElement("th") as HTMLTableCellElement)) : View(parent) {
     var text
         get() = element.innerHTML
         set(value) {
@@ -38,14 +33,8 @@ class TableHeaderCell(parent: View? = null) : View(parent) {
         }
 }
 
-class TableHeader(parent: View? = null) : View(parent) {
-    override val element: HTMLElement = (document.createElement("thead") as HTMLTableSectionElement)
-}
+class TableHeader(parent: View? = null, override val element: HTMLTableSectionElement = (document.createElement("thead") as HTMLTableSectionElement)) : View(parent)
 
-class TableFooter(parent: View? = null) : View(parent) {
-    override val element: HTMLElement = (document.createElement("tfoot") as HTMLTableSectionElement)
-}
+class TableFooter(parent: View? = null, override val element: HTMLTableSectionElement = (document.createElement("tfoot") as HTMLTableSectionElement)) : View(parent)
 
-class TableBody(parent: View? = null) : View(parent) {
-    override val element: HTMLElement = (document.createElement("tbody") as HTMLTableSectionElement)
-}
+class TableBody(parent: View? = null, override val element: HTMLTableSectionElement = (document.createElement("tbody") as HTMLTableSectionElement)) : View(parent)

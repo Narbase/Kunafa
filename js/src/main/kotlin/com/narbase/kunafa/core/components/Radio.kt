@@ -11,11 +11,12 @@ import org.w3c.dom.events.Event
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
-class Radio(parent: View? = null) : View(parent) {
-
-    override val element: HTMLInputElement = (document.createElement("input") as HTMLInputElement).apply {
-        this.type = "radio"
-    }
+class Radio(
+        parent: View? = null,
+        override val element: HTMLInputElement = (document.createElement("input") as HTMLInputElement).apply {
+            this.type = "radio"
+        }
+) : View(parent) {
 
     var isChecked: Boolean
         get() = element.checked
