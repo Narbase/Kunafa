@@ -39,6 +39,7 @@ class Reference<V : View>(private val viewClass: KClass<V>) {
             UList::class -> UList(UnknownMountedView, node as? HTMLUListElement ?: return null)
             ListItem::class -> ListItem(UnknownMountedView, node as? HTMLLIElement ?: return null)
             View::class -> View(UnknownMountedView, node as? HTMLElement ?: return null)
+            CustomView::class -> CustomView(UnknownMountedView, node as? HTMLElement ?: return null)
             else -> null
         }
         newView?.skipBaseClass()
