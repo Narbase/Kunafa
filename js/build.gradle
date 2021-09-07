@@ -21,7 +21,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
-def deployVersion = "0.2.27-beta2"
+def deployVersion = "0.2.27-beta3"
 
 group 'com.narbase'
 archivesBaseName = "kunafa"
