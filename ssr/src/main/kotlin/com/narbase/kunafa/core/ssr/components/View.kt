@@ -9,7 +9,7 @@ import kotlin.properties.Delegates.observable
 
 open class View(var parent: View? = null) : ViewInterface {
 
-    lateinit var page: Page
+    lateinit var page: Page<*>
 
     private var isBuilt = false
     open val element: String = "div"
@@ -68,7 +68,7 @@ open class View(var parent: View? = null) : ViewInterface {
         return builder.toString()
     }
 
-    open fun configureElement(page: Page) {
+    open fun configureElement(page: Page<*>) {
         this.page = page
         addRuleSet(page.baseClass)
     }

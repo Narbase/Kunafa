@@ -3,6 +3,7 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.css.*
+import com.narbase.kunafa.core.hydration.MetaData
 import kotlinx.browser.document
 import kotlinx.dom.clear
 import org.w3c.dom.HTMLBodyElement
@@ -43,7 +44,7 @@ object Page : PageInterface, View(null) {
     override val path: String?
         get() = "/"
 
-    override var useRtl: Boolean = false
+    override var useRtl: Boolean = MetaData.getMetaUseRtl()
         set(value) {
             field = value
             if (value) {
@@ -53,7 +54,9 @@ object Page : PageInterface, View(null) {
             }
         }
     override val styleSheetBuilder = SinglePageCssStyleSheetBuilder
-    override val classNameGenerator = ClassNameGenerator()
+    override val classNameGenerator = ClassNameGenerator().apply {
+        counter = MetaData.getMetaClassNameGeneratorCounter()
+    }
 
     override val linearLayoutClass = classRuleSet {
         alignItems = Alignment.Start

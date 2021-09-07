@@ -10,7 +10,7 @@ class Radio(parent: View? = null) : View(parent) {
 
     override val element = "input"
 
-    override fun configureElement(page: Page) {
+    override fun configureElement(page: Page<*>) {
         super.configureElement(page)
         attributes["type"] = "radio"
     }

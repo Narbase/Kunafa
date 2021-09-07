@@ -5,11 +5,12 @@ import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.ssr.css.classRuleSet
 
-class Page : PageInterface, View() {
+class Page<H : Any>(val clientReference: H) : PageInterface, View() {
 
     override var id: String? = null
 
     override var useRtl: Boolean = false
+    // todo: setter should make body rtl
 
     override val styleSheetBuilder = PageStyleSheetBuilder(this)
     override val classNameGenerator = ClassNameGenerator()
@@ -28,7 +29,7 @@ class Page : PageInterface, View() {
             append("<!DOCTYPE html>")
             append("""<html lang="en">""")
             append(getHead())
-            append("<body>")
+            append("<body ${getMetaData()}>")
 
             append(childrenStringBuilder)
 
@@ -44,6 +45,11 @@ class Page : PageInterface, View() {
         append("""<meta content="width=device-width, initial-scale=1" name="viewport">""")
         append(getStyles())
         append("</head>")
+    }
+
+    private fun getMetaData() = buildString {
+        appendLine("data-class-name-generator-counter=${classNameGenerator.counter++}")
+        appendLine("data-use-rtl=${useRtl}")
     }
 
     private fun getStyles() = buildString {

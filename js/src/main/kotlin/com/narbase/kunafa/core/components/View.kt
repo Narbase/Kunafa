@@ -17,7 +17,11 @@ import org.w3c.dom.events.MouseEvent
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
-open class View(var parent: View? = null) : ViewInterface, LifecycleOwner {
+open class View(
+        var parent: View? = null,
+        open val element: HTMLElement = document.createElement("div") as HTMLDivElement
+) : ViewInterface, LifecycleOwner {
+
     override var id: String?
         get() = element.id
         set(value) {
@@ -29,7 +33,7 @@ open class View(var parent: View? = null) : ViewInterface, LifecycleOwner {
     override val isViewMounted: Boolean
         get() = element.parentElement != null && parent?.isViewMounted == true
 
-    open val element: HTMLElement = document.createElement("div") as HTMLDivElement
+//    open val element: HTMLElement = document.createElement("div") as HTMLDivElement
 
     private val lifecycleObserversList = mutableListOf<LifecycleObserver>()
 

@@ -6,9 +6,17 @@ import com.narbase.kunafa.core.components.layout.LinearLayoutOrientation
 import com.narbase.kunafa.core.ssr.components.layout.LinearLayout
 import com.narbase.kunafa.core.ssr.components.layout.ScrollView
 
-fun page(block: Page.() -> Unit = {}): Page {
+fun page(block: Page<Unit>.() -> Unit = {}): Page<Unit> {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-    val page = Page()
+    val page = Page(Unit)
+    page.prepare()
+    page.visit(page, block)
+    return page
+}
+
+fun <H : Any> page(clientReference: H, block: Page<H>.() -> Unit = {}): Page<H> {
+//    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+    val page = Page(clientReference)
     page.prepare()
     page.visit(page, block)
     return page
