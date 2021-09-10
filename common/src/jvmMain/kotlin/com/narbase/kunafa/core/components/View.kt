@@ -20,6 +20,16 @@ actual open class View(var parent: View? = null) : ViewInterface {
     var text: String = ""
     var textBuilder: TextBuilder? = null
 
+    var ref: String? = null
+        set(value) {
+            if (value != null) {
+                attributes["data-kssr-ref"] = value
+            } else {
+                attributes.remove("data-kssr-ref")
+            }
+            field = value
+        }
+
     fun text(block: TextBuilder.() -> Unit) {
         if (textBuilder == null) textBuilder = TextBuilder()
         textBuilder?.block()
