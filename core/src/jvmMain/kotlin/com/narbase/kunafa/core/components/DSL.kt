@@ -2,6 +2,7 @@
 
 package com.narbase.kunafa.core.components
 
+import com.narbase.kunafa.core.components.layout.Grid
 import com.narbase.kunafa.core.components.layout.LinearLayout
 import com.narbase.kunafa.core.components.layout.LinearLayoutOrientation
 import com.narbase.kunafa.core.components.layout.ScrollView
@@ -38,6 +39,11 @@ fun View.verticalLayout(block: LinearLayout.() -> Unit): LinearLayout {
 fun View.horizontalLayout(block: LinearLayout.() -> Unit): LinearLayout {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     return LinearLayout(this, LinearLayoutOrientation.Horizontal).visit(page, block)
+}
+
+fun View.grid(block: Grid.() -> Unit): Grid {
+//    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+    return Grid(this).visit(page, block)
 }
 
 fun View.horizontalScrollLayout(block: ScrollView.() -> Unit): ScrollView {

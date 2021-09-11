@@ -2,6 +2,7 @@
 
 package com.narbase.kunafa.core.components
 
+import com.narbase.kunafa.core.components.layout.Grid
 import com.narbase.kunafa.core.components.layout.LinearLayout
 import com.narbase.kunafa.core.components.layout.LinearLayoutOrientation
 import com.narbase.kunafa.core.components.layout.ScrollView
@@ -32,6 +33,11 @@ fun View?.verticalLayout(lifecycleObserver: LifecycleObserver? = null, block: Li
 fun View?.horizontalLayout(lifecycleObserver: LifecycleObserver? = null, block: LinearLayout.() -> Unit): LinearLayout {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     return LinearLayout(this, LinearLayoutOrientation.Horizontal).visit(lifecycleObserver, block)
+}
+
+fun View.grid(lifecycleObserver: LifecycleObserver? = null, block: Grid.() -> Unit): Grid {
+//    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+    return Grid(this).visit(lifecycleObserver, block)
 }
 
 fun View?.horizontalScrollLayout(lifecycleObserver: LifecycleObserver? = null, block: ScrollView.() -> Unit): ScrollView {

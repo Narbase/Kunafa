@@ -15,6 +15,7 @@ interface PageInterface : ViewInterface {
     val linearLayoutClass: RuleSet
     val verticalLayoutClass: RuleSet
     val horizontalLayoutClass: RuleSet
+    val gridLayoutClass: RuleSet
 
 
 }

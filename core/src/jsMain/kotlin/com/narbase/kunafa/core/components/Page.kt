@@ -68,4 +68,7 @@ object Page : PageInterface, View(null) {
     override val horizontalLayoutClass = classRuleSet {
         flexDirection = "row"
     }
+    override val gridLayoutClass = classRuleSet {
+        display = "grid"
+    }
 }
