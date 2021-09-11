@@ -20,7 +20,7 @@ actual open class View(var parent: View? = null) : ViewInterface {
     var text: String = ""
     var textBuilder: TextBuilder? = null
 
-    var ref: String? = null
+    open var ref: String? = null
         set(value) {
             if (value != null) {
                 attributes["data-kssr-ref"] = value

@@ -15,6 +15,10 @@ object MetaData {
         return getMetaData("useRtl")?.toBoolean() ?: false
     }
 
+    fun getPageRef(): String? {
+        return getMetaData("kssrPageRef")
+    }
+
     private fun getMetaData(name: String): String? {
         return document.body?.dataset?.get(name)
     }

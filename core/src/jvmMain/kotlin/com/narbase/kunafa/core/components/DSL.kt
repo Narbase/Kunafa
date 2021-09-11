@@ -14,9 +14,10 @@ fun page(block: Page.() -> Unit = {}): Page {
     return page
 }
 
-fun <H : Any> page(clientReference: H, block: Page.(ref: H) -> Unit = {}): Page {
+inline fun <reified H : Any> page(clientReference: H, crossinline block: Page.(ref: H) -> Unit = {}): Page {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     val page = Page()
+    page.ref = H::class.simpleName
     page.prepare()
     val newBlock: Page.() -> Unit = { block(clientReference) }
     page.visit(page, newBlock)

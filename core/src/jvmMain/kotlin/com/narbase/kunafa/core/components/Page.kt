@@ -10,6 +10,8 @@ class Page : PageInterface, View() {
     override var useRtl: Boolean = false
     // todo: setter should make body rtl
 
+    override var ref: String? = null
+
     override val styleSheetBuilder = PageStyleSheetBuilder(this)
     override val classNameGenerator = ClassNameGenerator()
     val namedStyles = mutableMapOf<String, RuleSet>()
@@ -48,6 +50,7 @@ class Page : PageInterface, View() {
     private fun getMetaData() = buildString {
         appendLine("data-class-name-generator-counter=${classNameGenerator.counter++}")
         appendLine("data-use-rtl=${useRtl}")
+        ref?.let { appendLine("data-kssr-page-ref=$it") }
     }
 
     private fun getStyles() = buildString {
