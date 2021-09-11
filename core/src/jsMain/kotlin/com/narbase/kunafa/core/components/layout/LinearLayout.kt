@@ -9,7 +9,7 @@ import com.narbase.kunafa.core.components.layout.LinearLayoutOrientation.Horizon
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
  */
-open class LinearLayout(
+actual open class LinearLayout(
         parent: View?,
         private val initialOrientation: LinearLayoutOrientation? = Horizontal
 ) : View(parent) {

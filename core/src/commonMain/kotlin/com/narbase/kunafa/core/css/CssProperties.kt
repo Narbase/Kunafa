@@ -281,6 +281,26 @@ var RuleSet.marqueeStyle by RuleDelegate<String?>("marquee-style")
 var RuleSet.zoom by RuleDelegate<String?>("zoom")
 var RuleSet.src by RuleDelegate<String?>("src") // @font-face
 
+// Grid
+var RuleSet.gridTemplateColumns by RuleDelegate<String?>("grid-template-columns")
+var RuleSet.gridTemplateRows by RuleDelegate<String?>("grid-template-rows")
+var RuleSet.gridTemplateAreas by RuleDelegate<String?>("grid-template-areas")
+var RuleSet.gridTemplate by RuleDelegate<String?>("grid-template")
+var RuleSet.gridAutoColumns by RuleDelegate<String?>("grid-auto-columns")
+var RuleSet.gridAutoRows by RuleDelegate<String?>("grid-auto-rows")
+var RuleSet.gridAutoFlow by RuleDelegate<String?>("grid-auto-flow")
+var RuleSet.grid by RuleDelegate<String?>("grid")
+var RuleSet.gridRowStart by RuleDelegate<String?>("grid-row-start")
+var RuleSet.gridColumnStart by RuleDelegate<String?>("grid-column-start")
+var RuleSet.gridRowEnd by RuleDelegate<String?>("grid-row-end")
+var RuleSet.gridColumnEnd by RuleDelegate<String?>("grid-column-end")
+var RuleSet.gridRow by RuleDelegate<String?>("grid-row")
+var RuleSet.gridColumn by RuleDelegate<String?>("grid-column")
+var RuleSet.gridArea by RuleDelegate<String?>("grid-area")
+var RuleSet.rowGap by RuleDelegate<String?>("row-gap")
+var RuleSet.gap by RuleDelegate<String?>("gap")
+
+
 var RuleSet.isScrollableVertically by ScrollableRuleDelegate(isVertically = true)
 var RuleSet.isScrollableHorizontally by ScrollableRuleDelegate(isVertically = false)
 
