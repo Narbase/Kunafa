@@ -12,7 +12,7 @@ actual class Reference<V : View>(private val viewClass: KClass<V>) {
     var view: V? = null
 
     @Suppress("UNCHECKED_CAST")
-    operator fun getValue(any: Any, property: KProperty<*>): V? {
+    actual operator fun getValue(any: Any, property: KProperty<*>): V? {
         if (view != null) {
             return view
         }
@@ -21,7 +21,7 @@ actual class Reference<V : View>(private val viewClass: KClass<V>) {
         return view
     }
 
-    operator fun setValue(any: Any, property: KProperty<*>, value: V?) {
+    actual operator fun setValue(any: Any, property: KProperty<*>, value: V?) {
         throw RuntimeException("Cannot set value in front end")
     }
 
