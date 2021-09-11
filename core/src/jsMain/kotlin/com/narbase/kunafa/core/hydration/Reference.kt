@@ -12,16 +12,17 @@ actual class Reference<V : View>(private val viewClass: KClass<V>) {
     var view: V? = null
 
     @Suppress("UNCHECKED_CAST")
-    actual operator fun getValue(any: Any, property: KProperty<*>): V? {
+    actual operator fun getValue(parent: Any, property: KProperty<*>): V? {
         if (view != null) {
             return view
         }
-        view = ref("${any::class.simpleName}-${property.name}", viewClass) as? V
+        val parentRef = (parent as? ViewGroup)?.ref ?: parent::class.simpleName
+        view = ref("$parentRef-${property.name}", viewClass) as? V
 
         return view
     }
 
-    actual operator fun setValue(any: Any, property: KProperty<*>, value: V?) {
+    actual operator fun setValue(parent: Any, property: KProperty<*>, value: V?) {
         throw RuntimeException("Cannot set value in front end")
     }
 
@@ -50,7 +51,7 @@ actual class Reference<V : View>(private val viewClass: KClass<V>) {
                 TableCell::class -> TableCell(UnknownMountedView, node as? HTMLTableCellElement ?: return null)
                 TableRow::class -> TableRow(UnknownMountedView, node as? HTMLTableRowElement ?: return null)
                 TextInput::class -> TextInput(UnknownMountedView, node as? HTMLInputElement ?: return null)
-                TextView::class -> TextView(UnknownMountedView, node as? HTMLButtonElement ?: return null)
+                TextView::class -> TextView(UnknownMountedView, node as? HTMLElement ?: return null)
                 UList::class -> UList(UnknownMountedView, node as? HTMLUListElement ?: return null)
                 ListItem::class -> ListItem(UnknownMountedView, node as? HTMLLIElement ?: return null)
                 View::class -> View(UnknownMountedView, node as? HTMLElement ?: return null)
@@ -66,6 +67,19 @@ actual class Reference<V : View>(private val viewClass: KClass<V>) {
 
 }
 
+actual class GroupReference<G : ViewGroup>(private val group: G) {
+
+    actual operator fun getValue(parent: Any, property: KProperty<*>): G {
+        val parentRef = (parent as? ViewGroup)?.ref ?: parent::class.simpleName
+        group.ref = "$parentRef-${property.name}"
+        return group
+    }
+
+    actual operator fun setValue(any: Any, property: KProperty<*>, value: G) {
+    }
+}
+
 actual inline fun <reified V : View> reference() = Reference(V::class)
+actual inline fun <reified G : ViewGroup> reference(viewGroup: G) = GroupReference(viewGroup)
 
 inline fun <reified V : View> ref(reference: String): V? = Reference.ref(reference, V::class) as? V
