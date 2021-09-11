@@ -8,8 +8,8 @@ js/.gradle/
 js/build/
 
 
-common/build/
-common/target/
-common/.idea/
-common/.gradle/
-js/common/
+core/build/
+core/target/
+core/.idea/
+core/.gradle/
+js/core/
