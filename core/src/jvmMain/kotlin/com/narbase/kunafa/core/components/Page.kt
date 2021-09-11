@@ -19,6 +19,11 @@ class Page : PageInterface, View() {
 
     fun prepare() {
         page = this
+
+        stringRuleSet("body") {
+            margin = 0.px
+            padding = 0.px
+        }
     }
 
     override fun build(): String {
