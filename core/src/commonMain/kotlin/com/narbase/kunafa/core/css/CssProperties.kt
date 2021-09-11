@@ -284,7 +284,7 @@ var RuleSet.src by RuleDelegate<String?>("src") // @font-face
 // Grid
 var RuleSet.gridTemplateColumns by RuleDelegate<String?>("grid-template-columns")
 var RuleSet.gridTemplateRows by RuleDelegate<String?>("grid-template-rows")
-var RuleSet.gridTemplateAreas by RuleDelegate<String?>("grid-template-areas")
+var RuleSet.gridTemplateAreas by RuleDelegate<GridTemplateAreas?>("grid-template-areas")
 var RuleSet.gridTemplate by RuleDelegate<String?>("grid-template")
 var RuleSet.gridAutoColumns by RuleDelegate<String?>("grid-auto-columns")
 var RuleSet.gridAutoRows by RuleDelegate<String?>("grid-auto-rows")
