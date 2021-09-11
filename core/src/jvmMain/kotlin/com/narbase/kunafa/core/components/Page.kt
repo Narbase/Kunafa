@@ -3,7 +3,7 @@ package com.narbase.kunafa.core.components
 import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.px
 
-class Page<H : Any>(val clientReference: H) : PageInterface, View() {
+class Page : PageInterface, View() {
 
     override var id: String? = null
 

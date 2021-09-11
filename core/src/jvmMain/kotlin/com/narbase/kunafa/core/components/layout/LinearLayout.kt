@@ -14,7 +14,7 @@ open class LinearLayout(
         private val initialOrientation: LinearLayoutOrientation? = Horizontal
 ) : View(parent) {
 
-    override fun configureElement(page: Page<*>) {
+    override fun configureElement(page: Page) {
         super.configureElement(page)
         if (initialOrientation == Horizontal) {
             addRuleSet(page.horizontalLayoutClass)

@@ -11,7 +11,7 @@ class ScrollView(
         private val initialOrientation: LinearLayoutOrientation?
 ) : LinearLayout(parent, initialOrientation) {
 
-    override fun configureElement(page: Page<*>) {
+    override fun configureElement(page: Page) {
         super.configureElement(page)
         if (initialOrientation == LinearLayoutOrientation.Horizontal) {
             addRuleSet(page.horizontalScrollLayoutClass)

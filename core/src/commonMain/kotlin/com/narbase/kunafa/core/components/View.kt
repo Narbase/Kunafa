@@ -1,3 +1,3 @@
 package com.narbase.kunafa.core.components
 
-expect class View
+expect open class View

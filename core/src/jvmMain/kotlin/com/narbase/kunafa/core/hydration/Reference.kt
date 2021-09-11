@@ -3,7 +3,7 @@ package com.narbase.kunafa.core.hydration
 import com.narbase.kunafa.core.components.View
 import kotlin.reflect.KProperty
 
-class Reference<V : View> {
+actual class Reference<V : View> {
     var view: V? = null
 
     @Suppress("UNCHECKED_CAST")
@@ -19,5 +19,5 @@ class Reference<V : View> {
 
 }
 
-fun <V : View> reference() = Reference<V>()
+actual inline fun <reified V : View> reference() = Reference<V>()
 

@@ -8,7 +8,7 @@ import org.w3c.dom.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
-class Reference<V : View>(private val viewClass: KClass<V>) {
+actual class Reference<V : View>(private val viewClass: KClass<V>) {
     var view: V? = null
 
     @Suppress("UNCHECKED_CAST")
@@ -34,7 +34,6 @@ class Reference<V : View>(private val viewClass: KClass<V>) {
 
             val newView = when (viewClass) {
                 Anchor::class -> Anchor(UnknownMountedView, node as? HTMLAnchorElement ?: return null)
-                Button::class -> Button(UnknownMountedView, node as? HTMLButtonElement ?: return null)
                 Checkbox::class -> Checkbox(UnknownMountedView, node as? HTMLInputElement ?: return null)
                 Button::class -> Button(UnknownMountedView, node as? HTMLButtonElement ?: return null)
                 Form::class -> Form(UnknownMountedView, node as? HTMLFormElement ?: return null)
@@ -67,6 +66,6 @@ class Reference<V : View>(private val viewClass: KClass<V>) {
 
 }
 
-inline fun <reified V : View> reference() = Reference(V::class)
+actual inline fun <reified V : View> reference() = Reference(V::class)
 
 inline fun <reified V : View> ref(reference: String): V? = Reference.ref(reference, V::class) as? V
