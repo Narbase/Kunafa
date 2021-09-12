@@ -60,8 +60,10 @@ class Page : PageInterface, View() {
 
     private fun getStyles() = buildString {
         append("<style>")
-        namedStyles.map {
-            append(it.value.toString())
+        namedStyles.forEach { namedStyle ->
+            namedStyle.value.toRulesList().forEach {
+                append(it.toString())
+            }
         }
         keyframes.map {
             append(it.toString())
