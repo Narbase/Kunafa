@@ -14,6 +14,7 @@ class Page : PageInterface, View() {
 
     override val styleSheetBuilder = PageStyleSheetBuilder(this)
     override val classNameGenerator = ClassNameGenerator()
+    val cachedStyleSelectors = mutableMapOf<String, String>()
     val namedStyles = mutableMapOf<String, RuleSet>()
     val keyframes = mutableListOf<Keyframes>()
 

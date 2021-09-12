@@ -99,10 +99,16 @@ actual open class View(var parent: View? = null) : ViewInterface {
         }
         val testRuleSet = RuleSet(page, EmptySelector()).apply { rules() }
         val hashCode = testRuleSet.hashCode().toString()
-        val ruleSet = page.namedStyles.getOrElse(hashCode) {
+
+        val selectorName = page.cachedStyleSelectors[hashCode]
+
+        val ruleSet = if (selectorName == null) {
             val newRuleSet = page.classRuleSet(null, rules)
-            page.namedStyles[hashCode] = newRuleSet
+            page.cachedStyleSelectors[hashCode] = newRuleSet.selector.toString()
             newRuleSet
+        } else {
+            page.namedStyles[selectorName]
+                    ?: throw RuntimeException("RuleSet hash is in cachedStyleSelectors but selector is not in namedStyles")
         }
         addRuleSet(ruleSet)
         return ruleSet
