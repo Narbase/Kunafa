@@ -10,7 +10,6 @@ import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import kotlinx.browser.document
 import kotlinx.dom.addClass
 import kotlinx.dom.removeClass
-import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
@@ -19,7 +18,7 @@ import org.w3c.dom.events.MouseEvent
  */
 actual open class View(
         var parent: View? = null,
-        open val element: HTMLElement = document.createElement("div") as HTMLDivElement
+        open val element: HTMLElement = document.createElement("div") as HTMLElement
 ) : ViewInterface, LifecycleOwner {
 
     override var id: String?

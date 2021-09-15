@@ -362,3 +362,36 @@ fun View.video(block: CustomView.() -> Unit = {}) = CustomView(this, "video").vi
 
 fun View.wbr(block: CustomView.() -> Unit = {}) = CustomView(this, "wbr").visit(page, block)
 
+
+infix fun <V : View> V.withHorizontalLayout(block: V.() -> Unit): V {
+    withHorizontalLayout()
+    block()
+    return this
+}
+
+infix fun <V : View> V.withVerticalLayout(block: V.() -> Unit): V {
+    withVerticalLayout()
+    block()
+    return this
+}
+
+fun View.withHorizontalLayout() = withLinearLayout(LinearLayoutOrientation.Horizontal)
+fun View.withVerticalLayout() = withLinearLayout(LinearLayoutOrientation.Vertical)
+
+private fun View.withLinearLayout(orientation: LinearLayoutOrientation) {
+    if (orientation == LinearLayoutOrientation.Horizontal) {
+        addRuleSet(page.horizontalLayoutClass)
+    } else {
+        addRuleSet(page.verticalLayoutClass)
+    }
+    addRuleSet(page.linearLayoutClass)
+}
+
+infix fun <V : View> V.withGrid(block: V.() -> Unit): V = apply {
+    withGrid()
+    block()
+}
+
+fun View.withGrid() {
+    addRuleSet(page.gridLayoutClass)
+}
