@@ -51,7 +51,7 @@ actual class Reference<V : View>(private val viewClass: KClass<V>) {
                 TableCell::class -> TableCell(UnknownMountedView, node as? HTMLTableCellElement ?: return null)
                 TableRow::class -> TableRow(UnknownMountedView, node as? HTMLTableRowElement ?: return null)
                 TextInput::class -> TextInput(UnknownMountedView, node as? HTMLInputElement ?: return null)
-                TextView::class -> TextView(UnknownMountedView, node as? HTMLElement ?: return null)
+                TextView::class -> TextView(UnknownMountedView)
                 UList::class -> UList(UnknownMountedView, node as? HTMLUListElement ?: return null)
                 ListItem::class -> ListItem(UnknownMountedView, node as? HTMLLIElement ?: return null)
                 View::class -> View(UnknownMountedView, node as? HTMLElement ?: return null)
