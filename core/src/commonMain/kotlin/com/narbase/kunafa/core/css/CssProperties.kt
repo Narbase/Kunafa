@@ -547,7 +547,7 @@ fun classRuleSet(page: PageInterface, classNamePrefix: String? = null, rules: Ru
     val className = page.classNameGenerator.getClassName(classNamePrefix)
     val selector = ClassSelector(className)
     val ruleSet = RuleSet(page, selector).apply { rules() }
-    page.styleSheetBuilder.addRuleSetToDocument(ruleSet)
+    page.addRuleSetToDocument(ruleSet)
     return ruleSet
 }
 
@@ -555,19 +555,19 @@ fun classRuleSet(page: PageInterface, classNamePrefix: String? = null, ruleSet: 
     val className = page.classNameGenerator.getClassName(classNamePrefix)
     val selector = ClassSelector(className)
     ruleSet.selector = selector
-    page.styleSheetBuilder.addRuleSetToDocument(ruleSet)
+    page.addRuleSetToDocument(ruleSet)
     return ruleSet
 }
 
 fun stringRuleSet(page: PageInterface, selector: String, rules: RuleSet.() -> Unit): RuleSet {
     val stringSelector = StringSelector(selector)
     val ruleSet = RuleSet(page, stringSelector).apply { rules() }
-    page.styleSheetBuilder.addRuleSetToDocument(ruleSet)
+    page.addRuleSetToDocument(ruleSet)
     return ruleSet
 }
 
 fun keyframes(page: PageInterface, userIndent: String, keyframesRules: Keyframes.() -> Unit): Keyframes {
     val keyframes = Keyframes(page, userIndent).apply { keyframesRules() }
-    page.styleSheetBuilder.addKeyframesToDocument(keyframes)
+    page.addKeyframesToDocument(keyframes)
     return keyframes
 }

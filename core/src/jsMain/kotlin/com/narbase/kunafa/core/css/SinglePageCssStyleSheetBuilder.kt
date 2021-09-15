@@ -1,20 +1,19 @@
 package com.narbase.kunafa.core.css
 
-import com.narbase.kunafa.core.components.Page
 import kotlinx.browser.document
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLStyleElement
 import org.w3c.dom.css.CSSStyleSheet
 
-object SinglePageCssStyleSheetBuilder : CssStyleSheetBuilder(Page) {
+object SinglePageCssStyleSheetBuilder {
 
-    override fun addKeyframesToDocument(keyframes: Keyframes) {
+    fun addKeyframesToDocument(keyframes: Keyframes) {
         val sheetElement = getOrCreateKunafaSheet()
         val sheet = sheetElement.sheet as? CSSStyleSheet
         sheet?.insertRule(keyframes.toString(), sheet.cssRules.length)
     }
 
-    override fun addRuleSetToDocument(ruleSet: RuleSet) {
+    fun addRuleSetToDocument(ruleSet: RuleSet) {
         val sheetElement = getOrCreateKunafaSheet()
         val sheet = sheetElement.sheet as? CSSStyleSheet
         ruleSet.toRulesList().forEach {

@@ -12,7 +12,6 @@ class Page : PageInterface, View() {
 
     override var ref: String? = null
 
-    override val styleSheetBuilder = PageStyleSheetBuilder(this)
     override val classNameGenerator = ClassNameGenerator()
     val cachedStyleSelectors = mutableMapOf<String, String>()
     val namedStyles = mutableMapOf<String, RuleSet>()
@@ -72,6 +71,14 @@ class Page : PageInterface, View() {
         append("</style>")
     }
 
+
+    override fun addRuleSetToDocument(ruleSet: RuleSet) {
+        namedStyles[ruleSet.selector.toString()] = ruleSet
+    }
+
+    override fun addKeyframesToDocument(keyframes: Keyframes) {
+        this.keyframes.add(keyframes)
+    }
 
     override val linearLayoutClass = classRuleSet {
         alignItems = Alignment.Start

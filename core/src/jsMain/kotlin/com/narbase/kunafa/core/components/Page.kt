@@ -53,10 +53,15 @@ object Page : PageInterface, View(null) {
                 document.body?.style?.direction = "ltr"
             }
         }
-    override val styleSheetBuilder = SinglePageCssStyleSheetBuilder
+
+    private val styleSheetBuilder = SinglePageCssStyleSheetBuilder
     override val classNameGenerator = ClassNameGenerator().apply {
         counter = MetaData.getMetaClassNameGeneratorCounter()
     }
+
+    override fun addKeyframesToDocument(keyframes: Keyframes) = styleSheetBuilder.addKeyframesToDocument(keyframes)
+
+    override fun addRuleSetToDocument(ruleSet: RuleSet) = styleSheetBuilder.addRuleSetToDocument(ruleSet)
 
     override val linearLayoutClass = classRuleSet {
         alignItems = Alignment.Start

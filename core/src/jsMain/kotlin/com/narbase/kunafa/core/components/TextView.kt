@@ -8,6 +8,7 @@ package com.narbase.kunafa.core.components
  */
 actual open class TextView(parent: View? = null) : View(parent) {
 
+    //todo: move text and text builder to view
     var text
         get() = element.innerText
         set(value) {
