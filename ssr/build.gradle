@@ -13,6 +13,7 @@ buildscript {
 
 plugins {
     id 'org.jetbrains.kotlin.jvm'
+    id("maven-publish")
 }
 
 apply plugin: 'java'
@@ -20,7 +21,7 @@ apply plugin: 'kotlin'
 
 
 group 'com.narbase'
-version '0.1.0'
+version '0.2.27-beta.18'
 
 sourceCompatibility = 1.8
 kotlin { experimental { coroutines "enable" } }
