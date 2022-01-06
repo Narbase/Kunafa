@@ -31,7 +31,7 @@ actual class Reference<V : View>(private val viewClass: KClass<V>) {
         fun ref(reference: String, viewClass: KClass<*>): View? {
 
             val node = document.querySelector("*[data-kssr-ref^='$reference']") as? HTMLElement
-                    ?: return null
+                ?: return null
 
             val newView = when (viewClass) {
                 Anchor::class -> Anchor(UnknownMountedView, node as? HTMLAnchorElement ?: return null)
@@ -46,12 +46,14 @@ actual class Reference<V : View>(private val viewClass: KClass<V>) {
                 TableBody::class -> TableBody(UnknownMountedView, node as? HTMLTableSectionElement ?: return null)
                 TableFooter::class -> TableFooter(UnknownMountedView, node as? HTMLTableSectionElement ?: return null)
                 TableHeader::class -> TableHeader(UnknownMountedView, node as? HTMLTableSectionElement ?: return null)
-                TableHeaderCell::class -> TableHeaderCell(UnknownMountedView, node as? HTMLTableCellElement
-                        ?: return null)
+                TableHeaderCell::class -> TableHeaderCell(
+                    UnknownMountedView,
+                    node as? HTMLTableCellElement ?: return null
+                )
                 TableCell::class -> TableCell(UnknownMountedView, node as? HTMLTableCellElement ?: return null)
                 TableRow::class -> TableRow(UnknownMountedView, node as? HTMLTableRowElement ?: return null)
                 TextInput::class -> TextInput(UnknownMountedView, node as? HTMLInputElement ?: return null)
-                TextView::class -> TextView(UnknownMountedView)
+                TextView::class -> TextView(UnknownMountedView, node as? HTMLElement ?: return null)
                 UList::class -> UList(UnknownMountedView, node as? HTMLUListElement ?: return null)
                 ListItem::class -> ListItem(UnknownMountedView, node as? HTMLLIElement ?: return null)
                 View::class -> View(UnknownMountedView, node as? HTMLElement ?: return null)
