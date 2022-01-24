@@ -1,3 +1,3 @@
 package com.narbase.kunafa.core.components
 
-expect open class ViewGroup
+expect open class ViewGroup()
