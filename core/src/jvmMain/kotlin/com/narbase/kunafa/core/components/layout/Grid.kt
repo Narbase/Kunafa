@@ -7,7 +7,7 @@ actual class Grid(parent: View?) : View(parent) {
 
     override fun configureElement(page: Page) {
         super.configureElement(page)
-        addRuleSet(page.gridLayoutClass)
+        addRuleSet(page.baseStyles.gridLayoutClass)
     }
 
 }

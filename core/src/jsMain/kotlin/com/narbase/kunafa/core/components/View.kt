@@ -3,8 +3,10 @@
 package com.narbase.kunafa.core.components
 
 import com.narbase.kunafa.core.components.Page.namedStyles
-import com.narbase.kunafa.core.css.*
-import com.narbase.kunafa.core.dimensions.px
+import com.narbase.kunafa.core.css.ClassSelector
+import com.narbase.kunafa.core.css.EmptySelector
+import com.narbase.kunafa.core.css.RuleSet
+import com.narbase.kunafa.core.css.classRuleSet
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import kotlinx.browser.document
@@ -73,10 +75,10 @@ actual open class View(
             field = value
             when (value) {
                 true -> {
-                    removeRuleSet(invisibleClass)
+                    removeRuleSet(Page.baseStyles.invisibleClass)
                 }
                 false -> {
-                    addRuleSet(invisibleClass)
+                    addRuleSet(Page.baseStyles.invisibleClass)
                 }
             }
         }
@@ -95,7 +97,7 @@ actual open class View(
 
     open fun configureElement() {
         if (shouldSkipBaseClass.not()) {
-            addRuleSet(baseClass)
+            addRuleSet(Page.baseStyles.baseClass)
         }
     }
 
@@ -143,19 +145,6 @@ actual open class View(
         if (selector is ClassSelector) {
             val className = selector.name
             this.element.removeClass(className)
-        }
-    }
-
-
-    companion object {
-        val baseClass = classRuleSet {
-            boxSizing = "border-box"
-            margin = 0.px
-            padding = 0.px
-            flexShrink = "0"
-        }
-        val invisibleClass = classRuleSet {
-            display = "none !important"
         }
     }
 

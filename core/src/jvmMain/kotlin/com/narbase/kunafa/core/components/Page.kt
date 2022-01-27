@@ -13,6 +13,8 @@ class Page : PageInterface, View() {
     override var ref: String? = null
 
     override val classNameGenerator = ClassNameGenerator()
+    override val baseStyles by lazy { BaseStyles(this) }
+
     val cachedStyleSelectors = mutableMapOf<String, String>()
     val namedStyles = mutableMapOf<String, RuleSet>()
     val keyframes = mutableListOf<Keyframes>()
@@ -78,41 +80,6 @@ class Page : PageInterface, View() {
 
     override fun addKeyframesToDocument(keyframes: Keyframes) {
         this.keyframes.add(keyframes)
-    }
-
-    override val linearLayoutClass = classRuleSet {
-        alignItems = Alignment.Start
-        display = "inline-flex"
-    }
-    override val verticalLayoutClass = classRuleSet {
-        flexDirection = "column"
-    }
-    override val horizontalLayoutClass = classRuleSet {
-        flexDirection = "row"
-    }
-    override val gridLayoutClass = classRuleSet {
-        display = "grid"
-    }
-
-
-    val baseClass = classRuleSet {
-        boxSizing = "border-box"
-        margin = 0.px
-        padding = 0.px
-        flexShrink = "0"
-    }
-
-    val invisibleClass = classRuleSet {
-        display = "none !important"
-    }
-
-    val verticalScrollLayoutClass = classRuleSet {
-        isScrollableVertically = true
-        isScrollableHorizontally = false
-    }
-    val horizontalScrollLayoutClass = classRuleSet {
-        isScrollableHorizontally = true
-        isScrollableVertically = false
     }
 
 }

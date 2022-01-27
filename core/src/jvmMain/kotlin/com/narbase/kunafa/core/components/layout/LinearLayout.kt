@@ -17,9 +17,9 @@ actual open class LinearLayout(
     override fun configureElement(page: Page) {
         super.configureElement(page)
         if (initialOrientation == Horizontal) {
-            addRuleSet(page.horizontalLayoutClass)
+            addRuleSet(page.baseStyles.horizontalLayoutClass)
         } else {
-            addRuleSet(page.verticalLayoutClass)
+            addRuleSet(page.baseStyles.verticalLayoutClass)
         }
         addRuleSet(page.linearLayoutClass)
     }

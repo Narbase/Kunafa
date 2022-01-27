@@ -6,6 +6,6 @@ import com.narbase.kunafa.core.components.View
 actual class Grid(parent: View?) : View(parent) {
     override fun configureElement() {
         super.configureElement()
-        addRuleSet(Page.gridLayoutClass)
+        addRuleSet(Page.baseStyles.gridLayoutClass)
     }
 }

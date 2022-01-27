@@ -14,9 +14,9 @@ class ScrollView(
     override fun configureElement(page: Page) {
         super.configureElement(page)
         if (initialOrientation == LinearLayoutOrientation.Horizontal) {
-            addRuleSet(page.horizontalScrollLayoutClass)
+            addRuleSet(page.baseStyles.horizontalScrollLayoutClass)
         } else {
-            addRuleSet(page.verticalScrollLayoutClass)
+            addRuleSet(page.baseStyles.verticalScrollLayoutClass)
         }
     }
 

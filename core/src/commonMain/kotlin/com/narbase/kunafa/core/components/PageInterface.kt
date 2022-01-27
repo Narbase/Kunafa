@@ -15,10 +15,7 @@ interface PageInterface : ViewInterface {
     fun addKeyframesToDocument(keyframes: Keyframes)
 
     /* Global styles */
-    val linearLayoutClass: RuleSet
-    val verticalLayoutClass: RuleSet
-    val horizontalLayoutClass: RuleSet
-    val gridLayoutClass: RuleSet
+    val baseStyles: BaseStyles
 
 
 }

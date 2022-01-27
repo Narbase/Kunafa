@@ -373,11 +373,11 @@ fun View.withVerticalLayout() = withLinearLayout(LinearLayoutOrientation.Vertica
 
 private fun View.withLinearLayout(orientation: LinearLayoutOrientation) {
     if (orientation == LinearLayoutOrientation.Horizontal) {
-        addRuleSet(Page.horizontalLayoutClass)
+        addRuleSet(Page.baseStyles.horizontalLayoutClass)
     } else {
-        addRuleSet(Page.verticalLayoutClass)
+        addRuleSet(Page.baseStyles.verticalLayoutClass)
     }
-    addRuleSet(Page.linearLayoutClass)
+    addRuleSet(Page.baseStyles.linearLayoutClass)
 }
 
 
@@ -387,5 +387,5 @@ infix fun <V : View> V.withGrid(block: V.() -> Unit): V = apply {
 }
 
 fun View.withGrid() {
-    addRuleSet(Page.gridLayoutClass)
+    addRuleSet(Page.baseStyles.gridLayoutClass)
 }

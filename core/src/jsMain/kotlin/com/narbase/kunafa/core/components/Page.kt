@@ -2,7 +2,10 @@
 
 package com.narbase.kunafa.core.components
 
-import com.narbase.kunafa.core.css.*
+import com.narbase.kunafa.core.css.ClassNameGenerator
+import com.narbase.kunafa.core.css.Keyframes
+import com.narbase.kunafa.core.css.RuleSet
+import com.narbase.kunafa.core.css.SinglePageCssStyleSheetBuilder
 import com.narbase.kunafa.core.hydration.MetaData
 import kotlinx.browser.document
 import kotlinx.dom.clear
@@ -16,6 +19,7 @@ object Page : PageInterface, View(null) {
 
     override var isViewMounted: Boolean = true
     val namedStyles = mutableMapOf<String, RuleSet>()
+    override val baseStyles by lazy { BaseStyles(this) }
 
     override val element: HTMLElement
         get() = document.body ?: document.createElement("body") as HTMLBodyElement
@@ -41,7 +45,7 @@ object Page : PageInterface, View(null) {
          */
     }
 
-    override val path: String?
+    override val path: String
         get() = "/"
 
     override var useRtl: Boolean = MetaData.getMetaUseRtl()
@@ -63,17 +67,4 @@ object Page : PageInterface, View(null) {
 
     override fun addRuleSetToDocument(ruleSet: RuleSet) = styleSheetBuilder.addRuleSetToDocument(ruleSet)
 
-    override val linearLayoutClass = classRuleSet {
-        alignItems = Alignment.Start
-        display = "inline-flex"
-    }
-    override val verticalLayoutClass = classRuleSet {
-        flexDirection = "column"
-    }
-    override val horizontalLayoutClass = classRuleSet {
-        flexDirection = "row"
-    }
-    override val gridLayoutClass = classRuleSet {
-        display = "grid"
-    }
 }

@@ -17,11 +17,11 @@ actual open class LinearLayout(
     override fun configureElement() {
         super.configureElement()
         if (initialOrientation == Horizontal) {
-            addRuleSet(Page.horizontalLayoutClass)
+            addRuleSet(Page.baseStyles.horizontalLayoutClass)
         } else {
-            addRuleSet(Page.verticalLayoutClass)
+            addRuleSet(Page.baseStyles.verticalLayoutClass)
         }
-        addRuleSet(Page.linearLayoutClass)
+        addRuleSet(Page.baseStyles.linearLayoutClass)
     }
 
 }

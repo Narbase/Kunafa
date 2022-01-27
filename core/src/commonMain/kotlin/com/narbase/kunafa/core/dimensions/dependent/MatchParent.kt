@@ -22,7 +22,7 @@ class MatchParent internal constructor(private val page: PageInterface) : Dynami
     override fun configureHeight(ruleSet: RuleSet) {
         ruleSet.setProperty("height", "100%")
         if (ruleSet.selector is EmptySelector) return
-        stringRuleSet(page, "${page.horizontalLayoutClass.selector} > ${ruleSet.selector}") {
+        stringRuleSet(page, "${page.baseStyles.horizontalLayoutClass.selector} > ${ruleSet.selector}") {
             alignSelf = Alignment.Stretch
             height = wrapContent
 
@@ -32,7 +32,7 @@ class MatchParent internal constructor(private val page: PageInterface) : Dynami
     override fun configureWidth(ruleSet: RuleSet) {
         ruleSet.setProperty("width", "100%")
         if (ruleSet.selector is EmptySelector) return
-        stringRuleSet(page, "${page.verticalLayoutClass.selector} > ${ruleSet.selector}") {
+        stringRuleSet(page, "${page.baseStyles.verticalLayoutClass.selector} > ${ruleSet.selector}") {
             alignSelf = Alignment.Stretch
             width = wrapContent
         }

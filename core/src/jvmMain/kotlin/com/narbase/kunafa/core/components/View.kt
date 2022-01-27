@@ -79,7 +79,7 @@ actual open class View(var parent: View? = null) : ViewInterface {
 
     open fun configureElement(page: Page) {
         this.page = page
-        addRuleSet(page.baseClass)
+        addRuleSet(page.baseStyles.baseClass)
     }
 
     open fun configBegin(builder: StringBuilder) {
