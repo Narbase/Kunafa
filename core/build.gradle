@@ -19,7 +19,7 @@ plugins {
 }
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
-def deployVersion = "0.3.0-beta.2"
+def deployVersion = "0.3.0-beta.3"
 
 group 'com.narbase.kunafa'
 archivesBaseName = "kunafa"
@@ -141,3 +141,6 @@ uploadArchives {
         }
     }
 }
+
+// ./gradlew :core:clean :core:build :core:publishMavenPublicationToMavenRepository
+// Then manually go to https://oss.sonatype.org, close the staging repo and release
