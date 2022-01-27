@@ -19,6 +19,15 @@ class Page : PageInterface, View() {
     val namedStyles = mutableMapOf<String, RuleSet>()
     val keyframes = mutableListOf<Keyframes>()
 
+    override val children
+        get() = if (isInsideHead) headChildren else bodyChildren
+
+
+    private var isInsideHead = false
+
+    private val bodyChildren: MutableSet<View> = mutableSetOf()
+    private val headChildren: MutableSet<View> = mutableSetOf()
+
     fun prepare() {
         page = this
 
@@ -29,7 +38,7 @@ class Page : PageInterface, View() {
     }
 
     override fun build(): String {
-        val childrenStringBuilder = buildString { children.forEach { append(it.build()) } }
+        val childrenStringBuilder = buildString { bodyChildren.forEach { append(it.build()) } }
 
         val builder = StringBuilder()
         builder.apply {
@@ -47,9 +56,11 @@ class Page : PageInterface, View() {
     }
 
     private fun getHead() = buildString {
+        val headChildrenBuilder = buildString { headChildren.forEach { append(it.build()) } }
         append("<head>")
         append("""<meta charset="UTF-8">""")
         append("""<meta content="width=device-width, initial-scale=1" name="viewport">""")
+        append(headChildrenBuilder)
         append(getStyles())
         append("</head>")
     }
@@ -81,5 +92,13 @@ class Page : PageInterface, View() {
     override fun addKeyframesToDocument(keyframes: Keyframes) {
         this.keyframes.add(keyframes)
     }
+
+    fun insideHead(block: () -> Unit) {
+        isInsideHead = true
+        block()
+        isInsideHead = false
+    }
+
+    fun View.script(block: Script.() -> Unit = {}) = Script(this).visit(page, block)
 
 }

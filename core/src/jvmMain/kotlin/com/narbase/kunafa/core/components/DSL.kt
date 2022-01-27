@@ -26,6 +26,11 @@ inline fun <reified H : Any> page(clientReference: H, crossinline block: Page.(r
 }
 
 
+fun Page.head(block: Page.() -> Unit = {}) {
+//    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+    insideHead { visit(this, block) }
+}
+
 fun View.linearLayout(block: LinearLayout.() -> Unit): LinearLayout {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     return LinearLayout(this, null).visit(page, block)
@@ -248,7 +253,7 @@ fun View.h4(block: CustomView.() -> Unit = {}) = CustomView(this, "h4").visit(pa
 fun View.h5(block: CustomView.() -> Unit = {}) = CustomView(this, "h5").visit(page, block)
 fun View.h6(block: CustomView.() -> Unit = {}) = CustomView(this, "h6").visit(page, block)
 
-fun View.head(block: CustomView.() -> Unit = {}) = CustomView(this, "head").visit(page, block)
+//fun View.head(block: CustomView.() -> Unit = {}) = CustomView(this, "head").visit(page, block)
 
 fun View.header(block: CustomView.() -> Unit = {}) = CustomView(this, "header").visit(page, block)
 
@@ -314,7 +319,7 @@ fun View.s(block: CustomView.() -> Unit = {}) = CustomView(this, "s").visit(page
 
 fun View.samp(block: CustomView.() -> Unit = {}) = CustomView(this, "samp").visit(page, block)
 
-fun View.script(block: CustomView.() -> Unit = {}) = CustomView(this, "script").visit(page, block)
+fun View.script(block: Script.() -> Unit = {}) = Script(this).visit(page, block)
 
 fun View.section(block: CustomView.() -> Unit = {}) = CustomView(this, "section").visit(page, block)
 
@@ -382,9 +387,9 @@ private fun View.withLinearLayout(orientation: LinearLayoutOrientation) {
     if (orientation == LinearLayoutOrientation.Horizontal) {
         addRuleSet(page.baseStyles.horizontalLayoutClass)
     } else {
-        addRuleSet(page.baseStyles.baseStyles.verticalLayoutClass)
+        addRuleSet(page.baseStyles.verticalLayoutClass)
     }
-    addRuleSet(page.linearLayoutClass)
+    addRuleSet(page.baseStyles.linearLayoutClass)
 }
 
 infix fun <V : View> V.withGrid(block: V.() -> Unit): V = apply {

@@ -21,7 +21,7 @@ actual open class LinearLayout(
         } else {
             addRuleSet(page.baseStyles.verticalLayoutClass)
         }
-        addRuleSet(page.linearLayoutClass)
+        addRuleSet(page.baseStyles.linearLayoutClass)
     }
 
 }
