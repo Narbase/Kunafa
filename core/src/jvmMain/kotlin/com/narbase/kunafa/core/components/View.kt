@@ -10,7 +10,7 @@ actual open class View(var parent: View? = null) : ViewInterface {
 
     lateinit var page: Page
 
-    private var isBuilt = false
+    internal var isBuilt = false
     open val element: String = "div"
     override var id: String? by editableBeforeBuild(null)
     val attributes: MutableMap<String, Any> by editableBeforeBuild(mutableMapOf())
