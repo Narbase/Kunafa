@@ -19,7 +19,7 @@ plugins {
 }
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
-def deployVersion = "0.3.0-beta.5"
+def deployVersion = "0.3.0-beta.6"
 
 group 'com.narbase.kunafa'
 archivesBaseName = "kunafa"
