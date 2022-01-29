@@ -50,11 +50,20 @@ kotlin {
 }
 
 
-//task javadocJar(type: Jar) {
-//    archiveClassifier = 'javadoc'
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
 //    from javadoc.destinationDir
+}
+
+//val sourcesJar by tasks.creating(Jar::class) {
+//    dependsOn(JavaPlugin.CLASSES_TASK_NAME)
+//    classifier = "sources"
+//    from(sourceSets["main"].allSource)
 //}
 
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+}
 
 publishing {
     repositories {
@@ -72,8 +81,8 @@ publishing {
     publications {
         maven(MavenPublication) {
             from components.kotlin
-//            artifact sourcesJar
-//            artifact javadocJar
+            artifact sourcesJar
+            artifact javadocJar
 
             groupId = 'com.narbase'
             artifactId = 'kunafa'
