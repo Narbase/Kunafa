@@ -123,3 +123,6 @@ afterEvaluate {
 signing {
     useGpgCmd()
 }
+
+// To build and publish: ./gradlew clean build publish -Psigning.gnupg.keyName=<KeyId>
+// Then manually go to https://oss.sonatype.org, close the staging repo and release
