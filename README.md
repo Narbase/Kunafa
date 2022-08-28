@@ -2,7 +2,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.narbase/kunafa.svg)](https://mvnrepository.com/artifact/com.narbase/kunafa)
 
 <div align="center">
-  <img alt="Kunafa logo" src="https://github.com/Kabbura/Kunafa/raw/master/logo.png" height="86" />
+  <img alt="Kunafa logo" src="https://github.com/Narbase/Kunafa/raw/master/logo.png" height="86" />
 </div>
 
 <div align="center">
@@ -14,7 +14,8 @@
 Create web apps without using HTML, CSS, or JavaScript.
 
 ## Documentation
-Find Kunafa [Documentation here](https://kabbura.gitbook.io/kunafa/) (Work in progress). 
+
+Find Kunafa [Documentation here](https://docs.kunafa.narbase.com/) (Work in progress).
 
 ## Philosophy
 Web apps framework without using HTML, CSS, or JavaScript.
@@ -72,7 +73,7 @@ Developers only need to use Kotlin for development.
 ---
 ## Getting started
 
- [Hello Kunafa! Getting started guide.](https://github.com/Kabbura/Kunafa/wiki/Hello-Kunafa)
+[Hello Kunafa! Getting started guide.](https://github.com/Narbase/Kunafa/wiki/Hello-Kunafa)
 
 To add Kunafa to your project, first you need to add it to your build.gradle file as a dependency. 
 ```groovy
