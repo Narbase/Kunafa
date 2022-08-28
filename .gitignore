@@ -1,2 +1,15 @@
 target/
 .idea/
+.gradle/
+
+js/target/
+js/.idea/
+js/.gradle/
+js/build/
+
+
+core/build/
+core/target/
+core/.idea/
+core/.gradle/
+js/core/

@@ -1,0 +1,2 @@
+rootProject.name = 'kunafa'
+include 'core'
