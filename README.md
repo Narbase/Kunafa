@@ -1,5 +1,5 @@
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
-[![Maven Central](https://img.shields.io/maven-central/v/com.narbase/kunafa.svg)](https://mvnrepository.com/artifact/com.narbase/kunafa)
+[![Maven Central](https://img.shields.io/maven-central/v/com.narbase.kunafa/core.svg)](https://mvnrepository.com/artifact/com.narbase.kunafa/core)
 
 <div align="center">
   <img alt="Kunafa logo" src="https://github.com/Narbase/Kunafa/raw/master/logo.png" height="86" />
@@ -77,7 +77,7 @@ Developers only need to use Kotlin for development.
 
 To add Kunafa to your project, first you need to add it to your build.gradle file as a dependency. 
 ```groovy
-compile 'com.narbase:kunafa:<latest_version>'
+compile 'com.narbase.kunafa:core:<latest_version>'
 ````
 If you have Kotlin Js plugin configured, then you can directly use it the code and Webpack will include Kunafa in the 
 generated bundle.
