@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-val deployVersion = "0.3.1-alpha"
+val deployVersion = "0.3.1-alpha.3"
 
 group = "com.narbase.kunafa"
 //archivesBaseName = "kunafa"

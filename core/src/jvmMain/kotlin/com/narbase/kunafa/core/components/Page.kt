@@ -1,5 +1,6 @@
 package com.narbase.kunafa.core.components
 
+import com.narbase.kunafa.core.annotations.ChildrenAccessConcurrencyRisk
 import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.px
 
@@ -19,7 +20,8 @@ class Page : PageInterface, View() {
     val namedStyles = mutableMapOf<String, RuleSet>()
     val keyframes = mutableListOf<Keyframes>()
 
-    override val children
+    @ChildrenAccessConcurrencyRisk
+    override val children: Set<View>
         get() = if (isInsideHead) headChildren else bodyChildren
 
 

@@ -11,6 +11,7 @@ import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import kotlinx.browser.document
 import kotlinx.dom.addClass
+import kotlinx.dom.clear
 import kotlinx.dom.removeClass
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -44,22 +45,22 @@ actual open class View(
 
     internal fun postViewWillMount() {
         lifecycleObserversList.forEach { it.viewWillMount(this) }
-        children.forEach { it.postViewWillMount() }
+        childrenCopy().forEach { it.postViewWillMount() }
     }
 
     internal fun postOnViewMounted() {
         if (parent?.isViewMounted != true) return
         lifecycleObserversList.forEach { it.onViewMounted(this) }
-        children.forEach { it.postOnViewMounted() }
+        childrenCopy().forEach { it.postOnViewMounted() }
     }
 
     internal fun postViewWillBeRemoved() {
         lifecycleObserversList.forEach { it.viewWillBeRemoved(this) }
-        children.forEach { it.postViewWillBeRemoved() }
+        childrenCopy().forEach { it.postViewWillBeRemoved() }
     }
 
     internal fun postOnViewRemoved() {
-        children.forEach { it.postOnViewRemoved() }
+        childrenCopy().forEach { it.postOnViewRemoved() }
         lifecycleObserversList.forEach { it.onViewRemoved(this) }
     }
 
@@ -152,7 +153,11 @@ actual open class View(
         get() = parent?.path
 
 
-    override val children: MutableSet<View> = mutableSetOf()
+    private val _children: MutableSet<View> = mutableSetOf()
+    override val children: Set<View>
+        get() = _children
+
+    private fun childrenCopy(): Set<View> = mutableSetOf<View>().apply { addAll(children) }
 
 
     internal open fun addToParent() {
@@ -164,7 +169,7 @@ actual open class View(
         child.postViewWillMount()
         element.append(child.element)
         child.parent = this
-        children.add(child)
+        _children.add(child)
         child.postOnViewMounted()
     }
 
@@ -173,7 +178,7 @@ actual open class View(
         child.postViewWillMount()
         element.insertBefore(child.element, referenceNode.element.nextSibling)
         child.parent = this
-        children.add(child)
+        _children.add(child)
         child.postOnViewMounted()
     }
 
@@ -182,16 +187,16 @@ actual open class View(
         child.postViewWillMount()
         element.insertBefore(child.element, referenceNode.element)
         child.parent = this
-        children.add(child)
+        _children.add(child)
         child.postOnViewMounted()
     }
 
     open fun removeChild(child: View) {
-        if (children.contains(child).not()) {
+        if (_children.contains(child).not()) {
             return
         }
         child.postViewWillBeRemoved()
-        children.remove(child)
+        _children.remove(child)
         if (element.contains(child.element)) {
             element.removeChild(child.element)
         }
@@ -200,18 +205,15 @@ actual open class View(
     }
 
     open fun clearAllChildren() {
-        children.forEach { child ->
+        val childrenCopy = childrenCopy()
+        childrenCopy.forEach { child ->
             child.postViewWillBeRemoved()
         }
-        while (element.firstChild != null) {
-            element.firstChild?.let {
-                element.removeChild(it)
-            }
-        }
-        children.forEach { child ->
+        element.clear()
+        childrenCopy.forEach { child ->
             child.postOnViewRemoved()
-            children.remove(child)
         }
+        _children.clear()
     }
 
 
