@@ -7,18 +7,18 @@ buildscript {
     }
 
     dependencies {
-//        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32")
-        classpath(kotlin("gradle-plugin", version = "1.4.32"))
+//        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21")
+        classpath(kotlin("gradle-plugin", version = "1.9.21"))
     }
 }
 
-val deployVersion = "0.3.0"
+val deployVersion = "0.3.1-alpha"
 
 group = "com.narbase.kunafa"
 //archivesBaseName = "kunafa"
 version = deployVersion
 
-val kotlinVersion = "1.4.32"
+val kotlinVersion = "1.9.21"
 
 plugins {
     kotlin("multiplatform")
@@ -29,13 +29,22 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenLocal()
+    mavenCentral()
+//    jcenter()
 }
 
 kotlin {
     jvm()
-    js(BOTH) {
+    js {
+        moduleName = project.name
         browser {
+            testTask {
+                useKarma {
+//                    useChrome()
+                    useFirefox()
+                }
+            }
         }
     }
 
@@ -43,6 +52,23 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+            }
+        }
+        val jsMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
+            }
+        }
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+//                implementation(kotlin("test-js-runner"))
+            }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+//                implementation(kotlin("test-js-runner"))
             }
         }
         all {
