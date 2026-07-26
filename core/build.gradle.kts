@@ -121,6 +121,12 @@ mavenPublishing {
                 email.set("ayman.hassan@narbase.com")
                 organization.set("Narbase Technologies")
             }
+            developer {
+                id.set("shalaga44")
+                name.set("Mohamed Moawia")
+                email.set("mohamed.moawia@narbase.com")
+                organization.set("Narbase Technologies")
+            }
         }
         issueManagement {
             system.set("GitHub")

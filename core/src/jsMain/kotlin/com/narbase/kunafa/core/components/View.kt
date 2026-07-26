@@ -71,6 +71,10 @@ actual open class View(
         lifecycleObserversList.add(lifecycleObserver)
     }
 
+    override fun unbind(lifecycleObserver: LifecycleObserver) {
+        lifecycleObserversList.remove(lifecycleObserver)
+    }
+
     var isVisible: Boolean = true
         set(value) {
             field = value
@@ -158,6 +162,7 @@ actual open class View(
         get() = _children
 
     private fun childrenCopy(): Set<View> = mutableSetOf<View>().apply { addAll(children) }
+    private fun lifecycleObserversCopy(): Set<LifecycleObserver> = mutableSetOf<LifecycleObserver>().apply { addAll(lifecycleObserversList) }
 
 
     internal open fun addToParent() {
@@ -214,6 +219,13 @@ actual open class View(
             child.postOnViewRemoved()
         }
         _children.clear()
+    }
+
+    open fun clearAllLifecycleObservers() {
+        val lifecycleObserversCopy = lifecycleObserversCopy()
+        lifecycleObserversCopy.forEach { lifecycleObserver ->
+            unbind(lifecycleObserver)
+        }
     }
 
 
