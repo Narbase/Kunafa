@@ -1,0 +1,13 @@
+[versions]
+kotlin = "2.4.10"
+dokka = "2.2.0"
+gradleMavenPublish = "0.37.0"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
+[plugins]
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "gradleMavenPublish" }

@@ -1,5 +1,6 @@
 package com.narbase.kunafa.core.components
 
+import com.narbase.kunafa.core.annotations.ChildrenAccessConcurrencyRisk
 import com.narbase.kunafa.core.css.ClassSelector
 import com.narbase.kunafa.core.css.EmptySelector
 import com.narbase.kunafa.core.css.RuleSet
@@ -15,7 +16,14 @@ actual open class View(var parent: View? = null) : ViewInterface {
     override var id: String? by editableBeforeBuild(null)
     val attributes: MutableMap<String, Any> by editableBeforeBuild(mutableMapOf())
     private val classes: MutableList<String> by editableBeforeBuild(mutableListOf())
-    override val children: MutableSet<View> = mutableSetOf()
+
+    private val _children: MutableSet<View> = mutableSetOf()
+
+    @ChildrenAccessConcurrencyRisk
+    override val children: Set<View>
+        get() = _children
+
+    private fun childrenCopy(): Set<View> = mutableSetOf<View>().apply { addAll(_children) }
 
     var text: String = ""
     var textBuilder: TextBuilder? = null
@@ -42,7 +50,7 @@ actual open class View(var parent: View? = null) : ViewInterface {
 
     open fun mount(child: View) {
         child.parent = this
-        children.add(child)
+        _children.add(child)
     }
 
     open fun build(): String {
@@ -70,7 +78,7 @@ actual open class View(var parent: View? = null) : ViewInterface {
 
             configBegin(builder)
 
-            children.forEach { append(it.build()) }
+            childrenCopy().forEach { append(it.build()) }
 
             append("</$element>")
         }
@@ -133,10 +141,10 @@ actual open class View(var parent: View? = null) : ViewInterface {
 
 
     open fun removeChild(child: View) {
-        if (children.contains(child).not()) {
+        if (_children.contains(child).not()) {
             return
         }
-        children.remove(child)
+        _children.remove(child)
         child.parent = null
     }
 
