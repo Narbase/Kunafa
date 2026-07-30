@@ -77,7 +77,7 @@ Developers only need to use Kotlin for development.
 
 To add Kunafa to your project, first you need to add it to your build.gradle file as a dependency. 
 ```groovy
-compile 'com.narbase.kunafa:core:<latest_version>'
+implementation 'com.narbase.kunafa:kunafa:<latest_version>'
 ````
 If you have Kotlin Js plugin configured, then you can directly use it the code and Webpack will include Kunafa in the 
 generated bundle.
