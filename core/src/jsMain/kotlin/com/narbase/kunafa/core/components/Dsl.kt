@@ -9,6 +9,9 @@ import com.narbase.kunafa.core.components.layout.ScrollView
 import com.narbase.kunafa.core.lifecycle.LifecycleObserver
 import kotlinx.browser.document
 import org.w3c.dom.HTMLButtonElement
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /*
  * Copyright 2017-2020 Narbase technologies and contributors. Use of this source code is governed by the MIT License.
@@ -63,6 +66,19 @@ fun View?.a(lifecycleObserver: LifecycleObserver? = null, block: Anchor.() -> Un
 fun View?.textView(lifecycleObserver: LifecycleObserver? = null, block: TextView.() -> Unit): TextView {
 //    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     return TextView(this).visit(lifecycleObserver, block)
+}
+
+fun View?.textArea(lifecycleObserver: LifecycleObserver? = null, block: TextArea.() -> Unit): TextArea {
+//    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+    return TextArea(this).visit(lifecycleObserver, block)
+}
+
+@OptIn(ExperimentalContracts::class)
+fun View?.span(lifecycleObserver: LifecycleObserver? = null, block: Span.() -> Unit): Span {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return Span(this).visit(lifecycleObserver, block)
 }
 
 fun View?.textInput(lifecycleObserver: LifecycleObserver? = null, block: TextInput.() -> Unit): TextInput {

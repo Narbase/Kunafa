@@ -17,6 +17,9 @@ expect class TableCell : View
 expect class TableRow : View
 expect class TextInput : View
 expect class TextView : View
+
+expect class TextArea : View
+expect class Span : View
 expect class UList : View
 expect class ListItem : View
 expect class CustomView : View
